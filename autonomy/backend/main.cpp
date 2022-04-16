@@ -195,6 +195,10 @@ public:
     sim.loc.angle=((rand()%8)*8)/360;
     sim.loc.percent=50.0;
 
+    // Boot into BTI robot config
+    robot.state=state_backend_driver;
+    ui.power.high=1;
+    ui.power.torqueControl=1;
   }
 
   // Do robot work.
