@@ -65,16 +65,31 @@ For the aruco marker viewer:
 	cmake .
 	make
 	sudo make install
-	cd ../../viewer
+	cd ../../vision
 	make
 
 For the realsense viewer:
   sudo apt-get install libusb-1.0-0-dev libgtk-3-dev libglfw3-dev libzmq3-dev cmake libssl-dev
   git clone https://github.com/IntelRealSense/librealsense
   cd librealsense/
-  ./scripts/patch-realsense-ubuntu-lts.sh 
-  cmake .
+# ./scripts/patch-realsense-ubuntu-lts.sh 
+  mkdir build
+  cd build
+  cmake .. -DFORCE_RSUSB_BACKEND=true -DBUILD_PYTHON_BINDINGS=false -DBUILD_EXAMPLES=true -DBUILD_GRAPHICAL_EXAMPLES=true -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
 
+
+
+ros packages:
+	sudo apt-get install ros-noetic-apriltag-ros
+
+roscd apriltag_ros
+pwd
+
+
+
+
+
+------- Obsolete ------
 
 For the vive viewer:
 	sudo cp vive/91-vive.rules /etc/udev/rules.d/
