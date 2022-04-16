@@ -1,0 +1,9 @@
+Shows IP address, CPU temp, memory, and utilization.
+Autostart with:
+cp conky.desktop  ~/.config/autostart/
+
+Configure with:
+sudo apt-get install conky
+sudo cp conky.conf /etc/conky/
+
+Configure vcgencmd for temperature.

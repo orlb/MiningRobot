@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Exec=conky
+Hidden=false
+X-MATE-Autostart-enabled=true
+Name[en_US]=Conky Desktop Info
+Name=Conky Desktop Info
+Comment[en_US]=Window with info on desktop
+Comment=Window with info on desktop
