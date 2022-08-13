@@ -20,7 +20,7 @@
 class robot_ui {
 public:
 
-	float driveLimit=0.6; /* robot driving power (0.0 - 1.0) */
+	float driveLimit=1.0; /* robot driving power (0.0 - 1.0) */
 	
 	robot_power power; // Last output power commands
 	robot_realsense_comms realsense_comms;
