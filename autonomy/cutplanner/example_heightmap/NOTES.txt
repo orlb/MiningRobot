@@ -1,0 +1,12 @@
+
+heightmap.png: Real height data derived from a depth camera running in a sandpit in 2019.  The black areas are no data (e.g., behind a wall). 
+    102 x 192 pixels, approx 4m x 8m test pit.
+
+Converted to a 3D STL with:
+png23d  -l 256 -f surface -O 0 -o stl  heightmap.png heightmap.stl
+This STL needs to be rescaled to 4m x 8m in Blender. 
+
+
+
+
+
