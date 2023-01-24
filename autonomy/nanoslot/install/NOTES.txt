@@ -1,0 +1,36 @@
+Idea: a Linux service responds to an Arduino being plugged in by firing off a handler program, allowing hotplug of running robot hardware.
+
+
+---------- udev -> systemd -> slothandler ----------
+Arduino Uno 328p:
+lsusb
+Bus 001 Device 108: ID 2341:0043 Arduino SA Uno R3 (CDC ACM)
+
+Arduino Nano 328p with CH-340 clone serial:
+lsusb
+Bus 001 Device 091: ID 1a86:7523 QinHeng Electronics HL-340 USB-Serial adapter
+
+The target udev rule is something like /etc/udev/rules.d/90-nanoslot.rules. This did work:
+    SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523",  TAG+="systemd", ENV{SYSTEMD_WANTS}+="nanoslot@%k.service"
+(Matching on KERNEL didn't work at all for some reason.)
+
+You can check all the udev attributes with:
+   udevadm info -a -n /dev/ttyUSB0
+
+This fires a parameterized systemd service from: /etc/systemd/system/nanoslot@.service
+
+[Unit]
+Description=Nanoslot meta handler
+[Service]
+ExecStart=/nanoslot/slothandler.sh %i
+
+Debug with:
+udevadm control --log-priority=debug
+journalctl -f
+
+
+----------
+
+
+
+

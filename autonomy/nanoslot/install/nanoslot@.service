@@ -1,0 +1,6 @@
+[Unit]
+Description=Nanoslot meta handler
+[Service]
+ExecStart=/nanoslot/nanoslot.sh %i
+User=robot
+

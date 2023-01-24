@@ -1,0 +1,9 @@
+# Match Arduino Nano 328p with CH-340 clone serial.
+# Different clones may use different USB ids, see "lsusb" for yours.
+
+ACTION=="add", SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", TAG+="systemd", ENV{SYSTEMD_WANTS}+="nanoslot@%k.service"
+
+# Old school approach: directly fire a shell script (systemd will murder it after 5 seconds)
+#    RUN+="/nanoslot/slothandler.sh %k"
+
+
