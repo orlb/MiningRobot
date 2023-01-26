@@ -21,7 +21,6 @@ typedef int8_t nanoslot_motorpercent_t; ///< -100 for full reverse, 0 for stop, 
 */
 
 /* slot ID 0xA0: main arm motor controllers */
-
 struct nanoslot_command_0xA0 {
     nanoslot_byte_t mode; // mode 0 == stop.  mode 1 == normal. 
     nanoslot_motorpercent_t wrist;
@@ -31,6 +30,17 @@ struct nanoslot_sensor_0xA0 {
     nanoslot_byte_t latency;
     nanoslot_heartbeat_t heartbeat;
     nanoslot_byte_t sandbag[12];
+};
+
+
+/* slot ID 0xEE: example nano */
+struct nanoslot_command_0xEE {
+    nanoslot_byte_t mode; // mode 0 == stop.  mode 1 == normal. 
+    nanoslot_motorpercent_t LED;
+};
+struct nanoslot_sensor_0xEE {
+    nanoslot_byte_t latency;
+    nanoslot_heartbeat_t heartbeat;
 };
 
 
