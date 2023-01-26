@@ -24,7 +24,8 @@ typedef int8_t nanoslot_motorpercent_t; ///< -100 for full reverse, 0 for stop, 
 
 struct nanoslot_command_0xA0 {
     nanoslot_byte_t mode; // mode 0 == stop.  mode 1 == normal. 
-    nanoslot_byte_t sandbag[12];
+    nanoslot_motorpercent_t wrist;
+    nanoslot_byte_t sandbag[12]; //<- for benchmarking comm delays
 };
 struct nanoslot_sensor_0xA0 {
     nanoslot_byte_t latency;

@@ -9,6 +9,7 @@ dir=`realpath ..`
 (
 cd /nanoslot
 touch log
+sudo chown robot log
 ln -s "$dir"/nanohandler/nanoslot.sh .
 ln -s "$dir" dir
 )

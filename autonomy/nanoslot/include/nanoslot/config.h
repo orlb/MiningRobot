@@ -22,8 +22,8 @@
 #define NANOSLOT_ID_SANITY 0xA5 /* sanity-check for ID packet */
 
 
-// Environment variable used for exec handoff of serial port
-#define NANOSLOT_ENV "NANOSLOT_HANDOFF"
+// Exec-time handoff of serial port from nanoboot to slot program.
+#define NANOSLOT_HANDOFF_FANCY 1  /* 0: simple exec and reopen.  1: fancy re-use file descriptor */
 
 #endif
 

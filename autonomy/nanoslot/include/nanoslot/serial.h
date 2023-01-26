@@ -88,6 +88,10 @@ public:
 /* This is the original C++ interface. */
 	std::vector<std::string> port_list();
 	int Open(const std::string& name);
+#if defined(LINUX)
+    int OpenFd(int fd);
+    inline int GetFd(void) const { return port_fd; }
+#endif
 	std::string error_message();
 	int Set_baud(int baud);
 	int Get_baud() const;

@@ -76,6 +76,22 @@ SerialPort::~SerialPort()
 	Close();
 }
 
+#if defined(LINUX)
+// Reopen a serial port from an already-open file descriptor
+int SerialPort::OpenFd(int fd)
+{
+    port_fd=fd;
+    
+	if (tcgetattr(port_fd, &settings_orig) != 0) {
+		close(port_fd);
+		error_msg = _("Unable to query serial port settings (perhaps not a serial port)");
+		return -1;
+	}
+	settings=settings_orig;
+	port_is_open = 1;
+	return 0;
+}
+#endif
 
 
 // Open a port, by name.  Return 0 on success, non-zero for error

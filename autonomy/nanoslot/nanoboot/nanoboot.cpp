@@ -7,6 +7,8 @@
 
 #include "nanoslot/serial_handoff.h"
 
+#include <unistd.h> /* for exec magic */
+
 #include "nanoslot/nanoslot_exchange.h"
 nanoslot_command_0xA0 my_command;
 
@@ -31,29 +33,37 @@ bool talk_to_device(const char *device)
         while (-1==comm.pkt.read_packet(p)) {}
         if (p.valid) {
             if (p.command==NANOSLOT_A_ID) { // ID response
+                comm.check_ID(p);
                 int ID=p.data[0];
-                int sane=p.data[3];
-                if (p.length==4 && ID!=0 && sane==NANOSLOT_ID_SANITY) 
-                { // looks like a valid ID
-                    printf("  Valid ID %02X %02X %02X\n", ID,p.data[1],p.data[2]);
-                    
-                    comm.pkt.write_packet(NANOSLOT_A_COMMAND,sizeof(my_command),&my_command);
-                    // FIXME: handoff to slot handler now
-                    //exit(0);
-                } else {
-                    printf("  Invalid ID packet: %02X %02X\n", ID, sane);
-                    weird_count++;
-                }
-            }
-            else if (p.command==NANOSLOT_A_SENSOR) {
-                printf("  Device %s sensor: %02x\n",
-                    device,p.data[0]); 
-                comm.pkt.write_packet(NANOSLOT_A_COMMAND,sizeof(my_command),&my_command);
+                printf("  Got ID %02X, doing handoff\n", ID);
+                
+                // Path to the slot program is relative to /nanoslot/dir (our working directory):
+                char exe[1000];
+                snprintf(exe,sizeof(exe),"slot_%02X/slot_%02X",ID,ID);
+                
+                fflush(stdout); fflush(stderr);
+
+#if NANOSLOT_HANDOFF_FANCY  
+                int fd=Serial.GetFd();
+                char fdName[100];
+                snprintf(fdName,sizeof(fdName),"%d",fd);
+                execlp(exe,  exe,"--fd",fdName,NULL);
+#else
+                // Simple call where the slot program re-opens the device (two bootloader waits)
+                //  FIXME: do fancy handoff here where we leave the serial port open.
+                execlp(exe,  exe,"--dev",device,NULL);
+#endif
+           
+                // If we get here, the exec didn't work:
+                perror("Error doing exec of slot program");
+                int err=system("pwd");
+                err=system("echo $LD_LIBRARY_PATH");
+                printf("Attempted path to program: %s for device %s\n",exe,device);
+                exit(1);
             }
             else if (p.command==NANOSLOT_A_DEBUG) {
                 printf("  Device %s debug 0xD: %s\n",
                     device,(char *)p.data);
-                exit(1); //<- just stop if firmware hits errors.
             }
             else if (p.command==NANOSLOT_A_ERROR) {
                 printf("  Device %s hit error 0xE: %s\n",

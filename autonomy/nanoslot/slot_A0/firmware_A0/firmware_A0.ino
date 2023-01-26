@@ -14,18 +14,19 @@ void firmware_read_encoders(void)
   my_sensor.heartbeat++;
 }
 
+void firmware_send_motors()
+{
+  if (!comm.is_connected) my_command.mode=0;
+  pinMode(13,OUTPUT); // debug LED
+  digitalWrite(13,my_command.wrist>0);
+  
+}
+
+
 bool firmware_handle_custom_packet(A_packet_serial &pkt,A_packet &p)
 {
   return false;
 }
-
-void firmware_send_motors()
-{
-  if (!comm.is_connected) my_command.mode=0;
-
-  
-}
-
 
 void setup() {
     nanoslot_firmware_start();
