@@ -1,5 +1,7 @@
 /*
  Plain-old-bytes structs used to exchange data with the Arduino nanoslots.
+ These structs are sent on the serial connection between PC and Arduino,
+ connecting slot_ID program swith the firmware_ID Arduino programs.
 
  Dr. Orion Lawlor, lawlor@alaska.edu, 2023-01-23 (Public Domain)
 */
@@ -23,13 +25,12 @@ typedef int8_t nanoslot_motorpercent_t; ///< -100 for full reverse, 0 for stop, 
 /* slot ID 0xA0: main arm motor controllers */
 struct nanoslot_command_0xA0 {
     nanoslot_byte_t mode; // mode 0 == stop.  mode 1 == normal. 
-    nanoslot_motorpercent_t wrist;
-    nanoslot_byte_t sandbag[12]; //<- for benchmarking comm delays
+    nanoslot_motorpercent_t stick; // linear actuators that pivot the stick
+    nanoslot_motorpercent_t wrist; // linear actuators that pivot the wrist
 };
 struct nanoslot_sensor_0xA0 {
     nanoslot_byte_t latency;
     nanoslot_heartbeat_t heartbeat;
-    nanoslot_byte_t sandbag[12];
 };
 
 

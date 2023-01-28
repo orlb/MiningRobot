@@ -1,5 +1,5 @@
 /*
- Interface the lunatic data exchange with slot example.
+ Example where we interface the data exchange with slot serial comms.
 
  Dr. Orion Lawlor, lawlor@alaska.edu, 2023-01-25 (Public Domain)
 */
@@ -11,39 +11,32 @@ int main(int argc,char **argv)
 {
     nanoslot_comms comm(&argc,&argv);
     MAKE_exchange_nano_net(); 
-    NANOSLOT_SENSOR_MY my_sensor={0};
-    NANOSLOT_COMMAND_MY my_command={0};
+    NANOSLOT_SENSOR_MY my_sensor={0}; // telemetry / sensor data received from Arduino
+    NANOSLOT_COMMAND_MY my_command={0}; // command data sent from PC
     
-    while (true) {
-        bool send=false;
-        
+    while (comm.is_connected) {
         // Receive data from Arduino
         A_packet p;
-        while (-1==comm.pkt.read_packet(p)) {}
-        if (p.valid) {
-            if (p.command==NANOSLOT_A_ID) { // ID response
-                comm.check_ID(p);
-                send=true;
+        if (comm.read_packet(p)) {
+            comm.handle_standard_packet(p,my_sensor);
+
+            if (comm.got_sensor) 
+            {
+                printf("  Arduino latency: %d ms, heartbeat %02x\n", my_sensor.latency, my_sensor.heartbeat);
             }
-            else if (p.command==NANOSLOT_A_SENSOR) {
-                p.get(my_sensor);
-                printf("  Arduino latency: %d ms, heartbeat %02x\n", my_sensor.latency, my_sensor.heartbeat); 
-                send=true;
+            
+            if (comm.need_command) 
+            {
+                aurora::nano_net_data nano=exchange_nano_net.read();
+                my_command.LED=nano.command[0].speed[0]; //<- HACK: left side drive motor
+                comm.send_command(my_command);
             }
-            else 
-                comm.handle_standard_packet(p);
-        }
-        
-        if (send) 
-        {
-            aurora::nano_net_data nano=exchange_nano_net.read();
-            my_command.LED=nano.command[0].speed[0]; //<- HACK: left side drive motor
-            comm.pkt.write_packet(NANOSLOT_A_COMMAND,sizeof(my_command),&my_command);
         }
         
         // Limit this loop speed to this many milliseconds (varies by what's attached)
         data_exchange_sleep(50);
     }
     
+    return 0;
 }
 
