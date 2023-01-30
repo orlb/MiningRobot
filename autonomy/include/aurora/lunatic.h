@@ -49,10 +49,10 @@ namespace aurora {
 */
 
 /* This macro declares the variable used to communicate with the nanoslots
-    Setup and commands written by the backend
+    Commands written by the backend
     Sensors written by the slot modules for each nano
 */
-#define MAKE_exchange_nanoslot()  aurora::data_exchange<nanoslot_exchange> exchange_nanoslot("nanoslot")
+#define MAKE_exchange_nanoslot()  aurora::data_exchange<nanoslot_exchange> exchange_nanoslot={"nanoslot"}
 
 /* -------------- Drive Command ---------------- 
   Track speed commands, for the left and right tracks.

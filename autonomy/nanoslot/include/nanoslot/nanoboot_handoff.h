@@ -76,7 +76,7 @@ protected:
 };
 
 
-/** A nanoslot_comms does packet parsing, and is used by a slot program */
+/** A nanoslot_comms does packet parsing, and is used by all slot programs */
 class nanoslot_comms : public nanoboot_comms {
 public:
     // big inherited field: pkt, the serial packet formatter
@@ -204,28 +204,55 @@ public:
 #endif
 };
 
-
-/* Set up the nanoslot exchange, at program start */
-#define NANOSLOT_EXCHANGE_SETUP() \
-    MAKE_exchange_nanoslot(); \
-    nanoslot_exchange &nano=exchange_nanoslot.write_begin(); \
-    nano.sanity_check_size(); \
-    nanoslot_heartbeat_t last_backend=nano.backend_heartbeat; \
-    exchange_nanoslot.write_end(); \
-    int backend_paused=0; \
-
-
-/* Prepare our command from the nanoslot exchange */
-#define NANOSLOT_EXCHANGE_COMMAND() \
-    bool exchange_alive = last_backend != nano.backend_heartbeat; \
-    last_backend = nano.backend_heartbeat; \
-    if (exchange_alive) backend_paused=0; else backend_paused++; \
-    NANOSLOT_COMMAND_MY my_command=SLOT.command; \
-    my_command.autonomy=nano.autonomy; \
-    if (backend_paused>10) my_command.autonomy.mode=0; /* no backend -> safemode */ \
+#ifdef __AURORA_LUNATIC_H
+/** A nanoslot_lunatic stores it sensor data to the lunatic data exchange */
+class nanoslot_lunatic : public nanoslot_comms {
+public:
+    MAKE_exchange_nanoslot();
+    nanoslot_heartbeat_t last_backend;
+    int backend_paused=0; // count of packets with nothing new from backend
     
+    NANOSLOT_SENSOR_MY my_sensor={0};
+    NANOSLOT_COMMAND_MY my_command={0};
+    
+    nanoslot_lunatic(int *argc,char ***argv)
+        :nanoslot_comms(argc,argv)
+    {
+        nanoslot_exchange &nano=exchange_nanoslot.write_begin(); 
+        nano.sanity_check_size(); 
+        last_backend=nano.backend_heartbeat; 
+        exchange_nanoslot.write_end(); 
+    }
+    
+    void handle_standard_packet(A_packet &p)
+    {
+        nanoslot_comms::handle_standard_packet(p,my_sensor);
+        
+        if (got_sensor)
+        { // write sensor data to the exchange
+            nanoslot_exchange &nano=exchange_nanoslot.write_begin();
+            NANOSLOT_MY_EX.sensor=my_sensor;
+            NANOSLOT_MY_EX.debug.packet_count++;
+            exchange_nanoslot.write_end();
+        }
+            
+        if (need_command)
+        {
+            const nanoslot_exchange &nano=exchange_nanoslot.read();
+            bool exchange_alive = last_backend != nano.backend_heartbeat; 
+            last_backend = nano.backend_heartbeat; 
+            if (exchange_alive) backend_paused=0; else backend_paused++; 
+            
+            my_command=NANOSLOT_MY_EX.command; 
+            my_command.autonomy=nano.autonomy; 
+            if (backend_paused>10) my_command.autonomy.mode=0; /* no backend -> safemode */
+        }
+    }
+};
+
+#endif /* lunatic section */
 
 
-#endif
+#endif /* this header */
 
 
