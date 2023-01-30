@@ -1,0 +1,52 @@
+https://www.linode.com/docs/quick-answers/linux/start-service-at-boot/
+
+Write a .service file in /etc/systemd/system/ to describe one service:
+
+
+[Unit]
+Description=Example systemd service.
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /usr/bin/test_service.sh
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+Reload config files
+  sudo systemctl daemon-reload
+
+Manually start, stop, or restart:
+  sudo systemctl start myservice
+  sudo systemctl stop myservice
+  sudo systemctl restart myservice
+
+Check status and see stdout:
+  sudo systemctl status myservice
+
+Run at boot forever: 
+  sudo systemctl enable myservice
+
+
+
+
+
+https://stackoverflow.com/questions/48195340/systemd-with-multiple-execstart
+
+
+https://www.freedesktop.org/software/systemd/man/systemd.unit.html
+
+You can add several "After=" or "Requires=" dependencies to a Unit to make its startup depend on other services.
+
+Requires: startup will fail if it doesn't come up
+
+E.g., robot service 
+Requires=backend
+Wants=realsense
+
+
+
