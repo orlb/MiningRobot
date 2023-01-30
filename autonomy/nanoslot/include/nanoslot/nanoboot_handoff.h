@@ -21,11 +21,66 @@
 #include "nanoslot_sanity.h" // sanity checking for nanoslot data
 
 
-/** A nanoslot_comms manages communication with one Arduino */
-class nanoslot_comms {
+/** A nanoboot_comms manages communication with one Arduino.
+    This class is used by both nanoboot and the slot programs. */
+class nanoboot_comms {
 public:
     /// This is used to send/receive Arduino packets
     A_packet_formatter<SerialPort> pkt;
+    
+
+    /// Set up communications with this serial port (like "/dev/ttyUSB0")
+    /// Used by nanoboot.
+    nanoboot_comms(const std::string &serial_port) 
+        :pkt(Serial)
+    {
+        set_up_serial(serial_port);
+    }
+    
+    
+    
+    // Sanity-check this ID packet with our struct sizes.
+    //   (exit early and safely if struct sizes don't match)
+    void check_ID(A_packet &p)
+    {
+        nanoslot_expected_value(p.length,4,"ID packet length");
+#ifdef NANOSLOT_MY_ID
+        nanoslot_expected_value(p.data[0],NANOSLOT_MY_ID,"ID value");
+        nanoslot_expected_value(p.data[1],sizeof(NANOSLOT_COMMAND_MY),"command bytes");
+        nanoslot_expected_value(p.data[2],sizeof(NANOSLOT_SENSOR_MY),"sensor bytes");
+#endif
+        nanoslot_expected_value(p.data[3],NANOSLOT_ID_SANITY,"ID packet sanity");
+    }
+
+protected:
+    // Do manual serial port setup later, via the set_up_serial call below:
+    nanoboot_comms() 
+        :pkt(Serial)
+    {}
+    
+    bool set_up_serial(const std::string &serial_port) {
+        Serial.Open(serial_port);
+        Serial.Set_baud(NANOSLOT_BAUD_RATE);
+        if(Serial.Is_open())
+        {
+            std::cout << "  Opened "<<serial_port<<std::endl; 
+            data_exchange_sleep(NANOSLOT_BOOTLOADER_DELAY_MS); // wait through bootloader (which can hang if you immediately start sending it data)
+            return true;
+        }
+        else 
+        {
+            std::cout << "  Can't open serial port "<<serial_port<<"\n";
+            return false;
+        }
+    }
+};
+
+
+/** A nanoslot_comms does packet parsing, and is used by a slot program */
+class nanoslot_comms : public nanoboot_comms {
+public:
+    // big inherited field: pkt, the serial packet formatter
+    
     int verbose=0; // 0: print minimal connect/disconnect.  1: print more.  etc.
     int packet_count=0; // valid packets received
     int fail_count=0; // serial receive calls that failed
@@ -35,7 +90,6 @@ public:
     /// Set up communications with an existing serial port opened by nanoboot,
     ///   or a new serial port as specified on the command line (like "--dev /dev/ttyUSB0")
     nanoslot_comms(int *argc,char ***argv)
-        :pkt(Serial)
     {
 #if NANOSLOT_HANDOFF_FANCY
         /* We were just exec'd by nanoboot, and they already
@@ -69,34 +123,7 @@ public:
             *argv +=1;
         }
     }
-    
 
-    /// Set up communications with this serial port (like "/dev/ttyUSB0")
-    /// Used by nanoboot.
-    nanoslot_comms(const std::string &serial_port) 
-        :pkt(Serial)
-    {
-        set_up_serial(serial_port);
-    }
-
-protected:
-    bool set_up_serial(const std::string &serial_port) {
-        Serial.Open(serial_port);
-        Serial.Set_baud(NANOSLOT_BAUD_RATE);
-        if(Serial.Is_open())
-        {
-            std::cout << "  Opened "<<serial_port<<std::endl; 
-            data_exchange_sleep(NANOSLOT_BOOTLOADER_DELAY_MS); // wait through bootloader (which can hang if you immediately start sending it data)
-            return true;
-        }
-        else 
-        {
-            std::cout << "  Can't open serial port "<<serial_port<<"\n";
-            return false;
-        }
-    }
-
-public:
 #ifdef NANOSLOT_MY_ID
     //  read_packet / handle_standard_packet sets these flags according to what happened.
     bool is_connected=true; ///< If true, we are connected to the Arduino
@@ -175,20 +202,8 @@ public:
         pkt.write_packet(NANOSLOT_A_COMMAND,sizeof(command),&command);
     }
 #endif
-    
-    // Sanity-check this ID packet with our struct sizes.
-    //   (exit early and safely if struct sizes don't match)
-    void check_ID(A_packet &p)
-    {
-        nanoslot_expected_value(p.length,4,"ID packet length");
-#ifdef NANOSLOT_MY_ID
-        nanoslot_expected_value(p.data[0],NANOSLOT_MY_ID,"ID value");
-        nanoslot_expected_value(p.data[1],sizeof(NANOSLOT_COMMAND_MY),"command bytes");
-        nanoslot_expected_value(p.data[2],sizeof(NANOSLOT_SENSOR_MY),"sensor bytes");
-#endif
-        nanoslot_expected_value(p.data[3],NANOSLOT_ID_SANITY,"ID packet sanity");
-    }
 };
+
 
 /* Set up the nanoslot exchange, at program start */
 #define NANOSLOT_EXCHANGE_SETUP() \

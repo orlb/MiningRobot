@@ -10,12 +10,11 @@
 #include <unistd.h> /* for exec magic */
 
 #include "nanoslot/nanoslot_exchange.h"
-nanoslot_command_0xA0 my_command;
 
 
 bool talk_to_device(const char *device)
 {
-    nanoslot_comms comm(device);
+    nanoboot_comms comm(device);
     
     int send_wait=0; // cycles to wait for next send attempt
     int fail_count=0;
