@@ -120,6 +120,7 @@ bool firmware_handle_standard_packet(A_packet_serial &pkt,A_packet &p)
         {
             debuglog("bad cmd sz");
         }
+        // Send back command data:
         pkt.write_packet(NANOSLOT_A_SENSOR,
             sizeof(my_sensor),&my_sensor);
         return true;
@@ -158,6 +159,27 @@ inline void nanoslot_firmware_loop(int delayMs=4) {
     if (waitMs>0)
         delay(waitMs);
 }
+
+
+/** Utility function for handling motors:
+    - Your command struct should have an enum n_motors and array of motor powers
+    - You should declare a global array "hardware_motor" for the hardware 
+*/
+#define NANOSLOT_MOTOR_SETUP() \
+  for (int i=0;i<NANOSLOT_COMMAND_MY::n_motors;i++) \
+    hardware_motor[i].set_pin_modes();
+
+#define NANOSLOT_MOTOR_SEND_POWER() \
+  for (int i=0;i<NANOSLOT_COMMAND_MY::n_motors;i++) \
+  { \
+    if (my_command.autonomy.mode <= 0) { /* immediate stop */ \
+      hardware_motor[i].stop(); \
+    } else { \
+      send_motor_power(hardware_motor[i],my_command.motor[i]); \
+    } \
+  } 
+
+
 
 
 #endif

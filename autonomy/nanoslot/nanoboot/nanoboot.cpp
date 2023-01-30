@@ -5,7 +5,7 @@
 #include <iostream>
 #include <stdio.h>
 
-#include "nanoslot/serial_handoff.h"
+#include "nanoslot/nanoboot_handoff.h"
 
 #include <unistd.h> /* for exec magic */
 

@@ -28,11 +28,7 @@ path planner computes an obstacle-free drive path
     Reads obstacle grid from the obstacle detector
     Publishes drive commands to the backend
 
-backend talks to the robot, using two subsystems:
-    BAC: Basic Autonomy Control 
-        manages the autonomy state machine and pilot comms (over UDP)
-    KEND: Keep Electronics Not Dying 
-        talks to the Arduino, and restarts it if needed.
+backend talks to the robot via the nanoslot slot programs.
 
 This is the project Interface Control Document (ICD).
 */
@@ -44,54 +40,19 @@ This is the project Interface Control Document (ICD).
 #include "../aurora/data_exchange.h"
 #include "../aurora/coords.h"
 #include "../vision/grid.hpp"
-#include "../../firmware/nano_net.h"
+#include "../nanoslot/nanoslot_exchange.h"
 
 namespace aurora {
 
-/* --------------- Nano Net ------------
+/* --------------- Nanoslot ------------
  Low level microcontroller communication.
 */
-struct nano_net_data {
-    nano_net::nano_net_setup setup[nano_net::n_nanos];
-    nano_net::nano_net_command command[nano_net::n_nanos];
-    nano_net::nano_net_sensors sensor[nano_net::n_nanos];
-    
-    void print(int n=0,FILE *f=stdout, const char *terminator="\n") const {
-        fprintf(f,"nano.setup[%d]: { motorMode: [",n);
-        for (int m=0;m<nano_net::n_motors;m++) 
-            fprintf(f,"'%c' ",setup[n].motorMode[m]);
-        fprintf(f,"], sensorMode: [");
-        for (int s=0;s<nano_net::n_sensors;s++) 
-            fprintf(f,"'%c' ",setup[n].sensorMode[s]);
-        fprintf(f,"]}%s",terminator);
-        
-        fprintf(f,"nano.command[%d]: { %s %s %s, speed: [",
-            n, 
-            command[n].stop?"STOP":"run", 
-            command[n].torque?"TORQUE":"speed",
-            command[n].LED?"LED":"dark");
-        for (int m=0;m<nano_net::n_motors;m++) 
-            fprintf(f,"%4d ",(int)command[n].speed[m]);
-        fprintf(f,"]}%s",terminator);
-        
-        fprintf(f,"nano.sensor[%d]: ok:%d, heartbeat:%d, [", n,
-            (int)sensor[n].ok,(int)sensor[n].heartbeat);
-        for (int s=0;s<nano_net::n_sensors;s++) 
-        {
-            fprintf(f,"{%s%s %3d}, ",
-                ((n<nano_net::n_motors) && ((sensor[n].stall>>s)&1))?"STALL":" ",
-                ((sensor[n].raw>>s)&1)?"#":"_",
-                (int)sensor[n].counts[s]);
-        }
-        fprintf(f,"]}%s",terminator);
-    }
-};
 
-/* This macro declares the variable used to communicate with the nano_net
-    Setup and commands written by the bac part of the backend
-    Sensors written by the kend modules for each nano
+/* This macro declares the variable used to communicate with the nanoslots
+    Setup and commands written by the backend
+    Sensors written by the slot modules for each nano
 */
-#define MAKE_exchange_nano_net()  aurora::data_exchange<aurora::nano_net_data> exchange_nano_net("nano.net")
+#define MAKE_exchange_nanoslot()  aurora::data_exchange<nanoslot_exchange> exchange_nanoslot("nanoslot")
 
 /* -------------- Drive Command ---------------- 
   Track speed commands, for the left and right tracks.

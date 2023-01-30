@@ -7,7 +7,7 @@
 #define __AURORA_ROBOTICS__ROBOT_H
 
 #include "coords.h" // coordinate systems
-#include "../firmware/robot_base.h" // microcontroller code and states
+#include "robot_base.h" // basic structs
 
 // Command letters:
 enum {

@@ -1,5 +1,7 @@
 /*
  Utility functions for PC-side serial port handling.
+ This file is shared between nanoboot (which opens the serial port initially)
+ and the slot programs (which talk to the Arduino). 
 
  Dr. Orion Lawlor, lawlor@alaska.edu, 2023-01-22 (Public Domain)
 */
@@ -16,6 +18,7 @@
 #include "serial.cpp" // talk on serial port
 #include "A_packet.h" // format packets on serial port
 #include "nanoslot_exchange.h" // data exchanged in A packets
+#include "nanoslot_sanity.h" // sanity checking for nanoslot data
 
 
 /** A nanoslot_comms manages communication with one Arduino */
@@ -23,6 +26,7 @@ class nanoslot_comms {
 public:
     /// This is used to send/receive Arduino packets
     A_packet_formatter<SerialPort> pkt;
+    int verbose=0; // 0: print minimal connect/disconnect.  1: print more.  etc.
     int packet_count=0; // valid packets received
     int fail_count=0; // serial receive calls that failed
     int weird_count=0; // serial data with weird packet type
@@ -58,6 +62,12 @@ public:
         // We used up two arguments via either startup method:
         *argc -=2;
         *argv +=2; //<- hacky, leaves argv[0] pointing to wrong thing
+        
+        while (*argc>1 && 0==strcmp("--verbose",(*argv)[1])) {
+            verbose++;
+            *argc -=1;
+            *argv +=1;
+        }
     }
     
 
@@ -101,7 +111,7 @@ public:
         while (-1==pkt.read_packet(p)) { /* no data yet, keep reading */ }
         if (p.valid) {
             packet_count++;
-            fail_count=0; // link is OK
+            fail_count=0; // the serial link is now OK
             
             // Give caller a chance to look at this packet.
             //  They'll probably just call handle_standard_packet. 
@@ -109,7 +119,11 @@ public:
         }
         else { // No valid data, or error getting data
             fail_count++;
-            if (fail_count>20) { // probably a disconnect
+            if (fail_count>20) { // disconnect?
+                /* Possible causes of serial disconnects:
+                    - Arduino IDE serial monitor open (screws up serial state)
+                    - Noise on the USB line
+                */
                 is_connected=false;
                 printf(" slot %02X arduino disconnect (%d good, %d weird, %d fail)\n",
                     NANOSLOT_MY_ID,packet_count,weird_count,fail_count);
@@ -166,27 +180,35 @@ public:
     //   (exit early and safely if struct sizes don't match)
     void check_ID(A_packet &p)
     {
-        expected_value(p.length,4,"ID packet length");
+        nanoslot_expected_value(p.length,4,"ID packet length");
 #ifdef NANOSLOT_MY_ID
-        expected_value(p.data[0],NANOSLOT_MY_ID,"ID value");
-        expected_value(p.data[1],sizeof(NANOSLOT_COMMAND_MY),"command bytes");
-        expected_value(p.data[2],sizeof(NANOSLOT_SENSOR_MY),"sensor bytes");
+        nanoslot_expected_value(p.data[0],NANOSLOT_MY_ID,"ID value");
+        nanoslot_expected_value(p.data[1],sizeof(NANOSLOT_COMMAND_MY),"command bytes");
+        nanoslot_expected_value(p.data[2],sizeof(NANOSLOT_SENSOR_MY),"sensor bytes");
 #endif
-        expected_value(p.data[3],NANOSLOT_ID_SANITY,"ID packet sanity");
-    }
-    
-    // Sanity-check this value, exit if we got something we didn't expect
-    void expected_value(int got,int expected,const char *what) {
-        if (got!=expected) {
-            printf("  ERROR: %s on Arduino is %d (0x%x), but we wanted %d (0x%x) (mismatch!)\n",
-                what, got,got, expected,expected);
-            fflush(stdout);
-            exit(1);
-        }
+        nanoslot_expected_value(p.data[3],NANOSLOT_ID_SANITY,"ID packet sanity");
     }
 };
 
+/* Set up the nanoslot exchange, at program start */
+#define NANOSLOT_EXCHANGE_SETUP() \
+    MAKE_exchange_nanoslot(); \
+    nanoslot_exchange &nano=exchange_nanoslot.write_begin(); \
+    nano.sanity_check_size(); \
+    nanoslot_heartbeat_t last_backend=nano.backend_heartbeat; \
+    exchange_nanoslot.write_end(); \
+    int backend_paused=0; \
 
+
+/* Prepare our command from the nanoslot exchange */
+#define NANOSLOT_EXCHANGE_COMMAND() \
+    bool exchange_alive = last_backend != nano.backend_heartbeat; \
+    last_backend = nano.backend_heartbeat; \
+    if (exchange_alive) backend_paused=0; else backend_paused++; \
+    NANOSLOT_COMMAND_MY my_command=SLOT.command; \
+    my_command.autonomy=nano.autonomy; \
+    if (backend_paused>10) my_command.autonomy.mode=0; /* no backend -> safemode */ \
+    
 
 
 #endif

@@ -33,87 +33,66 @@
 
 
 #include "aurora/lunatic.h"
+#include "nanoslot/nanoslot_sanity.h"
 
-// Crude global variables for lunatic data exchange
-MAKE_exchange_nano_net();
+// Global variables for lunatic data exchange with Arduinos via nanoslot
+MAKE_exchange_nanoslot();
 void arduino_setup_exchange()
 {
-    const static nano_net::nano_net_setup nano_setup[nano_net::n_nanos] = 
-    {
-        /* nano[0]: on the back of the robot */ {
-        /* Motors: */ {
-        /* motor[0] */ '3', // drive right 
-        /* motor[1] */ '1', // drive left
-        /* motor[2] */ '0', // conveyor belt
-        /* motor[3] */ '1', // conveyor raise
-        },
-        /* Sensors: */ {
-        /* sensor[0] */ '1', // lf
-        /* sensor[1] */ '1', // lb
-        /* sensor[2] */ '0', // rf (extra counts! sus)
-        /* sensor[3] */ '0', // rb
-        /* sensor[4] */ '0', // reliable right 
-        /* sensor[5] */ 'B',
-        },
-        },
-    //  /* nano[1]: on the mining head in front */ {
-    //    /* Motors: */ {
-    //    /* motor[0] */ 'T', // mine left
-    //    /* motor[1] */ 'T', // raise mining head
-    //    /* motor[2] */ 'T', // extend mining head
-    //    /* motor[3] */ 'T', // mine right
-    //    },
-    //    /* Sensors: */ {
-    //    /* sensor[0] */ 'B', // mine left
-    //    /* sensor[1] */ 'B', // bag roll
-    //    /* sensor[2] */ 'B', // mine limit low
-    //    /* sensor[3] */ 'B', // mine limit high
-    //    /* sensor[4] */ 'B', // back-up left?
-    //    /* sensor[5] */ 'C',
-    //    },
-    //  },
-    };
-    
-    // Write setup data out to the exchange
-    aurora::nano_net_data &nano=exchange_nano_net.write_begin();
-    for (int n=0;n<nano_net::n_nanos;n++)
-        nano.setup[n]=nano_setup[n];
-    exchange_nano_net.write_end();
+    nanoslot_exchange &nano=exchange_nanoslot.write_begin();
+    nano.sanity_check_size();
+    nano.backend_heartbeat=0;
+    exchange_nanoslot.write_end();
+}
+
+// Before we shut down, we need to unplug the exchange
+void arduino_exit_exchange()
+{
+    nanoslot_exchange &nano=exchange_nanoslot.write_begin();
+    nano.autonomy.mode=(int)0;
+    nano.backend_heartbeat=0xDE;
+    exchange_nanoslot.write_end();
 }
 
 void arduino_runtime_exchange(robot_base &robot)
 {
-    // Read sensor data from the exchange
-    aurora::nano_net_data nano=exchange_nano_net.read();
-    int right_wire = 3;
-    int left_wire = 1;
-    robot.sensor.DR1count= - nano.sensor[0].counts[right_wire];
-    robot.sensor.DRstall = nano.sensor[0].stall&(1<<right_wire);
-    
-    robot.sensor.DL1count = nano.sensor[0].counts[left_wire];
-    robot.sensor.DLstall = nano.sensor[0].stall&(1<<left_wire);
-    
-    robot.sensor.heartbeat = nano.sensor[0].heartbeat; // fixme: report [1].heartbeat?
-    
-    robot.sensor.encoder_raw=int(nano.sensor[0].raw) | (int(nano.sensor[1].raw)<<nano_net::n_sensors);
-    robot.sensor.stall_raw=int(nano.sensor[0].stall) | (int(nano.sensor[1].stall)<<nano_net::n_sensors);
-
-    // Write commands to the exchange
-    for (int n=0;n<nano_net::n_nanos;n++)
     {
-        nano.command[n].stop = robot.state==state_STOP;
-        nano.command[n].torque = robot.power.torqueControl;
-        //nano.command[n].LED = ((milli%1024)<200); // backend tells nanos to blink
-        nano.command[n].LED = 1;
+        // Read sensor data from the exchange
+        const nanoslot_exchange &nano=exchange_nanoslot.read();
+        const auto &driveslot = nano.slot_D0;
+        int right_wire = 3;
+        int left_wire = 1;
+        robot.sensor.DR1count= - driveslot.sensor.counts[right_wire];
+        robot.sensor.DRstall =   driveslot.sensor.stall&(1<<right_wire);
+        
+        robot.sensor.DL1count=   driveslot.sensor.counts[left_wire];
+        robot.sensor.DLstall =   driveslot.sensor.stall&(1<<left_wire);
+        
+        robot.sensor.heartbeat = driveslot.debug.packet_count;
+        
+        robot.sensor.encoder_raw=int(driveslot.sensor.raw);
+        robot.sensor.stall_raw=int(driveslot.sensor.stall);
     }
-
-    nano.command[0].speed[0]=-robot.power.right;
-    nano.command[0].speed[1]=-robot.power.left;
-    nano.command[0].speed[2]=-robot.power.right;
-    nano.command[0].speed[3]=-robot.power.left;
-
-    exchange_nano_net.write_begin()=nano;
-    exchange_nano_net.write_end();
+    {
+        // Write commands to the exchange
+        nanoslot_exchange &nano=exchange_nanoslot.write_begin();
+        nano.autonomy.mode=(int)robot.state;
+        
+        auto &armslot = nano.slot_A0;
+        armslot.command.motor[0]=-robot.power.right; // HACK! need actual arm power vals
+        armslot.command.motor[1]=-robot.power.left;
+        
+        auto &driveslot = nano.slot_D0;
+        driveslot.command.motor[0]=-robot.power.right;
+        driveslot.command.motor[1]=-robot.power.left;
+        driveslot.command.motor[2]=-robot.power.right;
+        driveslot.command.motor[3]=-robot.power.left;
+        
+        nano.slot_EE.command.LED=robot.power.right; // just for debugging
+        
+        nano.backend_heartbeat++;
+        exchange_nanoslot.write_end();
+    }
 }
 
 
@@ -188,6 +167,7 @@ public:
     robot.sensor.limit_bottom=1;
     
     arduino_setup_exchange();
+    atexit(arduino_exit_exchange);
 
     // Start simulation in random real start location
     sim.loc.y=80.0;

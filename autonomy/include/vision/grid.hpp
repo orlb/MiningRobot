@@ -10,7 +10,7 @@
 #include <fstream>
 #include <vector>
 #include "../aurora/vec3.h"
-#include "../../firmware/field_geometry.h"
+#include "../aurora/field_geometry.h"
 
 class grid_square
 {

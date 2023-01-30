@@ -8,7 +8,7 @@
 
 #include "gridnav.h"
 #include "../aurora/coords.h"
-#include "../../firmware/field_geometry.h"
+#include "../aurora/field_geometry.h"
 
 
 /**

@@ -3,16 +3,19 @@
 
  Dr. Orion Lawlor, lawlor@alaska.edu, 2023-01-25 (Public Domain)
 */
-#define NANOSLOT_MY_ID 0xEE
+#define NANOSLOT_MY_ID 0xEE /* my numeric slot ID */
+#define SLOT nano.slot_EE  /* my exchange struct */
 #include "aurora/lunatic.h"
-#include "nanoslot/serial_handoff.h"
+#include "nanoslot/nanoboot_handoff.h"
 
 int main(int argc,char **argv)
 {
     nanoslot_comms comm(&argc,&argv);
-    MAKE_exchange_nano_net(); 
-    NANOSLOT_SENSOR_MY my_sensor={0}; // telemetry / sensor data received from Arduino
-    NANOSLOT_COMMAND_MY my_command={0}; // command data sent from PC
+    MAKE_exchange_nanoslot(); 
+    exchange_nanoslot.write_begin().sanity_check_size();
+    exchange_nanoslot.write_end();
+    
+    NANOSLOT_SENSOR_MY my_sensor={0}; 
     
     while (comm.is_connected) {
         // Receive data from Arduino
@@ -22,14 +25,20 @@ int main(int argc,char **argv)
 
             if (comm.got_sensor) 
             {
+                nanoslot_exchange &nano=exchange_nanoslot.write_begin();
+                SLOT.sensor=my_sensor;
+                SLOT.debug.packet_count++;
+                exchange_nanoslot.write_end();
+                
                 printf("  Arduino latency: %d ms, heartbeat %02x\n", my_sensor.latency, my_sensor.heartbeat);
             }
             
             if (comm.need_command) 
             {
-                aurora::nano_net_data nano=exchange_nano_net.read();
-                my_command.LED=nano.command[0].speed[0]; //<- HACK: left side drive motor
-                comm.send_command(my_command);
+                const nanoslot_exchange &nano=exchange_nanoslot.read();
+                NANOSLOT_COMMAND_MY cmd=SLOT.command;
+                cmd.autonomy=nano.autonomy;
+                comm.send_command(cmd);
             }
         }
         
