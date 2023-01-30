@@ -34,9 +34,9 @@
      objecttolerance="10"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.12374369"
-     inkscape:cx="1595.2525"
-     inkscape:cy="1545.4446"
+     inkscape:zoom="0.24748738"
+     inkscape:cx="1619.4962"
+     inkscape:cy="1141.3836"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      width="765px"
@@ -93,19 +93,17 @@
        inkscape:export-ydpi="30.004013"
        inkscape:export-filename="/home/olawlor/robotmining/git_2020/parts/bodyplan/export.png" />
     <circle
-       style="opacity:0.60399996;vector-effect:none;fill:#595446;fill-opacity:1;stroke:none;stroke-width:0.95999998;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.84000006, 3.84000006;stroke-dashoffset:0;stroke-opacity:1"
+       style="opacity:0.60399996;vector-effect:none;fill:#595446;fill-opacity:1;stroke:none;stroke-width:0.95999998;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.84000005, 3.84000005;stroke-dashoffset:0;stroke-opacity:1"
        id="path816"
-       cx="934.34619"
+       cx="491.89938"
+       cy="697.16217"
+       r="358.83771" />
+    <circle
+       r="566.92914"
        cy="489.07077"
-       r="566.92914" />
-    <use
-       x="0"
-       y="0"
-       xlink:href="#path816"
+       cx="2188.0605"
        id="use818"
-       transform="translate(1253.7143)"
-       width="100%"
-       height="100%" />
+       style="opacity:0.60399996;vector-effect:none;fill:#595446;fill-opacity:1;stroke:none;stroke-width:0.95999998;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.84000006, 3.84000006;stroke-dashoffset:0;stroke-opacity:1" />
     <rect
        style="opacity:0.57999998;vector-effect:none;fill:#e009f9;fill-opacity:1;stroke:#1034c1;stroke-width:2.88000011;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect903"
@@ -113,14 +111,12 @@
        height="753.02551"
        x="3434.2856"
        y="-45.596977" />
-    <use
-       height="100%"
-       width="100%"
-       transform="translate(2507.4285)"
+    <circle
+       r="566.92914"
+       cy="489.07077"
+       cx="3441.7747"
        id="use820"
-       xlink:href="#path816"
-       y="0"
-       x="0" />
+       style="opacity:0.60399996;vector-effect:none;fill:#595446;fill-opacity:1;stroke:none;stroke-width:0.95999998;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.84000006, 3.84000006;stroke-dashoffset:0;stroke-opacity:1" />
     <rect
        style="opacity:0.68000034;vector-effect:none;fill:#7d4a35;fill-opacity:1;stroke:none;stroke-width:0.9600001;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.8400001, 3.84000010000000014;stroke-dashoffset:0;stroke-opacity:1"
        id="rect822"
@@ -129,8 +125,8 @@
        x="416.85568"
        y="633.74548" />
     <path
-       style="opacity:0.68000034;vector-effect:none;fill:#7d4a35;fill-opacity:1;stroke:none;stroke-width:0.9600001;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.84000018, 3.84000018000000010;stroke-dashoffset:0;stroke-opacity:1"
-       d="M 3924.791,116.32812 V 1939.9512 h 94.4883 V 116.32812 Z m 47.0938,40.16211 c 8.3495,-5.5e-4 15.1186,6.76766 15.1191,15.11719 6e-4,8.35029 -6.7688,15.11969 -15.1191,15.11914 -8.3495,-5e-4 -15.1178,-6.76959 -15.1172,-15.11914 5e-4,-8.34879 6.7684,-15.11669 15.1172,-15.11719 z"
+       style="opacity:0.68000034;vector-effect:none;fill:#7d4a35;fill-opacity:1;stroke:none;stroke-width:0.9600001;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.84000018, 3.84000018;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 3924.791,116.32812 0,1997.36928 h 94.4883 l 0,-1997.36928 z m 47.0938,40.16211 c 8.3495,-5.5e-4 15.1186,6.76766 15.1191,15.11719 6e-4,8.35029 -6.7688,15.11969 -15.1191,15.11914 -8.3495,-5e-4 -15.1178,-6.76959 -15.1172,-15.11914 5e-4,-8.34879 6.7684,-15.11669 15.1172,-15.11719 z"
        id="rect824"
        transform="translate(0,-1211.7166)"
        inkscape:connector-curvature="0"
@@ -527,5 +523,11 @@
          id="tspan943"
          x="4505.6206"
          y="-852.35046">Sieve</tspan></text>
+    <path
+       style="opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.88000011;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="M 775.79713,494.3551 H 3644.6302 l 327.2894,294.96457 -327.2894,270.72083 H 775.79713 L 492.95442,777.19784 Z"
+       id="rect879"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccc" />
   </g>
 </svg>

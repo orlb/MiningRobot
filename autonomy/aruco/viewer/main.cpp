@@ -180,10 +180,10 @@ void draw_marker_gui_2D(Mat &img,Scalar color,const Marker &m)
 	
 	cv::line(img,
 		to_2D(m,-0.5),to_2D(m,0.0),
-		color,lineWidth,CV_AA);
+		color,lineWidth,cv::LINE_AA);
 	cv::line(img,
 		to_2D(m,0.0),to_2D(m,+0.5),
-		Scalar(255,255,255)-color,lineWidth,CV_AA);
+		Scalar(255,255,255)-color,lineWidth,cv::LINE_AA);
 }
 
 
@@ -396,7 +396,7 @@ int main(int argc,char **argv)
 	int skipCount=1; // only process frames ==0 mod this
 	int skipPhase=0;
 
-	int wid=640, ht=480;
+	int wid=0, ht=0;
 	const char *dictionary="TAG25h9";
 	for (int argi=1; argi<argc; argi++) {
 		if (0==strcmp(argv[argi],"-gui")) showGUI=true;
@@ -412,8 +412,8 @@ int main(int argc,char **argv)
 	//read from camera
 	vidcap.open(camNo);
 	
-	vidcap.set(CV_CAP_PROP_FRAME_WIDTH, wid);
-	vidcap.set(CV_CAP_PROP_FRAME_HEIGHT, ht);
+	if (wid) vidcap.set(cv::CAP_PROP_FRAME_WIDTH, wid);
+	if (ht)  vidcap.set(cv::CAP_PROP_FRAME_HEIGHT, ht);
 
 	//check video is open
 	if (!vidcap.isOpened()) {
@@ -547,7 +547,7 @@ int main(int argc,char **argv)
 
 			if (vidcap) { // write to disk
 				std::vector<int> params;
-				params.push_back(CV_IMWRITE_JPEG_QUALITY);
+				params.push_back(cv::IMWRITE_JPEG_QUALITY);
 				params.push_back(30); // <- low quality, save disk space and network bandwidth
 				cv::imwrite("vidcap_next.jpg",TheInputImageCopy,params); // dump JPEG
 				int ignore;

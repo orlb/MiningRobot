@@ -41,15 +41,15 @@ public:
         printf("  MARKER %d: ",ID);
         
         double size=18.0; // physical size of marker, in centimeters
-        if (ID==14) {  // small cat marker (debugging)
+        if (ID==6) {  // ghost
+            size=116.7; // <- big fabric, 1.5 meters including whitespace 
+        }
+        else if (ID==14) {  // small cat marker (debugging)
             size=14.5; 
         }
         else if (ID==13) {  // large mullet
             size=25; 
         } 
-        else if (ID==6) {  // goblin
-            size=18; 
-        }
         else if (ID==7) {  // mask
             size=5; 
         }

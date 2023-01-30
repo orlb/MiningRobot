@@ -1338,10 +1338,10 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Data_exchange"
-     style="display:inline">
+     style="display:none">
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;line-height:1.25;font-family:'Courier New';-inkscape-font-specification:'Courier New Bold';text-align:start;text-anchor:start;opacity:0.604;vector-effect:none;fill:#830074;fill-opacity:0.38951314;stroke:#830074;stroke-width:1.91999996;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.38823529;"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;line-height:1.25;font-family:'Courier New';-inkscape-font-specification:'Courier New Bold';text-align:start;text-anchor:start;opacity:0.60399996;vector-effect:none;fill:#830074;fill-opacity:0.38951314;stroke:#830074;stroke-width:1.91999996;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.38823529"
        x="534.78259"
        y="678.6087"
        id="text2010"><tspan

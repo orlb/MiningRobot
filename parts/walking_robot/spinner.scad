@@ -286,7 +286,7 @@ The spinner is the central part, connecting to the motor, bearings, and gear.
 spinner_print_tilt=[0,3,0];
 
 //  Basic shape of overall spinner
-module spinner_hull() {
+module spinner_hull(motor=1) {
     hull() {
         cylinder(h=out_ht,d=drive_OD_clear); // taper up to drive bearing
         translate(bearingSpin) 
@@ -308,20 +308,22 @@ module spinner_hull() {
 }
 
 // Slots cut in spinner
-module spinner_slots_2D()
+module spinner_slots_2D(motor=1)
 {
     round=2;
     rib=wall;
-    ribStart=drive_OD/2-rib/2+2;
+    circleOD=motor?drive_OD_clear:drivebearing_OD+wall/2;
+    ribStart=motor?drive_OD/2-rib/2+2:drivebearing_OD/2+wall;
     
     offset(r=+round) offset(r=-round)
     difference() {
         translate(bearingSpin) circle(r=bearingCenterR-bearingFlangeX);
-        circle(d=drive_OD_clear); 
+        circle(d=circleOD); 
+        
         
         offset(r=0.75*bearingFlangeX) bearingFillSlot2D();
         
-        ribs=9;
+        ribs=motor?9:7;
         angleDel=360/ribs;
         for (ribAngle=[0:angleDel:360-1])
             //if (abs(ribAngle-180)>40) // omit near side (lumpy)
@@ -329,7 +331,7 @@ module spinner_slots_2D()
             translate([ribStart,0])
                 square([rib,4*bearingCenterR],center=true);
         
-        rebarCircle=66; // connect empty spaces in grid (for triangles)
+        rebarCircle=motor?66:60; // connect empty spaces in grid (for triangles)
         rotate([0,0,360/ribs*0.5])
         difference() {
             circle(r=rebarCircle,$fn=ribs);
@@ -339,22 +341,18 @@ module spinner_slots_2D()
 }
 
 // Spinner with lightening holes and such
-module spinner_full() 
+module spinner_full(motor=1) 
 {
     difference() {
-        union() {
-            intersection() {
-                spinner_hull();
-                // do full lightening holes here
-            }
-            
-        }
+        // Start with the outside frame, and carve away from there
+        spinner_hull(motor);
         
         // Main slots/ribs
         linear_extrude(height=400,center=true,convexity=6)
-            spinner_slots_2D();
+            spinner_slots_2D(motor);
         
         // Space for motor drive
+        if (motor)
         linear_extrude(height=out_ht+1,convexity=8) tongan_lighter_subtract_2D();
         
         // M3 bolts to hold layers together
@@ -363,13 +361,15 @@ module spinner_full()
         
         
         // Lighten around motor
+        if (motor)
         linear_extrude(height=500,center=true,convexity=6) 
             tongan_lightening_holes_2D();
         
         // Clearance around motor
-        motor_round=12;
+        motor_round=motor?12:20;
+        motor_roundR=motor?drive_OD_clear/2:drivebearing_OD/2+wall;
         rotate_extrude()
-            translate([drive_OD_clear/2,bearingZlo+bearingFlangeY/2])
+            translate([motor_roundR,bearingZlo+bearingFlangeY/2])
             scale([3,1])
             offset(r=+motor_round) offset(r=-motor_round)
             square([1000,1000]);
@@ -402,11 +402,11 @@ module spinner_full()
 }
 
 // 3D printable orientation for spinner
-module spinner_printable() {
+module spinner_printable(motor=1) {
     difference() {
         translate(-outerbearingSpin) 
         rotate(spinner_print_tilt)
-            spinner_full();
+            spinner_full(motor);
         translate([0,0,-1000]) cube([2000,2000,2000],center=true);
     }
 }
@@ -571,9 +571,10 @@ module assembled() {
     translate(-bearingSpin+gearSpin+[0,0,-4]) idler_gear();
 }
 
-difference() { assembled(); //rotate([0,0,45]) translate([0,0,-100]) cube([1000,1000,1000]); 
+difference() { //assembled(); //rotate([0,0,45]) translate([0,0,-100]) cube([1000,1000,1000]); 
 }
-//spinner_printable();
+//spinner_printable(1); // with motor mount
+spinner_printable(0); // no motor mount
 //frame_printable();
 //fillSlot(); 
 //idler_gear();

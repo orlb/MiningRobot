@@ -468,8 +468,8 @@ module teethBosses() {
     }
 }
 
-// Ribs inside the main shell, to reduce deflection and transmit torsion forces
-module shellRibs() {
+// Ribs inside the main barrel, to reduce deflection and transmit torsion forces
+module barrelRibs() {
     rib=2.5;
     ribID=rockwheelID-2*rib; // gear_D(gear_ring);
     intersection() {
@@ -490,8 +490,8 @@ module shellRibs() {
     }
 }
 
-// Final finished outside shell/rim
-module shell3D(holes=1) {
+// Final finished outside barrel (shell/rim)
+module barrel3D(holes=1) {
     difference() {
         union() {
             // Main body
@@ -515,7 +515,7 @@ module shell3D(holes=1) {
             bearing3DoutsideWithPlugs();
             
             // Interior ribs
-            shellRibs();
+            barrelRibs();
             
             teethBosses();
         }
@@ -562,7 +562,7 @@ module clearanceCheck() {
 }
 
 part=0;
-if (part==0) shell3D();
+if (part==0) barrel3D();
 else if (part==1) core3D();
 else if (part==2) bearingPlugsPrintable();
 else if (part==3) makePlanets() planetGear3D();
