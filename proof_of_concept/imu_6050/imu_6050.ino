@@ -202,6 +202,14 @@ struct vec3_int16 {
     Serial.print(z); 
     Serial.print(") ");
   }
+  void printHi(const char *name) {
+    Serial.print(name);
+    Serial.print("=(");
+    Serial.print(x.hi); Serial.print(" ");
+    Serial.print(y.hi); Serial.print(" ");
+    Serial.print(z.hi); 
+    Serial.print(") ");
+  }
 };
 
 // Binary struct stores the raw data sent by the IMU:
@@ -255,9 +263,17 @@ void MPU_setup(int sensor){
 
 }
 
+// Daniel Kling's breakout board:
+enum {nBreakout=3};
+const unsigned char breakoutPins[6]={ 11,10,9,8,A0,12 };
 
 void setup()
 {      
+  for (int i=0;i<nBreakout;i++) {
+    pinMode(breakoutPins[i],OUTPUT);
+    digitalWrite(breakoutPins[i],i==0);
+  }
+
   // Initialize the Serial Bus for printing data.
   Serial.begin(115200);
   Serial.println("IMU dump starting up");
@@ -291,7 +307,7 @@ void loop()
   Serial.print(sensor);
 
   IMU_report r=IMU_report::read(sensor);
-  r.accel.print(" accel");
+  r.accel.printHi(" accel");
   r.gyro.print("gyro");
   Serial.print("\n");
 
