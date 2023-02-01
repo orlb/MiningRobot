@@ -202,12 +202,20 @@ struct vec3_int16 {
     Serial.print(z); 
     Serial.print(") ");
   }
-  void printHi(const char *name) {
+  void printAcc(const char *name) {
     Serial.print(name);
     Serial.print("=(");
-    Serial.print(x.hi); Serial.print(" ");
-    Serial.print(y.hi); Serial.print(" ");
-    Serial.print(z.hi); 
+    Serial.print(x>>6); Serial.print(" ");
+    Serial.print(y>>6); Serial.print(" ");
+    Serial.print(z>>6); 
+    Serial.print(") ");
+  }
+  void printGyro(const char *name) {
+    Serial.print(name);
+    Serial.print("=(");
+    Serial.print(x>>4); Serial.print(" ");
+    Serial.print(y>>4); Serial.print(" ");
+    Serial.print(z>>4); 
     Serial.print(") ");
   }
 };
@@ -217,6 +225,21 @@ struct IMU_report {
   vec3_int16 accel;
   int16_big_endian temp;
   vec3_int16 gyro;
+
+  // Return the temperature in degrees C
+  int get_temperature() {
+    return (((int)temp) + 521)/340 + 35;
+  }
+
+  // Print our data to the serial port
+  void print()
+  {
+    accel.printAcc(" accel");
+    gyro.printGyro("gyro");
+    Serial.print(" t ");
+    Serial.print(get_temperature());
+  }
+
 
   static IMU_report read(int sensor) {
     MPU_selectSensor(sensor);
@@ -307,8 +330,7 @@ void loop()
   Serial.print(sensor);
 
   IMU_report r=IMU_report::read(sensor);
-  r.accel.printHi(" accel");
-  r.gyro.print("gyro");
+  r.print();
   Serial.print("\n");
 
   delay(10);
