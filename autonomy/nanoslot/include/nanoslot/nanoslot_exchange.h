@@ -14,6 +14,32 @@ typedef uint8_t nanoslot_heartbeat_t; ///< heartbeat (watchdog-type counter)
 typedef int8_t nanoslot_motorpercent_t; ///< -100 for full reverse, 0 for stop, +100 for full forward
 typedef int8_t nanoslot_padding_t[3]; ///< padding to avoid false sharing between slots
 
+// Packed bitfield struct holding 10-bit XYZ values.
+//   Used for gyro and accelerometer data.  Will be padded to 4-byte alignment.
+struct nanoslot_xyz10_t {
+	int32_t x:10;
+	int32_t y:10;
+	int32_t z:10;
+	uint32_t type:2; // Round out to 32 bits with a type field (scaling?  extra bits?)
+	
+#if _STDIO_H
+    void print(const char *name) {
+        printf("%s %d %d %d (%d) ",
+            name,x,y,z,type);
+    }
+#endif
+};
+
+// 3D vector type
+typedef nanoslot_xyz10_t nanoslot_vec3_t;
+
+// Inertial measurement unit (IMU) data
+//  Will be padded to 4-byte alignment.
+struct nanoslot_IMU_t {
+    nanoslot_vec3_t acc; /// Accelerometer down vector (gravity)
+    nanoslot_vec3_t gyro; /// Gyro rotation rates
+};
+
 
 /** Info about autonomous operation shared with all firmware */
 struct nanoslot_autonomy {
@@ -42,8 +68,16 @@ struct nanoslot_command_0xA0 {
     nanoslot_motorpercent_t motor[n_motors]; // brushed DC linear actuator motors
 };
 struct nanoslot_sensor_0xA0 {
+    // IMU needs to be listed first in the struct, for alignment
+    nanoslot_IMU_t imu0;
+    nanoslot_IMU_t imu1;
+    nanoslot_IMU_t imu2;
+    
+    // Single-byte fields go after IMU data
     nanoslot_heartbeat_t heartbeat;
     nanoslot_byte_t feedback;
+    // need a multiple of 4 bytes for Arduino and PC to agree on struct padding
+    nanoslot_byte_t spare1,spare2;
 };
 
 /** slot ID 0xD0: drive motor controllers */

@@ -4,6 +4,9 @@
 #define NANOSLOT_MY_ID 0xA0 /* robot Arm board 0 */
 #include "nanoslot/firmware.h"
 
+#define MPU_COUNT 3
+#include "nanoslot/firmware_mpu6050.h"
+
 #define NeoPIN        A1 /* neopixel chain is on a 3-pin header */
 #include "nanoslot/firmware_neopixel.h"
 
@@ -18,7 +21,10 @@ un178_motor_single_t hardware_motor[NANOSLOT_COMMAND_MY::n_motors]={
 
 void firmware_read_encoders(void)
 {
-  my_sensor.feedback=my_command.motor[0];
+  MPU_read(0,my_sensor.imu0);
+  MPU_read(1,my_sensor.imu1);
+  //MPU_read(2,my_sensor.imu2);
+  my_sensor.feedback=MPU_lastReport.accel.x.hi;
 }
 
 void firmware_send_motors()
@@ -40,6 +46,7 @@ void setup() {
   NANOSLOT_MOTOR_SETUP();
   neopixels.begin();
   nanoslot_firmware_start();
+  MPU_setup();
 }
 
 void loop() {

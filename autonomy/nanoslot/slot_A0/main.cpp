@@ -20,7 +20,15 @@ int main(int argc,char **argv)
 
             if (comm.got_sensor) 
             {
-                if (comm.verbose) {
+                comm.my_sensor.imu0.acc.print("  acc0");
+                comm.my_sensor.imu0.gyro.print("  gyro0");
+                comm.my_sensor.imu1.acc.print("  acc1");
+                comm.my_sensor.imu1.gyro.print("  gyro1");
+                printf("\n");
+                fflush(stdout);
+                
+                if (comm.verbose) 
+                {
                     printf("  A0 feedback: %02x\n",comm.my_sensor.feedback); fflush(stdout);
                 }
             }
