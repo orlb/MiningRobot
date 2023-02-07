@@ -20,7 +20,7 @@
 #include "aurora/ui.h"
 #include "aurora/robot_serial.h"
 
-#include <SOIL/SOIL.h>
+// #include <SOIL/SOIL.h> // image file loading
 
 #include "ogl/event.cpp"
 #include "osl/socket.cpp"
