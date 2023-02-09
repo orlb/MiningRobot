@@ -54,45 +54,45 @@ void arduino_exit_exchange()
     exchange_nanoslot.write_end();
 }
 
-void arduino_runtime_exchange(robot_base &robot)
+void arduino_sensor_read(robot_base &robot)
 {
-    {
-        // Read sensor data from the exchange
-        const nanoslot_exchange &nano=exchange_nanoslot.read();
-        const auto &driveslot = nano.slot_D0;
-        int right_wire = 3;
-        int left_wire = 1;
-        robot.sensor.DR1count= - driveslot.sensor.counts[right_wire];
-        robot.sensor.DRstall =   driveslot.sensor.stall&(1<<right_wire);
-        
-        robot.sensor.DL1count=   driveslot.sensor.counts[left_wire];
-        robot.sensor.DLstall =   driveslot.sensor.stall&(1<<left_wire);
-        
-        robot.sensor.heartbeat = driveslot.debug.packet_count;
-        
-        robot.sensor.encoder_raw=int(driveslot.sensor.raw);
-        robot.sensor.stall_raw=int(driveslot.sensor.stall);
-    }
-    {
-        // Write commands to the exchange
-        nanoslot_exchange &nano=exchange_nanoslot.write_begin();
-        nano.autonomy.mode=(int)robot.state;
-        
-        auto &armslot = nano.slot_A0;
-        armslot.command.motor[0]=-robot.power.right; // HACK! need actual arm power vals
-        armslot.command.motor[1]=-robot.power.left;
-        
-        auto &driveslot = nano.slot_D0;
-        driveslot.command.motor[0]=-robot.power.right;
-        driveslot.command.motor[1]=-robot.power.left;
-        driveslot.command.motor[2]=-robot.power.right;
-        driveslot.command.motor[3]=-robot.power.left;
-        
-        nano.slot_EE.command.LED=robot.power.right; // just for debugging
-        
-        nano.backend_heartbeat++;
-        exchange_nanoslot.write_end();
-    }
+    // Read sensor data from the exchange
+    const nanoslot_exchange &nano=exchange_nanoslot.read();
+    const auto &driveslot = nano.slot_D0;
+    int right_wire = 3;
+    int left_wire = 1;
+    robot.sensor.DR1count= - driveslot.sensor.counts[right_wire];
+    robot.sensor.DRstall =   driveslot.sensor.stall&(1<<right_wire);
+    
+    robot.sensor.DL1count=   driveslot.sensor.counts[left_wire];
+    robot.sensor.DLstall =   driveslot.sensor.stall&(1<<left_wire);
+    
+    robot.sensor.heartbeat = driveslot.debug.packet_count;
+    
+    robot.sensor.encoder_raw=int(driveslot.sensor.raw);
+    robot.sensor.stall_raw=int(driveslot.sensor.stall);
+}
+
+void arduino_command_write(robot_base &robot)
+{
+    // Write commands to the exchange
+    nanoslot_exchange &nano=exchange_nanoslot.write_begin();
+    nano.autonomy.mode=(int)robot.state;
+    
+    auto &armslot = nano.slot_A0;
+    armslot.command.motor[0]=-robot.power.right; // HACK! need actual arm power vals
+    armslot.command.motor[1]=-robot.power.left;
+    
+    auto &driveslot = nano.slot_D0;
+    driveslot.command.motor[0]=-robot.power.right;
+    driveslot.command.motor[1]=-robot.power.left;
+    driveslot.command.motor[2]=-robot.power.right;
+    driveslot.command.motor[3]=-robot.power.left;
+    
+    nano.slot_EE.command.LED=robot.power.right; // just for debugging
+    
+    nano.backend_heartbeat++;
+    exchange_nanoslot.write_end();
 }
 
 
@@ -152,6 +152,9 @@ class robot_manager_t
 public:
   robot_base robot; // overall integrated current state
 
+  // Read (write?) copy of nano data
+  nanoslot_exchange nano;
+  
   robot_locator locator; // localization
   robot_telemetry telemetry; // next-sent telemetry value
   robot_command command; // last-received command
@@ -774,8 +777,27 @@ void robot_manager_t::update(void) {
     robot.sensor.limit_bottom=0;
   }
   else { // Send data to/from real arduino
-    arduino_runtime_exchange(robot);
+    arduino_sensor_read(robot);
+    nano=exchange_nanoslot.read();
   }
+  
+  if (nano.slot_A0.sensor.stop && robot.state!=state_STOP) {
+    enter_state(state_STOP);
+    robot.power.stop();
+    robotPrintln("Slot A0 STOP command");
+  }
+  
+  if (robot.state==state_mine) 
+  { // TESTING ONLY: keep the front tool level
+    const float gain=5.0;
+    float drive=nano.slot_A0.sensor.imu0.acc.x;
+    float rate=0.0;
+    float pid = gain*drive + rate;
+    int send=ui.limit(pid,30);
+    robot.power.left=robot.power.right=send;
+    if (fabs(drive)<5) robot.power.stop(); //<- deadband, bigger than noise
+  }
+  
   speed_Mcount=robot.sensor.McountL-last_Mcount;
   float smoothing=0.3;
   smooth_Mcount=speed_Mcount*smoothing + smooth_Mcount*(1.0-smoothing);
@@ -809,6 +831,8 @@ void robot_manager_t::update(void) {
 
 
 // Send out telemetry
+  arduino_command_write(robot);
+
   static double last_send=0.0;
   if (cur_time>last_send+0.050)
   {
