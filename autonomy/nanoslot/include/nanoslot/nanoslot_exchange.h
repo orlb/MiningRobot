@@ -2,6 +2,16 @@
  Plain-old-bytes structs used to exchange data with the Arduino nanoslots.
  These structs are sent on the serial connection between PC and Arduino,
  connecting slot_ID program swith the firmware_ID Arduino programs.
+ 
+ Structs:
+    - command: raw data sent to Arduino, like the autonomy mode and motor power.
+    - sensor: raw data sent from Arduino, like heartbeat and raw encoder counts.
+    - state: parsed data about the machine state, like connected data and encoder counts with wraparound.
+    - debug: debug data received from Arduino.
+
+ Command and sensor data is sent over serial to/from the Arduino, so it must be compact and match Arduino struct layout byte for byte.
+
+ State and debug data is only used on the PC side and is hence less size critical.
 
  Dr. Orion Lawlor, lawlor@alaska.edu, 2023-01-23 (Public Domain)
 */
@@ -24,7 +34,7 @@ struct nanoslot_xyz10_t {
 	
 #if _STDIO_H
     void print(const char *name) {
-        printf("%s %d %d %d (%d) ",
+        printf("%s %4d %4d %4d (%d) ",
             name,x,y,z,type);
     }
 #endif
@@ -38,6 +48,11 @@ typedef nanoslot_xyz10_t nanoslot_vec3_t;
 struct nanoslot_IMU_t {
     nanoslot_vec3_t acc; /// Accelerometer down vector (gravity)
     nanoslot_vec3_t gyro; /// Gyro rotation rates
+};
+
+/** Generic firmware state */
+struct nanoslot_state {
+    nanoslot_byte_t connected; // 0 if not connected, 1 if connected
 };
 
 
@@ -74,10 +89,14 @@ struct nanoslot_sensor_0xA0 {
     nanoslot_IMU_t imu2;
     
     // Single-byte fields go after IMU data
-    nanoslot_heartbeat_t heartbeat;
+    nanoslot_byte_t stop; // 1 == stop requested
+    nanoslot_heartbeat_t heartbeat; // increments
     nanoslot_byte_t feedback;
     // need a multiple of 4 bytes for Arduino and PC to agree on struct padding
-    nanoslot_byte_t spare1,spare2;
+    nanoslot_byte_t spare1;
+};
+struct nanoslot_state_0xA0 : public nanoslot_state {
+    
 };
 
 /** slot ID 0xD0: drive motor controllers */
@@ -93,6 +112,9 @@ struct nanoslot_sensor_0xD0 {
     enum {n_sensors=6};
     nanoslot_byte_t counts[n_sensors]; // counts for each sensor channel
 };
+struct nanoslot_state_0xD0 : public nanoslot_state {
+    
+};
 
 
 /** slot ID 0xEE: example nano */
@@ -103,6 +125,9 @@ struct nanoslot_command_0xEE {
 struct nanoslot_sensor_0xEE {
     nanoslot_heartbeat_t heartbeat;
     nanoslot_byte_t latency;
+};
+struct nanoslot_state_0xEE : public nanoslot_state {
+    
 };
 
 /** Debug data kept per slot */
@@ -116,12 +141,13 @@ struct nanoslot_debug_t {
 /** Each slot keeps this data on the exchange.
     The idea is we can send commands like nano.slot_A0.command.motor[1]=100;
 */
-template <typename command_t, typename sensor_t>
+template <typename command_t, typename sensor_t, typename state_t>
 struct nanoslot_exchange_slot 
 {
-    command_t command; // commands to send to Arduino
-    sensor_t sensor; // sensor data received back from Arduino
-    nanoslot_debug_t debug; // debug data
+    command_t command; ///< Commands to send to Arduino
+    sensor_t sensor; ///< Sensor data received back from Arduino
+    state_t state; ///< Persistent state data
+    nanoslot_debug_t debug; ///< Debug data
 };
 
 
@@ -140,13 +166,13 @@ struct nanoslot_exchange {
     nanoslot_padding_t pad_0; ///<- padding prevents false sharing slowdown
     
     // Each slot stores its data here:
-    nanoslot_exchange_slot<nanoslot_command_0xA0,nanoslot_sensor_0xA0> slot_A0;
+    nanoslot_exchange_slot<nanoslot_command_0xA0, nanoslot_sensor_0xA0, nanoslot_state_0xA0> slot_A0;
     nanoslot_padding_t pad_A0;
     
-    nanoslot_exchange_slot<nanoslot_command_0xD0,nanoslot_sensor_0xD0> slot_D0;
+    nanoslot_exchange_slot<nanoslot_command_0xD0, nanoslot_sensor_0xD0, nanoslot_state_0xD0> slot_D0;
     nanoslot_padding_t pad_D0;
     
-    nanoslot_exchange_slot<nanoslot_command_0xEE,nanoslot_sensor_0xEE> slot_EE;
+    nanoslot_exchange_slot<nanoslot_command_0xEE, nanoslot_sensor_0xEE, nanoslot_state_0xEE> slot_EE;
     nanoslot_padding_t pad_EE;
 };
 
@@ -157,6 +183,7 @@ struct nanoslot_exchange {
 #define NANOSLOT_TOKENPASTE2(a,b) NANOSLOT_TOKENPASTE(a,b)
 #define NANOSLOT_COMMAND_MY  NANOSLOT_TOKENPASTE2(nanoslot_command_,NANOSLOT_MY_ID)
 #define NANOSLOT_SENSOR_MY  NANOSLOT_TOKENPASTE2(nanoslot_sensor_,NANOSLOT_MY_ID)
+#define NANOSLOT_STATE_MY  NANOSLOT_TOKENPASTE2(nanoslot_state_,NANOSLOT_MY_ID)
 
 #endif
 
