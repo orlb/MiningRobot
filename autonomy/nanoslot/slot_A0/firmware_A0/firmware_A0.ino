@@ -9,7 +9,12 @@
 
 const int ESTOP_pin=A2; /* ESTOP switch: ground=run mode, open=stop */
 
-#define MPU_COUNT 2 /* accelerometer/gyro IMUs */
+/* accelerometer/gyro IMUs:
+   0 is on tool coupler
+   1 is on stick frame
+   (future) 2 is on boom
+*/
+#define MPU_COUNT 2 
 #include "nanoslot/firmware_mpu6050.h"
 
 #include "nanoslot/firmware_un178.h"
@@ -34,7 +39,7 @@ void firmware_read_encoders(void)
 
 void firmware_send_motors()
 {
-  if (!comm.is_connected) my_command.autonomy.mode=0;
+  if (!comm.is_connected || my_sensor.stop) my_command.autonomy.mode=0;
   
   NANOSLOT_MOTOR_SEND_POWER();
 

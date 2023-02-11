@@ -30,7 +30,21 @@ struct nanoslot_xyz10_t {
 	int32_t x:10;
 	int32_t y:10;
 	int32_t z:10;
-	uint32_t type:2; // Round out to 32 bits with a type field (scaling?  extra bits?)
+	uint32_t type:2; // Round out to 32 bits with scaling/valid flag
+	enum {
+	    type_1x = 0, // scale 1x
+	    type_2x = 1, // scale 2x
+	    type_4x = 2, // scale 4x
+	    type_invalid = 3
+	};
+	
+	void invalidate(void) {
+	    x=y=z=0;
+	    type=type_invalid;
+	}
+	bool valid(void) {
+	    return type!=type_invalid;
+	}
 	
 #if _STDIO_H
     void print(const char *name) {
@@ -48,6 +62,10 @@ typedef nanoslot_xyz10_t nanoslot_vec3_t;
 struct nanoslot_IMU_t {
     nanoslot_vec3_t acc; /// Accelerometer down vector (gravity)
     nanoslot_vec3_t gyro; /// Gyro rotation rates
+    
+    void invalidate(void) {
+        acc.invalidate(); gyro.invalidate();
+    }
 };
 
 /** Generic firmware state */

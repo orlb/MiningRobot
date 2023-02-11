@@ -793,7 +793,7 @@ void robot_manager_t::update(void) {
     float drive=nano.slot_A0.sensor.imu0.acc.x;
     float rate=0.0;
     float pid = gain*drive + rate;
-    int send=ui.limit(pid,30);
+    int send=ui.limit(pid,30); //<- calmer driving
     robot.power.left=robot.power.right=send;
     if (fabs(drive)<5) robot.power.stop(); //<- deadband, bigger than noise
   }

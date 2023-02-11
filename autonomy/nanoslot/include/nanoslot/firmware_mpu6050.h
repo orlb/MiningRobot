@@ -200,6 +200,8 @@ struct int16_big_endian {
   int8_t hi; // high byte (and sign bit)
   uint8_t lo; // low byte
   
+  void zero(void) { lo=hi=0; }
+  
   // Allow a normal int to get extracted from this class,
   //   so things like "int x=r.accel.x;" just work.
   operator int () const {
@@ -210,6 +212,10 @@ struct int16_big_endian {
 /// Store a 3D vector of 16-bit ints
 struct vec3_int16 {
   int16_big_endian x,y,z; // value along different axes
+  
+  void zero(void) {
+    x.zero(); y.zero(); z.zero();
+  }
 
   void print(const char *name) {
 #if _STDIO_H
@@ -271,12 +277,19 @@ struct IMU_report {
   int16_big_endian temp;
   vec3_int16 gyro;
   
+  void zero() {
+    accel.zero();
+    temp.zero();
+    gyro.zero();
+  }
+  
   // Return true if we have valid data
   bool valid() {
-    return temp!=-1;
+    return temp>0 || temp<-1;
   }
   
   // Convert our data to an IMU struct:
+  //   Throw away noisy low bits as we figure out the scale factor.
   void to_IMU(nanoslot_IMU_t &imu)
   {
     imu.acc.type=0;
@@ -299,7 +312,7 @@ struct IMU_report {
     Serial.print(get_temperature());
   }
 
-  static IMU_report read(int sensor) {
+  void read(int sensor) {
     MPU_selectSensor(sensor);
     
     // Request data from the IMU:
@@ -310,8 +323,10 @@ struct IMU_report {
     // Read the bytes of the IMU report:
     IMU_report ret;
     Wire.requestFrom(MPU_I2C_TARGET,sizeof(ret),true);
-    char *buffer=(char *)&ret; // write the report as bytes
-    for (int i=0;i<sizeof(ret);i++) buffer[i]=Wire.read();
+    temp.zero();
+    
+    char *buffer=(char *)&accel; // write into us as bytes
+    for (int i=0;i<sizeof(*this);i++) buffer[i]=Wire.read();
     
     MPU_deselectSensor(sensor);
     
@@ -356,6 +371,7 @@ void MPU_setup_single(int sensor){
 void MPU_setup()
 {
   Wire.begin(); //<- super easy to forget!
+  Wire.setWireTimeout(5000,true);
   
   for (int sensor=0;sensor<MPU_count;sensor++) {
     pinMode(MPU_selectPins[sensor],OUTPUT);
@@ -372,13 +388,15 @@ void MPU_setup()
 IMU_report MPU_lastReport;
 bool MPU_read(int sensor,nanoslot_IMU_t &imu)
 {
-  MPU_lastReport=IMU_report::read(sensor);
+  MPU_lastReport.read(sensor);
   if (MPU_lastReport.valid())
   {
       MPU_lastReport.to_IMU(imu);
       return true;
+  } else {
+      imu.invalidate();
+      return false;
   }
-  return false;  
 }
 
 
