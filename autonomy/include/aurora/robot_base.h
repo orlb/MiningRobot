@@ -74,58 +74,37 @@ class robot_power {
 public:
 	enum { drive_stop=0 };
 
-	signed char left; // left drive wheels
-	signed char right; // right drive wheels
-	signed char mine; // mining head dig
-	signed char conveyor_raise;
-	signed char dump; // storage bucket lift
-	signed char roll; //Roll bag
-	signed char head_extend; // Extend mining head linear
+	signed char left; // left drive wheels: + is forward
+	signed char right; // right drive wheels: + is forward
+
+	signed char fork; // front scoop lift fork: + is up
+	signed char dump; // front scoop curl: + is raise
+
+	signed char boom; // arm first link: + extends the boom
+	signed char stick; // arm second link: + extends the stick
+	signed char tilt; // arm third link: + extends tool forward
 	
-	unsigned char high:1; // High power mode
-	unsigned char torqueControl:1; // Drive backwards (for final dump)
-	unsigned char mineDump:1; // Run backwards and dump
-	unsigned char mineEncoderReset:1; //Get ready to go out and mine again
+	signed char spin; // tool coupler rotation: + is right handed
+	signed char tool; // excavation tool: + is normal forward cut
 	
-	unsigned char motorControllerReset:1; //Reset BTS motor controller enable pin
-	unsigned char mineMode:1; // if true, autonomously run mining head
-	unsigned char dumpMode:1; // dock-and-dump mode
+	unsigned char torque; // one bit per power: 0=torque control; 1=speed or position control
 
 	robot_power() { stop(); }
 	
 	void stop(void) {
-		left=right=mine=dump=roll=head_extend=conveyor_raise=drive_stop; // all-stop
-		high=dumpMode=mineMode=mineDump=mineEncoderReset=0;
+		left=right=fork=dump=boom=stick=tilt=spin=tool=drive_stop; // all-stop
+		
 	}
 };
 
 
 
-enum {
-/*
-		DN 949 fully up
-		DN 330 mining head will drag on bar
-		DN 260 mining starts on level ground
-		DN 240 conservative mining depth
-		DN 180 fully down
-*/
-		head_mine_stop=0, // stop lowering at this mining height
-		head_mine_start=700, // start mining at this height
-		head_mine_drive=900, // normal driving height
-		head_drive_safe=940, // can safely drive below this height (without tipping over)
-		head_mine_dump=940, // dumping height
-		head_mine_stow = 850, // stow height, where frame is level
-
-	// These 2 are used to tell whether the box is at max or min height
-	box_raise_max = 1000,
-	box_raise_min = -500,
-	box_raise_limit_high = 1000,
-	box_raise_limit_low = -500
-	};
 /**
   This is a list of possible robot states.
   It's mostly maintained on the backend, but
   can be commanded from the front end.
+  
+  This must match the strings in include/aurora/robot_states.cpp
 */
 typedef enum {
 	state_STOP=0, ///< EMERGENCY STOP (no motion)
@@ -133,34 +112,22 @@ typedef enum {
 	state_backend_driver, ///< drive from backend UI
 
 	state_autonomy, ///< full autonomy start state
-	state_setup_raise, ///< raise conveyor before driving
-	state_setup_extend, ///< extend mining head before driving
-	state_setup_lower, ///< lower box before driving
-	state_find_camera, ///< turn until camera is visible
-	state_scan_obstacles, ///< scan for obstacles
-
-	state_drive_to_mine, ///< autonomous: drive to mining area
-
-	/* Semiauto mine mode entry point: */
-	state_mine_lower, ///< mining mode: lowering head, driving forward
-	state_mine_stall, ///< mining mode: raising head (after stall)
-	state_mine, // actually mine
-	state_mine_raise, ///< existing mining mode: raise bucket
-
-	state_drive_to_dump, ///< drive back to bin
-	state_dump_align, ///< get lined up
-
-	/* Semiauto dump mode entry point: */
-	state_dump_contact, ///< final dock-and-dump mode: drive to contact bin
-	state_dump_raise, ///< raise box
-	state_dump_pull, ///< pull box up
-	state_dump_rattle, ///< rattle mode to empty bucket
-	state_dump_push, ///< push box back down
-
-	/* Semiauto dump mode entry point: */
-	state_stow, // begin stowing: raise bucket
-	state_stow_clean, // clean bucket
-	state_stowed, // finished stowing (wait forever)
+	
+	state_calibrate, ///< Calibrate internal gyros (stationary)
+	
+	state_scan, ///< Scan terrain before mining
+	state_mine_start, ///< Prepare for mining (deploy scoop)
+	state_mine, ///< Autonomously mining
+	state_mine_stall, ///< Clearing mining head stall
+	state_mine_finish, ///< Finish up mining (pick up scoop)
+	
+	state_weigh, ///< Weigh material in front scoop
+	state_haul_out, ///< Haul material out of pit
+	state_haul_dump, ///< Dump material out of scoop
+	state_haul_back, ///< Drive back into pit
+	
+	state_stow, ///< Begin stowing
+	state_stowed, ///< Finished stowing (wait forever)
 
 	state_last ///< end state (repeat from mine_drive)
 } robot_state_t;

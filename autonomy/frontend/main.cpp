@@ -12,7 +12,7 @@
 #include <cmath>
 
 #include "aurora/robot.h"
-#include "aurora/robot.cpp"
+#include "aurora/robot_states.cpp"
 #include "aurora/display.h" /* for graphics */
 #include "aurora/network.h"
 #include "aurora/ui.h"

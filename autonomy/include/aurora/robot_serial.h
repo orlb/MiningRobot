@@ -23,7 +23,7 @@ public:
 	robot_serial() :pkt(Serial) {
 		_timeout=100; //< hack, to get connect at startup
 		McountLdiff = McountRdiff= DL1diff = DR1diff = DL2diff = DR2diff = 0;
-		Rdiff=box_raise_max/2;
+		Rdiff=0;
 	}
 };
 

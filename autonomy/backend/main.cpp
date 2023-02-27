@@ -14,13 +14,10 @@
 #include "gridnav/gridnav_RMC.h"
 
 #include "aurora/robot.h"
-#include "aurora/robot.cpp"
+#include "aurora/robot_states.cpp"
 #include "aurora/display.h"
 #include "aurora/network.h"
 #include "aurora/ui.h"
-#include "aurora/robot_serial.h"
-
-// #include <SOIL/SOIL.h> // image file loading
 
 #include "ogl/event.cpp"
 #include "osl/socket.cpp"
@@ -117,6 +114,7 @@ aurora::robot_navtarget no_idea_loc(0.0f,0.0f,0.0f);
 /** X,Y field target location where we drive to, before finally backing up */
 aurora::robot_navtarget dump_target_loc(field_x_trough_center,field_y_trough_stop+20.0,field_angle_trough,
     20.0,30.0,70.0); // get back to starting area
+
 aurora::robot_navtarget dump_align_loc(field_x_trough_center,field_y_trough_stop,field_angle_trough,
     20.0,10.0,5.0); // final alignment
 
@@ -180,8 +178,7 @@ public:
 
     // Boot into BTI robot config
     robot.state=state_backend_driver;
-    ui.power.high=1;
-    ui.power.torqueControl=1;
+    ui.power.torque=0;
   }
 
   // Do robot work.
@@ -242,7 +239,7 @@ private:
     exchange_plan_target.write_begin()=no_idea_loc;
     exchange_plan_target.write_end();
 
-    if (new_state==state_setup_raise) { autonomy_start_time=cur_time; }
+    if (new_state==state_autonomy) { autonomy_start_time=cur_time; }
     // if(!(robot.autonomous)) { new_state=state_drive; }
 
     // Log state timings to dedicate state timing file:
@@ -282,9 +279,8 @@ private:
   // Run autonomous mining, if possible
   bool tryMineMode(void) {
     //if (drive_posture()) {    
-    robot.power.mine=100; // TUNE THIS mining head rate
+    robot.power.tool=100; // TUNE THIS mining head rate
     robot.power.dump=0; // TUNE THIS lowering rate
-    robot.power.mineMode = true; // Start PID based mining
     mining_head_lowered=true;
     
     
@@ -294,9 +290,6 @@ private:
   // Set the mining head linear and dump linear to natural driving posture
   //  Return true if we're safe to drive
   bool drive_posture() {
-    if (!mining_head_extended && (cur_time-state_start_time <10))
-      robot.power.head_extend = 100;
-    mining_head_extended = true;
     if(mining_head_lowered && cur_time-state_start_time <10)
       robot.power.dump = 100;
     if (sim.bucket>0.9) { // we're back up in driving range
@@ -459,81 +452,24 @@ void robot_manager_t::autonomous_state()
   // full autonomy start
   if (robot.state==state_autonomy) {
     robot.autonomous=true;
-    enter_state(state_setup_raise);
+    enter_state(state_scan);
   }
-  // raise: raise the mining head to clear ground for driving
-  else if (robot.state==state_setup_raise)
+  
+  // scan terrain before mining
+  else if (robot.state==state_scan)
   {
-    if(robot.sensor.bucket<head_mine_drive && time_in_state<2.0)// raises until bucket_drive
+    
+    if(time_in_state<2.0) // stare at terrain
     {
-      robot.power.dump=power_full_fw; // raise bin
+      // FIXME: activate arm and depth camera
     }
     else{
-      enter_state(state_setup_extend);
+      enter_state(state_mine_start);
     }
   }
-  // state_setup_extend: extend the mining head so it does not get dragged
-  else if (robot.state==state_setup_extend)
-  {
-	  if (time_in_state<7.0)
-    {
-      robot.power.dump=power_full_fw; // raise bin
-      robot.power.head_extend = power_full_fw; // 127 for extend, 1 for tuck
-	  }
-	  else
-	  {
-		  mining_head_extended = true;
-		  enter_state(state_find_camera);
-	  }
-  }
-  //state_find_camera: line up with centerline
-  else if (robot.state==state_find_camera)
-  {
-    if (!drive_posture()) { /* correct posture first */ }
-    else if (locator.merged.percent>=15.0) { // we know where we are!
-      sim.loc=locator.merged; // reset simulator to real detected values
-      sim.loc=locator.merged; // reset simulator to real detected values
-      enter_state(state_scan_obstacles);
-    }
-    else // don't know where we are yet--change pointing
-    {
-      if (time_in_state<5.0) point_camera(0);
-      else if (time_in_state<10.0) point_camera(-10);
-      else if (time_in_state<15.0) point_camera(-30);
-    }
-  }
-  //state_scan_obstacles: Scan for obstacles
-  else if (robot.state==state_scan_obstacles)
-  {
-    int scan_angle=0; //Look straight ahead
-    if (time_in_state<10.0) { // line up the beacon correctly
-      point_camera(scan_angle);
-    }
-  }
-  //state_drive_to_mine: Drive to mining area
-  else if (robot.state==state_drive_to_mine)
-  {
-    if (drive_posture()) {
-      double target_Y=field_y_mine_start; // mining area distance (plus buffer)
-      double distance=target_Y-locator.merged.y;
-      point_camera(0);
-      if (autonomous_drive(mine_target_loc) ||
-          distance<0.0)  // we're basically there now
-      {
-        if (driver_test) enter_state(state_drive_to_dump);
-        else enter_state(state_mine_lower); // start mining!
-      }
-      
-    }
-  }
-
-  //Enter Semiauto mine modes
-
   //state_mine_lower: enter mining state
-  else if (robot.state==state_mine_lower) {
+  else if (robot.state==state_mine_start) {
     tryMineMode();
-    //ToDo: point camera until it finds the Aruco markers
-    point_camera(-180); //Look back 
     mine_start_time=cur_time; // update mine start time
     enter_state(state_mine);
   }
@@ -545,10 +481,10 @@ void robot_manager_t::autonomous_state()
     }
 
     double mine_time=cur_time-mine_start_time;
-    double mine_duration=250.0;
+    double mine_duration=25.0;
     if(mine_time>mine_duration)
     {
-        enter_state(state_mine_raise);
+        enter_state(state_mine_finish);
     } // done mining
     
     if (robot.sensor.Mstall) enter_state(state_mine_stall);
@@ -560,72 +496,61 @@ void robot_manager_t::autonomous_state()
     tryMineMode(); // Start PID based mining
     if(robot.sensor.Mstall && time_in_state<1)
     {
-      robot.power.dump=power_full_fw; // raise bucket
+      robot.power.boom=power_full_bw; // retract bucket
     }
     else {enter_state(state_mine);} // not stalled? Then back to mining
   }
 
-  //state_mine_raise: Raise mining conveyor before starting to backup towards Lunarbin
-  else if (robot.state==state_mine_raise)
+  //Done mining: Raise scoop
+  else if (robot.state==state_mine_finish)
   {
     if(drive_posture())
-      enter_state(state_drive_to_dump);
+      enter_state(state_weigh);
+  }
+  
+  //Weigh material beofre leaving pit
+  else if (robot.state==state_weigh)
+  {
+    if(time_in_state<2.0) // let settle
+    {
+      // FIXME: tilt scoop so it's level
+      // FIXME: record loads on left and right
+    }
+    if(drive_posture())
+      enter_state(state_haul_out);
   }
 
   // Drive back to trough
-  else if (robot.state==state_drive_to_dump)
+  else if (robot.state==state_haul_out)
   {
-    point_camera(-180);
     if (autonomous_drive(dump_target_loc) 
      || locator.merged.y<dump_target_loc.y+50.0)
     {
-      enter_state(state_dump_align);
+      enter_state(state_haul_dump);
     }
   }
-  else if (robot.state==state_dump_align)
+  // Dump material
+  else if (robot.state==state_haul_dump)
   { 
-    // target.y=currentLocation.y; // don't try to turn when this close
-    // if (autonomous_drive(target,dump_target_angle)
-    //   || (fabs(currentLocation.y-target.y)<30 && fabs(currentLocation.y-field_y_trough_stop)<=10) )
-
-    if (autonomous_drive(dump_align_loc)
-      || (fabs(locator.merged.y-field_y_trough_stop)<=10) )
+    // FIXME: do this
+    enter_state(state_haul_back);
+  }
+  // Drive back into pit
+  else if (robot.state==state_haul_back)
+  {
+    if (autonomous_drive(mine_target_loc))
     {
-      if (driver_test) {
-        // mine_target_loc.x=50+(rand()%250); // retarget in mining area every run
-        enter_state(state_drive_to_mine);
-      }
-      else enter_state(state_dump_contact);
+      enter_state(state_scan);
     }
   }
-
-
-  //Semiauto dump mode entry point: dock and dump mode
-  else if (robot.state==state_dump_contact) // final backup to Lunarbin
-  {
-    back_up();
-    if (time_in_state>1.0)
-    {
-      enter_state(state_dump_pull);
-    }
-  }
-  // Conveyor Belt Eject
-  else if(robot.state==state_dump_pull)
-  {
-    int howfast=32;
-    int cur=(signed short)robot.sensor.Rcount;
-    int target=box_raise_max;
-    if (!speed_limit(howfast,cur,target,+1)  || time_in_state>15.0)
-      enter_state(state_drive_to_mine);
-    else
-      robot.power.roll=power_full_fw; // converyor belt eject
-  }
+  
+  // Stow the robot (like for moving it)
   else if (robot.state==state_stow)
   {
     if(mining_head_lowered)
       drive_posture();
     if(time_in_state<20)
-      robot.power.dump=power_full_fw;
+      robot.power.dump=power_full_bw;
     enter_state(state_stowed);
 
   }
@@ -742,27 +667,6 @@ void robot_manager_t::update(void) {
     autonomous_state();
   }
 
-  //Detect soft encoder limiters
-  // if(robot.sensor.Rcount>=box_raise_max)
-  //   can_raise_up=false;
-  // if(robot.sensor.Rcount<=box_raise_min)
-  //   can_raise_down=false;
-
-  //Detect limit switches and reset encoder offset if needed
-  /*if(robot.sensor.limit_top%2!=0)
-    can_raise_up=false;
-  if(robot.sensor.limit_bottom%2!=0)
-    can_raise_down=false;*/
-
-  //Stop raise/lower if limit detected
-  if (!robot.power.torqueControl) //Override limit switches in torque control
-  {
-    // FIXME: Set a limit on mining head movement, head extend
-    // if(robot.power.roll>64&&!can_raise_up)
-    //   robot.power.roll=64;
-    // if(robot.power.roll<64&&!can_raise_down)
-    //   robot.power.roll=64;
-  }
 
   // Send commands to Arduino
   robot_sensors_arduino old_sensor=robot.sensor;
@@ -837,7 +741,7 @@ void robot_manager_t::update(void) {
   if (cur_time>last_send+0.050)
   {
     last_send=cur_time;
-    robotPrintln("Sending telemetry, waiting for command");
+    // robotPrintln("Sending telemetry, waiting for command");
     telemetry.count++;
     telemetry.state=robot.state; // copy current values out for send
     telemetry.status=robot.status;

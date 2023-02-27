@@ -220,7 +220,7 @@ void robot_display_setup(const robot_base &robot) {
 	// Graphical illustration of the dust storage box:
 	vec2 box0=box_tip;
 	vec2 box1=dump_tip;
-	float Rprogress=((robot.sensor.Rcount-box_raise_min)/float(box_raise_max-box_raise_min));
+	float Rprogress=0;
 	vec2 box=box0+Rprogress*(box1-box0);
 	glColor4f(0.8,0.8,0.2,1.0);
 	glBegin(GL_TRIANGLE_FAN);
@@ -259,12 +259,12 @@ void robot_display_setup(const robot_base &robot) {
 	}
 	robotPrintf_enable=true;
 
-// Draw current robot power values
+// Draw current robot power values as weird triangles
 	signed char *powers=(signed char *)&robot.power; // HACK: want array of powers
 	glBegin(GL_TRIANGLES);
-	for (unsigned int i=0;i<7;i++) {
+	for (unsigned int i=0;i<9;i++) {
 		int pow=powers[i];
-		float cenx=50*(0.5+i)+field_x_GUI;
+		float cenx=30*(0.5+i)+field_x_GUI;
 		float ceny=0.10*field_y_size;
 		glColor3ub(128+pow,128,255-pow);
 		glVertex2f(cenx-20,ceny);
@@ -279,25 +279,6 @@ void robot_display_setup(const robot_base &robot) {
 	robotPrintln("Left/Right Mining Motor Counts: %d, %d",robot.sensor.McountL, robot.sensor.McountR);
 	robotPrintln("Track front encoder ticks %d L %d R", robot.sensor.DL1count, robot.sensor.DR1count);
 	robotPrintln("Track back encoder ticks %d L %d R", robot.sensor.DL2count, robot.sensor.DR2count);
-	robotPrintln("Roll motor encoder ticks %d", robot.sensor.Rcount);
-
-
-	std::string box_status = "";
-
-	if(robot.sensor.Rcount <= box_raise_min)
-	{
-		box_status = "lowered";
-	}
-	else if(robot.sensor.Rcount >= box_raise_max)
-	{
-		box_status = "raised";
-	}
-	else
-	{
-		box_status = "in motion";
-	}
-	robotPrintln("Box %s limit ticks %d %d", box_status.c_str(),
-	    robot.sensor.limit_top, robot.sensor.limit_bottom);
 
 	std::string encoder_str("Encoder Raw ");
 	for(int ii=12-1;ii>=0;--ii)

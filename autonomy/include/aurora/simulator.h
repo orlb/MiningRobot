@@ -112,6 +112,7 @@ public:
 		vec2 right=side[1]-side[0];
 		loc.angle=atan2(-right.y,right.x)*180.0/M_PI;
 	
+	/*
 	// Update bag roll counter
 	  float Rcount_per_sec=72*220.0/60.0; // roll motor counts/sec at full speed
   	Rcount+=dt*Rcount_per_sec*(power.roll)/100.0;
@@ -124,6 +125,7 @@ public:
 		Mcount+=dt*Mpower*Mcount_per_sec;
 		while (Mcount>120.0) Mcount-=120.0;
 		while (Mcount<0.0) Mcount+=120.0;
+	*/
 	
 	// Update linear actuators
 		double linear_scale=1.0/7.0/100.0; // seconds to full deploy, and power scale factor

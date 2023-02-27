@@ -21,6 +21,7 @@ class robot_ui {
 public:
 
 	float driveLimit=1.0; /* robot driving power (0.0 - 1.0) */
+	float toolLimit=0.5; /* tool power */
 	
 	robot_power power; // Last output power commands
 	robot_realsense_comms realsense_comms;
@@ -29,10 +30,7 @@ public:
 	#endif
 
 	// Current floating-point power values:
-	float left, right, front, mine, dump, roll, head_extend, conveyor_raise;
-
-	//UI stall states
-	bool Mstall;
+	float left, right, fork, dump, boom, stick, tilt, spin, tool;
 
 	// Human-readable description of current state
 	std::string description;
@@ -90,7 +88,7 @@ public:
 	}
 
 	void stop(void) {
-		left=right=front=mine=dump=roll=head_extend=0.0;
+		left=right=fork=dump=boom=stick=tilt=spin=tool=0.0;
 		power.stop();
 		description="Sending STOP";
 	}
@@ -122,7 +120,25 @@ public:
 		if (iv>100) iv=100;
 		return iv;
 	}
+	
+	
+    /* Set this keyboard-controlled power limit--
+      Use P + number keys to set drive power, in percent:
+        P-1 = 10%, P-2=20%, etc. 
+      Returns a human-readable description of the current limit.
+    */
+    std::string setPowerLimit(int keys[],char lowercase,char uppercase,const std::string &description,float &limit)
+    {
+	    if (keys[lowercase]||keys[uppercase]) 
+	        for (int num=1;num<=9;num++)
+	            if (keys['0'+num]) 
+	                limit=0.1f*num;
+	    
+	    return "\n  "+description+": "+std::to_string(limit)+"\n";
+    }
+
 };
+
 
 void robot_ui::update(int keys[],const robot_base &robot) {
 	#ifdef MSL
@@ -151,11 +167,8 @@ void robot_ui::update(int keys[],const robot_base &robot) {
 	description="UI:\n";
 
 // Power limits:
-	float mineLimit=0.5;
-	float dumpLimit=1.0;
-	float rollLimit=0.5;
-	float head_extend_limit = 1.0;
-	float converyor_raise_limit=0.5;
+	float scoopLimit=1.0; // limit on fork & dump
+	float armLimit=1.0; // limit on boom, stick, tilt, spin
 
 // Prepare a command:
 	if (keys[' ']) { // spacebar--full stop
@@ -164,119 +177,94 @@ void robot_ui::update(int keys[],const robot_base &robot) {
 		return; // don't do anything else.  Just stop.
 	}
 	// else spacebar not down--check other keys for manual control
-
-	/* scale back, so things die away when key is released.
-   It'd be better to detect key-up here, and stop, but that's ncurses. */
-	left*=0.80;
-	right*=0.80;
-	front*=0.5;
-	mine*=0.5;
-	dump*=0.5;
-	roll*=0.5;
-	conveyor_raise*=0.5;
-
-	head_extend=0.0;
-
+	
+	left=right=0.0;
+	
+	fork=dump=0.0;
+	
+	boom=stick=tilt=0.0; 
+	spin=0.0;
+	
+	tool=0.0;
 
 	static bool joyDrive=false;
+	static int joyMode=0; // Last joystick button pressed = joystick control mode
 	bool joyDone=false; // subtle:
 
 
-
-/*  Fix: Uses only the left analog stick for driving the robot */
-	/* Uses the left analog stick*/
-/* TODO: Map dumpMode to joystick*/
+	/* Uses the left analog stick for driving*/
 	float forward=-js_axis(2,"Go Forward or Reverse"); // left Y
 	float turn=js_axis(1,"Turn Left or Right"); //left X, scaled for gentle turns
 
-	/* Oerate the mining head*/
-	 float dumpJoy=-js_axis(3,"Operate Dump Buckets");
-	 //ToDo: Change this back to mining
-	 float conveyor_joy=js_axis(4,"Run Conveyor belt");
+    /* Use the right analog stick for modal control */
+    float ry=-js_axis(3,"Vertical by mode");
+    float rx=js_axis(4,"Horizontal by mode");
 
-	if(forward!=0.0 || turn!=0.0 || dumpJoy!=0 || conveyor_joy!=0)
+	if(forward!=0.0 || turn!=0.0 || ry!=0 || rx!=0)
 	{
 		joyDrive=true; // using joystick
 	}
 	else {joyDone=true;}
+	
+	
+	if(js_button(1,"state_mine")) joyMode=1;
+	if(js_button(2,"state_dump_pull")) joyMode=2;
+
+	if (js_button(3,"Stop")) 
+	{
+	    joyMode=0;
+		stop();
+		robotState_requested=state_STOP;
+	}
+	
+	if(js_button(4,"Drive")) joyMode=4;
+	if(js_button(5,"state_dump_pull")) joyMode=5;
+	if((js_button_once(6,"calibrate")))
+	{
+		robotState_requested=state_calibrate;
+	}
+
+
 	if(joyDrive)
 	{
 		left=driveLimit*(forward+turn);
 		right=driveLimit*(forward-turn);
-         	dump=dumpLimit*dumpJoy;
-		roll+=conveyor_joy;
+        
+        switch (joyMode) {
+        case 0: break;
+        case 1: 
+            description += " mine ";
+            tool=0.5;
+            break;
+        case 2: 
+            description += " fork-dump ";
+            fork=ry;
+            dump=rx;
+            break;
+        case 4:
+            description += " boom-stick ";
+            boom=ry;
+            stick=rx;
+            break;
+        case 5:
+            description += " spin-tool ";
+            spin=ry;
+            tool=rx;
+            break;
+        default: break;
+        }
 
-		description += "  joystick\n";
+        
+		description += "joystick\n";
 	}
 	joyDrive=!joyDone;
-	if(js_button(1,"state_mine"))
-	{
-		robotState_requested=state_mine;
-	}
-	if(js_button(2,"state_dump_pull"))
-	{
-		robotState_requested=state_dump_pull;
-	}
-
-	if (js_button(3,"Stop"))
-	{
-		stop();
-		robotState_requested=state_STOP;
-	}
-	if(js_button(4,"Drive"))
-	{
-		robotState_requested=state_drive;
-	}
-	if(js_button(5,"state_dump_pull"))
-	{
-		robotState_requested=state_dump_pull;
-	}
-	if((js_button_once(6,"High Power")))
-	{
-		power.high=!power.high;
-	}
-
-
-	if ((js_button_once(1,"Break"))) { stop(); } // stop without changing state
-
 
 //Pilot warning messages:
 
-	if(Mstall)
-		description+="  MINING HEAD STALLED. RELEASE POWER\n";
-	if(robot.sensor.DLstall)
-		description+="  LEFT DRIVE STALLED\n";
-	if(robot.sensor.DRstall)
-		description+="  RIGHT DRIVE STALLED\n";
-//Realsense beacon commands
-	realsense_comms.command = ' ';
+
+	description+=setPowerLimit(keys,'p','P',"Drive power",driveLimit);
+	description+=setPowerLimit(keys,'t','T',"Tool power",toolLimit);
 	
-	/* Use P + number keys to set drive power, in percent:
-	    P-1 = 10%, P-2=20%, etc. */
-	if (keys['p']||keys['P']) for (int num=1;num<=9;num++)
-	    if (keys['0'+num]) driveLimit=0.1f*num;
-	description+="\n  Drive power: "+std::to_string(driveLimit)+"\n";
-
-	float beacon_requested_angle=-1;
-	/*
-	if(keys['1'])
-		beacon_requested_angle=-60;
-	if(keys['2'])
-		beacon_requested_angle=-45;
-	if(keys['3'])
-		beacon_requested_angle=-0;
-	if(keys['4'])
-		beacon_requested_angle=45;
-	if(keys['5'])
-		beacon_requested_angle=60;
-    */
-
-	if (beacon_requested_angle != -1)	
-		{
-			realsense_comms.requested_angle=(signed char)(beacon_requested_angle);
-			realsense_comms.command='P';
-			description+= " \n Requested Beacon Angle "+ std::to_string(realsense_comms.requested_angle) + "\n";
-		}
 
 // Drive keys:
 	float acceleration=.2;
@@ -302,114 +290,48 @@ void robot_ui::update(int keys[],const robot_base &robot) {
         }
         if(keys_once['t']||keys_once['T'])
         {
-			power.torqueControl=!power.torqueControl;
+			power.torque=~power.torque;
         }
 
-	power.motorControllerReset=keys['r']||keys['R'];
-
-	if(power.motorControllerReset!=0)
-		description+="  BTS Motor Reset\n";
-
-
-	if(power.torqueControl!=0)
+	if(power.torque==0)
 		description+="  torque control\n";
 	else
 		description+="  speed control\n";
 
 
-// Special features
-
-	if(keys_once['m'])
-        {
-	   power.mineMode=!power.mineMode;
-        }
-	if (power.mineMode) {
-		mine=mineLimit;
-	}
-
-	if(keys['j'])
-        {
-
-            mine=-1;
-            description+="  mine-\n";
-        }
-	if(keys_once['p'])
-	{
-	    power.high=!power.high;
-	}
-
-        if(keys[oglSpecialDown])
-        {
-            dump=-1;
-            description+="  depth-\n";
-        }
-        if(keys[oglSpecialUp])
-        {
-            dump=+1;
-            description+="  depth+\n";
-        }
-        if(keys[oglSpecialRight])
-        {
-            mine=+mineLimit;
-            description+="  mine+\n";
-        }
-        if(keys[oglSpecialLeft])
-        {
-            mine=-mineLimit;
-            description+="  mine-\n";
-        }
-	if(keys['f'])
-	{
-		roll=+1;
-		description+=" roll+\n";
-	 }
-	if(keys['v'])
-	{
-		roll=-1;
-		description+=" roll-\n";
-	}
-	if(keys['g'])
-	{
-		head_extend = +1;
-		description += " head_extend+\n";
-	}
-	if(keys['b'])
-	{
-		head_extend = -1;
-		description += " head_extend-\n";
-	}
-	if(keys['h'])
-	{
-		conveyor_raise = +1;
-		description += " conveyor_extend+\n";
-	}
-	if(keys['n'])
-	{
-		conveyor_raise = -1;
-		description += " conveyor_extend-\n";
-	}
-	if(robot.sensor.Mstall && mine!=0)
-		Mstall=true;
-	else if(mine==0)
-		Mstall=false; // Reset UI stall if no mine command
-
+// Limit powers, and write them to the struct
 	left=limit(left,driveLimit);
 	right=limit(right,driveLimit);
+	
+	fork=limit(fork,scoopLimit);
+	dump=limit(dump,scoopLimit);
+	
+	boom=limit(boom,armLimit);
+	stick=limit(stick,armLimit);
+	tilt=limit(tilt,armLimit);
+	spin=limit(spin,armLimit);
+	
+	tool=limit(tool,toolLimit);
 
-	if(Mstall)
-		mine=0; //Do not allow mining if UI stall is set
-	power.left=toMotor(left,driveLimit);
-	power.right=toMotor(right,driveLimit);
-	power.mine=toMotor(mine,mineLimit);
-	power.dump=toMotor(dump,dumpLimit);
-	power.roll=toMotor(roll,rollLimit);
-	power.head_extend=toMotor(head_extend, head_extend_limit);
-	power.conveyor_raise=toMotor(conveyor_raise, converyor_raise_limit);
-
+	// FIXME: use a complementary filter to smooth the motion commands, for less jerky operation
+    float commandLimit=1.0;
+	power.left=toMotor(left,commandLimit);
+	power.right=toMotor(right,commandLimit);
+	
+	power.fork=toMotor(fork,commandLimit);
+	power.dump=toMotor(dump,commandLimit);
+	
+	power.boom=toMotor(boom,commandLimit);
+    power.stick=toMotor(stick,commandLimit);
+    power.tilt=toMotor(tilt,commandLimit);
+    
+    power.spin=toMotor(spin,commandLimit);
+    power.tool=toMotor(tool,commandLimit);
+    
 	robotPrintln("Arduino Heartbeat: %d",robot.sensor.heartbeat);
 	robotPrintLines(description);
-	printf("Robot raw power: %d %d %d %d %d %d\n",
-		power.left, power.right, power.mine, power.dump, power.roll, power.head_extend);
+	printf("Robot raw power: %d %d  %d %d  %d %d %d  %d %d\n",
+		power.left, power.right, power.fork, power.dump, power.boom, power.stick, power.tilt, power.spin, power.tool);
 }
 
 
