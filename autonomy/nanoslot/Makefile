@@ -1,4 +1,4 @@
-DIRS=nanoboot slot_A0 slot_EE ../backend
+DIRS=nanoboot slot_A0 slot_A1 slot_EE ../backend
 
 all:
 	for dir in $(DIRS) ; do \

@@ -1,10 +1,10 @@
 /*
- Interface the lunatic data exchange with slot A0 arm nano.
+ Interface the lunatic data exchange with slot A1 arm nano.
 
  Dr. Orion Lawlor, lawlor@alaska.edu, 2023-01-25 (Public Domain)
 */
-#define NANOSLOT_MY_ID 0xA0 /* my numeric slot ID */
-#define NANOSLOT_MY_EX nano.slot_A0  /* my exchange struct */
+#define NANOSLOT_MY_ID 0xA1 /* my numeric slot ID */
+#define NANOSLOT_MY_EX nano.slot_A1  /* my exchange struct */
 #include "aurora/lunatic.h"
 #include "nanoslot/nanoboot_handoff.h"
 
@@ -20,18 +20,19 @@ int main(int argc,char **argv)
 
             if (comm.got_sensor) 
             {
-                if (comm.my_sensor.stop) {
-                    printf(" A0 STOP requested\n");
-                    fflush(stdout);
+                printf("   A1: ");
+                for (int i=0;i<NANOSLOT_SENSOR_MY::n_imu;i++)
+                {
+                    comm.my_sensor.imu[i].acc.print("  acc ");
+                    comm.my_sensor.imu[i].gyro.print(" gyro ");
                 }
+                printf("\n");
+                fflush(stdout);
             }
             
             if (comm.need_command)
             {
                 comm.send_command(comm.my_command);
-                if (comm.verbose) {
-                    printf("  A0 motors: %3d %3d %3d %3d\n",comm.my_command.motor[0],comm.my_command.motor[1],comm.my_command.motor[2],comm.my_command.motor[3]); fflush(stdout);
-                }
             }
         }
         

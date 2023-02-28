@@ -1,7 +1,7 @@
 /*
- Firmware that runs on robot arm board A0
+ Firmware that runs on robot forward
 */
-#define NANOSLOT_MY_ID 0xA0 
+#define NANOSLOT_MY_ID 0xF0
 #include "nanoslot/firmware.h"
 
 const int ESTOP_pin=A1; /* ESTOP switch: ground=run mode, open=stop */
@@ -11,7 +11,7 @@ const int ESTOP_pin=A1; /* ESTOP switch: ground=run mode, open=stop */
 void firmware_read_encoders(void)
 {
   my_sensor.heartbeat++;
-  my_sensor.stop=(digitalRead(ESTOP_pin)!=0);
+  my_sensor.stop=0; // DISABLED: (digitalRead(ESTOP_pin)!=0);
 }
 
 void firmware_send_motors()

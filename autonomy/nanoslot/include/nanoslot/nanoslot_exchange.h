@@ -93,31 +93,43 @@ struct nanoslot_autonomy {
  nanoslot_sensor_<ID> is the sensor data reported back by the Arduino.
 */
 
-/** slot ID 0xA0: arm motor controllers */
+/** slot ID 0xA0: arm motor controllers (in arm electronics box) */
 struct nanoslot_command_0xA0 {
     nanoslot_autonomy autonomy; 
     
-    enum {n_motors=2};
+    enum {n_motors=4};
     nanoslot_motorpercent_t motor[n_motors]; // brushed DC linear actuator motors
 };
 struct nanoslot_sensor_0xA0 {
-    // IMU needs to be listed first in the struct, for alignment
-    nanoslot_IMU_t imu0;
-    nanoslot_IMU_t imu1;
-    nanoslot_IMU_t imu2;
-    
-    // Single-byte fields go after IMU data
-    nanoslot_byte_t stop; // 1 == stop requested
     nanoslot_heartbeat_t heartbeat; // increments
-    nanoslot_byte_t feedback;
-    // need a multiple of 4 bytes for Arduino and PC to agree on struct padding
-    nanoslot_byte_t spare1;
+    nanoslot_byte_t stop; // 1 == stop requested
 };
 struct nanoslot_state_0xA0 : public nanoslot_state {
     
 };
 
-/** slot ID 0xD0: drive motor controllers */
+/** slot ID 0xA1: arm IMUs (in arm electronics box) */
+struct nanoslot_command_0xA1 {
+    nanoslot_autonomy autonomy; 
+};
+struct nanoslot_sensor_0xA1 {
+    // IMU needs to be listed first in the struct, for alignment
+    enum {n_imu=2}; 
+    enum {imu_tool=0};
+    enum {imu_stick=1};
+    nanoslot_IMU_t imu[n_imu];
+    
+    // Single-byte fields go after IMU data
+    nanoslot_heartbeat_t heartbeat; // increments
+    // need a multiple of 4 bytes for Arduino and PC to agree on struct padding
+    nanoslot_byte_t spare[3];
+};
+struct nanoslot_state_0xA1 : public nanoslot_state {
+    // FIXME: filtered IMU values (smoothed, vibration estimate, de-vertigo etc)
+};
+
+
+/** slot ID 0xD0: drive motor controllers (in big back box) */
 struct nanoslot_command_0xD0 {
     nanoslot_autonomy autonomy; 
     enum {n_motors=4};
@@ -127,15 +139,53 @@ struct nanoslot_sensor_0xD0 {
     nanoslot_heartbeat_t heartbeat;
     nanoslot_byte_t raw; // raw bit version of sensors
     nanoslot_byte_t stall; // raw bit version of sensors
-    enum {n_sensors=6};
+    enum {n_sensors=2};
     nanoslot_byte_t counts[n_sensors]; // counts for each sensor channel
 };
 struct nanoslot_state_0xD0 : public nanoslot_state {
     
 };
 
+/** slot ID 0xF0: forward motor controllers (in big back box) */
+struct nanoslot_command_0xF0 {
+    nanoslot_autonomy autonomy; 
+    
+    enum {n_motors=4};
+    nanoslot_motorpercent_t motor[n_motors]; // brushed DC linear actuator motors
+};
+struct nanoslot_sensor_0xF0 {
+    nanoslot_heartbeat_t heartbeat; // increments
+    nanoslot_byte_t stop; // 1 == stop requested
+};
+struct nanoslot_state_0xF0 : public nanoslot_state {
+    
+};
 
-/** slot ID 0xEE: example nano */
+
+/** slot ID 0xF1: forward IMUs (in dedicated mini box in bottom front of robot) */
+struct nanoslot_command_0xF1 {
+    nanoslot_autonomy autonomy; 
+};
+struct nanoslot_sensor_0xF1 {
+    // IMU needs to be listed first in the struct, for alignment
+    enum {n_imu=4};
+    enum {imu_frame=0};
+    enum {imu_boom=1};
+    enum {imu_fork=2};
+    enum {imu_dump=3};
+    nanoslot_IMU_t imu[n_imu];
+    
+    // Single-byte fields go after IMU data
+    nanoslot_heartbeat_t heartbeat; // increments
+    // need a multiple of 4 bytes for Arduino and PC to agree on struct padding
+    nanoslot_byte_t spare[3];
+};
+struct nanoslot_state_0xF1 : public nanoslot_state {
+    // FIXME: filtered IMU values (smoothed, vibration estimate, de-vertigo etc)
+};
+
+
+/** slot ID 0xEE: example nano (debug / dev only) */
 struct nanoslot_command_0xEE {
     nanoslot_autonomy autonomy; 
     nanoslot_motorpercent_t LED; // pin 13 debug
@@ -187,8 +237,17 @@ struct nanoslot_exchange {
     nanoslot_exchange_slot<nanoslot_command_0xA0, nanoslot_sensor_0xA0, nanoslot_state_0xA0> slot_A0;
     nanoslot_padding_t pad_A0;
     
+    nanoslot_exchange_slot<nanoslot_command_0xA1, nanoslot_sensor_0xA1, nanoslot_state_0xA1> slot_A1;
+    nanoslot_padding_t pad_A1;
+    
     nanoslot_exchange_slot<nanoslot_command_0xD0, nanoslot_sensor_0xD0, nanoslot_state_0xD0> slot_D0;
     nanoslot_padding_t pad_D0;
+    
+    nanoslot_exchange_slot<nanoslot_command_0xF0, nanoslot_sensor_0xF0, nanoslot_state_0xF0> slot_F0;
+    nanoslot_padding_t pad_F0;
+    
+    nanoslot_exchange_slot<nanoslot_command_0xF1, nanoslot_sensor_0xF1, nanoslot_state_0xF1> slot_F1;
+    nanoslot_padding_t pad_F1;
     
     nanoslot_exchange_slot<nanoslot_command_0xEE, nanoslot_sensor_0xEE, nanoslot_state_0xEE> slot_EE;
     nanoslot_padding_t pad_EE;

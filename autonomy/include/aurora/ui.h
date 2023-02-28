@@ -16,21 +16,21 @@
 
 /**
  Keyboard-based user interface for robot.
+ Inherits from robot_power to control those variables.
 */
-class robot_ui {
+class robot_ui : private robot_power {
 public:
-
 	float driveLimit=1.0; /* robot driving power (0.0 - 1.0) */
 	float toolLimit=0.5; /* tool power */
 	
+	int joyMode=0; // joystick mode selected
+	
 	robot_power power; // Last output power commands
+	
 	robot_realsense_comms realsense_comms;
 	#ifdef MSL
 		msl::joystick_t* joystick;
 	#endif
-
-	// Current floating-point power values:
-	float left, right, fork, dump, boom, stick, tilt, spin, tool;
 
 	// Human-readable description of current state
 	std::string description;
@@ -88,7 +88,7 @@ public:
 	}
 
 	void stop(void) {
-		left=right=fork=dump=boom=stick=tilt=spin=tool=0.0;
+		robot_power::stop();
 		power.stop();
 		description="Sending STOP";
 	}
@@ -97,7 +97,8 @@ public:
 	//  The "keys" array is indexed by the character, 0 for up, 1 for down.
 	void update(int keys[],const robot_base &robot);
 
-	robot_ui() {
+	robot_ui()
+	{
 		#ifdef MSL
 		joystick=NULL;
 		#endif
@@ -187,9 +188,9 @@ void robot_ui::update(int keys[],const robot_base &robot) {
 	
 	tool=0.0;
 
-	static bool joyDrive=false;
-	static int joyMode=0; // Last joystick button pressed = joystick control mode
-	bool joyDone=false; // subtle:
+    // These are subtle state variables (why?)
+	static bool joyDrive=false; 
+	bool joyDone=false; 
 
 
 	/* Uses the left analog stick for driving*/
@@ -207,8 +208,8 @@ void robot_ui::update(int keys[],const robot_base &robot) {
 	else {joyDone=true;}
 	
 	
-	if(js_button(1,"state_mine")) joyMode=1;
-	if(js_button(2,"state_dump_pull")) joyMode=2;
+	if(js_button(1,"")) joyMode=1;
+	if(js_button(2,"")) joyMode=2;
 
 	if (js_button(3,"Stop")) 
 	{
@@ -217,12 +218,40 @@ void robot_ui::update(int keys[],const robot_base &robot) {
 		robotState_requested=state_STOP;
 	}
 	
-	if(js_button(4,"Drive")) joyMode=4;
-	if(js_button(5,"state_dump_pull")) joyMode=5;
-	if((js_button_once(6,"calibrate")))
-	{
-		robotState_requested=state_calibrate;
-	}
+	if(js_button(3,"")) joyMode=3;
+	if(js_button(4,"")) joyMode=4;
+	if(js_button(5,"")) joyMode=5;
+	if(js_button(6,"")) joyMode=6;
+
+    switch (joyMode) {
+    case 0: break;
+    case 1: 
+        description += " fork-dump ";
+        fork=ry;
+        dump=rx;
+        break;
+    case 2:
+        description += " stick-boom ";
+        stick=ry;
+        boom=rx;
+        break;
+    case 4:
+        description += " stick-tilt ";
+        stick=ry;
+        tilt=rx;
+        break;
+    case 5:
+        description += " spin-tilt ";
+        spin=ry;
+        tilt=rx;
+        break;
+    case 6: 
+        description += " mine-tilt";
+        tilt=rx;
+        tool=0.5;
+        break;
+    default: break;
+    }
 
 
 	if(joyDrive)
@@ -230,68 +259,42 @@ void robot_ui::update(int keys[],const robot_base &robot) {
 		left=driveLimit*(forward+turn);
 		right=driveLimit*(forward-turn);
         
-        switch (joyMode) {
-        case 0: break;
-        case 1: 
-            description += " mine ";
-            tool=0.5;
-            break;
-        case 2: 
-            description += " fork-dump ";
-            fork=ry;
-            dump=rx;
-            break;
-        case 4:
-            description += " boom-stick ";
-            boom=ry;
-            stick=rx;
-            break;
-        case 5:
-            description += " spin-tool ";
-            spin=ry;
-            tool=rx;
-            break;
-        default: break;
-        }
-
         
 		description += "joystick\n";
 	}
 	joyDrive=!joyDone;
 
-//Pilot warning messages:
-
-
+// Adjust power limits
 	description+=setPowerLimit(keys,'p','P',"Drive power",driveLimit);
 	description+=setPowerLimit(keys,'t','T',"Tool power",toolLimit);
 	
 
 // Drive keys:
-	float acceleration=.2;
-        if(keys['w']||keys['W'])
-        {
-            left+=acceleration;
-            right+=acceleration;
-        }
-        if(keys['s']||keys['S'])
-        {
-            left-=acceleration;
-            right-=acceleration;
-        }
-        if(keys['a']||keys['A'])
-        {
-            left-=acceleration;
-            right+=acceleration;
-        }
-        if(keys['d']||keys['D'])
-        {
-            left+=acceleration;
-            right-=acceleration;
-        }
-        if(keys_once['t']||keys_once['T'])
-        {
-			power.torque=~power.torque;
-        }
+	float speed=driveLimit;
+    if(keys['w']||keys['W'])
+    {
+        left+=speed;
+        right+=speed;
+    }
+    if(keys['s']||keys['S'])
+    {
+        left-=speed;
+        right-=speed;
+    }
+    if(keys['a']||keys['A'])
+    {
+        left-=speed;
+        right+=speed;
+    }
+    if(keys['d']||keys['D'])
+    {
+        left+=speed;
+        right-=speed;
+    }
+    if(keys_once['t']||keys_once['T'])
+    {
+	    power.torque=~power.torque;
+    }
 
 	if(power.torque==0)
 		description+="  torque control\n";
@@ -313,25 +316,12 @@ void robot_ui::update(int keys[],const robot_base &robot) {
 	
 	tool=limit(tool,toolLimit);
 
-	// FIXME: use a complementary filter to smooth the motion commands, for less jerky operation
-    float commandLimit=1.0;
-	power.left=toMotor(left,commandLimit);
-	power.right=toMotor(right,commandLimit);
-	
-	power.fork=toMotor(fork,commandLimit);
-	power.dump=toMotor(dump,commandLimit);
-	
-	power.boom=toMotor(boom,commandLimit);
-    power.stick=toMotor(stick,commandLimit);
-    power.tilt=toMotor(tilt,commandLimit);
-    
-    power.spin=toMotor(spin,commandLimit);
-    power.tool=toMotor(tool,commandLimit);
+	// Use a complementary filter to smooth our motion commands, for less jerky operation
+    power.blend_from(*this,0.2);
     
 	robotPrintln("Arduino Heartbeat: %d",robot.sensor.heartbeat);
 	robotPrintLines(description);
-	printf("Robot raw power: %d %d  %d %d  %d %d %d  %d %d\n",
-		power.left, power.right, power.fork, power.dump, power.boom, power.stick, power.tilt, power.spin, power.tool);
+	power.print("UI power");
 }
 
 

@@ -68,33 +68,62 @@ public:
 /**
  This class contains a power setting for each of the robot's actuators.
 
- The signed char run from -100 (full backwards) to 0 (stop) to +100 (full forwards)
+ The float power values run from -1.0 (full backwards) to 0 (stop) to +1.0 (full forwards)
 */
 class robot_power {
 public:
 	enum { drive_stop=0 };
 
-	signed char left; // left drive wheels: + is forward
-	signed char right; // right drive wheels: + is forward
+	float left; // left drive wheels: + is forward
+	float right; // right drive wheels: + is forward
 
-	signed char fork; // front scoop lift fork: + is up
-	signed char dump; // front scoop curl: + is raise
+	float fork; // front scoop lift fork: + is up
+	float dump; // front scoop curl: + is raise
 
-	signed char boom; // arm first link: + extends the boom
-	signed char stick; // arm second link: + extends the stick
-	signed char tilt; // arm third link: + extends tool forward
+	float boom; // arm first link: + extends the boom
+	float stick; // arm second link: + extends the stick
+	float tilt; // arm third link: + extends tool forward
 	
-	signed char spin; // tool coupler rotation: + is right handed
-	signed char tool; // excavation tool: + is normal forward cut
+	float spin; // tool coupler rotation: + is right handed
+	float tool; // excavation tool: + is normal forward cut
 	
 	unsigned char torque; // one bit per power: 0=torque control; 1=speed or position control
 
 	robot_power() { stop(); }
 	
+	/// Set all power values to 0
 	void stop(void) {
 		left=right=fork=dump=boom=stick=tilt=spin=tool=drive_stop; // all-stop
-		
+		torque=0;
 	}
+	
+	/// Blend a scaled copy of this power value into ours.
+	///  frac=0.0 means no change.  frac=1.0 means this=src.
+	///  This is designed to allow smoother changes.
+	void blend_from(const robot_power &src,float frac)
+	{
+	    left=left*(1.0-frac)+src.left*frac;
+	    right=right*(1.0-frac)+src.right*frac;
+	    
+	    
+	    fork=fork*(1.0-frac)+src.fork*frac;
+	    dump=dump*(1.0-frac)+src.dump*frac;
+	    
+	    
+	    boom=boom*(1.0-frac)+src.boom*frac;
+	    stick=stick*(1.0-frac)+src.stick*frac;
+	    tilt=tilt*(1.0-frac)+src.tilt*frac;
+	    
+	    spin=spin*(1.0-frac)+src.spin*frac;
+	    tool=tool*(1.0-frac)+src.tool*frac;
+	}
+
+#ifdef _STDIO_H
+    void print(const char *what) {
+        printf("%s: LR %.1f %.1f  FD %.1f %.1f  BST %.1f %.1f %.1f  PO %.1f %.1f\n",
+            what, left,right, fork,dump, boom,stick,tilt, spin,tool);
+    }
+#endif
 };
 
 

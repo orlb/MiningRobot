@@ -56,8 +56,8 @@ void arduino_sensor_read(robot_base &robot)
     // Read sensor data from the exchange
     const nanoslot_exchange &nano=exchange_nanoslot.read();
     const auto &driveslot = nano.slot_D0;
-    int right_wire = 3;
-    int left_wire = 1;
+    int left_wire = 0;
+    int right_wire = 1;
     robot.sensor.DR1count= - driveslot.sensor.counts[right_wire];
     robot.sensor.DRstall =   driveslot.sensor.stall&(1<<right_wire);
     
@@ -70,6 +70,23 @@ void arduino_sensor_read(robot_base &robot)
     robot.sensor.stall_raw=int(driveslot.sensor.stall);
 }
 
+/*
+ Convert -1.0 to +1.0 float power to discrete -100 to +100 motor percent.  
+*/
+nanoslot_motorpercent_t motor_scale(float power,const char *what)
+{
+    const float sanity_limit=4.0;
+    if (power<-sanity_limit || power>sanity_limit || power!=power) {
+        printf("Power %s ERROR: value %f insane, using 0\n", what,power);
+        return 0;
+    }
+    if (power>1.0) power=1.0;
+    if (power<-1.0) power=-1.0;
+    
+    const float send_limit=100.0;
+    return (nanoslot_motorpercent_t)(send_limit*power);
+}
+
 void arduino_command_write(robot_base &robot)
 {
     // Write commands to the exchange
@@ -77,14 +94,24 @@ void arduino_command_write(robot_base &robot)
     nano.autonomy.mode=(int)robot.state;
     
     auto &armslot = nano.slot_A0;
-    armslot.command.motor[0]=-robot.power.right; // HACK! need actual arm power vals
-    armslot.command.motor[1]=-robot.power.left;
+    armslot.command.motor[0]=motor_scale(robot.power.spin,"spin");
+    armslot.command.motor[1]=0; // spare
+    armslot.command.motor[2]=motor_scale(robot.power.tilt,"tilt");
+    armslot.command.motor[3]=motor_scale(robot.power.stick,"stick");
+    
+    auto &frontslot = nano.slot_F0;
+    frontslot.command.motor[0]=motor_scale(robot.power.boom,"boom");
+    frontslot.command.motor[1]=motor_scale(robot.power.fork,"fork");
+    frontslot.command.motor[2]=0; // spare
+    frontslot.command.motor[3]=motor_scale(robot.power.dump,"dump");
     
     auto &driveslot = nano.slot_D0;
-    driveslot.command.motor[0]=-robot.power.right;
-    driveslot.command.motor[1]=-robot.power.left;
-    driveslot.command.motor[2]=-robot.power.right;
-    driveslot.command.motor[3]=-robot.power.left;
+    nanoslot_motorpercent_t L=motor_scale(robot.power.left,"left");
+    nanoslot_motorpercent_t R=motor_scale(robot.power.right,"right");
+    driveslot.command.motor[0]=-R;
+    driveslot.command.motor[1]=-L;
+    driveslot.command.motor[2]=-R;
+    driveslot.command.motor[3]=-L;
     
     nano.slot_EE.command.LED=robot.power.right; // just for debugging
     
@@ -259,13 +286,6 @@ private:
   // Advance autonomous state machine
   void autonomous_state(void);
 
-  // Raw robot.power levels for various speeds
-  enum {
-    power_full_fw=100, // forward
-    power_stop=0,
-    power_full_bw=-100, // backward
-  };
-
   // Dump bucket encoder target a/d values
 
 
@@ -279,7 +299,7 @@ private:
   // Run autonomous mining, if possible
   bool tryMineMode(void) {
     //if (drive_posture()) {    
-    robot.power.tool=100; // TUNE THIS mining head rate
+    robot.power.tool=0.5; // TUNE THIS mining head rate
     robot.power.dump=0; // TUNE THIS lowering rate
     mining_head_lowered=true;
     
@@ -291,7 +311,7 @@ private:
   //  Return true if we're safe to drive
   bool drive_posture() {
     if(mining_head_lowered && cur_time-state_start_time <10)
-      robot.power.dump = 100;
+      robot.power.dump = 1.0;
     if (sim.bucket>0.9) { // we're back up in driving range
       mining_head_lowered=false;
     }
@@ -317,8 +337,8 @@ private:
     double d=limit(forward*0.5,drive_power);
     double L=d-t;
     double R=d+t;
-    robot.power.left= 100 * limit(L,max_autonomous_drive);
-    robot.power.right=100 * limit(R,max_autonomous_drive);
+    robot.power.left= limit(L,max_autonomous_drive);
+    robot.power.right=limit(R,max_autonomous_drive);
   }
 
   // Autonomous feeler-based backing up: drive backward slowly until both switches engage.
@@ -476,7 +496,7 @@ void robot_manager_t::autonomous_state()
   else if (robot.state==state_mine)
   {
     if (!tryMineMode()) { // too high to mine (sanity check)
-      robot.power.dump=power_full_bw; // lower bucket
+      robot.power.dump=-1.0f; // lower bucket
       mining_head_lowered=true;
     }
 
@@ -496,7 +516,7 @@ void robot_manager_t::autonomous_state()
     tryMineMode(); // Start PID based mining
     if(robot.sensor.Mstall && time_in_state<1)
     {
-      robot.power.boom=power_full_bw; // retract bucket
+      robot.power.boom=-1.0f; // retract bucket
     }
     else {enter_state(state_mine);} // not stalled? Then back to mining
   }
@@ -550,7 +570,7 @@ void robot_manager_t::autonomous_state()
     if(mining_head_lowered)
       drive_posture();
     if(time_in_state<20)
-      robot.power.dump=power_full_bw;
+      robot.power.dump=-1.0f;
     enter_state(state_stowed);
 
   }
@@ -661,7 +681,6 @@ void robot_manager_t::update(void) {
   else if (robot.state==state_backend_driver)
   { // set robot power from backend UI
     robot.power=ui.power;
-    printf("Backend driver dump: %d\n",robot.power.dump);
   }
   else if (robot.state>=state_autonomy) { // autonomous mode!
     autonomous_state();
@@ -694,11 +713,11 @@ void robot_manager_t::update(void) {
   if (robot.state==state_mine) 
   { // TESTING ONLY: keep the front tool level
     const float gain=5.0;
-    float drive=nano.slot_A0.sensor.imu0.acc.x;
+    float drive=nano.slot_A1.sensor.imu[0].acc.x;
     float rate=0.0;
     float pid = gain*drive + rate;
     int send=ui.limit(pid,30); //<- calmer driving
-    robot.power.left=robot.power.right=send;
+    robot.power.tilt=send;
     if (fabs(drive)<5) robot.power.stop(); //<- deadband, bigger than noise
   }
   

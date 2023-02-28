@@ -260,16 +260,16 @@ void robot_display_setup(const robot_base &robot) {
 	robotPrintf_enable=true;
 
 // Draw current robot power values as weird triangles
-	signed char *powers=(signed char *)&robot.power; // HACK: want array of powers
+	float *powers=(float *)&robot.power.left; // HACK: want array of powers
 	glBegin(GL_TRIANGLES);
 	for (unsigned int i=0;i<9;i++) {
-		int pow=powers[i];
+		float pow=powers[i];
 		float cenx=30*(0.5+i)+field_x_GUI;
 		float ceny=0.10*field_y_size;
-		glColor3ub(128+pow,128,255-pow);
+		glColor3ub(128+100*pow,128,255);
 		glVertex2f(cenx-20,ceny);
 		glVertex2f(cenx+20,ceny);
-		glVertex2f(cenx,ceny+0.8*(pow+1));
+		glVertex2f(cenx,ceny+80*(pow+0.01));
 	}
 	glEnd();
 

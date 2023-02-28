@@ -1,7 +1,9 @@
+/*
+UN178 dual channel 100A brushed motor driver
+Also known as "big green motor controller"
 
-//Arsh Chauhan
-//Last Edited: 4/8/2019
-
+Original in 4/8/2019 by Arsh Chauhan
+*/
 #ifndef NANOSLOT_FIRMWARE_UN178_MOTOR_H
 #define NANOSLOT_FIRMWARE_UN178_MOTOR_H
 
@@ -83,5 +85,17 @@ void send_motor_power(const un178_motor_single_t &motor, int8_t speed)
       motor.drive_red(-pwm);
 }
 
+#ifdef NANOSLOT_COMMAND_MY
+/* Hardware-connected motor drivers, UN178 green brushed boards,
+   using our breakout board.  
+   These pins number the motors [0] through [3] from left to right.
+*/
+un178_motor_single_t hardware_motor[NANOSLOT_COMMAND_MY::n_motors]={
+    un178_motor_single_t(6,5,7),
+    un178_motor_single_t(3,2,4),
+    un178_motor_single_t(10,9,8),
+    un178_motor_single_t(11,12,A0),
+};
+#endif
 
 #endif
