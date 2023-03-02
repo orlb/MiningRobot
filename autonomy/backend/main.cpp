@@ -94,16 +94,16 @@ void arduino_command_write(robot_base &robot)
     nano.autonomy.mode=(int)robot.state;
     
     auto &armslot = nano.slot_A0;
-    armslot.command.motor[0]=motor_scale(robot.power.spin,"spin");
+    armslot.command.motor[0]=-motor_scale(robot.power.spin,"spin");
     armslot.command.motor[1]=0; // spare
     armslot.command.motor[2]=motor_scale(robot.power.tilt,"tilt");
     armslot.command.motor[3]=motor_scale(robot.power.stick,"stick");
     
     auto &frontslot = nano.slot_F0;
-    frontslot.command.motor[0]=motor_scale(robot.power.boom,"boom");
-    frontslot.command.motor[1]=motor_scale(robot.power.fork,"fork");
+    frontslot.command.motor[0]=-motor_scale(robot.power.dump,"dump");
+    frontslot.command.motor[1]=-motor_scale(robot.power.fork,"fork");
     frontslot.command.motor[2]=0; // spare
-    frontslot.command.motor[3]=motor_scale(robot.power.dump,"dump");
+    frontslot.command.motor[3]=motor_scale(robot.power.boom,"boom");
     
     auto &driveslot = nano.slot_D0;
     nanoslot_motorpercent_t L=motor_scale(robot.power.left,"left");
@@ -703,6 +703,7 @@ void robot_manager_t::update(void) {
     arduino_sensor_read(robot);
     nano=exchange_nanoslot.read();
   }
+  
   
   if (nano.slot_A0.sensor.stop && robot.state!=state_STOP) {
     enter_state(state_STOP);

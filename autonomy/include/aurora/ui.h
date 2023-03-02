@@ -228,7 +228,7 @@ void robot_ui::update(int keys[],const robot_base &robot) {
     case 1: 
         description += " fork-dump ";
         fork=ry;
-        dump=rx;
+        dump=-rx;
         break;
     case 2:
         description += " stick-boom ";
@@ -241,13 +241,13 @@ void robot_ui::update(int keys[],const robot_base &robot) {
         tilt=rx;
         break;
     case 5:
-        description += " spin-tilt ";
-        spin=ry;
-        tilt=rx;
+        description += " tilt-spin ";
+        tilt=ry;
+        spin=rx;
         break;
     case 6: 
-        description += " mine-tilt";
-        tilt=rx;
+        description += " tilt-mine";
+        tilt=ry;
         tool=0.5;
         break;
     default: break;

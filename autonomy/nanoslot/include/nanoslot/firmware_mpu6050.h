@@ -326,11 +326,9 @@ struct IMU_report {
     temp.zero();
     
     char *buffer=(char *)&accel; // write into us as bytes
-    for (int i=0;i<sizeof(*this);i++) buffer[i]=Wire.read();
+    for (unsigned int i=0;i<sizeof(*this);i++) buffer[i]=Wire.read();
     
     MPU_deselectSensor(sensor);
-    
-    return ret;
   }
 };
 
