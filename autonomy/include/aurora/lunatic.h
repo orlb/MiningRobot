@@ -14,7 +14,9 @@ vision manages the realsense camera
 
 localizer integrates the robot position
     Reads drive encoder counts from the backend
+        To know how far the wheels have turned, we put magnetic encoders on the drive wheel motors.  These emit one count every time a magnet inside the fastest gear in the gearbox rotates past the magnetic sensor.  Add up the counts, and you know how far the wheels have turned, which is used by the localizer to keep track of the robot's position.
     Reads aruco data from the vision subsystem
+        From Google: "ArUco is an OpenSource library for detecting squared fiducial markers in images. Additionally, if the camera is calibrated, you can estimate the pose of the camera with respect to the markers."
     Reads camera pointing from the stepper motor
     Publishes coordinates used by all other components
 
@@ -40,7 +42,7 @@ This is the project Interface Control Document (ICD).
 #include "../aurora/data_exchange.h"
 #include "../aurora/coords.h"
 #include "../vision/grid.hpp"
-#include "../nanoslot/nanoslot_exchange.h"
+#include "../../nanoslot/include/nanoslot/nanoslot_exchange.h"
 
 namespace aurora {
 
