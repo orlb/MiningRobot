@@ -40,7 +40,7 @@ This is the project Interface Control Document (ICD).
 #include "../aurora/data_exchange.h"
 #include "../aurora/coords.h"
 #include "../vision/grid.hpp"
-#include "../nanoslot/nanoslot_exchange.h"
+#include "../../nanoslot/include/nanoslot/nanoslot_exchange.h"
 
 namespace aurora {
 
