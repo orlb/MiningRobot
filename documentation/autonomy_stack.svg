@@ -401,7 +401,7 @@
      inkscape:cx="529.78241"
      inkscape:cy="446.65341"
      inkscape:document-units="in"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer1"
      width="765px"
      height="990px"
      gridanglex="0.33333333in"
@@ -447,14 +447,15 @@
      id="layer1"
      transform="translate(0,-240)">
     <rect
-       style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.36618257;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:2.36619;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect1852"
        width="995.54614"
-       height="738.9621"
+       height="761.59015"
        x="28.924023"
        y="283.4487"
        inkscape:export-xdpi="200"
-       inkscape:export-ydpi="200" />
+       inkscape:export-ydpi="200"
+       inkscape:export-filename="/home/olawlor/MiningRobot/documentation/autonomy_stack_full.png" />
     <rect
        style="opacity:1;vector-effect:none;fill:#000000;fill-opacity:0.164794;stroke:none;stroke-width:1.9154;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
        id="rect34467"
@@ -1399,7 +1400,7 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Data_exchange"
-     style="display:none">
+     style="display:inline">
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;line-height:1.25;font-family:'Courier New';-inkscape-font-specification:'Courier New Bold';text-align:start;text-anchor:start;opacity:0.604;vector-effect:none;fill:#830074;fill-opacity:0.389513;stroke:#830074;stroke-width:1.92;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.388235"
