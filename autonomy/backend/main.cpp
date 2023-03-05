@@ -29,8 +29,8 @@
 #include <iostream>
 
 
-#include "../include/aurora/lunatic.h"
-#include "../nanoslot/include/nanoslot/nanoslot_sanity.h"
+#include "aurora/lunatic.h"
+#include "nanoslot/nanoslot_sanity.h"
 
 // Global variables for lunatic data exchange with Arduinos via nanoslot
 MAKE_exchange_nanoslot();

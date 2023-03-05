@@ -102,8 +102,8 @@ public:
 */
 class robot_comms {
 public:
-	enum {robot_UDP_telemetry_port=42874}; // telemetry leaves robot on this UDP port number
-	enum {robot_UDP_command_port=42875}; // commands enter robot on this port
+	enum {robot_UDP_telemetry_port=42876}; // telemetry leaves robot on this UDP port number
+	enum {robot_UDP_command_port=42877}; // commands enter robot on this port
 	unsigned int send_port, recv_port;
 
 	SOCKET socket; // UDP datagram socket for receiving our data

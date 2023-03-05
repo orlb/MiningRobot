@@ -30,7 +30,7 @@ path planner computes an obstacle-free drive path
 
 backend talks to the robot via the nanoslot slot programs.
 
-This is the project Interface Control Document (ICD).
+This header is the project Interface Control Document (ICD).
 */
 #ifndef __AURORA_LUNATIC_H
 #define __AURORA_LUNATIC_H
