@@ -120,6 +120,7 @@ void arduino_command_write(robot_base &robot)
 }
 
 
+MAKE_exchange_backend_state();
 MAKE_exchange_drive_encoders();
 MAKE_exchange_stepper_request();
 MAKE_exchange_plan_target();
@@ -791,6 +792,17 @@ void robot_manager_t::update(void) {
     locator.merged.percent=std::min(100.0,locator.merged.percent*(1.0-dt));
   }
   sim.simulate(robot.power,dt);
+  
+  // Drop the current state onto the exchange
+  aurora::backend_state s;
+  s.cur_time = cur_time;
+  s.state_start_time = state_start_time;
+  s.state = robot.state;
+  s.power = robot.power;
+  s.sensor = robot.sensor;
+  exchange_backend_state.write_begin() = s;
+  exchange_backend_state.write_end();
+  
 }
 
 

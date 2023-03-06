@@ -1,4 +1,4 @@
-/* Debug print the backend's encoder output */
+/* Debug print the backend's state variables */
 #include "aurora/lunatic.h"
 
 int main() {
@@ -8,7 +8,9 @@ int main() {
     while (true) {
         if (exchange_backend_state.updated()) {
             last=exchange_backend_state.read();
-            printf("%.3f\n", last.cur_time);
+            
+            printf("%.3f: LR %.2f %.2f\n", 
+                last.cur_time, last.power.left, last.power.right);
         }
         
         aurora::data_exchange_sleep(100);

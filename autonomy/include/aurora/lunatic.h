@@ -39,6 +39,7 @@ This header is the project Interface Control Document (ICD).
 #include <array>
 #include "../aurora/data_exchange.h"
 #include "../aurora/coords.h"
+#include "../aurora/robot.h"
 #include "../vision/grid.hpp"
 #include "../../nanoslot/include/nanoslot/nanoslot_exchange.h"
 
@@ -53,6 +54,27 @@ namespace aurora {
     Sensors written by the slot modules for each nano
 */
 #define MAKE_exchange_nanoslot()  aurora::data_exchange<nanoslot_exchange> exchange_nanoslot={"nanoslot"}
+
+/* -------------- Backend State ---------------- 
+  This tracks the internal variables of the backend. 
+  It's written by the backend, and read by lunabug/lunatic_print_state
+  and other debug and visualization tools.
+*/
+struct backend_state {
+    // Times are all in seconds
+    double cur_time; ///< time since we started up the backend 
+    double state_start_time; ///< cur_time when we entered this state
+    
+    robot_state_t state; ///< Current control state
+    robot_power power; // Current drive commands
+    robot_sensors_arduino sensor;  ///< Current hardware sensor values	
+};
+
+/** This macro declares the variable used to 
+coordinate with the backend's state.
+*/
+#define MAKE_exchange_backend_state()   aurora::data_exchange<aurora::backend_state> exchange_backend_state("backend.state")
+
 
 /* -------------- Drive Command ---------------- 
   Track speed commands, for the left and right tracks.
