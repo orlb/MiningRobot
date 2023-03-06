@@ -1,8 +1,6 @@
 /**
  Aurora Robotics general robot code.
 
- This is shared between the Arduino and the PC.
-
   Orion Sky Lawlor, lawlor@alaska.edu, 2014-03-23 (Public Domain)
 */
 #ifndef __AURORA_ROBOTICS__ROBOT_BASE_H
