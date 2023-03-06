@@ -1,5 +1,6 @@
 /* Debug print the backend's encoder output */
 #include "aurora/lunatic.h"
+#include "nlohmann/json.hpp"
 
 int main() {
     MAKE_exchange_drive_encoders();
