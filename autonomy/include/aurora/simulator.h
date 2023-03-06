@@ -97,8 +97,8 @@ public:
 
 		for (int s=0;s<2;s++) {
 			double torque=sidepower[s]; // wheel torque command
-			if (fabs(torque)>2.0) { // friction
-				double distance=torque/100*topspeed*dt;
+			if (fabs(torque)>0.001) { // friction
+				double distance=torque*topspeed*dt;
 				sideticks[s]=distance;
 				side[s]+=distance*forward();
 			}

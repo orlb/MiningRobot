@@ -1,7 +1,7 @@
 /**
   Aurora Robotics Backend Code
 
-  Orion Sky Lawlor, lawlor@alaska.edu, 2014-03-23 (Public Domain)
+  Orion Sky Lawlor, lawlor@alaska.edu, 2014--2023 (Public Domain)
 */
 #define AURORA_IS_BACKEND 1
 
