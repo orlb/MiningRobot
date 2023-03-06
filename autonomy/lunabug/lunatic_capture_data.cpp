@@ -1,6 +1,7 @@
 /* Debug print the backend's encoder output */
 #include "aurora/lunatic.h"
 #include "nlohmann/json.hpp"
+#include <iostream>
 
 int main() {
     MAKE_exchange_drive_encoders();
@@ -14,9 +15,7 @@ int main() {
         aurora::drive_encoders change = cur - last;
         change.print();
 
-        /*
-         * comment!
-         */
+        // Create a new file in the tmp dir
         
         last=cur;
         
