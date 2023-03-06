@@ -9,6 +9,9 @@ all: $(PROGS)
 lunaview: lunaview.cpp ../include/*/*
 	g++ $(OPTS) $(CFLAGS) $< -o $@ $(LIBS)
 
+lunatic_print_state: lunatic_print_state.cpp
+	g++ $(CFLAGS) $< -o $@
+
 lunatic_print_drive: lunatic_print_drive.cpp
 	g++ $(CFLAGS) $< -o $@
 
