@@ -28,7 +28,12 @@ public:
 	float driveLimit=1.0; /* robot driving power (0.0 - 1.0) */
 	float toolLimit=0.5; /* tool power */
 	
-	int joyMode=0; // joystick mode selected
+	enum {
+	    joyModeSTOP=0, // don't drive
+	    joyModeLow=1, // bottom of robot
+	    joyModeMed=2, // middle of robot
+	    joyModeHigh=3, // top of robot (tool)
+	} joyMode=joyModeLow; // joystick mode selected
 	
 	robot_power power; // Last output power commands
 	
@@ -127,6 +132,20 @@ public:
 		return iv;
 	}
 	
+	// Filter a raw joystick axis (remove jittery deadband)
+	float filter_axis(float v) {
+	    const float minV=0.03f;
+	    if (v>minV) {
+	        return v-minV;
+	    }
+	    else if (v<-minV) {
+	        return v+minV;
+	    }
+	    else /* v is tiny, between min and -min */ {
+	        return 0.0f;
+	    }
+	}
+	
 	
     /* Set this keyboard-controlled power limit--
       Use P + number keys to set drive power, in percent:
@@ -185,6 +204,7 @@ void robot_ui::update(int keys[],const robot_base &robot) {
 	// else spacebar not down--check other keys for manual control
 	
 	left=right=0.0;
+	float forward=0.0, turn=0.0; //<- turned into left and right
 	
 	fork=dump=0.0;
 	
@@ -193,78 +213,102 @@ void robot_ui::update(int keys[],const robot_base &robot) {
 	
 	tool=0.0;
 
-    // These are subtle state variables (why?)
+    // These state variables are used to display whether you're on a joystick.
 	static bool joyDrive=false; 
 	bool joyDone=false; 
+/*
+Joysticks have different axis and button numbering:
 
+ Logitech Gamepad F310:
+    axis 1: left analog X
+    axis 2: left analog Y
+    axis 3: left trigger analog
+    axis 4: right analog X
+    axis 5: right analog Y    
+    axis 6: right trigger analog
+        (Releasing trigger analog drops it to -max, but we start it at 0)
+    
+    button 1: A (green)
+    button 2: B (red)
+    button 3: X (blue)
+    button 4: Y (orange)
+    button 5: left top trigger
+    button 6: right top trigger
+ 
+ Saitek PLC Cyborg Force Rumble Pad
+    axis 1: left analog X
+    axis 2: left analog Y
+    axis 3: right analog Y
+    axis 4: right analog X
+    
+    buttons 1-6 as labelled
+    button 7: left trigger
+    button 8: right trigger
+*/
+    // Defaults are for Logitech
+    int axis_lx=1, axis_ly=2;
+    int axis_rx=4, axis_ry=5;
+    int button_stop=3, button_low=1, button_med=2, button_high=4;
+//    int button_topleft=5, button_topright=6; // shoulder buttons
+    
+    const char *joystick_name=oglJoystickName();
+    if (joystick_name[0]=='S') { // Saitek
+        axis_ry=3; // for some reason this uses axis 3
+        button_stop=1; button_low=3; button_med=4; button_high=2;
+//        button_topleft=7; button_topright=8;
+    }
 
-	/* Uses the left analog stick for driving*/
-	float forward=-js_axis(2,"Go Forward or Reverse"); // left Y
-	float turn=js_axis(1,"Turn Left or Right"); //left X, scaled for gentle turns
+	/* Read left analog stick X and Y axes*/
+	float ly=filter_axis(-js_axis(axis_ly,"")); 
+	float lx=filter_axis(js_axis(axis_lx,"")); 
 
-    /* Use the right analog stick for modal control */
-    float ry=-js_axis(3,"Vertical by mode");
-    float rx=js_axis(4,"Horizontal by mode");
+    /* Read the right analog stick */
+    float ry=filter_axis(-js_axis(axis_ry,""));
+    float rx=filter_axis(js_axis(axis_rx,""));
 
-	if(forward!=0.0 || turn!=0.0 || ry!=0 || rx!=0)
+	if(lx!=0.0 || ly!=0.0 || ry!=0 || rx!=0)
 	{
 		joyDrive=true; // using joystick
 	}
-	else {joyDone=true;}
-	
-	
-	if(js_button(1,"")) joyMode=1;
-	if(js_button(2,"")) joyMode=2;
-
-	if (js_button(3,"Stop")) 
-	{
-	    joyMode=0;
-		stop();
-		robotState_requested=state_STOP;
+	else { // joystick stopped
+	    joyDone=true;
 	}
 	
-	if(js_button(3,"")) joyMode=3;
-	if(js_button(4,"")) joyMode=4;
-	if(js_button(5,"")) joyMode=5;
-	if(js_button(6,"")) joyMode=6;
+	// Pressing a button changes the mode persistently
+	if (js_button(button_stop,"")) joyMode=joyModeSTOP;
+	if (js_button(button_low,"")) joyMode=joyModeLow;
+	if (js_button(button_med,"")) joyMode=joyModeMed;
+	if (js_button(button_high,"")) joyMode=joyModeHigh;
 
     switch (joyMode) {
-    case 0: break;
-    case 1: 
-        description += " fork-dump ";
+    case joyModeSTOP: default: 
+		stop();
+		robotState_requested=state_STOP;
+		break;
+    case joyModeLow: 
+        description += " Low: drive fork-dump ";
+        forward=ly;
+        turn=lx;
         fork=ry;
         dump=-rx;
         break;
-    case 2:
-        description += " stick-boom ";
+    case joyModeMed:
+        description += " Med: drive stick-boom ";
+        forward=ly;
+        turn=lx;
         stick=ry;
         boom=rx;
         break;
-    case 4:
-        description += " stick-tilt ";
-        stick=ry;
-        tilt=rx;
-        break;
-    case 5:
-        description += " tilt-spin ";
+    case joyModeHigh:
+        description += " High: spin tilt-mine ";
+        spin=lx;
         tilt=ry;
-        spin=rx;
+        tool=rx;
         break;
-    case 6: 
-        description += " tilt-mine";
-        tilt=ry;
-        tool=0.5;
-        break;
-    default: break;
     }
 
-
 	if(joyDrive)
-	{
-		left=driveLimit*(forward+turn);
-		right=driveLimit*(forward-turn);
-        
-        
+	{   
 		description += "joystick\n";
 	}
 	joyDrive=!joyDone;
@@ -275,27 +319,14 @@ void robot_ui::update(int keys[],const robot_base &robot) {
 	
 
 // Drive keys:
-	float speed=driveLimit;
-    if(keys['w']||keys['W'])
-    {
-        left+=speed;
-        right+=speed;
-    }
-    if(keys['s']||keys['S'])
-    {
-        left-=speed;
-        right-=speed;
-    }
-    if(keys['a']||keys['A'])
-    {
-        left-=speed;
-        right+=speed;
-    }
-    if(keys['d']||keys['D'])
-    {
-        left+=speed;
-        right-=speed;
-    }
+    if(keys['w']||keys['W']) forward+=1.0;
+    if(keys['s']||keys['S']) forward-=1.0;
+    if(keys['a']||keys['A']) turn-=1.0;
+    if(keys['d']||keys['D']) turn+=1.0;
+    
+	left=driveLimit*(forward+turn);
+	right=driveLimit*(forward-turn);
+	
     if(keys_once['t']||keys_once['T'])
     {
 	    power.torque=~power.torque;
@@ -307,7 +338,7 @@ void robot_ui::update(int keys[],const robot_base &robot) {
 		description+="  speed control\n";
 
 
-// Limit powers, and write them to the struct
+// Limit powers, and write them to the output struct
 	left=limit(left,driveLimit);
 	right=limit(right,driveLimit);
 	
@@ -321,10 +352,9 @@ void robot_ui::update(int keys[],const robot_base &robot) {
 	
 	tool=limit(tool,toolLimit);
 
-	// Use a complementary filter to smooth our motion commands, for less jerky operation
+	// Blend in power to smooth our motion commands, for less jerky operation
     power.blend_from(*this,0.2);
     
-	robotPrintln("Arduino Heartbeat: %d",robot.sensor.heartbeat);
 	robotPrintLines(description);
 	power.print("UI power");
 }

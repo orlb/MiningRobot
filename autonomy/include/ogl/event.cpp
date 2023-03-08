@@ -61,6 +61,13 @@ double oglAxis(int n,const char *what) {
 	return joy_axes[n];
 }
 
+enum {oglJoystickNameLen=64};
+char oglJoystickNameBuf[oglJoystickNameLen]={0};
+const char *oglJoystickName(void)
+{
+    return oglJoystickNameBuf;
+}
+
 #ifdef __linux__
 /******************* Linux Event Interface **************/
 #include <stdio.h>
@@ -75,18 +82,23 @@ double oglAxis(int n,const char *what) {
 extern "C" void *joystick_thread(void *joy_fd_pointer) 
 {
 	int joy_fd=(int)(long)joy_fd_pointer;
-	printf("Joystick thread running, joystick opened as FD %d\n",joy_fd);
+	
+	ioctl(joy_fd,JSIOCGNAME(oglJoystickNameLen-1),&oglJoystickNameBuf[0]);
+	
+	printf("Joystick thread running, '%s' opened as FD %d\n",oglJoystickNameBuf,joy_fd);
 	while (1) {
 		struct js_event e;
 		if (read(joy_fd,&e,sizeof(e))<=0) continue; /* nothing to grab yet */
 		//e.type&=~JS_EVENT_INIT; /* special startup messages */
 		int n=e.number+1, v=e.value;
-		if (n>max_axes) continue; /* Numbered way too high! */
+		if (n>=max_axes) continue; /* Numbered way too high, skip it! */
 		if (e.type==JS_EVENT_AXIS) {
+		    /*
 			switch (n) {
-			case 5: n=4; break; /* fixup axis numbers */
+			case 5: n=4; break; // fixup axis numbers 
 			case 6: n=3; break;
 			};
+			*/
 			joy_axes[n]=v*(1.0/0x7fFF);
 		} else if (e.type==JS_EVENT_BUTTON) {
 			joy_buttons[n]=v;
