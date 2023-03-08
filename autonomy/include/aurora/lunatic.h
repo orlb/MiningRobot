@@ -37,11 +37,10 @@ This header is the project Interface Control Document (ICD).
 
 #include <stdio.h>
 #include <array>
-#include "../aurora/data_exchange.h"
-#include "../aurora/coords.h"
-#include "../aurora/robot.h"
-#include "../vision/grid.hpp"
-#include "../../nanoslot/include/nanoslot/nanoslot_exchange.h"
+#include "../aurora/data_exchange.h" /* file I/O code */
+#include "../aurora/robot_base.h" /* basic structs */
+#include "../vision/grid.hpp" /* path planning */
+#include "../../nanoslot/include/nanoslot/nanoslot_exchange.h" /* Arduino comms */
 
 namespace aurora {
 

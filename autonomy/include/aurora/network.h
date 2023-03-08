@@ -20,6 +20,12 @@
 #include "../gridnav/gridnav_RMC.h"
 #include "coords.h"
 
+struct aurora_detected_obstacle {
+  signed short x,y; // location on field (cm, field coords)
+  signed short height; // height above/below neighbors
+};
+
+
 /*
  Huge bloated autonomy (debugging) state. 
 */
@@ -41,7 +47,7 @@ public:
   
   // Beacon-detected obstacles
   unsigned short obstacle_len;
-  enum {max_obstacle_len=200}; // only 6 bytes each
+  enum {max_obstacle_len=100}; // only 6 bytes each
   aurora_detected_obstacle obstacles[max_obstacle_len];
   
   robot_autonomy_state() {
@@ -63,9 +69,9 @@ inline int vector_copy_limited(T *dest,const std::vector<T> &src,int limit)
 }
 
 /**
- This is the simplest telemetry report from the robot.
- It's designed to minimize storage space, although the UDP header
- occupies 28-odd bytes already, so there's no point in sweating every last bit.
+ This is the full telemetry report from the robot.
+ The UDP header occupies 28-odd bytes already, so 
+ there's no point in sweating every last bit.
 */
 class robot_telemetry {
 public:
@@ -74,7 +80,6 @@ public:
 	
 	byte state; ///< Robot's current state code.  See state codes in robot.h
 	byte ack_state; ///< Copy of last-received state change command.
-	robot_status_bits status; ///< Robot's current software status (bitfield).
 	robot_sensors_arduino sensor; ///< Robot's current raw sensor values (bitfield).  
 	robot_localization loc; ///< Backend's current localization values. 
 	robot_power power; ///< Current actuator power values (for debugging only)
@@ -89,18 +94,18 @@ public:
 */
 class robot_command {
 public:
-	byte type; // 'c' for command packet
+	byte type; // 'c' for command packet (basically a sanity check)
 	enum {
 		command_STOP=0, ///< set the robot to EMERGENCY STOP mode.
 		command_state=1, ///< if true, enter the listed state
 		command_power=2 ///< set manual driving commands (and exit autopilot/semiauto)
 	};
-	byte command;
-	byte state; ///< Only valid if command_state is true.  See state codes in autonomy.h
-	 
+	byte command; ///< Requested command from the enum above
+	byte state; ///<  A state code from robot_base.h. (Only valid if command==command_state.)
 	
 	robot_power power;
-	robot_realsense_comms realsense_comms;
+	
+	// FIXME: authentication code here (HMAC?)
 	
 	robot_command() { type='c'; command=command_STOP; state=state_STOP; }
 };

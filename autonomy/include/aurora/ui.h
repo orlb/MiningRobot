@@ -37,7 +37,6 @@ public:
 	
 	robot_power power; // Last output power commands
 	
-	robot_realsense_comms realsense_comms;
 	#ifdef MSL
 		msl::joystick_t* joystick;
 	#endif

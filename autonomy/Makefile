@@ -1,4 +1,4 @@
-PROGS=nanoslot kend frontend localizer pathplanner stepper vision lunabug andretti cartographer
+PROGS=nanoslot kend frontend localizer pathplanner vision lunabug andretti cartographer
 
 all: 
 	for dir in $(PROGS); do make -C $$dir; done

@@ -13,7 +13,7 @@
 
 #include "gridnav/gridnav_RMC.h"
 
-#include "aurora/robot.h"
+#include "aurora/robot_base.h"
 #include "aurora/robot_states.cpp"
 #include "aurora/display.h"
 #include "aurora/network.h"
@@ -122,7 +122,6 @@ void arduino_command_write(robot_base &robot)
 
 MAKE_exchange_backend_state();
 MAKE_exchange_drive_encoders();
-MAKE_exchange_stepper_request();
 MAKE_exchange_plan_target();
 MAKE_exchange_drive_commands();
 //Needed for localization
@@ -186,7 +185,6 @@ public:
   robot_command command; // last-received command
   robot_comms comms; // network link to front end
   robot_ui ui; // keyboard interface
-  robot_realsense_comms realsense_comms;
 
   robot_simulator sim;
   int robot_insanity_counter = 0;
@@ -212,13 +210,8 @@ public:
   // Do robot work.
   void update(void);
   
-  
-  void point_camera(int target) {
-    if (simulate_only) {
-      telemetry.autonomy.markers.beacon=target;
-    }
-    exchange_stepper_request.write_begin().angle=target;
-    exchange_stepper_request.write_end();
+  // Switch active camera (heading 0 is facing forward)
+  void point_camera(float heading) {
   }
 
 
@@ -268,7 +261,6 @@ private:
     exchange_plan_target.write_end();
 
     if (new_state==state_autonomy) { autonomy_start_time=cur_time; }
-    // if(!(robot.autonomous)) { new_state=state_drive; }
 
     // Log state timings to dedicate state timing file:
     static FILE *timelog=fopen("timing.log","w");
@@ -472,7 +464,6 @@ void robot_manager_t::autonomous_state()
 
   // full autonomy start
   if (robot.state==state_autonomy) {
-    robot.autonomous=true;
     enter_state(state_scan);
   }
   
@@ -649,17 +640,12 @@ void robot_manager_t::update(void) {
         robotPrintln("Incoming power command: %d bytes",n);
         if (robot.state==state_drive)
         {
-          robot.autonomous=false;
           robot.power=command.power;
         }
         else
         {
           robotPrintln("IGNORING POWER: not in drive state\n");
         }
-      }
-      if (command.realsense_comms.command=='P')
-      {
-        point_camera(command.realsense_comms.requested_angle);
       }
     } else {
       robotPrintln("ERROR: COMMAND VERSION MISMATCH!  Expected %d, got %d",
@@ -692,7 +678,6 @@ void robot_manager_t::update(void) {
   robot_sensors_arduino old_sensor=robot.sensor;
     
   if (simulate_only) { // build fake arduino data
-    robot.status.arduino=1; // pretend it's connected
     robot.sensor.McountL=0xff&(int)sim.Mcount;
     robot.sensor.Rcount=0xffff&(int)sim.Rcount;
     robot.sensor.DL1count=0xffff&(int)sim.DLcount;
@@ -765,7 +750,6 @@ void robot_manager_t::update(void) {
     // robotPrintln("Sending telemetry, waiting for command");
     telemetry.count++;
     telemetry.state=robot.state; // copy current values out for send
-    telemetry.status=robot.status;
     telemetry.sensor=robot.sensor;
     telemetry.power=robot.power;
     telemetry.loc=locator.merged; 
@@ -785,10 +769,6 @@ void robot_manager_t::update(void) {
 
   if (simulate_only) // make reality track sim
   {
-    float view_robot_angle=0;
-    float beacon_FOV=30; // field of view of beacon (markers)
-    if (beacon_FOV>fabs(telemetry.autonomy.markers.beacon - view_robot_angle))
-      locator.merged.percent+=10.0;
     locator.merged.percent=std::min(100.0,locator.merged.percent*(1.0-dt));
   }
   sim.simulate(robot.power,dt);

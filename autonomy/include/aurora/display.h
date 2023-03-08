@@ -307,30 +307,6 @@ void robot_display_setup(const robot_base &robot) {
 	}
 	robotPrintln(str.c_str());
 
-	if (robot.status.arduino)
-	{ // arduino connected: print status
-		std::string status="";
-		if (robot.status.stop) status+="STOP(status) ";
-		if (robot.sensor.stop) status+="STOP(sensor) ";
-		if (robot.status.located) status+="located ";
-		if (robot.status.autonomy) status+="AUTONOMY ";
-		if (robot.status.semiauto) status+="SEMIAUTO ";
-		robotPrintln("Arduino connected: %s",status.c_str());
-
-	// Analog voltage dividers:
-	// Linear actuators:
-		//robotPrintln("  bucket %.1f%% (%d) up",
-		//	(robot.sensor.bucket-179.0)*100.0/(920-179.0),robot.sensor.bucket);
-
-		//robotPrintln("  battery %.2f V (%d)",
-		//	robot.sensor.battery*AD_DN2high_voltage,robot.sensor.battery);
-
-		robotPrintln("  MCU latency %d",
-			robot.sensor.latency);
-	} else {
-		robotPrintln("Arduino not connected");
-	}
-
 	if (robot.loc.percent>50.0) {
 		robotPrintln("Location:  X %.0f   Y %.0f   angle %.0f",
 			robot.loc.x,robot.loc.y,

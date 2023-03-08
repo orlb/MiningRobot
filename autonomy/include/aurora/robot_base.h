@@ -1,14 +1,14 @@
 /**
  Aurora Robotics general robot structs: sensors, power, states.
- 
- (Ironically, the class robot_base is actually in aurora/robot.h)
 
- Orion Sky Lawlor, lawlor@alaska.edu, 2014-03-23 (Public Domain)
+ Orion Sky Lawlor, lawlor@alaska.edu, 2014--2023 (Public Domain)
 */
 #ifndef __AURORA_ROBOTICS__ROBOT_BASE_H
 #define __AURORA_ROBOTICS__ROBOT_BASE_H
 #include <stdint.h> /* for uint32_t */
 #include "field_geometry.h"
+#include "coords.h" /* coordinate systems needed for localization */
+
 
 /** This is the Arduino's AREF analog reference voltage.
   It's the scale factor that gives true voltage output,
@@ -162,20 +162,27 @@ typedef enum {
 } robot_state_t;
 const char *state_to_string(robot_state_t state);
 
-/// This bitfield convey's the robot's software status.
-class robot_status_bits {
+
+// Everything about the visible computer vision markers / apriltags
+class robot_markers_all {
 public:
-	unsigned char stop:1; ///< EMERGENCY STOP engaged
-	unsigned char arduino:1; ///< arduino is connected correctly
-	unsigned char located:1; ///< robot thinks it knows where it is
-	unsigned char autonomy:1; ///< full-autonomy mode is engaged
-	unsigned char semiauto:1; ///< semiauto mode is engaged
+  // Integrated robot position
+  robot_localization pose;
+
+  // Raw sensed pose for each marker
+  enum {NMARKER=4}; // <- all tag25h9 markers
+  robot_localization markers[NMARKER];
 };
 
-class robot_arduino {
-  public:
-	robot_power power;
-	robot_sensors_arduino sensor;
+/**
+ This class contains everything we currently know about the robot.
+*/
+class robot_base {
+public:
+	robot_state_t state; ///< Current control state
+	robot_sensors_arduino sensor;  ///< Current hardware sensor values
+	robot_localization loc; ///< Location
+	robot_power power; // Current drive commands
 };
 
 
