@@ -2,7 +2,7 @@
 #include "aurora/lunatic.h"
 #include "nlohmann/json.hpp"
 
-// Temporary libraries
+// Temporary include files
 
 #include <string>
 // #include <fstream>
@@ -11,7 +11,7 @@
 // #include <iostream>
 #include <filesystem>
 // #include <stdlib.h>
-// 
+
 // using json = nlohmann::json;
 // using std::cin;
 // using std::cout;
@@ -22,7 +22,7 @@ using std::string;
 // using std::ifstream;
 // using std::istringstream;
 
-// namespace fs = std::filesystem;
+namespace fs = std::filesystem;
 
 int main() {
 
@@ -32,9 +32,9 @@ int main() {
 
     last.left=last.right=0.0f;
 
-    const string data_storage_location = "/tmp/data_exchange/data_capture";
+    const string& data_storage_location = "/tmp/data_exchange/data_capture";
 
-    std::filesystem::create_directory(data_storage_location);
+    fs::create_directory(data_storage_location);
 
     while (true) {
         if (exchange_drive_encoders.updated()) printf("+");
