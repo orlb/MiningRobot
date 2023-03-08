@@ -4,12 +4,12 @@
 #include <chrono>               // system_clock::time_point(), system_clock::now()
 #include <string>               // string()
 #include <sstream>              // stringstream()
-#include <ofstream>             // create, open, and close files,
+// #include <ofstream>             // create, open, and close files,
 // #include <fstream>              
 #include <filesystem>           // create_directory()
 #include <ctime>                // put_time(), locattime()
-#include <iomanip>              // cout, cin, endl
-// #include <iostream>
+#include <iomanip>              
+#include <iostream>             // cout, cin, endl
 
 using std::string;
 using std::istringstream;
@@ -17,15 +17,6 @@ using std::stringstream;
 using std::cin;
 using std::cout;
 using std::endl;
-
-namespace fs    =   std::filesystem;
-namespace f     =   std::fstream;
-namespace cs    =   std::chrono::system_clock;
-
-// using json = nlohmann::json;
-// using std::vector;
-// using std::ofstream;
-// using std::ifstream;
 
 int main() {
 
@@ -36,7 +27,7 @@ int main() {
 
     // Create directory for the captured data
     const string& data_storage_location     =   "/tmp/data_exchange/data_capture";
-    fs::create_directory(data_storage_location);
+    std::filesystem::create_directory(data_storage_location);
 
     while (true) {
 
@@ -51,11 +42,11 @@ int main() {
         change.print();
 
         // Capture current time and convert to string format
-        const auto now{cs::now()};                  // Capture the current time using chrono::system_clock
-        const auto now_{cs::to_time_t(now)};        // Convert the current time to a type time_t var;
-        stringstream curr_time;               // Create an empty stringstream var for manipulation
-        curr_time << std::put_time(std::localtime(&now_), "%Y/%m/%d %I:%M:%S %p");            // , complete with specific date/time info
-        const stringstream& curr_filename = "lunatic_data_" + curr_time;
+        const auto now{std::chrono::system_clock::now()};                                       // Capture the current time using chrono::system_clock
+        const auto now_{std::chrono::system_clock::to_time_t(now)};                             // Convert the current time to a type time_t var;
+        stringstream curr_time;                                                                 // Create an empty stringstream var for manipulation
+        curr_time << std::put_time(std::localtime(&now_), "%Y/%m/%d %I:%M:%S %p");              // add local time to curr_time var
+        stringstream curr_filename = stringstream("lunatic_data_" + &curr_time);
 
         // Test that curr_filename is accurate
         cout << curr_filename << endl;
