@@ -1,5 +1,11 @@
 /*
 File-based high performance interprocess data exchange for robotics.
+
+The basic idea here:
+    - Make an aurora::data_exchange<T> to link a class T to a file.
+    - Reads and writes modify the file.
+    - Internally, this uses mmap and MAP_SHARED to be *very* efficient, like nanoseconds per read/write, even across separate processes, even on a Raspberry Pi.
+
 Orion Lawlor, Arsh Chauhan, Addeline Mitchell 2019-11-24
 */
 #ifndef __AURORA_DATA_EXCHANGE_H

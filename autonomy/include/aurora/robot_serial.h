@@ -1,7 +1,11 @@
+/*
+ This is now obsolete, replaced by the nanoslots.
+
 //Author: Aven Bross
 //Date: 3/30/2014
 //Handles serial connection between backend and arduino
 
+*/
 #ifndef __AURORA_ROBOTICS__ROBOT_SERIAL_H
 #define __AURORA_ROBOTICS__ROBOT_SERIAL_H
 

@@ -1,7 +1,9 @@
 /**
- Aurora Robotics general robot code.
+ Aurora Robotics general robot structs: sensors, power, states.
+ 
+ (Ironically, the class robot_base is actually in aurora/robot.h)
 
-  Orion Sky Lawlor, lawlor@alaska.edu, 2014-03-23 (Public Domain)
+ Orion Sky Lawlor, lawlor@alaska.edu, 2014-03-23 (Public Domain)
 */
 #ifndef __AURORA_ROBOTICS__ROBOT_BASE_H
 #define __AURORA_ROBOTICS__ROBOT_BASE_H

@@ -1,5 +1,10 @@
 /**
   Aurora Robotics keyboard user interface code.
+  
+  This is used by both frontend (drive) and backend (backend_driver)
+  to convert keyboard and joystick input into robot power commands.
+  
+  This is the place to add new user interface modes and features.
 
   Orion Sky Lawlor, lawlor@alaska.edu, 2014-03-23 (Public Domain)
 */

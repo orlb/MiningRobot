@@ -1,6 +1,9 @@
 /**
  Aurora Robotics OpenGL display code.
  Shared between front end and back end.
+ 
+ This draws the robot state and telemetry onscreen using OpenGL calls.
+ 
 */
 #ifndef __AURORA_ROBOTICS__DISPLAY_H
 #define __AURORA_ROBOTICS__DISPLAY_H

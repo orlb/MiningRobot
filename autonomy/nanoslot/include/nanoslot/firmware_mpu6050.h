@@ -170,8 +170,8 @@
 
 
 // Number of MPU sensors to address
-#ifndef MPU_count
-#define MPU_count 2
+#ifndef MPU_COUNT
+#define MPU_COUNT 2
 #endif
 
 // The sensor's I2C address is 0x69 (AD0==1 or unconnected) or 0x68 (AD0=0)
@@ -371,12 +371,12 @@ void MPU_setup()
   Wire.begin(); //<- super easy to forget!
   Wire.setWireTimeout(5000,true);
   
-  for (int sensor=0;sensor<MPU_count;sensor++) {
+  for (int sensor=0;sensor<MPU_COUNT;sensor++) {
     pinMode(MPU_selectPins[sensor],OUTPUT);
     digitalWrite(MPU_selectPins[sensor],LOW);
   }
   
-  for (int sensor=0;sensor<MPU_count;sensor++)
+  for (int sensor=0;sensor<MPU_COUNT;sensor++)
   {
     MPU_setup_single(sensor);
   }

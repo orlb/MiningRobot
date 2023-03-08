@@ -1,5 +1,13 @@
 /**
- Aurora Robotics network communication code.
+ Aurora Robotics UDP network communication code.
+ 
+ This is how the pilot frontend (with a human driving it)
+ talks to the robot backend (onboard the robot). 
+ 
+ Internally it uses UDP broadcasts, so on the same subnet 
+ everything should just work automatically.
+ 
+ There is no security--FIXME add at least a simple HMAC. 
  
   Orion Sky Lawlor, lawlor@alaska.edu, 2014-03-23 (Public Domain)
 */

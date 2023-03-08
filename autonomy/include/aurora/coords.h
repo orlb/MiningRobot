@@ -1,4 +1,4 @@
-/* Robot coordinate systems, in 2D and 3D. 
+/* Robot coordinate systems, in 2D and 3D, used for localization and navigation. 
 
 
 Absolute field coordinates:
