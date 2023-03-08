@@ -56,7 +56,7 @@ int main() {
 
 
         // Format variables into file name
-        curr_time << std::put_time(std::localtime(&now_), "%Y/%m/%d_%H:%M:%S_");
+        curr_time << std::put_time(std::localtime(&now_), "%Y/%m/%d_%H:%M:%S:");
         std::string curr_filename = "lunatic_data_" + curr_time.str() + ms_formatted;
 
         // Test that curr_filename is accurate
