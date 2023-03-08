@@ -42,19 +42,27 @@ int main() {
         change.print();
 
         // Capture current time and convert to string format
-        const auto now{std::chrono::system_clock::now()};                                       
-        const auto now_{std::chrono::system_clock::to_time_t(now)};                             
-        stringstream curr_time;                                                                 
-        curr_time << std::put_time(std::localtime(&now_), "%Y/%m/%d_%I:%M:%S_%p");              
-        std::string curr_filename = "lunatic_data_" + curr_time.str();
+        // Create variables
+        const auto now          = std::chrono::high_resolution_clock::now();
+        const auto now_         = std::chrono::system_clock::to_time_t(now);
+        const auto ms           = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
+        string ms_formatted     = std::to_string(ms.count());
+        stringstream curr_time;
+
+        // Format milliseconds to three digits
+        while (ms_formatted.length() < 3) {
+            ms_formatted = ms_formatted.insert(0, "0");
+        }
+
+
+        // Format variables into file name
+        curr_time << std::put_time(std::localtime(&now_), "%Y/%m/%d_%H:%M:%S_");
+        std::string curr_filename = "lunatic_data_" + curr_time.str() + ms_formatted;
 
         // Test that curr_filename is accurate
         cout << curr_filename << endl;
 
         // Create a new file in the tmp dir
-
-
-
 
         // Old code to be reused
         // Process the provided file by writing its data into an output file
