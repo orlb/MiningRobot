@@ -42,11 +42,11 @@ int main() {
         change.print();
 
         // Capture current time and convert to string format
-        const auto now{std::chrono::system_clock::now()};                                       // Capture the current time using chrono::system_clock
-        const auto now_{std::chrono::system_clock::to_time_t(now)};                             // Convert the current time to a type time_t var;
-        stringstream curr_time;                                                                 // Create an empty stringstream var for manipulation
-        curr_time << std::put_time(std::localtime(&now_), "%Y/%m/%d %I:%M:%S %p");              // add local time to curr_time var
-        stringstream curr_filename = stringstream("lunatic_data_" + &curr_time);
+        const auto now{std::chrono::system_clock::now()};                                       
+        const auto now_{std::chrono::system_clock::to_time_t(now)};                             
+        stringstream curr_time;                                                                 
+        curr_time << std::put_time(std::localtime(&now_), "%Y/%m/%d_%I:%M:%S_%p");              
+        std::string curr_filename = "lunatic_data_" + curr_time.str();
 
         // Test that curr_filename is accurate
         cout << curr_filename << endl;
