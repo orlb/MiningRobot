@@ -4,12 +4,12 @@
 
 // Temporary libraries
 
-// #include <string>
+#include <string>
 // #include <fstream>
 // #include <sstream>
 // #include <iomanip>
 // #include <iostream>
-// #include <filesystem>
+#include <filesystem>
 // #include <stdlib.h>
 // 
 // using json = nlohmann::json;
@@ -17,16 +17,25 @@
 // using std::cout;
 // using std::endl;
 // using std::vector;
-// using std::string;
+using std::string;
 // using std::ofstream;
 // using std::ifstream;
 // using std::istringstream;
 
+// namespace fs = std::filesystem;
+
 int main() {
+
     MAKE_exchange_drive_encoders();
     
     aurora::drive_encoders last;
+
     last.left=last.right=0.0f;
+
+    const string data_storage_location = "/tmp/data_exchange/data_capture";
+
+    std::filesystem::create_directory(data_storage_location);
+
     while (true) {
         if (exchange_drive_encoders.updated()) printf("+");
         aurora::drive_encoders cur=exchange_drive_encoders.read();
@@ -35,6 +44,9 @@ int main() {
         change.print();
 
         // Create a new file in the tmp dir
+
+
+
         // Old code to be reused
         // Process the provided file by writing its data into an output file
         // void processOutputFile(const string& filename, const vector< pair< string, int>>& data) {

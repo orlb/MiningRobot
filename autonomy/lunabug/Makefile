@@ -19,7 +19,7 @@ lunatic_print_encoders: lunatic_print_encoders.cpp
 	g++ $(CFLAGS) $< -o $@
 
 lunatic_capture_data: lunatic_capture_data.cpp
-	g++ $(CFLAGS) $< -o $@
+	g++ $(CFLAGS) $< -o sysfex -std=c++17 $@
 
 lunatic_print_stepper: lunatic_print_stepper.cpp
 	g++ $(CFLAGS) $< -o $@
