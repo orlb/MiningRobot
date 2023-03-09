@@ -4,8 +4,7 @@
 #include <chrono>               // system_clock::time_point(), system_clock::now()
 #include <string>               // string()
 #include <sstream>              // stringstream()
-// #include <ofstream>             // create, open, and close files,
-// #include <fstream>              
+#include <fstream>              // create, open, and close files,
 #include <filesystem>           // create_directory()
 #include <ctime>                // put_time(), locattime()
 #include <iomanip>              
@@ -17,6 +16,9 @@ using std::stringstream;
 using std::cin;
 using std::cout;
 using std::endl;
+using std::ofstream;
+
+using json = nlohmann::json;
 
 int main() {
 
@@ -26,7 +28,7 @@ int main() {
     last.left   =   last.right=0.0f;
 
     // Create directory for the captured data
-    const string& data_storage_location     =   "/tmp/data_exchange/data_capture";
+    const string& data_storage_location     =   "/tmp/data_exchange/data_capture/";
     std::filesystem::create_directory(data_storage_location);
 
     while (true) {
@@ -41,57 +43,72 @@ int main() {
         // Print change of drive encoders to terminal
         change.print();
 
+        // The following is necessary code, but I'm stuck right now due to not remembering a lot of the finer
+        // details regarding iterators, pointers, etc.
+
+        // // Make sure the number of files in the data_storage_location is not excessive
+        // int count_files = 0;
+        // int max_num_files = 25;
+        // for (auto& tmp : std::filesystem::directory_iterator(data_storage_location)) {
+        //     count_files++;
+        // }
+        // cout << "Total files: " << count_files << endl;
+        // while (count_files > max_num_files) {
+        //     const auto & curr_path = std::filesystem::directory_iterator(data_storage_location).next();
+        //     std::filesystem::remove(curr_path);
+        //     count_files--;
+        // }
+        // cout << "Total files: " << count_files << endl;
+
+
+
         // Capture current time and convert to string format
         // Create variables
         const auto now          = std::chrono::high_resolution_clock::now();
         const auto now_         = std::chrono::system_clock::to_time_t(now);
         const auto ms           = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
         string ms_formatted     = std::to_string(ms.count());
-        stringstream curr_time;
+        stringstream curr_time_file;
+        stringstream curr_time_json;
 
         // Format milliseconds to three digits
         while (ms_formatted.length() < 3) {
             ms_formatted = ms_formatted.insert(0, "0");
         }
 
+        // Format variables into current time string
+        curr_time_file << std::put_time(std::localtime(&now_), "%Y_%m_%d_%H_%M_%S_");
+        curr_time_json << std::put_time(std::localtime(&now_), "%Y/%m/%d %H:%M:%S:");
 
-        // Format variables into file name
-        curr_time << std::put_time(std::localtime(&now_), "%Y/%m/%d_%H:%M:%S:");
-        std::string curr_filename = "lunatic_data_" + curr_time.str() + ms_formatted;
+        // Craft the json output
+        json output_stream;
+        output_stream["timestamp"] = curr_time_json.str() + ms_formatted;
+        std::string curr_filename = "lunatic_data_" + curr_time_file.str() + ms_formatted;
+
+        // Test that json is formatted properly:
+    
+        string test = output_stream.dump();
+        cout << test << endl;
+
 
         // Test that curr_filename is accurate
         cout << curr_filename << endl;
 
-        // Create a new file in the tmp dir
+        // Create path to new file
+        const string& curr_path = data_storage_location + curr_filename + ".json";
+        cout << curr_path << endl;
 
-        // Old code to be reused
-        // Process the provided file by writing its data into an output file
-        // void processOutputFile(const string& filename, const vector< pair< string, int>>& data) {
-        // 
-        //     ofstream fout(filename);
-        // 
-        //     if (!fout) {
-        //         cout << "Error opening output file" << endl;
-        //         exit(0);
-        //     }
-        // 
-        //     // Ensure the longest length of any word is represented in the column format for each word
-        //     int len = (int)(data.size());
-        // 
-        //     int longestLen = 0;
-        // 
-        //     for (int i = 0; i < len; i++) {
-        //         if (longestLen < (int)data.at(i).first.size()) {
-        //             longestLen = (int)data.at(i).first.size();
-        //         }
-        //     }
-        // 
-        //     for (int i = 0; i < len; i++) {
-        //         fout << left << setw(longestLen) << data.at(i).first << " " << setw(5) << right << data.at(i).second << endl;
-        //     }
-        // 
-        // }
-        
+        // Create a new file in the tmp dir
+        ofstream fout(curr_path);
+     
+        if (!fout) {
+            cout << "Error opening output file" << endl;
+            exit(-1);
+        }
+
+        fout << output_stream; 
+        fout.close();
+
         last=cur;
         
         aurora::data_exchange_sleep(100);
