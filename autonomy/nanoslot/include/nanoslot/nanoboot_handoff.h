@@ -58,13 +58,13 @@ protected:
         :pkt(Serial)
     {}
     
-    bool set_up_serial(const std::string &serial_port) {
+    bool set_up_serial(const std::string &serial_port,int waitscale=1) {
         Serial.Open(serial_port);
         Serial.Set_baud(NANOSLOT_BAUD_RATE);
         if(Serial.Is_open())
         {
             std::cout << "  Opened "<<serial_port<<std::endl; 
-            data_exchange_sleep(NANOSLOT_BOOTLOADER_DELAY_MS); // wait through bootloader (which can hang if you immediately start sending it data)
+            data_exchange_sleep(waitscale*NANOSLOT_BOOTLOADER_DELAY_MS); // wait through bootloader (which can hang if you immediately start sending it data)
             return true;
         }
         else 
@@ -106,7 +106,7 @@ public:
 #endif
         if (*argc>2 && 0==strcmp("--dev",(*argv)[1]))
         { // command line case (used for development and testing)
-            set_up_serial((*argv)[2]);
+            set_up_serial((*argv)[2],10);
         } 
         else {
             printf("Usage: slotprogram --dev /dev/ttyUSB0\n");
@@ -146,8 +146,15 @@ public:
         }
         else { // No valid data, or error getting data
             fail_count++;
-            if (fail_count>20) { // disconnect?
+            bool bad=fail_count>=100;
+            if (packet_count>=10 && fail_count>=10) 
+            { // disconnect fast if we were solidly connected before
+                bad=true;
+            }
+            
+            if (bad) { // disconnected
                 /* Possible causes of serial disconnects:
+                    - Unplugged Arduino
                     - Arduino IDE serial monitor open (screws up serial state)
                     - Noise on the USB line
                 */
