@@ -59,6 +59,18 @@ Build instructions:
 	./backend --sim
 (The backend without --sim tries to connect to the nanoslot data exchange.)
 
+Make Arduino comms work:
+	sudo vipw -g
+	... add your account to the dialout group and re-login ...
+	sudo apt-get remove modemmanager brltty
+	sudo apt-get install libfuse2
+	... now open autonomy/nanoslot/slot_F0/firmware_F0/firmware_F0.ino in the Arduino IDE 2.0 ...
+	
+On a Raspberry Pi:
+	A Pi compatible Arduino IDE 2.0 build is here: 
+		https://github.com/koendv/arduino-ide-raspberrypi
+	Decrease bloat with:
+		sudo apt-get remove cups avahi-daemon update-notifier
 
 For the aruco marker viewer:
 	sudo apt-get install cmake libopencv-dev
