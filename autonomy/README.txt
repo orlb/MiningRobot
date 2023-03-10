@@ -94,6 +94,14 @@ For the realsense viewer:
   sudo cp ../config/99-realsense-libusb.rules /etc/udev/rules.d/99-realsense-libusb.rules && sudo udevadm control --reload-rules && sudo udevadm trigger
 
 
+For debug operation of the nanoslot programs, you can start them 
+manually.  For full robot operation, you want them reliably started
+automatically on hotplug.  There is a script to do this here:
+  cd nanoslot/install
+  sudo ./install.sh
+This requires a user named "robot", and creates a directory "/nanoslot".
+
+
 ros packages are to be determined.
 
 
