@@ -95,14 +95,26 @@ For the realsense viewer:
 
 
 For debug operation of the nanoslot programs, you can start them 
-manually.  For full robot operation, you want them reliably started
+manually.  For full on-robot operation, you want them reliably started
 automatically on hotplug.  There is a script to do this here:
   cd nanoslot/install
   sudo ./install.sh
 This requires a user named "robot", and creates a directory "/nanoslot".
+Watch nanoslot operations and slot program print output with:
+  tail -f /nanoslot/log
 
 
-ros packages are to be determined.
+ROS setup for Ubuntu 22.04 (ROS2 humble) from:
+  https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html
+
+sudo add-apt-repository universe
+sudo apt update
+sudo apt install software-properties-common curl
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+sudo apt update
+sudo apt install ros-humble-desktop ros-dev-tools
+
 
 
 
