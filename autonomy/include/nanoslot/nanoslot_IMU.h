@@ -18,8 +18,8 @@ class vec3 {
     vec3(float x_, float y_, float z_) :x(x_), y(y_), z(z_) {}
 };
 #else
-// Full vec3 for PC
-#include "../../include/aurora/vec3.h" /* 3D vector type used for output */
+// Full vec3, for Pi or PC
+#include "../aurora/vec3.h" /* 3D vector type used for output */
 
 #endif // __AVR__ conditional
 
