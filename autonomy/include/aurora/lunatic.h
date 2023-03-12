@@ -40,7 +40,7 @@ This header is the project Interface Control Document (ICD).
 #include "../aurora/data_exchange.h" /* file I/O code */
 #include "../aurora/robot_base.h" /* basic structs */
 #include "../vision/grid.hpp" /* path planning */
-#include "../../nanoslot/include/nanoslot/nanoslot_exchange.h" /* Arduino comms */
+#include "../nanoslot/nanoslot_exchange.h" /* Arduino comms */
 
 namespace aurora {
 
