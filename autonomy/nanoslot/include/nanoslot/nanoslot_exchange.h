@@ -18,55 +18,13 @@
 #ifndef NANOSLOT_EXCHANGE_H
 #define NANOSLOT_EXCHANGE_H 1
 
+#include "nanoslot_IMU.h"
+
 /* Datatypes used */
 typedef uint8_t nanoslot_byte_t; ///< generic data byte
 typedef uint8_t nanoslot_heartbeat_t; ///< heartbeat (watchdog-type counter)
 typedef int8_t nanoslot_motorpercent_t; ///< -100 for full reverse, 0 for stop, +100 for full forward
 typedef int8_t nanoslot_padding_t[3]; ///< padding to avoid false sharing between slots
-
-// Packed bitfield struct holding 10-bit XYZ values.
-//   Used for gyro and accelerometer data.  Will be padded to 4-byte alignment.
-struct nanoslot_xyz10_t {
-	int32_t x:10;
-	int32_t y:10;
-	int32_t z:10;
-	uint32_t type:2; // Round out to 32 bits with scaling/valid flag
-	enum {
-	    type_1x = 0, // scale 1x
-	    type_2x = 1, // scale 2x
-	    type_4x = 2, // scale 4x
-	    type_invalid = 3
-	};
-	
-	void invalidate(void) {
-	    x=y=z=0;
-	    type=type_invalid;
-	}
-	bool valid(void) {
-	    return type!=type_invalid;
-	}
-	
-#if _STDIO_H
-    void print(const char *name) {
-        printf("%s %4d %4d %4d (%d) ",
-            name,x,y,z,type);
-    }
-#endif
-};
-
-// 3D vector type
-typedef nanoslot_xyz10_t nanoslot_vec3_t;
-
-// Inertial measurement unit (IMU) data
-//  Will be padded to 4-byte alignment.
-struct nanoslot_IMU_t {
-    nanoslot_vec3_t acc; /// Accelerometer down vector (gravity)
-    nanoslot_vec3_t gyro; /// Gyro rotation rates
-    
-    void invalidate(void) {
-        acc.invalidate(); gyro.invalidate();
-    }
-};
 
 /** Generic firmware state */
 struct nanoslot_state {
@@ -180,8 +138,12 @@ struct nanoslot_sensor_0xF1 {
     // need a multiple of 4 bytes for Arduino and PC to agree on struct padding
     nanoslot_byte_t spare[3];
 };
+
 struct nanoslot_state_0xF1 : public nanoslot_state {
-    // FIXME: filtered IMU values (smoothed, vibration estimate, de-vertigo etc)
+    nanoslot_IMU_state frame; ///< Drive frame
+    nanoslot_IMU_state boom; ///< Robot arm boom
+    nanoslot_IMU_state fork; ///< Front scoop fork
+    nanoslot_IMU_state dump; ///< Front scoop dump
 };
 
 

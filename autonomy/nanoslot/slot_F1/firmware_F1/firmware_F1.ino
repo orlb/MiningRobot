@@ -4,10 +4,6 @@
 #define NANOSLOT_MY_ID 0xF1
 #include "nanoslot/firmware.h"
 
-/* accelerometer/gyro IMUs:
-   0 is on tool coupler
-   1 is on stick frame
-*/
 #define MPU_COUNT (NANOSLOT_SENSOR_MY::n_imu)  
 #include "nanoslot/firmware_mpu6050.h"
 

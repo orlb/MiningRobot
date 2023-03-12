@@ -221,6 +221,7 @@ public:
     
     NANOSLOT_SENSOR_MY my_sensor={0};
     NANOSLOT_COMMAND_MY my_command={0};
+    NANOSLOT_STATE_MY my_state={0};
     
     nanoslot_lunatic(int *argc,char ***argv)
         :nanoslot_comms(argc,argv)
@@ -239,6 +240,7 @@ public:
         { // write sensor data to the exchange
             nanoslot_exchange &nano=exchange_nanoslot.write_begin();
             NANOSLOT_MY_EX.sensor=my_sensor;
+            NANOSLOT_MY_EX.state=my_state;
             NANOSLOT_MY_EX.debug.packet_count++;
             exchange_nanoslot.write_end();
         }
