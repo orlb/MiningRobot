@@ -26,7 +26,6 @@ autonomy/aruco/aruco-3.0.11/CMakeFiles/cmake.check_cache
 *.slo
 *.lo
 *.o
-*.obj
 
 # Precompiled Headers
 *.gch
