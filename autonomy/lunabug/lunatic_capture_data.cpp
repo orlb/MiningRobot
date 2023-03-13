@@ -17,11 +17,15 @@ using std::cin;
 using std::cout;
 using std::endl;
 using std::ofstream;
+using std::to_string;
 
 using json = nlohmann::json;
 
 // Create a new output file for json data streaming
-ofstream createNewFile();
+string createNewFileName();
+
+// Create a new output file for json data streaming
+ofstream createNewFile(const string& filename, const string& location);
 
 // Capture the current time and return in string format
 string capture_time();
@@ -33,7 +37,7 @@ string capture_date();
 std::string ReplaceString(std::string subject, const std::string& search, const std::string& replace);
 
 // Set data storage location
-const string& data_storage_location = "/tmp/data_exchange/data_capture/";
+const string& data_location = "/tmp/data_exchange/data_capture/";
 
 int main() {
 
@@ -43,10 +47,17 @@ int main() {
     last.left   =   last.right  =   0.0f;
 
     // Create ofstream stream for json data streaming
-    ofstream fout = createNewFile();
+    string filename = createNewFileName();
+    ofstream fout = createNewFile(filename, data_location);
 
     // Initiate json structure in output stream
     fout << "{}";
+
+    // Close output stream
+    fout.close();
+
+    // Set path to file
+    string data_path = data_location + filename;
 
     while (true) {
 
@@ -60,7 +71,6 @@ int main() {
         // Print change of drive encoders to terminal
         change.print();
 
-
         // Capture current time and convert to string format
         // Create variables
         const auto now          = std::chrono::high_resolution_clock::now();
@@ -69,31 +79,35 @@ int main() {
 
         // Craft the json output
         json output_stream;
-        output_stream["date"] = curr_date_json.str();
-        output_stream["time"] = curr_time_json.str() + ms_formatted;
-        output_stream["left"] = std::to_string(last.left);
-        output_stream["right"] = std::to_string(last.right);
+        output_stream["date"]   = capture_date();
+        output_stream["time"]   = capture_time();
+        output_stream["left"]   = to_string(last.left);
+        output_stream["right"]  = to_string(last.right);
 
         // Test that json is formatted properly:
     
         string test = output_stream.dump();
         cout << test << endl;
 
+        // Open data_location
+        std::fstream file(data_path);
 
+        if (!file) {
+            std::cerr << "Failed to open data file" << endl;
+            return 0;
+        }
 
-        fout << output_stream; 
+        // Write json output
+        file << output_stream; 
         fout.close();
 
+        // Reset 
         last=cur;
-        
         aurora::data_exchange_sleep(100);
     }
 }
 
-ofstream createNewFile() {
-
-    // Create directory for the captured data
-    std::filesystem::create_directory(data_storage_location);
+string createNewFileName() {
 
     // Capture time
     string time_file = capture_time();
@@ -109,11 +123,21 @@ ofstream createNewFile() {
     stringstream filename;
     filename << "lunatic_data_" << date_file << "_" << time_file << ".json";
 
-    // Test that filename is accurate
+    // Check filename accuracy
     cout << filename << endl;
 
+    return filename.str();
+
+}
+
+// Create new file
+ofstream createNewFile(const string& filename, const string& location) {
+
+    // Create directory for the captured data
+    std::filesystem::create_directory(location);
+
     // Create path to new file
-    const string& curr_path = data_storage_location + curr_filename;
+    const string& curr_path = location + filename;
     cout << curr_path << endl;
 
     // Create a new file in the tmp dir
@@ -125,7 +149,6 @@ ofstream createNewFile() {
     }
 
     return fout;
-
 
 }
 
