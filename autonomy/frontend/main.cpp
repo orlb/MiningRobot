@@ -14,6 +14,7 @@
 #include "aurora/robot_base.h"
 #include "aurora/robot_states.cpp"
 #include "aurora/display.h" /* for graphics */
+#include "aurora/kinematic_links.cpp"
 #include "aurora/network.h"
 #include "aurora/ui.h"
 
@@ -147,7 +148,7 @@ void robot_manager_t::update(void) {
 	
 	robotPrintln("Location %.0f,%0.0f,%0.0f",robot.loc.x,robot.loc.y,robot.loc.angle);
 	
-	robot_display(robot.loc);
+	robot_2D_display(robot.loc);
 	
 	robot_display_autonomy(telemetry.autonomy);
 
@@ -160,6 +161,8 @@ extern "C" void display(void) {
 	robot_display_setup(robot_manager.robot);
 	
 	robot_manager.update();
+	
+	robot_display_text(robot_manager.robot);
 	
 	glutSwapBuffers();
 	glutPostRedisplay();
