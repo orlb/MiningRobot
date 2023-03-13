@@ -102,7 +102,7 @@ public:
         return angle;
     }
 
-//#ifdef __gl_h_ /* OpenGL support */
+#ifdef __gl_h_ /* OpenGL support */
     /// Apply the OpenGL transform to get from this link to its parent.
     static void glTransform(robot_link_index L,const robot_joint_state &state)
     {
@@ -117,7 +117,7 @@ public:
         default: break;
         };
     }
-//#endif
+#endif
     
 };
 
