@@ -163,6 +163,25 @@ typedef enum {
 const char *state_to_string(robot_state_t state);
 
 
+
+/** The angles, in degrees, of each robot joint. 
+  For example, joints.angle.boom is the angle of the boom over the frame.
+  This is a union, so joints.angle.boom == joints.array[2]
+  
+  See aurora/kinematics.h for details on each link.
+*/
+union robot_joint_state {
+    struct {
+        /// Joint angles in degrees
+        float fork, dump, boom, stick, tilt, spin;
+    } angle;
+
+    // This allows you to access the same angles as an array
+    enum {count=6};
+    float array[count];
+};
+
+
 // Everything about the visible computer vision markers / apriltags
 class robot_markers_all {
 public:
@@ -180,6 +199,7 @@ public:
 class robot_base {
 public:
 	robot_state_t state; ///< Current control state
+	robot_joint_state joint; ///< Current joint angles
 	robot_sensors_arduino sensor;  ///< Current hardware sensor values
 	robot_localization loc; ///< Location
 	robot_power power; // Current drive commands

@@ -72,6 +72,13 @@ void arduino_sensor_read(robot_base &robot)
     
     robot.sensor.encoder_raw=int(driveslot.sensor.raw);
     robot.sensor.stall_raw=int(driveslot.sensor.stall);
+    
+    
+    // Copy joint orientations from IMU data
+    //   FIXME: additional sanity checking here, or in slot program?
+    robot.joint.angle.boom=nano.slot_F1.state.boom.pitch;
+    robot.joint.angle.fork=nano.slot_F1.state.fork.pitch;
+    robot.joint.angle.dump=nano.slot_F1.state.dump.pitch;
 }
 
 /*
@@ -194,6 +201,9 @@ public:
   int robot_insanity_counter = 0;
 
   robot_manager_t() {
+    // Zero out the joints until we hear otherwise
+    for (int i=0;i<robot_joint_state::count;i++) robot.joint.array[i]=0.0f;
+    
     robot.sensor.limit_top=1;
     robot.sensor.limit_bottom=1;
     
@@ -693,33 +703,14 @@ void robot_manager_t::update(void) {
     robotPrintln("Slot A0 STOP command");
   }
 
-
-    // TEST TEST: attach a few IMU values directly to the joint state.
-    using namespace aurora;
-    robot_joint_state jointstate;
-    for (int i=0;i<robot_joint_state::count;i++) jointstate.array[i]=0.0f;
-    jointstate.angle.boom=nano.slot_F1.state.boom.pitch;
-    jointstate.angle.fork=nano.slot_F1.state.fork.pitch;
-    jointstate.angle.dump=nano.slot_F1.state.dump.pitch;
-    jointstate.angle.stick=-45.0f; // from nano.slot_A1 eventually...    
-
-
     // Show estimated robot location
     robot_2D_display(locator.merged);
     robot_display_autonomy(telemetry.autonomy);
     
     // Draw current robot joint configuration (side view)
     robot_3D_setup();
-    for (float tilt : {-60,0,+60}) {
-        jointstate.angle.tilt=tilt;
-        robot_3D_draw(jointstate);
-    }
-    
+    robot_3D_draw(robot.joint);
     robot_3D_cleanup();
-    
-
-
-
 
 
   
@@ -770,13 +761,15 @@ void robot_manager_t::update(void) {
   {
     last_send=cur_time;
     // robotPrintln("Sending telemetry, waiting for command");
-    telemetry.count++;
-    telemetry.state=robot.state; // copy current values out for send
-    telemetry.sensor=robot.sensor;
-    telemetry.power=robot.power;
-    telemetry.loc=locator.merged; 
+    robot.loc=locator.merged;
     locator.merged.percent*=0.999; // slowly lose location fix
 
+    // Wacky way to copy over all robot_base fields from robot to telemetry:
+    *static_cast<robot_base *>(&telemetry) = robot; 
+    
+    telemetry.count++;
+    telemetry.state=robot.state; // copy current values out for send
+    
     comms.broadcast(telemetry);
   }
 
@@ -796,12 +789,9 @@ void robot_manager_t::update(void) {
   sim.simulate(robot.power,dt);
   
   // Drop the current state onto the exchange
-  aurora::backend_state s;
+  aurora::backend_state s{robot};
   s.cur_time = cur_time;
   s.state_start_time = state_start_time;
-  s.state = robot.state;
-  s.power = robot.power;
-  s.sensor = robot.sensor;
   exchange_backend_state.write_begin() = s;
   exchange_backend_state.write_end();
   

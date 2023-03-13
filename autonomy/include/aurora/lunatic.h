@@ -59,14 +59,17 @@ namespace aurora {
   It's written by the backend, and read by lunabug/lunatic_print_state
   and other debug and visualization tools.
 */
-struct backend_state {
+struct backend_state : public robot_base {
+    // The fields state, joint, sensor, loc, power etc inherited from robot_base
+
     // Times are all in seconds
     double cur_time; ///< time since we started up the backend 
-    double state_start_time; ///< cur_time when we entered this state
+    double state_start_time; ///< cur_time when we entered this state  
     
-    robot_state_t state; ///< Current control state
-    robot_power power; // Current drive commands
-    robot_sensors_arduino sensor;  ///< Current hardware sensor values	
+    /// Default constructor (does nothing)
+    backend_state() {}
+    /// Fancy way to copy over all the robot_base fields
+    backend_state(const robot_base &base) :robot_base(base) {}  
 };
 
 /** This macro declares the variable used to 

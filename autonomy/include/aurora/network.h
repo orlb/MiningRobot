@@ -47,7 +47,7 @@ public:
   
   // Beacon-detected obstacles
   unsigned short obstacle_len;
-  enum {max_obstacle_len=100}; // only 6 bytes each
+  enum {max_obstacle_len=50}; // only 6 bytes each
   aurora_detected_obstacle obstacles[max_obstacle_len];
   
   robot_autonomy_state() {
@@ -73,17 +73,14 @@ inline int vector_copy_limited(T *dest,const std::vector<T> &src,int limit)
  The UDP header occupies 28-odd bytes already, so 
  there's no point in sweating every last bit.
 */
-class robot_telemetry {
+class robot_telemetry : public robot_base {
 public:
 	byte type; ///< 'h' for ordinary telemetry heartbeat
 	byte count; ///< counts 0-255 (to detect lost packets, reordering, etc)
 	
-	byte state; ///< Robot's current state code.  See state codes in robot.h
 	byte ack_state; ///< Copy of last-received state change command.
-	robot_sensors_arduino sensor; ///< Robot's current raw sensor values (bitfield).  
-	robot_localization loc; ///< Backend's current localization values. 
-	robot_power power; ///< Current actuator power values (for debugging only)
-	robot_autonomy_state autonomy;
+	
+	robot_autonomy_state autonomy; ///< Debugging data about autonomous operation
 	
 	// Works like a constructor, but can't have constructors, this is plain-old-data.
 	robot_telemetry() { type='h'; count=0; state=state_STOP; }

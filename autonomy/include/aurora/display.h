@@ -123,7 +123,7 @@ void robot_3D_setup(float Zrot=-90.0f) {
 }
 
 /* Draw robot in this joint state */
-void robot_3D_draw(const aurora::robot_joint_state &jointstate)
+void robot_3D_draw(const robot_joint_state &jointstate)
 {
     using namespace aurora;
 

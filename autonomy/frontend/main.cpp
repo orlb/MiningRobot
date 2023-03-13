@@ -96,7 +96,7 @@ void robot_manager_t::update(void) {
 		{ // grab telemetry from backend
 			comms.receive(telemetry);
 			
-			robot.state=(robot_state_t)telemetry.state;
+			robot=telemetry; // copy over all fields
 			
 			static int last_state=robot.state;
 			if (last_state!=robot.state)
@@ -110,14 +110,6 @@ void robot_manager_t::update(void) {
 					robotState_requested=state_last; // confirmed.
 				}
 			}
-			
-			robot.sensor=telemetry.sensor;
-			robot.loc=telemetry.loc;
-			if (robot.state!=state_drive) 
-			{ // show autonomous mode power
-				robot.power=telemetry.power;
-				 
-			}	
 			
 			robotPrintln("Telemetry: state %s (%d bytes)",
 				state_to_string((robot_state_t)telemetry.state),
@@ -149,6 +141,10 @@ void robot_manager_t::update(void) {
 	robotPrintln("Location %.0f,%0.0f,%0.0f",robot.loc.x,robot.loc.y,robot.loc.angle);
 	
 	robot_2D_display(robot.loc);
+	
+	robot_3D_setup();
+	robot_3D_draw(robot.joint);
+	robot_3D_cleanup();
 	
 	robot_display_autonomy(telemetry.autonomy);
 
