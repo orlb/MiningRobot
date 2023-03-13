@@ -103,17 +103,14 @@ ofstream createNewFile() {
 
     // Convert vars to file format
     time_file = ReplaceStringInPlace(time_file, ":", "_");
-    date_file = ReplaceStringInPlace(date_file, "\/", "_");
+    date_file = ReplaceStringInPlace(date_file, "/", "_");
 
     // Craft filename
     stringstream filename;
-    filename << date_file + "_" + time_file + ".json";
+    filename << "lunatic_data_" << date_file << "_" << time_file << ".json";
 
-    // Create filename
-    std::string filename = "lunatic_data_" + filename.str();
-
-    // Test that curr_filename is accurate
-    cout << curr_filename << endl;
+    // Test that filename is accurate
+    cout << filename << endl;
 
     // Create path to new file
     const string& curr_path = data_storage_location + curr_filename;
@@ -132,19 +129,17 @@ ofstream createNewFile() {
 
 }
 
+// Capture current time
 string capture_time() {
 
     // Capture current time
-    const auto file_timestamp          = std::chrono::high_resolution_clock::now();
-    const auto file_timestamp_         = std::chrono::system_clock::to_time_t(file_timestamp);
-    const auto file_ms           = std::chrono::duration_cast<std::chrono::milliseconds>(file_timestamp.time_since_epoch()) % 1000;
+    const auto timestamp           = std::chrono::high_resolution_clock::now();
+    const auto timestamp_          = std::chrono::system_clock::to_time_t(timestamp);
+    const auto ms                  = std::chrono::duration_cast<std::chrono::milliseconds>(timestamp.time_since_epoch()) % 1000;
 
     // Convert current time to string format
-    string file_ms_formatted     = std::to_string(file_ms.count());
-
-    string ms_formatted     = std::to_string(ms.count());
-    stringstream curr_time_json;
-    stringstream curr_date_json;
+    string ms_formatted            = std::to_string(ms.count());
+    stringstream time_output;
 
     // Format milliseconds to three digits
     while (ms_formatted.length() < 3) {
@@ -152,19 +147,39 @@ string capture_time() {
     }
 
     // Format variables into current time string
-    curr_time_json << std::put_time(std::localtime(&now_), "%H:%M:%S:"); curr_date_json << std::put_time(std::localtime(&now_), "%Y/%m/%d");
+    time_output << std::put_time(std::localtime(&timestamp_), "%H:%M:%S:") << ms_formatted;
+
+    return time_output.str();
 }
 
-string capture_date();
+// Capture current date
+string capture_date() {
+    // Capture current date
+    const auto datestamp           = std::chrono::high_resolution_clock::now();
+    const auto datestamp_          = std::chrono::system_clock::to_time_t(timestamp);
+
+    // Convert current time to string format
+    stringstream date_output;
+
+    // Format variables into current time string
+    date_output << std::put_time(std::localtime(&datestamp_), "%Y/%m/%d") << ms_formatted;
+
+    return date_output.str();
+
+}
 
 // Find and replace within string (function copied from stackoverflow: https://tinyurl.com/48fvpu6n via Czarek Tomcza)
 std::string ReplaceString(std::string subject, const std::string& search, const std::string& replace) {
 
-        size_t pos = 0;
-            while ((pos = subject.find(search, pos)) != std::string::npos) {
-                         subject.replace(pos, search.length(), replace);
-                                  pos += replace.length();
-                                      }
-                return subject;
+    // Set initial position at 0
+    size_t pos = 0;
+
+    // Search through subject and replace wherever char is found
+    while ((pos = subject.find(search, pos)) != std::string::npos) {
+        subject.replace(pos, search.length(), replace);
+            pos += replace.length();
+    }
+
+    return subject;
 
 }
