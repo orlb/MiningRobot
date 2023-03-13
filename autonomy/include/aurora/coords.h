@@ -268,6 +268,25 @@ struct robot_navtarget : public robot_center2D {
 };
 
 
+
+
+/** The angles, in degrees, of each robot joint. 
+  For example, joints.angle.boom is the angle of the boom over the frame.
+  This is a union, so joints.angle.boom == joints.array[2]
+*/
+union robot_joint_state {
+    struct {
+        /// Joint angles in degrees
+        float fork, dump, boom, stick, tilt, spin;
+    } angle;
+
+    // This allows you to access the same angles as an array
+    enum {count=6};
+    float array[count];
+};
+
+
+
 };
 
 // Old name for robot_loc2D: robot_localization

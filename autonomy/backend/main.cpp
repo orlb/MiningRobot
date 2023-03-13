@@ -16,6 +16,10 @@
 #include "aurora/robot_base.h"
 #include "aurora/robot_states.cpp"
 #include "aurora/display.h"
+
+#include "aurora/kinematics.h"
+#include "aurora/kinematic_links.cpp"
+
 #include "aurora/network.h"
 #include "aurora/ui.h"
 
@@ -606,12 +610,6 @@ void robot_manager_t::update(void) {
   }
 #endif
 
-// Show real and simulated robots
-//needs to be updated for new data exchange?
-  robot_display(locator.merged);
-
-	robot_display_autonomy(telemetry.autonomy);
-
 // Check for a command broadcast (briefly)
   int n;
   while (0!=(n=comms.available(10))) {
@@ -689,13 +687,41 @@ void robot_manager_t::update(void) {
     arduino_sensor_read(robot);
     nano=exchange_nanoslot.read();
   }
-  
-  
   if (nano.slot_A0.sensor.stop && robot.state!=state_STOP) {
     enter_state(state_STOP);
     robot.power.stop();
     robotPrintln("Slot A0 STOP command");
   }
+
+
+    // TEST TEST: attach a few IMU values directly to the joint state.
+    using namespace aurora;
+    robot_joint_state jointstate;
+    for (int i=0;i<robot_joint_state::count;i++) jointstate.array[i]=0.0f;
+    jointstate.angle.boom=nano.slot_F1.state.boom.pitch;
+    jointstate.angle.fork=nano.slot_F1.state.fork.pitch;
+    jointstate.angle.dump=nano.slot_F1.state.dump.pitch;
+    jointstate.angle.stick=-45.0f; // from nano.slot_A1 eventually...    
+
+
+    // Show estimated robot location
+    robot_2D_display(locator.merged);
+    robot_display_autonomy(telemetry.autonomy);
+    
+    // Draw current robot joint configuration (side view)
+    robot_3D_setup();
+    for (float tilt : {-60,0,+60}) {
+        jointstate.angle.tilt=tilt;
+        robot_3D_draw(jointstate);
+    }
+    
+    robot_3D_cleanup();
+    
+
+
+
+
+
   
   if (robot.state==state_mine) 
   { // TESTING ONLY: keep the front tool level
@@ -707,13 +733,9 @@ void robot_manager_t::update(void) {
     robot.power.tilt=send;
     if (fabs(drive)<5) robot.power.stop(); //<- deadband, bigger than noise
   }
-  
-  speed_Mcount=robot.sensor.McountL-last_Mcount;
-  float smoothing=0.3;
-  smooth_Mcount=speed_Mcount*smoothing + smooth_Mcount*(1.0-smoothing);
-  robotPrintln("Mcount smoothed: %.1f, speed %d\n",
-     smooth_Mcount, speed_Mcount);
-  last_Mcount=robot.sensor.McountL;
+
+
+
 
   // Fake the bucket sensor from the sim (no hardware sensor for now)
   robot.sensor.bucket=sim.bucket*(950-179)+179;
@@ -790,6 +812,8 @@ void display(void) {
   robot_display_setup(robot_manager->robot);
 
   robot_manager->update();
+  
+  robot_display_text(robot_manager->robot);
 
   if (video_texture_ID) {
     glTranslatef(field_x_GUI+350.0,100.0,0.0);
@@ -815,7 +839,7 @@ int main(int argc,char *argv[])
   glutInit(&argc,argv);
 
   // Set screen size
-  int w=1200, h=700;
+  int w=1000, h=600;
   for (int argi=1;argi<argc;argi++) {
     if (0==strcmp(argv[argi],"--sim")) {
       simulate_only=true;

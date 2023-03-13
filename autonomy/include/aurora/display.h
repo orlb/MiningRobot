@@ -16,6 +16,11 @@
 #include "osl/vec2.h"
 #include "aurora/network.h"
 #include "aurora/coords.h"
+
+// Needed to draw the robot:
+#include "aurora/model.h" // OBJ model file loader
+#include "aurora/kinematics.h" // joint orientations
+
 #include <string>
 
 robot_state_t robotState_requested=state_last;
@@ -98,11 +103,139 @@ inline float state_to_Y(int state) {
 	return field_y_size*(state_last-state)*(1.0/state_last);
 }
 
+/* Set up for 3D side view of robot */
+void robot_3D_setup(float Zrot=-90.0f) {
+    // Incoming coordinate system: centimeters field coordinates
+    //    X+ screen right, Y+ screen up, Z+ toward camera
+    // Intermediate coordinate system: robot frame coordinates for front view
+    //    X+ screen right, Y+ toward camera, Z+ screen up
+    // Outgoing coordinate system: robot frame coordinates for side view
+    //    X+ toward camera, Y+ screen right, Z+ screen up
+    glPushMatrix();
+    glScalef(100.0f,100.0f,0.1f); // from cm to meters (and squish Z so it doesn't clip)
+    glTranslatef(1.0f,0.0f,0.0f); // meters field coordinates to origin of side view of robot
+    float zoom=2.5; // Zoom from field coords to robot coords
+    glScalef(zoom,zoom,1.0f);
+    glRotatef(-90.0f,1.0f,0.0f,0.0f); // rotate around X to front view
+    glRotatef(Zrot,0.0f,0.0f,1.0f); // rotate around Z to side view
+    
+    //glRotatef(-5.0f,0.0f,1.0f,0.0f); // rotate around Y to gently tip the view  
+}
+
+/* Draw robot in this joint state */
+void robot_3D_draw(const aurora::robot_joint_state &jointstate)
+{
+    using namespace aurora;
+
+    float colorPrint[3]={0.2,0.2,0.3}; // black 3D printed parts
+    float colorBox[3]={0.7,0.7,0.6}; // electronics boxes
+    float colorFrame[3]={0.8,0.8,0.7}; // white painted steel frame
+
+    static bool meshes_OK=true;
+    if (meshes_OK) {
+        try {
+            static mesh mesh_frameBox=readOBJmesh("../../documentation/obj/frameBox.obj");
+            static mesh mesh_frame=readOBJmesh("../../documentation/obj/frame.obj");
+
+            static mesh mesh_fork=readOBJmesh("../../documentation/obj/fork.obj");
+            static mesh mesh_dump=readOBJmesh("../../documentation/obj/dump.obj");
+
+            static mesh mesh_boom=readOBJmesh("../../documentation/obj/boom.obj");
+            static mesh mesh_stick=readOBJmesh("../../documentation/obj/stick.obj");
+            static mesh mesh_stickCamera=readOBJmesh("../../documentation/obj/stickCamera.obj");
+            static mesh mesh_stickBox=readOBJmesh("../../documentation/obj/stickBox.obj");
+
+            static mesh mesh_tilt=readOBJmesh("../../documentation/obj/tilt.obj");
+            static mesh mesh_tool=readOBJmesh("../../documentation/obj/tool.obj");
+
+            static mesh mesh_grinder=readOBJmesh("../../documentation/obj/Rockgrinder.obj");
+
+            static mesh mesh_wheel=readOBJmesh("../../documentation/obj/wheel.obj");
+            
+            glPushMatrix();
+            robot_link_coords::glTransform(link_frame,jointstate);
+            
+            // The scoop
+            glColor3fv(colorBox);
+            glPushMatrix();
+            robot_link_coords::glTransform(link_fork,jointstate);
+            mesh_fork.draw();
+            robot_link_coords::glTransform(link_dump,jointstate);
+            mesh_dump.draw();
+            glPopMatrix();
+
+            // The frame
+            glColor3fv(colorBox);
+            mesh_frameBox.draw();
+            glColor3fv(colorFrame);
+            mesh_frame.draw();
+
+            glPushMatrix();
+            // The boom      
+            robot_link_coords::glTransform(link_boom,jointstate);
+            mesh_boom.draw();
+
+            // The stick
+            robot_link_coords::glTransform(link_stick,jointstate);
+            glColor3fv(colorBox);
+            mesh_stickBox.draw();
+            glColor3fv(colorFrame);
+            mesh_stick.draw();
+            glColor3fv(colorPrint);
+            mesh_stickCamera.draw();
+
+            // The tool coupler
+            robot_link_coords::glTransform(link_tilt,jointstate);
+            glColor3fv(colorFrame);
+            mesh_tilt.draw();
+            robot_link_coords::glTransform(link_spin,jointstate);
+            robot_link_coords::glTransform(link_coupler,jointstate);
+            glColor3fv(colorPrint);
+            mesh_tool.draw();
+
+            // The held tool
+            glColor3fv(colorBox);
+            mesh_grinder.draw();
+            //robot_link_coords::glTransform(link_grinder,jointstate);
+            // draw actual cutting point?
+
+            glPopMatrix();
+
+            // Wheels
+            glColor3fv(colorPrint);
+            float axleX = 0.400;
+            for (float side : {-1.0f, +1.0f})
+            for (float axleY : { -0.455f, 0.0f, +0.455f})
+            {
+                glPushMatrix();
+                glScalef(side,1.0f,1.0f);
+                glTranslatef(axleX,axleY,0.150f);
+                glRotatef(90.0f,0.0f,1.0f,0.0f); // wheel has Z up, should have X up
+                mesh_wheel.draw();
+                glPopMatrix();
+            }
+            
+            glPopMatrix();
+            
+            glColor3fv(colorFrame);
+        }
+        catch (std::runtime_error &e) {
+            std::cout<<"Mesh load exception: "<<e.what()<<"\n";
+            meshes_OK=false;
+        }
+    }  
+}
+
+/* Clean up after 3D view of robot */
+void robot_3D_cleanup() {
+    glPopMatrix();
+}
+
 
 /* Called at start of user's OpenGL display function */
 void robot_display_setup(const robot_base &robot) {
 
-	glDisable(GL_DEPTH_TEST);
+	glDisable(GL_DEPTH_TEST); // draw stuff back-to-front
 	glDisable(GL_ALPHA_TEST);
 	glDisable(GL_BLEND);
 
@@ -183,56 +316,14 @@ void robot_display_setup(const robot_base &robot) {
 	glVertex2i(field_x_size,field_y_size);
 	glVertex2i(0,field_y_size);
 	glEnd();
-
-// Draw current robot configuration (side view)
-	glBegin(GL_TRIANGLES);
-	double robot_draw_y=75; // size of side view image
-	double robot_draw_x=-75;
-	vec2 robot_draw(1.2*field_x_size-robot_draw_x,200);
-	vec2 dump_pivot=robot_draw;
-
-	glColor4f(0.0,0.0,0.0,1.0); // body (black)
-	glVertex2fv(robot_draw);
-	glVertex2fv(robot_draw+vec2(robot_draw_x,0));
-	glVertex2fv(robot_draw+vec2(0,robot_draw_y));
-
-	double dump_angle=-30.0*((robot.sensor.bucket-180.0)/(950.0-180.0))+10.0;
-
-	vec2 dump_tip=dump_pivot + rotate(vec2(0,robot_draw_y-10),dump_angle);
-	vec2  box_tip=dump_pivot + rotate(vec2(0,15),dump_angle);
-	vec2 mine_tip=dump_pivot + rotate(vec2(robot_draw_x*0.8,0),dump_angle);
-
-	glColor4f(0.0,0.0,0.0,1.0); // body (black)
-	glVertex2fv(dump_pivot);
-	glColor4f(0.0,1.0,0.0,0.5); // Dump bin (green)
-	glVertex2fv(dump_tip);
-	glColor4f(1.0,0.0,0.0,0.5); // Tip of mining head (red)
-	glVertex2fv(mine_tip);
-
-	// Graphical illustration of Mcount:
-	vec2 mine1=mine_tip;
-	vec2 mine0=dump_tip;
-	float Mprogress=((robot.sensor.McountL+119)%120)/120.0*0.8;
-	vec2 Mprog=mine1+Mprogress*(mine0-mine1);
-	glColor4f(1.0,0.0,0.0,1.0);
-	glVertex2fv(Mprog);
-	glVertex2fv(Mprog+rotate(vec2(0,20),dump_angle));
-	glVertex2fv(Mprog+rotate(vec2(-20,0),dump_angle));
-	glEnd();
 	
-	// Graphical illustration of the dust storage box:
-	vec2 box0=box_tip;
-	vec2 box1=dump_tip;
-	float Rprogress=0;
-	vec2 box=box0+Rprogress*(box1-box0);
-	glColor4f(0.8,0.8,0.2,1.0);
-	glBegin(GL_TRIANGLE_FAN);
-	glVertex2fv(box);
-	glVertex2fv(box+rotate(vec2(-10,0),dump_angle));
-	glVertex2fv(box+rotate(vec2(-10,20),dump_angle));
-	glVertex2fv(box+rotate(vec2(0,20),dump_angle));
-	glEnd();
+	// Leave text white
+	glColor3f(1.0,1.0,1.0);
+}
 
+/* Called near end of OpenGL display function */
+void robot_display_text(const robot_base &robot)
+{
 // Draw the current autonomy state
 	robotPrintf_enable=false;
 	double state_display_x=field_x_size*2.6; // 3*field_x_hsize;
@@ -267,8 +358,8 @@ void robot_display_setup(const robot_base &robot) {
 	glBegin(GL_TRIANGLES);
 	for (unsigned int i=0;i<9;i++) {
 		float pow=powers[i];
-		float cenx=30*(0.5+i)+field_x_GUI;
-		float ceny=0.10*field_y_size;
+		float cenx=30*(0.5+i); // +field_x_GUI;
+		float ceny=0.90*field_y_size;
 		glColor3ub(128+100*pow,128,255);
 		glVertex2f(cenx-20,ceny);
 		glVertex2f(cenx+20,ceny);
@@ -314,7 +405,8 @@ void robot_display_setup(const robot_base &robot) {
 	}
 }
 
-void robot_display(const robot_localization &loc,double alpha=1.0)
+// Top-down view of robot
+void robot_2D_display(const robot_localization &loc,double alpha=1.0)
 {
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
