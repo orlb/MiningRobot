@@ -273,11 +273,24 @@ Joysticks have different axis and button numbering:
 	    joyDone=true;
 	}
 	
+	// Treat the WASD keys like left analog stick (for keyboard-only driving)
+	if (keys['a'] || keys['A']) lx=-1.0;
+	if (keys['d'] || keys['D']) lx=+1.0;
+	if (keys['w'] || keys['W']) ly=+1.0;
+	if (keys['s'] || keys['S']) ly=-1.0;
+	
+	// Treat the arrow keys like right analog stick
+	if (keys[oglSpecialLeft])  rx=-1.0;
+	if (keys[oglSpecialRight]) rx=+1.0;
+	if (keys[oglSpecialUp])    ry=+1.0;
+	if (keys[oglSpecialDown])  ry=-1.0;
+	
+	
 	// Pressing a button changes the mode persistently
-	if (js_button(button_stop,"")) joyMode=joyModeSTOP;
-	if (js_button(button_low,"")) joyMode=joyModeLow;
-	if (js_button(button_med,"")) joyMode=joyModeMed;
-	if (js_button(button_high,"")) joyMode=joyModeHigh;
+	if (js_button(button_stop,"") || keys['1']) joyMode=joyModeSTOP;
+	if (js_button(button_low,"") || keys['2']) joyMode=joyModeLow;
+	if (js_button(button_med,"") || keys['3']) joyMode=joyModeMed;
+	if (js_button(button_high,"") || keys['4']) joyMode=joyModeHigh;
 
     switch (joyMode) {
     case joyModeSTOP: default: 
@@ -318,11 +331,6 @@ Joysticks have different axis and button numbering:
 	
 
 // Drive keys:
-    if(keys['w']||keys['W']) forward+=1.0;
-    if(keys['s']||keys['S']) forward-=1.0;
-    if(keys['a']||keys['A']) turn-=1.0;
-    if(keys['d']||keys['D']) turn+=1.0;
-    
 	left=driveLimit*(forward+turn);
 	right=driveLimit*(forward-turn);
 	

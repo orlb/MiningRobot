@@ -111,15 +111,13 @@ void robot_manager_t::update(void) {
 				}
 			}
 			
-			robotPrintln("Telemetry: state %s (%d bytes)",
-				state_to_string((robot_state_t)telemetry.state),
-				sizeof(telemetry));
 			byte next_count=1+last_telemetry_count;
-			if (telemetry.count!=next_count && next_count!=1) {
+			int distance=abs(telemetry.count - next_count);
+			if (distance>2 && next_count!=1) {
 				robotPrintln("Telemetry warning> count mismatch. Expected %d, got %d",
 					next_count,telemetry.count);
 			}
-			if (time>0.15+last_telemetry_time) {
+			if (time>0.50+last_telemetry_time) {
 				robotPrintln("Telemetry warning> time gap of %.3f seconds",
 					time-last_telemetry_time);
 			}

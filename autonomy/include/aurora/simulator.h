@@ -33,6 +33,8 @@ void blend(robot_localization &dest, const robot_localization &src, float weight
 class robot_simulator {
 public:
 	// Actuators:
+	robot_joint_state joint; // simulated joint angles (degrees)
+	
 	double DLcount, DRcount; // driving left/right track counts
 	double Mcount; // mining head counter
 	double Rcount; // roll motor
@@ -40,6 +42,9 @@ public:
 	robot_localization loc; // current location of robot
 	
 	robot_simulator() {
+        joint.angle.boom=90.0f;
+        joint.angle.stick=-90.0f;
+        joint.angle.dump=45.0f;
 		bucket=0.6; // lowered
 		DLcount=DRcount=0;
 		Mcount=0;
@@ -84,6 +89,19 @@ public:
 
 /* Simulate these robot power values, for this timestep (seconds) */
 	void simulate(const robot_power &power, double dt) {
+	// Move the linear actuators
+	    float linear_speed = dt*15.0; // degrees/sec at full power
+	    
+	    joint.angle.fork +=power.fork *linear_speed;
+	    joint.angle.dump +=power.dump *linear_speed;
+
+	    joint.angle.boom -=power.boom *linear_speed*0.6f; // boom is a little slower
+	    joint.angle.stick+=power.stick*linear_speed;
+	    joint.angle.tilt +=power.tilt *linear_speed;
+	    joint.angle.spin +=power.spin *linear_speed;
+	    
+	
+	
 	// Move both wheels
 		vec2 side[2];  // Location of wheels:  0: Left; 1:Right
 		side[0]=world_from_robot(vec2(-wheelbase,wheelforward));

@@ -686,6 +686,7 @@ void robot_manager_t::update(void) {
   robot_sensors_arduino old_sensor=robot.sensor;
     
   if (simulate_only) { // build fake arduino data
+    robot.joint = sim.joint;
     robot.sensor.McountL=0xff&(int)sim.Mcount;
     robot.sensor.Rcount=0xffff&(int)sim.Rcount;
     robot.sensor.DL1count=0xffff&(int)sim.DLcount;
