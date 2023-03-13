@@ -22,14 +22,40 @@ using json = nlohmann::json;
 
 int main() {
 
-    // Initialize the data capture for the drive encoders
+    // Initialize data capture for the drive encoders
     MAKE_exchange_drive_encoders();
     aurora::drive_encoders last;
-    last.left   =   last.right=0.0f;
+    last.left   =   last.right  =   0.0f;
 
     // Create directory for the captured data
     const string& data_storage_location     =   "/tmp/data_exchange/data_capture/";
     std::filesystem::create_directory(data_storage_location);
+
+    // Capture current time and convert to string format
+    // Create variables
+    const auto now          = std::chrono::high_resolution_clock::now();
+    const auto now_         = std::chrono::system_clock::to_time_t(now);
+    const auto ms           = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
+    string ms_formatted     = std::to_string(ms.count());
+    stringstream curr_time_file;
+    std::string curr_filename = "lunatic_data_" + curr_time_file.str() + ms_formatted;
+    // Format variables into current time string
+    curr_time_file << std::put_time(std::localtime(&now_), "%Y_%m_%d_%H_%M_%S_");
+
+    // Test that curr_filename is accurate
+    cout << curr_filename << endl;
+
+    // Create path to new file
+    const string& curr_path = data_storage_location + curr_filename + ".json";
+    cout << curr_path << endl;
+
+    // Create a new file in the tmp dir
+    ofstream fout(curr_path);
+    
+    if (!fout) {
+        cout << "Error opening output file" << endl;
+        exit(-1);
+    }
 
     while (true) {
 
@@ -43,24 +69,6 @@ int main() {
         // Print change of drive encoders to terminal
         change.print();
 
-        // The following is necessary code, but I'm stuck right now due to not remembering a lot of the finer
-        // details regarding iterators, pointers, etc.
-
-        // // Make sure the number of files in the data_storage_location is not excessive
-        // int count_files = 0;
-        // int max_num_files = 25;
-        // for (auto& tmp : std::filesystem::directory_iterator(data_storage_location)) {
-        //     count_files++;
-        // }
-        // cout << "Total files: " << count_files << endl;
-        // while (count_files > max_num_files) {
-        //     const auto & curr_path = std::filesystem::directory_iterator(data_storage_location).next();
-        //     std::filesystem::remove(curr_path);
-        //     count_files--;
-        // }
-        // cout << "Total files: " << count_files << endl;
-
-
 
         // Capture current time and convert to string format
         // Create variables
@@ -68,8 +76,8 @@ int main() {
         const auto now_         = std::chrono::system_clock::to_time_t(now);
         const auto ms           = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
         string ms_formatted     = std::to_string(ms.count());
-        stringstream curr_time_file;
         stringstream curr_time_json;
+        stringstream curr_date_json;
 
         // Format milliseconds to three digits
         while (ms_formatted.length() < 3) {
@@ -78,12 +86,15 @@ int main() {
 
         // Format variables into current time string
         curr_time_file << std::put_time(std::localtime(&now_), "%Y_%m_%d_%H_%M_%S_");
-        curr_time_json << std::put_time(std::localtime(&now_), "%Y/%m/%d %H:%M:%S:");
+        curr_time_json << std::put_time(std::localtime(&now_), "%H:%M:%S:");
+        curr_date_json << std::put_time(std::localtime(&now_), "%Y/%m/%d");
 
         // Craft the json output
         json output_stream;
-        output_stream["timestamp"] = curr_time_json.str() + ms_formatted;
-        std::string curr_filename = "lunatic_data_" + curr_time_file.str() + ms_formatted;
+        output_stream["date"] = curr_date_json.str();
+        output_stream["time"] = curr_time_json.str() + ms_formatted;
+        output_stream["left"] = std::to_string(last.left);
+        output_stream["right"] = std::to_string(last.right);
 
         // Test that json is formatted properly:
     
@@ -91,20 +102,6 @@ int main() {
         cout << test << endl;
 
 
-        // Test that curr_filename is accurate
-        cout << curr_filename << endl;
-
-        // Create path to new file
-        const string& curr_path = data_storage_location + curr_filename + ".json";
-        cout << curr_path << endl;
-
-        // Create a new file in the tmp dir
-        ofstream fout(curr_path);
-     
-        if (!fout) {
-            cout << "Error opening output file" << endl;
-            exit(-1);
-        }
 
         fout << output_stream; 
         fout.close();
