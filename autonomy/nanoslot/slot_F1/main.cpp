@@ -1,7 +1,7 @@
 /*
- Interface the lunatic data exchange with slot A1 arm nano.
+ Interface the lunatic data exchange with slot F1 front nano.
 
- Dr. Orion Lawlor, lawlor@alaska.edu, 2023-01-25 (Public Domain)
+ Dr. Orion Lawlor, lawlor@alaska.edu, 2023-03-07 (Public Domain)
 */
 #define NANOSLOT_MY_ID 0xF1 /* my numeric slot ID */
 #define NANOSLOT_MY_EX nano.slot_F1  /* my exchange struct */
@@ -14,65 +14,14 @@ const int delayMs=30; // set filtering loop speed (milliseconds)
 int printCount=0;
 int printInterval=30;
 
-nanoslot_IMU_filter frame_filter(delayMs);
-nanoslot_IMU_filter boom_filter(delayMs);
+/* The vec3 here are hardware offset values, collected with autonomy/kinematics/IMU_calibrate
+ The accelerometer values are collected in reference orientation, might be off a degree or two.
+*/
+nanoslot_IMU_filter frame_filter(delayMs,vec3(0.0722,0.0306,-0.0191),vec3(-2.4215,1.9971,-1.0437));
+nanoslot_IMU_filter boom_filter(delayMs,vec3(0.0473,0.0669,-0.0045),vec3(4.1016,0.8854,-5.1388));
 nanoslot_IMU_filter fork_filter(delayMs);
 nanoslot_IMU_filter dump_filter(delayMs);
 
-
-/**
- Fix coordinate system of raw IMU data, with MPU-6050 mounted 
- on the side of a frame sidebar. 
-   Incoming for frame IMU:
-     +X down -> -Z out
-     +Y forwards -> +Y out
-     +Z right -> +X out
-*/
-nanoslot_vec3_t fix_coords_side(const nanoslot_vec3_t &src)
-{
-    nanoslot_vec3_t ret;
-    ret.type=src.type;
-    ret.x=src.z;
-    ret.y=src.y;
-    ret.z=-src.x;
-    return ret;
-}
-
-// Fix both the accelerometer and gyro coordinates (the same way)
-nanoslot_IMU_t fix_coords_side(const nanoslot_IMU_t &src)
-{
-    nanoslot_IMU_t ret;
-    ret.acc = fix_coords_side(src.acc);
-    ret.gyro = fix_coords_side(src.gyro);
-    return ret;
-}
-
-/**
- Fix coordinate system of raw IMU data, with MPU-6050 mounted 
- on the front of a frame member. 
-   Incoming for dump IMU:
-     +Y down -> -Z out
-     +X left -> -X out
-     +Z back -> -Y out
-*/
-nanoslot_vec3_t fix_coords_front(const nanoslot_vec3_t &src)
-{
-    nanoslot_vec3_t ret;
-    ret.type=src.type;
-    ret.x=-src.x;
-    ret.y=-src.z;
-    ret.z=-src.y;
-    return ret;
-}
-
-// Fix both the accelerometer and gyro coordinates (the same way)
-nanoslot_IMU_t fix_coords_front(const nanoslot_IMU_t &src)
-{
-    nanoslot_IMU_t ret;
-    ret.acc = fix_coords_front(src.acc);
-    ret.gyro = fix_coords_front(src.gyro);
-    return ret;
-}
 
 int main(int argc,char **argv)
 {

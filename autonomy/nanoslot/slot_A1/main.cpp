@@ -14,38 +14,11 @@ const int delayMs=30; // set filtering loop speed (milliseconds)
 int printCount=0;
 int printInterval=30;
 
-nanoslot_IMU_filter stick_filter(delayMs);
-nanoslot_IMU_filter tool_filter(delayMs);
-
-/**
- Fix coordinate system of raw IMU data, with MPU-6050 mounted underneath a crossbar:
-   Incoming for stick IMU:
-     +X behind stick -> -Y out
-     +Y across stick -> +X out
-     +Z above stick -> +Z out
-   Tool is same but flip sign on XY.
-   
-   sign=+1: underneath, pins facing robot forwards
-   sign=-1: underneath, pins facing backwards
+/* The vec3 here are hardware offset values, collected with autonomy/kinematics/IMU_calibrate
+ The accelerometer values are collected in reference orientation, might be off a degree or two.
 */
-nanoslot_vec3_t fix_coords_cross(const nanoslot_vec3_t &src,int sign=+1)
-{
-    nanoslot_vec3_t ret;
-    ret.type=src.type;
-    ret.x=sign*src.y;
-    ret.y=-sign*src.x;
-    ret.z=src.z;
-    return ret;
-}
-
-// Fix both the accelerometer and gyro coordinates (the same way)
-nanoslot_IMU_t fix_coords_cross(const nanoslot_IMU_t &src,int sign=+1)
-{
-    nanoslot_IMU_t ret;
-    ret.acc = fix_coords_cross(src.acc,sign);
-    ret.gyro = fix_coords_cross(src.gyro,sign);
-    return ret;
-}
+nanoslot_IMU_filter stick_filter(delayMs,vec3(-0.0136,0.0745,-0.0111),vec3(-1.5821,1.9100,-0.1994));
+nanoslot_IMU_filter tool_filter(delayMs,vec3(-0.0094,0.0073,0.0372),vec3(0.1127,3.3704,-26.7998));
 
 int main(int argc,char **argv)
 {

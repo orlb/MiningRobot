@@ -54,6 +54,8 @@ inline FusionVector fusion(const vec3 &v) {
 class nanoslot_IMU_filter
 {
 public:
+    vec3 offset_acc; /// g force acclerometer offset (subtracted off of raw readings)
+    vec3 offset_gyro; /// degrees/sec gyro offset (subtracted off of raw readings)
     
     /** State update for a base (world) link, like the robot main frame */
     void update_base(nanoslot_IMU_state &state,const nanoslot_IMU_t &reading) 
@@ -81,8 +83,8 @@ public:
     }
 
     /** Create a filter designed to run every delayMs milliseconds */
-    nanoslot_IMU_filter(int delayMs_)
-        :delayMs(delayMs_)
+    nanoslot_IMU_filter(int delayMs_, vec3 offset_acc_=vec3(0,0,0), vec3 offset_gyro_=vec3(0,0,0))
+        :offset_acc(offset_acc_), offset_gyro(offset_gyro_), delayMs(delayMs_)
     {
         FusionAhrsInitialise(&ahrs);
         FusionOffsetInitialise(&offset,1000/delayMs);
@@ -116,9 +118,14 @@ protected:
         vec3 acc = vec_unpack(reading.acc, (1<<6)/16384.0f);
         // Scaling: 4 bit shift during pack, +250deg/sec = 32768
         vec3 gyro_scale = vec_unpack(reading.gyro, (1<<4)/131.07f);
+        
+        // Apply offsets, now that we're converted to float
+        acc -= offset_acc;
+        gyro_scale -= offset_gyro;
+        
         state.rate=gyro_scale;
         
-        // Update the gyro offset (this only seems to work with low rates)
+        // Update the gyro offset (this only seems to work at low rates)
         FusionVector gyro=FusionOffsetUpdate(&offset,fusion(gyro_scale));
         
         // Update the quaternion
@@ -174,6 +181,94 @@ protected:
     FusionAhrs ahrs; 
     FusionOffset offset;
 };
+
+
+
+
+/**
+ Fix coordinate system of raw IMU data, with MPU-6050 mounted underneath a crossbar:
+   Incoming for stick IMU:
+     +X behind stick -> -Y out
+     +Y across stick -> +X out
+     +Z above stick -> +Z out
+   Tool is same but flip sign on XY.
+   
+   sign=+1: underneath, pins facing robot forwards
+   sign=-1: underneath, pins facing backwards
+*/
+nanoslot_vec3_t fix_coords_cross(const nanoslot_vec3_t &src,int sign=+1)
+{
+    nanoslot_vec3_t ret;
+    ret.type=src.type;
+    ret.x=sign*src.y;
+    ret.y=-sign*src.x;
+    ret.z=src.z;
+    return ret;
+}
+
+// Fix both the accelerometer and gyro coordinates (the same way)
+nanoslot_IMU_t fix_coords_cross(const nanoslot_IMU_t &src,int sign=+1)
+{
+    nanoslot_IMU_t ret;
+    ret.acc = fix_coords_cross(src.acc,sign);
+    ret.gyro = fix_coords_cross(src.gyro,sign);
+    return ret;
+}
+
+
+/**
+ Fix coordinate system of raw IMU data, with MPU-6050 mounted 
+ on the inside of a frame sidebar. 
+   Incoming for frame IMU:
+     +X down -> -Z out
+     +Y forwards -> +Y out
+     +Z right -> +X out
+*/
+nanoslot_vec3_t fix_coords_side(const nanoslot_vec3_t &src)
+{
+    nanoslot_vec3_t ret;
+    ret.type=src.type;
+    ret.x=src.z;
+    ret.y=src.y;
+    ret.z=-src.x;
+    return ret;
+}
+
+// Fix both the accelerometer and gyro coordinates (the same way)
+nanoslot_IMU_t fix_coords_side(const nanoslot_IMU_t &src)
+{
+    nanoslot_IMU_t ret;
+    ret.acc = fix_coords_side(src.acc);
+    ret.gyro = fix_coords_side(src.gyro);
+    return ret;
+}
+
+/**
+ Fix coordinate system of raw IMU data, with MPU-6050 mounted 
+ on the front face of a frame member. 
+   Incoming for boom IMU:
+     +Y down -> -Z out
+     +X left -> -X out
+     +Z back -> -Y out
+*/
+nanoslot_vec3_t fix_coords_front(const nanoslot_vec3_t &src)
+{
+    nanoslot_vec3_t ret;
+    ret.type=src.type;
+    ret.x=-src.x;
+    ret.y=-src.z;
+    ret.z=-src.y;
+    return ret;
+}
+
+// Fix both the accelerometer and gyro coordinates (the same way)
+nanoslot_IMU_t fix_coords_front(const nanoslot_IMU_t &src)
+{
+    nanoslot_IMU_t ret;
+    ret.acc = fix_coords_front(src.acc);
+    ret.gyro = fix_coords_front(src.gyro);
+    return ret;
+}
 
 
 
