@@ -83,7 +83,8 @@ struct nanoslot_sensor_0xA1 {
     nanoslot_byte_t spare[3];
 };
 struct nanoslot_state_0xA1 : public nanoslot_state {
-    // FIXME: filtered IMU values (smoothed, vibration estimate, de-vertigo etc)
+    nanoslot_IMU_state stick; ///< Arm stick frame
+    nanoslot_IMU_state tool; ///< Tool coupler (tilt + spin)
 };
 
 

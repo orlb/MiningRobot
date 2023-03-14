@@ -91,6 +91,9 @@ public:
     ///  in world space (absolute orientation).
     FusionQuaternion orient; 
     
+    /// Raw rotation rate, local coordinates, in degrees per second
+    vec3 rate;
+    
     /// Our world-coordinates X axis vector.
     vec3 X(void) const { return make_vec3(FusionQuaternionXaxis(orient)); }
     /// Our world-coordinates Y axis vector.

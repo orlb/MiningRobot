@@ -19,13 +19,66 @@ nanoslot_IMU_filter boom_filter(delayMs);
 nanoslot_IMU_filter fork_filter(delayMs);
 nanoslot_IMU_filter dump_filter(delayMs);
 
+
+/**
+ Fix coordinate system of raw IMU data, with MPU-6050 mounted 
+ on the side of a frame sidebar. 
+   Incoming for frame IMU:
+     +X down -> -Z out
+     +Y forwards -> +Y out
+     +Z right -> +X out
+*/
+nanoslot_vec3_t fix_coords_side(const nanoslot_vec3_t &src)
+{
+    nanoslot_vec3_t ret;
+    ret.type=src.type;
+    ret.x=src.z;
+    ret.y=src.y;
+    ret.z=-src.x;
+    return ret;
+}
+
+// Fix both the accelerometer and gyro coordinates (the same way)
+nanoslot_IMU_t fix_coords_side(const nanoslot_IMU_t &src)
+{
+    nanoslot_IMU_t ret;
+    ret.acc = fix_coords_side(src.acc);
+    ret.gyro = fix_coords_side(src.gyro);
+    return ret;
+}
+
+/**
+ Fix coordinate system of raw IMU data, with MPU-6050 mounted 
+ on the front of a frame member. 
+   Incoming for dump IMU:
+     +Y down -> -Z out
+     +X left -> -X out
+     +Z back -> -Y out
+*/
+nanoslot_vec3_t fix_coords_front(const nanoslot_vec3_t &src)
+{
+    nanoslot_vec3_t ret;
+    ret.type=src.type;
+    ret.x=-src.x;
+    ret.y=-src.z;
+    ret.z=-src.y;
+    return ret;
+}
+
+// Fix both the accelerometer and gyro coordinates (the same way)
+nanoslot_IMU_t fix_coords_front(const nanoslot_IMU_t &src)
+{
+    nanoslot_IMU_t ret;
+    ret.acc = fix_coords_front(src.acc);
+    ret.gyro = fix_coords_front(src.gyro);
+    return ret;
+}
+
 int main(int argc,char **argv)
 {
     nanoslot_lunatic c(&argc,&argv);
 
-#define ST c.my_state /* shorter name for my state variables */
-    // TESTING: initialize frame state to rotated
-    frame_filter.set(ST.frame,FusionQuaternionZdegrees(170.0f));    
+#define ST c.my_state /* shorter name for my state variables */ 
     
     while (c.is_connected) {
         // Receive data from Arduino
@@ -35,10 +88,14 @@ int main(int argc,char **argv)
 
             if (c.got_sensor) 
             {
-                //frame_filter.update_base(ST.frame, c.my_sensor.imu[0]);
-                boom_filter.update_parent(ST.boom, c.my_sensor.imu[1],ST.frame);
-                fork_filter.update_parent(ST.fork, c.my_sensor.imu[2],ST.frame);
-                dump_filter.update_parent(ST.dump, c.my_sensor.imu[3],ST.frame);
+                frame_filter.update_base(ST.frame, 
+                    fix_coords_side(c.my_sensor.imu[0]));
+                boom_filter.update_parent(ST.boom, 
+                    fix_coords_front(c.my_sensor.imu[1]),ST.frame);
+                fork_filter.update_parent(ST.fork, 
+                    fix_coords_side(c.my_sensor.imu[2]),ST.frame);
+                dump_filter.update_parent(ST.dump, 
+                    fix_coords_front(c.my_sensor.imu[3]),ST.frame);
                 
                 if (printCount++ >=printInterval)
                 {

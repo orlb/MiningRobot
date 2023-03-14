@@ -77,6 +77,10 @@ void arduino_sensor_read(robot_base &robot)
     // Copy joint orientations from IMU data
     //   FIXME: additional sanity checking here, or in slot program?
     robot.joint.angle.boom=nano.slot_F1.state.boom.pitch;
+    robot.joint.angle.stick=nano.slot_A1.state.stick.pitch;
+    robot.joint.angle.tilt=nano.slot_A1.state.tool.pitch;
+    robot.joint.angle.spin=nano.slot_A1.state.tool.roll;
+    
     robot.joint.angle.fork=nano.slot_F1.state.fork.pitch;
     robot.joint.angle.dump=nano.slot_F1.state.dump.pitch;
 }

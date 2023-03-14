@@ -116,8 +116,9 @@ protected:
         vec3 acc = vec_unpack(reading.acc, (1<<6)/16384.0f);
         // Scaling: 4 bit shift during pack, +250deg/sec = 32768
         vec3 gyro_scale = vec_unpack(reading.gyro, (1<<4)/131.07f);
+        state.rate=gyro_scale;
         
-        // Update the gyro offset
+        // Update the gyro offset (this only seems to work with low rates)
         FusionVector gyro=FusionOffsetUpdate(&offset,fusion(gyro_scale));
         
         // Update the quaternion
@@ -130,7 +131,6 @@ protected:
         */
         FusionAhrsUpdateNoMagnetometer(&ahrs,
              gyro,fusion(acc), deltaTime);
-        
         
         // Export updated state
         state.orient=ahrs.quaternion;

@@ -45,7 +45,7 @@ const robot_link_geometry &link_geometry(robot_link_index L)
         {
             "stick",
             link_stick, linktype_revolute,
-            link_frame, vec3(0,0.750,0.312),
+            link_frame, vec3(0,-0.312,0.750),
             axisX, 0.0f, 3
         },
         {
