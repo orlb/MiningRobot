@@ -10,6 +10,10 @@ all: $(PROGS)
 vision: vision.cpp ../include/*/*
 	g++ $(CFLAGS) $< -o $@ $(LIBS)
 
+
+calibration: calibration.cpp ../include/*/*
+	g++ $(CFLAGS) $< -o $@ $(LIBS)
+
 clean:
 	- rm $(PROGS)
 

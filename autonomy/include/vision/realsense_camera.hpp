@@ -24,8 +24,8 @@ public:
   std::vector<float> ydir;
   
   realsense_projector(const rs2::depth_frame &frame)
-    :xdir(frame.get_width()*frame.get_height()),
-     ydir(frame.get_width()*frame.get_height())
+    :xdir(frame.get_width()),
+     ydir(frame.get_height())
   {
     auto stream_profile = frame.get_profile();
     auto video = stream_profile.as<rs2::video_stream_profile>();
@@ -33,12 +33,17 @@ public:
     
     // Precompute per-pixel direction vectors (with distortion)
     for (int h = 0; h < intrinsics.height; ++h)
+        ydir[h] = (h - intrinsics.ppy) * (1.0 / intrinsics.fy);
     for (int w = 0; w < intrinsics.width; ++w)
+        xdir[w] = (w - intrinsics.ppy) * (1.0 / intrinsics.fy);
+/*
+ // Actual 400 series RealSense cameras always have zero distortion coeffs
+ //   if they didn't you'd need to do 2D correction:
     {
       const float pixel[] = { (float)w, (float)h };
 
-      float x = (pixel[0] - intrinsics.ppx) / intrinsics.fx;
-      float y = (pixel[1] - intrinsics.ppy) / intrinsics.fy;
+      float x = (pixel[0] - intrinsics.ppx) * (1.0 / intrinsics.fx);
+      float y = (pixel[1] - intrinsics.ppy) * (1.0 / intrinsics.fy);
 
       if (intrinsics.model == RS2_DISTORTION_INVERSE_BROWN_CONRADY)
       {
@@ -53,13 +58,13 @@ public:
       xdir[h*intrinsics.width + w] = x;
       ydir[h*intrinsics.width + w] = y;
     }
+*/
   }
   
   // Project this depth at this pixel into 3D camera coordinates
   vec3 lookup(float depth,int x,int y) const
   {
-    int i=y*intrinsics.width + x;
-    return vec3(xdir[i]*depth, ydir[i]*depth, depth);
+    return vec3(xdir[x]*depth, ydir[y]*depth, depth);
   }
 };
 
@@ -96,7 +101,7 @@ public:
     // Calling this constructor captures one frame of image data from the camera.
     realsense_camera_capture(realsense_camera &cam);
     
-private:
+public:
     // This is the librealsense handle to the frame's allocated memory.
     rs2::frameset frames;  
     rs2::video_frame color_frame;
