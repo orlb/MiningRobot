@@ -33,7 +33,7 @@ const robot_link_geometry &link_geometry(robot_link_index L)
             "dump",
             link_dump, linktype_revolute,
             link_fork, vec3(0,0.250,0.020),
-            axisX, 0.0f, 1
+            axisX, 45.0f, 1
         },
         
         {
@@ -45,7 +45,7 @@ const robot_link_geometry &link_geometry(robot_link_index L)
         {
             "stick",
             link_stick, linktype_revolute,
-            link_frame, vec3(0,-0.312,0.750),
+            link_boom, vec3(0,-0.312,0.750),
             axisX, 0.0f, 3
         },
         {
@@ -78,13 +78,19 @@ const robot_link_geometry &link_geometry(robot_link_index L)
             "depthcam",
             link_depthcam, linktype_revolute,
             link_stick, vec3(0,0.510,0.500),
-            axisX, -35.0f, -1
+            axisX, -180+57, -1
+        },
+        {
+            "drivecamflip",
+            link_drivecamflip, linktype_revolute,
+            link_frame, vec3(0,-0.575,0.270+0.215),
+            axisZ, 180.0f, -1
         },
         {
             "drivecam",
             link_drivecam, linktype_revolute,
-            link_frame, vec3(0,-0.575,0.270),
-            axisX, -3.0f, -1
+            link_drivecamflip, vec3(0,0,0),
+            axisX, -90.0f, -1
         },
     };
     

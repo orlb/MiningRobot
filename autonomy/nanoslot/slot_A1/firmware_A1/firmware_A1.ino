@@ -7,6 +7,10 @@
 #define NeoPIN        A1 /* neopixel chain is on a 3-pin header */
 #include "nanoslot/firmware_neopixel.h"
 
+#include "nanoslot/firmware_HX711.h"
+HX711_reader load_cell;
+
+
 /* accelerometer/gyro IMUs:
    0 is on tool coupler
    1 is on stick frame
@@ -16,6 +20,11 @@
 
 void firmware_read_encoders(void)
 {
+  load_cell.use_channelA=!(my_command.read_L);
+  load_cell.read();
+  my_sensor.load_L=load_cell.readB;
+  my_sensor.load_R=load_cell.readA;
+
   for (int i=0;i<MPU_COUNT;i++)
       MPU_read(i,my_sensor.imu[i]);
 
@@ -36,6 +45,7 @@ bool firmware_handle_custom_packet(A_packet_serial &pkt,A_packet &p)
 }
 
 void setup() {
+  load_cell.begin();
   neopixels.begin();
   MPU_setup();
   nanoslot_firmware_start();

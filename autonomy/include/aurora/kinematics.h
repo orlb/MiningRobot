@@ -13,10 +13,11 @@ Dr. Orion Lawlor, lawlor@alaska.edu, 2023-03-08 (Public Domain)
 namespace aurora {
 
 /** This specifies the numbering of the robot links.
- A "link" is a coordinate system of some rigid part of the robot, 
+A "link" is a coordinate system of some rigid part of the robot, 
  usually connected to other links via joints. 
- We also specify links for the cameras, since this lets us use the 
+We also specify links for the cameras, since this lets us use the 
  same coordinate system transform and parenting as for moving parts.
+Link order should put parent before child coordinates. 
 */
 typedef enum { 
     link_pit=0, ///< Mining pit coordinates == world coordinates
@@ -33,7 +34,8 @@ typedef enum {
     link_grinder=9, ///< Front center tooth of rockgrinder wheel
 
     link_depthcam=10, ///< Front depth camera, mounted on stick
-    link_drivecam=11,  ///< Back drive camera, mounted on frame
+    link_drivecamflip=11,  ///< Flip frame coords for back drive camera
+    link_drivecam=12,  ///< Back drive camera, mounted on frame
     link_count
 } robot_link_index;
 
@@ -89,9 +91,14 @@ struct robot_link_geometry {
 ///   Throws if L is not a valid link index.
 const robot_link_geometry &link_geometry(robot_link_index L);
 
-/** This class does coordinate system transforms for all robot links. */
+/** This class does coordinate system transforms for all robot links. 
+*/
 class robot_link_coords {
 public:
+    
+/* Static utility functions that don't need a constructed object */
+    /// Convert this quaternion representing world-coordinates orientation into a coord3D
+    
     
     /// Return this link's relative rotation angle, in degrees, in this state. 
     static float link_degrees(robot_link_index L,const robot_joint_state &state)
@@ -103,7 +110,7 @@ public:
     }
 
 #ifdef __gl_h_ /* OpenGL support */
-    /// Apply the OpenGL transform to get from this link to its parent.
+    /// Apply the incremental OpenGL transform to get from this link to its parent.
     static void glTransform(robot_link_index L,const robot_joint_state &state)
     {
         const robot_link_geometry &g=link_geometry(L);
@@ -118,7 +125,59 @@ public:
         };
     }
 #endif
+
+/** Initialize this object from a joint state, to get coordinate transforms for all the robot's links. */
+    robot_link_coords(const robot_joint_state &state_, robot_coord3D frameCoords=robot_coord3D())
+        :state(state_) 
+    {
+        links[link_pit].reset(); // pit has identity coordinate system
+        links[link_frame]=frameCoords;
+    // Preemptively fill in all coordinate system transforms. 
+    //  (future alternative option: memoize on-demand computed coordinate systems)
+        for (int i=link_frame+1;i<link_count;i++)
+        {
+            robot_link_index L=robot_link_index(i);
+            const robot_link_geometry &G=link_geometry(L);
+            const robot_coord3D &parent=(G.parent>=0)?links[G.parent]:links[link_pit];
+            
+            links[L].origin=parent.world_from_local(G.origin);
+            float angle = link_degrees(L,state);
+            float rad = angle * DEG2RAD;
+            float s=sinf(rad), c=cosf(rad);
+            switch (G.axis) {
+            case axisX: 
+                links[L].X=parent.X;
+                links[L].Y= c*parent.Y +s*parent.Z;
+                links[L].Z=-s*parent.Y +c*parent.Z;
+                break;
+            case axisY: 
+                links[L].Z= c*parent.Z -s*parent.X;
+                links[L].X= s*parent.Z +c*parent.X;
+                links[L].Y=parent.Y;
+                break;
+            case axisZ: 
+                links[L].X= c*parent.X -s*parent.Y;
+                links[L].Y= s*parent.X +c*parent.Y;
+                links[L].Z=parent.Z;
+                break;
+            default:
+                links[L].X=parent.X;
+                links[L].Y=parent.Y;
+                links[L].Z=parent.Z;
+                break;       
+            };
+        }
+    }
+
+/** Access the coordinate transform for this robot link */
+    const robot_coord3D &coord3D(robot_link_index L) {
+        if (L>=0 && L<link_count) return links[L];
+        else throw std::runtime_error("Invalid link index in robot_link_coords::coord3D");
+    }
     
+private:
+    robot_joint_state state;
+    robot_coord3D links[link_count];
 };
 
 

@@ -30,7 +30,7 @@ int main(int argc,char **argv)
         // Receive data from Arduino
         A_packet p;
         if (c.read_packet(p)) {
-            c.handle_standard_packet(p);
+            c.handle_standard_packet(p,c.my_sensor);
 
             if (c.got_sensor) 
             {
@@ -42,10 +42,13 @@ int main(int argc,char **argv)
                 tool_filter.update_parent(ST.tool, 
                     fix_coords_cross(c.my_sensor.imu[0],-1),ST.stick);
                 
+                ST.load_L = HX711_read_scale(c.my_sensor.load_L,-6.6f);
+                ST.load_R = HX711_read_scale(c.my_sensor.load_R,-1.7f);
+                
                 if (printCount++ >=printInterval)
                 {
                     printCount=0;
-                    printf("   A1: ");
+                    printf("   A1:  load cell LR %.1f %.1f", ST.load_L, ST.load_R);
                     if (1) { // print filtered IMU data
                         ST.stick.print("\n      stick");
                         ST.tool.print("\n      tool");
@@ -63,7 +66,7 @@ int main(int argc,char **argv)
                 }
             }
             
-            if (c.need_command)
+            if (c.lunatic_post_packet(p))
             {
                 c.send_command(c.my_command);
             }

@@ -20,6 +20,16 @@
 #include "nanoslot_exchange.h" // data exchanged in A packets
 #include "nanoslot_sanity.h" // sanity checking for nanoslot data
 
+// Scale factor from raw HX711 readings to actual kilograms
+static inline float HX711_read_scale(int32_t raw,float zerocal=0.0f)
+{
+    // This scale factor converts raw readings to kilograms
+    float scale=2.0/10000.0; // FIXME: do some tests to measure this
+
+    if (raw==0) return 0.0f; // uninitialized channel?
+    else return raw*scale - zerocal;
+}
+
 
 /** A nanoboot_comms manages communication with one Arduino.
     This class is used by both nanoboot and the slot programs. */
@@ -232,10 +242,10 @@ public:
         exchange_nanoslot.write_end(); 
     }
     
-    void handle_standard_packet(A_packet &p)
-    {
-        nanoslot_comms::handle_standard_packet(p,my_sensor);
-        
+    // If there was a sensor update, post it to the data exchange.
+    // Returns true if we need to send command data to Arduino.
+    bool lunatic_post_packet(A_packet &p)
+    {        
         if (got_sensor)
         { // write sensor data to the exchange
             nanoslot_exchange &nano=exchange_nanoslot.write_begin();
@@ -244,7 +254,7 @@ public:
             NANOSLOT_MY_EX.debug.packet_count++;
             exchange_nanoslot.write_end();
         }
-            
+        
         if (need_command)
         {
             const nanoslot_exchange &nano=exchange_nanoslot.read();
@@ -255,7 +265,10 @@ public:
             my_command=NANOSLOT_MY_EX.command; 
             my_command.autonomy=nano.autonomy; 
             if (backend_paused>10) my_command.autonomy.mode=0; /* no backend -> safemode */
+            
+            return true;
         }
+        return false;
     }
 };
 

@@ -116,7 +116,7 @@ struct robot_coord3D {
 
     float extract_angle()const{
         return angle_from_dir(vec2(X.x,X.y));
-    }    
+    }
 
     robot_coord3D() { reset(); }
     

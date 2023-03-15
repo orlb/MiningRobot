@@ -1,4 +1,8 @@
 /* Perform IMU calibration, to reduce vertigo and skew.
+
+Collect data in reference configuration, with each joint at local zero.
+
+Add the collected offsets to slot_A1 and slot_F1 manually.
 */
 #include "aurora/lunatic.h"
 

@@ -13,11 +13,13 @@ typedef FusionQuaternion nanoslot_quat;
 #ifdef __AVR__
 // Simpler version for Arduino (that only can get to nanoslot headers) 
 class vec3 {
+public:
     float x,y,z;
     vec3() { x=y=z=0.0f; }
     vec3(float x_, float y_, float z_) :x(x_), y(y_), z(z_) {}
 };
 #else
+#define FULL_VEC3 1
 // Full vec3, for Pi or PC
 #include "../aurora/vec3.h" /* 3D vector type used for output */
 
@@ -118,7 +120,8 @@ public:
     /// Valid flag: false if last report wasn't OK
     bool valid;
     
-    
+#if _STDIO_H
+
     void print(const FusionQuaternion &q) const {
         printf(" Q(%+.2f,+%.2f,+%.2f,+%.2f) ",q.element.w,q.element.x,q.element.y,q.element.z);
     }
@@ -136,6 +139,7 @@ public:
         print("vibe",vibe);
         printf(" } ");
     }
+#endif
 };
 
 

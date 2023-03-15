@@ -154,7 +154,7 @@ void robot_3D_draw(const robot_joint_state &jointstate)
             
             glPushMatrix();
             robot_link_coords::glTransform(link_frame,jointstate);
-            
+                        
             // The scoop
             glColor3fv(colorBox);
             glPushMatrix();
@@ -199,7 +199,7 @@ void robot_3D_draw(const robot_joint_state &jointstate)
             //robot_link_coords::glTransform(link_grinder,jointstate);
             // draw actual cutting point?
 
-            glPopMatrix();
+            glPopMatrix(); // back to frame coords
 
             // Wheels
             glColor3fv(colorPrint);
@@ -215,7 +215,24 @@ void robot_3D_draw(const robot_joint_state &jointstate)
                 glPopMatrix();
             }
             
-            glPopMatrix();
+            // Draw the idealized axes for each link
+            robot_link_coords links(jointstate);
+            glLineWidth(2.0);
+            float len=0.1; // length of axis lines in meters
+            glBegin(GL_LINES);
+            for (int i=link_frame;i<link_count;i++) {
+                const robot_coord3D &coord=links.coord3D(robot_link_index(i));
+                glColor3f(0,0,1);
+                glVertex3fv(coord.origin); glVertex3fv(coord.origin+len*coord.Z);
+                glColor3f(0,1,0);
+                glVertex3fv(coord.origin); glVertex3fv(coord.origin+len*coord.Y);
+                glColor3f(1,0,0);
+                glVertex3fv(coord.origin); glVertex3fv(coord.origin+len*coord.X);
+            }
+            glEnd();
+
+            
+            glPopMatrix(); // back to field coords
             
             glColor3fv(colorFrame);
         }

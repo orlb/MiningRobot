@@ -42,9 +42,9 @@ public:
 	robot_localization loc; // current location of robot
 	
 	robot_simulator() {
-        joint.angle.boom=90.0f;
-        joint.angle.stick=-90.0f;
-        joint.angle.dump=45.0f;
+        joint.angle.boom=0.0f;
+        joint.angle.stick=0.0f;
+        joint.angle.dump=0.0f;
 		bucket=0.6; // lowered
 		DLcount=DRcount=0;
 		Mcount=0;

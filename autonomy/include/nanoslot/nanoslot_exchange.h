@@ -69,6 +69,7 @@ struct nanoslot_state_0xA0 : public nanoslot_state {
 /** slot ID 0xA1: arm IMUs (in arm electronics box) */
 struct nanoslot_command_0xA1 {
     nanoslot_autonomy autonomy; 
+    nanoslot_byte_t read_L; // if 1, read from left load cell channel
 };
 struct nanoslot_sensor_0xA1 {
     // IMU needs to be listed first in the struct, for alignment
@@ -76,6 +77,9 @@ struct nanoslot_sensor_0xA1 {
     enum {imu_tool=0};
     enum {imu_stick=1};
     nanoslot_IMU_t imu[n_imu];
+    
+    // Load cell left and right (default) values
+    int32_t load_L, load_R;
     
     // Single-byte fields go after IMU data
     nanoslot_heartbeat_t heartbeat; // increments
@@ -85,6 +89,9 @@ struct nanoslot_sensor_0xA1 {
 struct nanoslot_state_0xA1 : public nanoslot_state {
     nanoslot_IMU_state stick; ///< Arm stick frame
     nanoslot_IMU_state tool; ///< Tool coupler (tilt + spin)
+    
+    // Load cell kilogram-force, negative = down
+    float load_L, load_R;
 };
 
 
@@ -124,6 +131,7 @@ struct nanoslot_state_0xF0 : public nanoslot_state {
 /** slot ID 0xF1: forward IMUs (in dedicated mini box in bottom front of robot) */
 struct nanoslot_command_0xF1 {
     nanoslot_autonomy autonomy; 
+    nanoslot_byte_t read_L; // if 1, read from left load cell channel
 };
 struct nanoslot_sensor_0xF1 {
     // IMU needs to be listed first in the struct, for alignment
@@ -133,6 +141,9 @@ struct nanoslot_sensor_0xF1 {
     enum {imu_fork=2};
     enum {imu_dump=3};
     nanoslot_IMU_t imu[n_imu];
+    
+    // Load cell left and right (default) values
+    int32_t load_L, load_R;
     
     // Single-byte fields go after IMU data
     nanoslot_heartbeat_t heartbeat; // increments
@@ -145,6 +156,9 @@ struct nanoslot_state_0xF1 : public nanoslot_state {
     nanoslot_IMU_state boom; ///< Robot arm boom
     nanoslot_IMU_state fork; ///< Front scoop fork
     nanoslot_IMU_state dump; ///< Front scoop dump
+    
+    // Load cell kilogram-force, negative = down
+    float load_L, load_R;
 };
 
 
