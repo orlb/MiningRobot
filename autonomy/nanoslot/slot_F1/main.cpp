@@ -18,7 +18,7 @@ int printInterval=30;
  The accelerometer values are collected in reference orientation, might be off a degree or two.
 */
 nanoslot_IMU_filter frame_filter(delayMs, vec3(0.0722,0.0306,-0.0191),vec3(-2.0,1.9971,-1.0437));
-nanoslot_IMU_filter boom_filter(delayMs, vec3(0.052,0.09,0.08),vec3(4.1016,0.8854,-5.1388));
+nanoslot_IMU_filter boom_filter(delayMs, vec3(0.052,0.04,0.08),vec3(4.1016,0.8854,-5.1388),vec3(1,1,1.1f));
 nanoslot_IMU_filter fork_filter(delayMs, vec3(-0.0494,-0.0589,-0.0449),vec3(-0.9815,-6.3307,0.6161));
 nanoslot_IMU_filter dump_filter(delayMs, vec3(0.0045,0.0225,0.0816),vec3(-21.1348,4.0780,6.3213));
 

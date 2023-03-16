@@ -122,12 +122,17 @@ public: // Actual captured data (read/write)
 
     // This is cached inside the camera, to avoid reallocation
     const realsense_projector *depth_projector;
-    float depth2cm;
+    float depth2cm,depth2m;
     
-    // Return the last-grabbed depth at this (x,y) pixel
-    //   The value may be zero, indicating invalid depth data there.
-    float get_depth(int x,int y) const {
+    /// Return the last-grabbed depth at this (x,y) pixel in centimeters.
+    ///   The value may be zero, indicating invalid depth data there.
+    float get_depth_cm(int x,int y) const {
         return depth2cm*depth_data[x+y*depth_w];
+    }
+    /// Return the last-grabbed depth at this (x,y) pixel in meters.
+    ///   The value may be zero, indicating invalid depth data there.
+    float get_depth_m(int x,int y) const {
+        return depth2m*depth_data[x+y*depth_w];
     }
     
     // Extract camera-coordinates (Y down, Z out) 3D location of this depth value

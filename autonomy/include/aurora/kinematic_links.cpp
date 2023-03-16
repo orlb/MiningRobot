@@ -33,7 +33,7 @@ const robot_link_geometry &link_geometry(robot_link_index L)
             "dump",
             link_dump, linktype_revolute,
             link_fork, vec3(0,0.250,0.020),
-            axisX, 45.0f, 1
+            axisX, 5.0f, 1
         },
         
         {

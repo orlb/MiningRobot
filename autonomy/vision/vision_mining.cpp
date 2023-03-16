@@ -11,6 +11,8 @@ From the depth images, we extract drivable / non-drivable areas.
 #include <opencv2/opencv.hpp>   
 #include "aurora/data_exchange.h"
 #include "aurora/lunatic.h"
+#include "aurora/kinematics.h"
+#include "aurora/kinematic_links.cpp"
 
 #include "vision/realsense_camera.hpp"
 #include "vision/realsense_camera.cpp"
@@ -22,6 +24,7 @@ From the depth images, we extract drivable / non-drivable areas.
 #include "vision/grid.hpp"
 #include "vision/grid.cpp"
 
+using namespace aurora;
 
 /* Fill out computer vision marker reports, based on observations from aruco */
 class vision_marker_watcher {
@@ -108,53 +111,58 @@ void erode_depth(realsense_camera_capture &cap,int erode_depth) {
     }
 }
 
-/* Project current depth data onto 2D map */
-void project_depth_to_2D(const realsense_camera_capture &cap,
+/* Project current depth data onto mining_depth stripe */
+void project_depth_to_mining(const realsense_camera_capture &cap,
     const aurora::robot_coord3D &view3D,
-    obstacle_grid &map2D)
+    mining_depth &mining)
 {
-    printf("Camera view: "); view3D.print();
+    // printf("Camera view: "); view3D.print();
+    mining.camera_coords=view3D;
     const float depth_calibration_scale_factor=1.0f; // fudge factor to match real distances
-    const float sanity_distance_min = 100.0; // mostly parts of robot if they're too close
-    const float sanity_distance_max = 550.0; // depth gets ratty if it's too far out
-    const float sanity_Z_max = 200.0; // ignore ceiling (with wide error band for tilt)
-    const float sanity_Z_min = -100.0; // ignore invalid too-low
-    const int realsense_left_start=30; // invalid data left of here
-    for (int y = 0; y < cap.depth_h; y++)
-    for (int x = realsense_left_start; x < cap.depth_w; x++)
+    const float sanity_distance_min = 0.5; // mostly parts of robot if they're too close
+    const float sanity_distance_max = 7.5; // depth gets ratty if it's too far out
+    const float sanity_Z_max = 3.0; // ignore ceiling (with wide error band for tilt)
+    const float sanity_Z_min = -1.0; // ignore invalid too-low
+    //const int realsense_left_start=30; // invalid data left of here
+    
+    int L=cap.depth_w/2;
+    int R=L+1;
+    //for (int y = 0; y < cap.depth_h; y++)
+    for (int d=0;d<mining_depth::ndepth;d++) //< vertical samples across image
+    for (int x = L; x < R; x++)
     {
-        float depth=cap.get_depth_cm(x,y);
-        if (depth<=sanity_distance_min || depth>sanity_distance_max) 
-            continue; // out of range value
+        vec3 spot(0,0,0);
+        int y=d*(cap.depth_h-1)/(mining_depth::ndepth-1);
+        float depth=cap.get_depth_m(x,y);
+        if (depth>sanity_distance_min && depth<sanity_distance_max) 
+        { // value seems in-range
+            depth *= depth_calibration_scale_factor;
         
-        depth *= depth_calibration_scale_factor;
-        
-        vec3 cam = cap.project_3D(depth,x,y);
-        vec3 world = view3D.world_from_local(cam);
-        
-        if (world.z<sanity_Z_max && world.z>sanity_Z_min)
-        {
-            map2D.add(world);
+            vec3 cam = cap.project_3D(depth,x,y);
+            vec3 world = view3D.world_from_local(cam);
+            
+            if (world.z<sanity_Z_max && world.z>sanity_Z_min)
+            {
+                spot=world;
+            }
         }
+        mining.depth[d]=spot;
     }   
 }
-
-/* Mark grid cells as driveable or non-driveable */
-
 
 int main(int argc,const char *argv[]) {
     int show_GUI=0;
     //Data sources need to write to, these are defined by lunatic.h for what files we will be communicating through
-    MAKE_exchange_marker_reports();
-    MAKE_exchange_field_raw();
-    MAKE_exchange_obstacle_view();
+    MAKE_exchange_marker_reports(); // for reporting aruco markers
+    MAKE_exchange_backend_state(); // for joint angles
+    MAKE_exchange_mining_depth(); // for viewed depth data
 
     // res=720; fps=30; // <- 200% of gaming laptop CPU
     // res=540; fps=60; // <- 220% of gaming laptop CPU
     // res=540; fps=30; // <- 100% of gaming laptop CPU
     
-    int res=540; // camera's requested vertical resolution
-    int fps=30; // camera's frames per second 
+    int res=480; // camera's requested vertical resolution
+    int fps=5; // camera's frames per second 
     bool aruco=true; // look for computer vision markers in RGB data
     bool obstacle=true; // look for obstacles/driveable areas in depth data
     int erode=3; // image erosion passes
@@ -208,23 +216,15 @@ int main(int argc,const char *argv[]) {
         if (obstacle) {
             if (erode) erode_depth(cap,erode);
             
-            // Project to 2D map
-            obstacle_grid map2D;
-            aurora::robot_coord3D view3D = exchange_obstacle_view.read();
-            std::cout << "current percent: " << view3D.percent << "\n";
-            if(view3D.percent > 0.0)
-            {
-                project_depth_to_2D(cap,view3D,map2D);
-                exchange_field_raw.write_begin() = map2D;
-                exchange_field_raw.write_end();
-            }
+            // Project to mining
+            robot_link_coords links(exchange_backend_state.read().joint);
+            const robot_coord3D &view3D=links.coord3D(link_depthcam);
             
+            mining_depth mining;
+            project_depth_to_mining(cap,view3D,mining);
+            exchange_mining_depth.write_begin() = mining;
+            exchange_mining_depth.write_end();
             
-            
-            if (show_GUI) {
-                cv::Mat debug=map2D.get_debug_2D(6);
-                imshow("2D Map",debug);
-            }
         }
         
         // Show debug GUI

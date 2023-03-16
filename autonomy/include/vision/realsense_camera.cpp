@@ -59,6 +59,7 @@ realsense_camera_capture::realsense_camera_capture(realsense_camera &cam)
     } 
     depth_projector=cam.depth_projector;
     depth2cm = cam.depth2cm;
+    depth2m = cam.depth2cm*0.01;
 }
 
 

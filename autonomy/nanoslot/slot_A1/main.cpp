@@ -17,7 +17,7 @@ int printInterval=30;
 /* The vec3 here are hardware offset values, collected with autonomy/kinematics/IMU_calibrate
  The accelerometer values are collected in reference orientation, might be off a degree or two.
 */
-nanoslot_IMU_filter stick_filter(delayMs,vec3(-0.0136,0.0745,-0.0111),vec3(-1.5821,1.9100,-0.1994));
+nanoslot_IMU_filter stick_filter(delayMs,vec3(-0.0136,0.09,-0.0111),vec3(-1.5821,1.9100,-0.1994),vec3(1,1.1f,1));
 nanoslot_IMU_filter tool_filter(delayMs,vec3(-0.0094,0.0073,0.0372),vec3(0.1127,3.3704,-26.7998));
 
 int main(int argc,char **argv)

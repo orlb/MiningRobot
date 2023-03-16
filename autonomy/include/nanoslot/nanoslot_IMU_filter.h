@@ -55,6 +55,7 @@ class nanoslot_IMU_filter
 {
 public:
     vec3 offset_acc; /// g force acclerometer offset (subtracted off of raw readings)
+    vec3 scale_acc; /// scale factor to apply to incoming accelerometer data
     vec3 offset_gyro; /// degrees/sec gyro offset (subtracted off of raw readings)
     
     /** State update for a base (world) link, like the robot main frame */
@@ -83,8 +84,9 @@ public:
     }
 
     /** Create a filter designed to run every delayMs milliseconds */
-    nanoslot_IMU_filter(int delayMs_, vec3 offset_acc_=vec3(0,0,0), vec3 offset_gyro_=vec3(0,0,0))
-        :offset_acc(offset_acc_), offset_gyro(offset_gyro_), delayMs(delayMs_)
+    nanoslot_IMU_filter(int delayMs_, vec3 offset_acc_=vec3(0,0,0), vec3 offset_gyro_=vec3(0,0,0), vec3 scale_acc_=vec3(1,1,1))
+        :offset_acc(offset_acc_), scale_acc(scale_acc_),
+         offset_gyro(offset_gyro_), delayMs(delayMs_)
     {
         FusionAhrsInitialise(&ahrs);
         FusionOffsetInitialise(&offset,1000/delayMs);
@@ -120,7 +122,7 @@ protected:
         vec3 gyro_scale = vec_unpack(reading.gyro, (1<<4)/131.07f);
         
         // Apply offsets, now that we're converted to float
-        acc -= offset_acc;
+        acc = (acc-offset_acc)*scale_acc;
         gyro_scale -= offset_gyro;
         
         state.rate=gyro_scale;

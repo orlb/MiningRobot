@@ -164,6 +164,30 @@ report the current drive track encoders:
 #define MAKE_exchange_drive_encoders()   aurora::data_exchange<aurora::drive_encoders> exchange_drive_encoders("backend.encoders")
 
 
+/* ------------- Mining Depth Camera Data ------------
+ This is the stripe of depth camera data we look at before mining starts.
+ FIXME: coordinates are currently frame-relative, so the robot can't move.
+ Make this pit-relative coordinates?
+*/
+struct mining_depth {
+    /// Frame-relative coordinate system used to acquire this data
+    robot_coord3D camera_coords;
+    
+    /// Number of depth samples across the camera field of view
+    enum {ndepth=200};
+    
+    /// Frame-relative 3D position of mining surface
+    vec3 depth[ndepth];
+    
+    /// FIXME: maybe add depth / distance uncertainty range, perhaps a grid_sample?
+};
+
+/* This macro declares the variable used to 
+report the current mining depth view:
+    Written by vision_miner
+    Read by the backend (and ??)
+*/
+#define MAKE_exchange_mining_depth()   aurora::data_exchange<aurora::mining_depth> exchange_mining_depth("mining.depth")
 
 
 /* -------------- Camera Pointing via Stepper Motor --------------

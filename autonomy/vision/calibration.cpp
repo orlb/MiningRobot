@@ -11,7 +11,26 @@ For the RealSense D435 (smaller):
  color Intrinsics: wid ht 1280.0 720.0  ppx/y 635.6 373.1  fx/y 920.7 920.8
 
 For the RealSense D455 (bigger):
- 
+ At res=480:  USB 2.0 FPS == 5 works
+ depth Intrinsics: wid ht 640.0 480.0  ppx/y 320.2 242.3  fx/y 384.9 384.9
+ color Intrinsics: wid ht 640.0 480.0  ppx/y 319.9 242.0  fx/y 379.5 379.2
+  model: 2
+  coeff[0]=-0.056522
+  coeff[1]=0.068801
+  coeff[2]=-0.000717
+  coeff[3]=-0.000025
+  coeff[4]=-0.022386
+
+
+ At res=720: USB 2.0 FPS == 5 works
+depth Intrinsics: wid ht 1280.0 720.0  ppx/y 640.4 363.8  fx/y 641.5 641.5
+color Intrinsics: wid ht 1280.0 720.0  ppx/y 639.8 363.3  fx/y 632.4 632.0
+  model: 2
+  coeff[0]=-0.056522
+  coeff[1]=0.068801
+  coeff[2]=-0.000717
+  coeff[3]=-0.000025
+  coeff[4]=-0.022386
 
  
 */
@@ -38,7 +57,7 @@ void print_profile(const char *what,const frame_t &frame)
 }
 
 int main() {
-    int res=720, fps=15;
+    int res=720, fps=5;
     printf("Connecting to camera...\n");
     realsense_camera cam(res,fps);
     

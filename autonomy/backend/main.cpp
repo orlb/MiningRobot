@@ -136,6 +136,7 @@ void arduino_command_write(robot_base &robot)
 
 
 MAKE_exchange_backend_state();
+MAKE_exchange_mining_depth();
 MAKE_exchange_drive_encoders();
 MAKE_exchange_plan_target();
 MAKE_exchange_drive_commands();
@@ -714,7 +715,24 @@ void robot_manager_t::update(void) {
     
     // Draw current robot joint configuration (side view)
     robot_3D_setup();
+    if (0) { // visually depict physical robot tilts (neat, but mining is robot relative)
+        glRotatef(nano.slot_F1.state.frame.pitch,1,0,0);
+        glRotatef(nano.slot_F1.state.frame.roll,0,1,0);
+    }
     robot_3D_draw(robot.joint);
+    
+    // Draw mining depths
+    const aurora::mining_depth &mining=exchange_mining_depth.read();
+    glColor3f(0,1,0);
+    glBegin(GL_LINES);
+    for (int d=0;d<aurora::mining_depth::ndepth;d++) //< vertical samples across image
+    {
+        vec3 v=mining.depth[d]; // 3D viewed spot, in frame coords
+        if (v.z!=0.0)
+            glVertex3fv(v); 
+    }
+    glEnd();
+    
     robot_3D_cleanup();
 
 
