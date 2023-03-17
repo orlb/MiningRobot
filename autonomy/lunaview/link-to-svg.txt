@@ -1,0 +1,1 @@
+https://github.com/AuroraRoboticsLab/Excahauler/blob/main/documentation/kinematics/sideview_axes.png

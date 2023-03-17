@@ -42,9 +42,57 @@ const string& data_location = "/tmp/data_exchange/data_capture/";
 int main() {
 
     // Initialize data capture for the drive encoders
+    // (floats) total distance driven, by each side of robot
     MAKE_exchange_drive_encoders();
     aurora::drive_encoders last;
     last.left   =   last.right  =   0.0f;
+
+    // From robot_base.h (included in lunatic.h), grab info from class robot_base
+    // Import into new var state
+    MAKE_exchange_backend_state();
+    backend_state state;
+
+    // Updates automatically whenever we read the <state> var
+    state = exchange_backend_state.read();
+
+    // List of joints, in sequential order from base to furthest point of arm
+    // Vars are all floats
+    // These are all angles reconstructed from the inertial measurement units (IMUs)
+    cout << state.joint.angle.fork << endl;
+    cout << state.joint.angle.dump << endl;
+    cout << state.joint.angle.boom << endl;
+    cout << state.joint.angle.stick << endl;
+    cout << state.joint.angle.tilt << endl;
+    cout << state.joint.angle.spin << endl;
+
+    // (float) runs -1 to +1, indicates full backward to full forward 
+    cout << state.power.left << endl;
+    cout << state.power.right << endl;
+    // floats
+    // power levels run from -1 (full backwards) to +1 (full forwards)
+    // This is the power being sent to the motor, not necessarily position
+    cout << state.power.fork << endl;
+    cout << state.power.dump << endl;
+    cout << state.power.boom << endl;
+    cout << state.power.stick << endl;
+    cout << state.power.tilt << endl;
+    cout << state.power.spin << endl;
+    // (float) power level being sent to tool
+    cout << state.power.tool << endl;
+
+    // state.state is one int
+    cout << state.state << endl;
+
+    // state.sensor is obsolete and therefore currently omitted
+    // Later will include info such as battery voltage
+
+    // state.loc all floats
+    // (x, y) are in meters
+    cout << state.loc.x << endl;
+    cout << state.loc.y << endl;
+    // degrees (float)
+    cout << state.loc.angle << endl;
+
 
     // Create ofstream stream for json data streaming
     string filename = createNewFileName();
