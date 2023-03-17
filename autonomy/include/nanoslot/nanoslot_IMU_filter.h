@@ -127,7 +127,7 @@ protected:
         
         state.rate=gyro_scale;
         
-        // Update the gyro offset (this only seems to work at low rates)
+        // Update the gyro offset (this only works at low rates, below 1 deg/sec)
         FusionVector gyro=FusionOffsetUpdate(&offset,fusion(gyro_scale));
         
         // Update the quaternion

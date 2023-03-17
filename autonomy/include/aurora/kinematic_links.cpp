@@ -23,17 +23,17 @@ const robot_link_geometry &link_geometry(robot_link_index L)
             axisZ, 0.0f, -1
         },
         
-        {
+        { /* Lift the whole front scoop assembly */
             "fork",
             link_fork, linktype_revolute,
             link_frame, vec3(0,0.455,0.150),
             axisX, 0.0f, 0
         },
-        {
+        { /* Dump the front scoop out */
             "dump",
             link_dump, linktype_revolute,
             link_fork, vec3(0,0.250,0.020),
-            axisX, 5.0f, 1
+            axisX, 0.0f, 1
         },
         
         {
@@ -74,11 +74,11 @@ const robot_link_geometry &link_geometry(robot_link_index L)
         },
         
         
-        {
+        { /* Realsense depth camera on top of stick */
             "depthcam",
             link_depthcam, linktype_revolute,
-            link_stick, vec3(0,0.510,0.500),
-            axisX, -180+57, -1
+            link_stick, vec3(0,0.490,0.500),
+            axisX, -180+57+1, -1
         },
         {
             "drivecamflip",
@@ -86,7 +86,7 @@ const robot_link_geometry &link_geometry(robot_link_index L)
             link_frame, vec3(0,-0.575,0.270+0.215),
             axisZ, 180.0f, -1
         },
-        {
+        { /* Genius 120 FOV camera on back electronics box */
             "drivecam",
             link_drivecam, linktype_revolute,
             link_drivecamflip, vec3(0,0,0),
