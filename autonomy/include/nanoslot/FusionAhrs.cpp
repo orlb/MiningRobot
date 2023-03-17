@@ -487,7 +487,7 @@ float FusionCompassCalculateHeading(const FusionConvention convention, const Fus
 /**
  * @brief Threshold in degrees per second.
  */
-#define THRESHOLD (3.0f)
+#define THRESHOLD (1.0f)
 
 //------------------------------------------------------------------------------
 // Functions
