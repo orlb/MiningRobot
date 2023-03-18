@@ -69,8 +69,6 @@ int main() {
             // time data reached the database
             w.exec("CREATE TABLE IF NOT EXISTS test_conn ( \
                 robot_json VARCHAR ( 50 ) NOT NULL, \
-                /* timestamp_db TIMESTAMP ( 50 ) NOT NULL, \
-                datestamp_db TIMESTAMP ( 50 ) NOT NULL, */ \
                 );"
             );
 

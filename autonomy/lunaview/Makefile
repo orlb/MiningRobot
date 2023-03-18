@@ -5,19 +5,18 @@ OBJECTS = $(SOURCES:%.cpp=%.o)
 LD = g++
 CXX = g++
 CXXFLAGS = -std=c++17 -g -Wall -I../include -DGL_SILENCE_DEPRECATION
-LDFLAGS =  -lpqxx -lpq
+LDFLAGS = -lpqxx -lpq
 
 .PHONY: all clean
 
 all: $(TARGET)
 
 clean:
-    $(RM) src/*.o
-    $(RM) $(TARGET)
+	$(RM) src/*.o
+	$(RM) $(TARGET)
 
 $(TARGET): $(OBJECTS)
-    $(LD) -o $@ $(OBJECTS) $(LDFLAGS)
+	$(LD) -o $@ $(OBJECTS) $(LDFLAGS)
 
 %.o: %.cpp $(HEADERS)
-    $(CXX) $(CXXFLAGS) -c $< -o $@
-
+	$(CXX) $(CXXFLAGS) -c $< -o $@
