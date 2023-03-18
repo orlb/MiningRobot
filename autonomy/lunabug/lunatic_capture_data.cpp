@@ -9,6 +9,7 @@
 #include <ctime>                // put_time(), locattime()
 #include <iomanip>              
 #include <iostream>             // cout, cin, endl
+#include <pqxx/pqxx>            // postgresql database library
 
 using std::string;
 using std::istringstream;
@@ -39,24 +40,66 @@ std::string ReplaceString(std::string subject, const std::string& search, const 
 // Set data storage location
 const string& data_location = "/tmp/data_exchange/data_capture/";
 
+// Error message for loss of a previously established database connection
+const string& db_disconnect_msg = "Connection to the database is lost.";
+
 int main() {
 
+    // Establish connection to postgresql database
+    pqxx::connection psql_conn(" \
+        dbname=test_cpp \
+        user=postgres \
+        password=asdf \
+        hostaddr=127.0.0.1 \
+        port=5432 \
+        target_session_attrs=read-write"
+    );
+
+    if (!psql_conn.is_open()) {
+        cout << "Connection to database could not be established." << endl;
+
+        return 0;
+    }
+
+    try {
+
+        if (conn.is_open()) {
+
+            pqxx::work w(conn);
+
+            w.exec("CREATE TABLE IF NOT EXISTS test_conn ( \
+                test_col_1 VARCHAR ( 50 ) NOT NULL, \
+                test_col_2 VARCHAR ( 50 ) NOT NULL \
+                );"
+            );
+            w.commit();
+
+        } else {
+            cout << db_disconnect_msg << endl;
+        }
+
+    } catch (const std::exception& e) {
+        cout << e.what() << endl;
+    }
+
     // Initialize data capture for the drive encoders
-    // (floats) total distance driven, by each side of robot
+    // Variables are of type float and provide total distance driven by each side of robot
     MAKE_exchange_drive_encoders();
     aurora::drive_encoders last;
     last.left   =   last.right  =   0.0f;
 
-    // From robot_base.h (included in lunatic.h), grab info from class robot_base
-    // Import into new var state
+    // From robot_base.h (included in lunatic.h), obtain info from class robot_base
     MAKE_exchange_backend_state();
+
+    // Import new var state
     backend_state state;
 
-    // Updates automatically whenever we read the <state> var
+    // Establish initial values of state variable
+    // (These values will update automatically from now on)
     state = exchange_backend_state.read();
 
-    // List of joints, in sequential order from base to furthest point of arm
-    // Vars are all floats
+    // List of joints, in sequential order, from base to furthest point of arm
+    // Vars are all of type float
     // These are all angles reconstructed from the inertial measurement units (IMUs)
     cout << state.joint.angle.fork << endl;
     cout << state.joint.angle.dump << endl;
@@ -65,35 +108,38 @@ int main() {
     cout << state.joint.angle.tilt << endl;
     cout << state.joint.angle.spin << endl;
 
-    // (float) runs -1 to +1, indicates full backward to full forward 
+    // This is the power being sent to the motor, not necessarily position
+    // Vars are all of type float
+    // Values run from -1 to +1, and indicate full backward to full forward 
+    // The first two indicate power to the drive motors
     cout << state.power.left << endl;
     cout << state.power.right << endl;
-    // floats
-    // power levels run from -1 (full backwards) to +1 (full forwards)
-    // This is the power being sent to the motor, not necessarily position
+    // These variables indicate power to the joints
     cout << state.power.fork << endl;
     cout << state.power.dump << endl;
     cout << state.power.boom << endl;
     cout << state.power.stick << endl;
     cout << state.power.tilt << endl;
     cout << state.power.spin << endl;
-    // (float) power level being sent to tool
+    // This var represents power level sent to tool
     cout << state.power.tool << endl;
 
-    // state.state is one int
+    // The state.state variable is one int
     cout << state.state << endl;
 
     // state.sensor is obsolete and therefore currently omitted
     // Later will include info such as battery voltage
 
-    // state.loc all floats
-    // (x, y) are in meters
+    // The state.loc variables represent an estimate of location 
+    // Values are of type float
+    // Variables (x, y) are in meters
     cout << state.loc.x << endl;
     cout << state.loc.y << endl;
-    // degrees (float)
+    // Variable (angle) are in degrees
     cout << state.loc.angle << endl;
 
 
+    // Obsolete code, may be deleted
     // Create ofstream stream for json data streaming
     string filename = createNewFileName();
     ofstream fout = createNewFile(filename, data_location);
