@@ -51,6 +51,9 @@ autonomy/aruco/aruco-3.0.11/CMakeFiles/cmake.check_cache
 *.out
 *.app
 
+# Temporary Files
+*.swp
+
 CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles
