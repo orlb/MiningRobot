@@ -1,19 +1,23 @@
-include ../Makefile.inc
-OPTS=-O4
+TARGET = lunacapture
+SOURCES = $(wildcard *.cpp)
+HEADERS = $(wildcard *.h*)
+OBJECTS = $(SOURCES:%.cpp=%.o)
 LD = g++
 CXX = g++
-CFLAGS=-I../include  -Wall  -std=c++17 -DGL_SILENCE_DEPRECATION  $(OPTS) $(CVCFLAGS)
+CXXFLAGS = -std=c++17 -g -Wall -I../include -DGL_SILENCE_DEPRECATION
 LDFLAGS =  -lpqxx -lpq
-LIBS=$(CVLINK)
-PROGS=lunacapture lunaview
 
-all: $(PROGS)
+.PHONY: all clean
 
-lunaview: lunaview.cpp
-	g++ $(CFLAGS) $< -o $@ $(LIBS)
-
-lunacapture: lunacapture.cpp
-	g++ $(CFLAGS) $< -o $@
+all: $(TARGET)
 
 clean:
-	- rm $(PROGS)
+    $(RM) src/*.o
+    $(RM) $(TARGET)
+
+$(TARGET): $(OBJECTS)
+    $(LD) -o $@ $(OBJECTS) $(LDFLAGS)
+
+%.o: %.cpp $(HEADERS)
+    $(CXX) $(CXXFLAGS) -c $< -o $@
+
