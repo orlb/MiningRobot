@@ -22,12 +22,6 @@ using std::to_string;
 
 using json = nlohmann::json;
 
-// Create a new output file for json data streaming
-string createNewFileName();
-
-// Create a new output file for json data streaming
-ofstream createNewFile(const string& filename, const string& location);
-
 // Capture the current time and return in string format
 string capture_time();
 
@@ -37,8 +31,8 @@ string capture_date();
 // Find and replace within string (function copied from stackoverflow: https://tinyurl.com/48fvpu6n via Czarek Tomcza)
 std::string ReplaceString(std::string subject, const std::string& search, const std::string& replace);
 
-// Set data storage location
-const string& data_location = "/tmp/data_exchange/data_capture/";
+// // Set data storage location
+// const string& data_location = "/tmp/data_exchange/data_capture/";
 
 // Error message for loss of a previously established database connection
 const string& db_disconnect_msg = "Connection to the database is lost.";
@@ -61,17 +55,25 @@ int main() {
         return 0;
     }
 
+    // Create the database table, if it does not already exist
     try {
 
         if (conn.is_open()) {
 
             pqxx::work w(conn);
 
+            // TO-DO
+            // Establish variables for names of db, columns, etc.
+            // (Table is to contain most data in a single json string
+            // and, likely, also a timestamp column to indicate 
+            // time data reached the database
             w.exec("CREATE TABLE IF NOT EXISTS test_conn ( \
-                test_col_1 VARCHAR ( 50 ) NOT NULL, \
-                test_col_2 VARCHAR ( 50 ) NOT NULL \
+                robot_json VARCHAR ( 50 ) NOT NULL, \
+                /* timestamp_db TIMESTAMP ( 50 ) NOT NULL, \
+                datestamp_db TIMESTAMP ( 50 ) NOT NULL, */ \
                 );"
             );
+
             w.commit();
 
         } else {
@@ -79,7 +81,10 @@ int main() {
         }
 
     } catch (const std::exception& e) {
+
         cout << e.what() << endl;
+        
+        return 0;
     }
 
     // Initialize data capture for the drive encoders
@@ -98,152 +103,80 @@ int main() {
     // (These values will update automatically from now on)
     state = exchange_backend_state.read();
 
-    // List of joints, in sequential order, from base to furthest point of arm
-    // Vars are all of type float
-    // These are all angles reconstructed from the inertial measurement units (IMUs)
-    cout << state.joint.angle.fork << endl;
-    cout << state.joint.angle.dump << endl;
-    cout << state.joint.angle.boom << endl;
-    cout << state.joint.angle.stick << endl;
-    cout << state.joint.angle.tilt << endl;
-    cout << state.joint.angle.spin << endl;
-
-    // This is the power being sent to the motor, not necessarily position
-    // Vars are all of type float
-    // Values run from -1 to +1, and indicate full backward to full forward 
-    // The first two indicate power to the drive motors
-    cout << state.power.left << endl;
-    cout << state.power.right << endl;
-    // These variables indicate power to the joints
-    cout << state.power.fork << endl;
-    cout << state.power.dump << endl;
-    cout << state.power.boom << endl;
-    cout << state.power.stick << endl;
-    cout << state.power.tilt << endl;
-    cout << state.power.spin << endl;
-    // This var represents power level sent to tool
-    cout << state.power.tool << endl;
-
-    // The state.state variable is one int
-    cout << state.state << endl;
-
-    // state.sensor is obsolete and therefore currently omitted
-    // Later will include info such as battery voltage
-
-    // The state.loc variables represent an estimate of location 
-    // Values are of type float
-    // Variables (x, y) are in meters
-    cout << state.loc.x << endl;
-    cout << state.loc.y << endl;
-    // Variable (angle) are in degrees
-    cout << state.loc.angle << endl;
-
-
-    // Obsolete code, may be deleted
-    // Create ofstream stream for json data streaming
-    string filename = createNewFileName();
-    ofstream fout = createNewFile(filename, data_location);
-
-    // Initiate json structure in output stream
-    fout << "{}";
-
-    // Close output stream
-    fout.close();
-
-    // Set path to file
-    string data_path = data_location + filename;
-
     while (true) {
 
-        // If there has been a change to the drive encoders, update terminal printout text for clarity
-        if (exchange_drive_encoders.updated()) printf("+");
+        // May not need to print this to terminal
+        // // If there has been a change to the drive encoders, update terminal printout text for clarity
+        // if (exchange_drive_encoders.updated()) printf("+");
 
-        // Calculate amount of echange in drive encoders
+        // Calculate amount of change in drive encoders
         aurora::drive_encoders cur      =   exchange_drive_encoders.read();
         aurora::drive_encoders change   =   cur - last;
 
-        // Print change of drive encoders to terminal
-        change.print();
-
-        // Capture current time and convert to string format
+        // Capture current time (on robot) and convert to string format
         // Create variables
-        const auto now          = std::chrono::high_resolution_clock::now();
-        const auto now_         = std::chrono::system_clock::to_time_t(now);
-        const auto ms           = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
+        const auto now      = std::chrono::high_resolution_clock::now();
+        const auto now_     = std::chrono::system_clock::to_time_t(now);
+        const auto ms       = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
 
         // Craft the json output
         json output_stream;
-        output_stream["date"]   = capture_date();
-        output_stream["time"]   = capture_time();
-        output_stream["left"]   = to_string(last.left);
-        output_stream["right"]  = to_string(last.right);
+        output_stream["date_robot"]   = capture_date();
+        output_stream["time_robot"]   = capture_time();
+        output_stream["drive_encoder_left"]   = to_string(change.left);
+        output_stream["drive_encoder_right"]  = to_string(change.right);
+
+        // List of joints, in sequential order, from base to furthest point of arm
+        // Vars are all of type float
+        // These are all angles reconstructed from the inertial measurement units (IMUs)
+        output_stream["fork"]  = state.joint.angle.fork;
+        output_stream["dump"]  = state.joint.angle.dump;
+        output_stream["boom"]  = state.joint.angle.boom;
+        output_stream["stick"] = state.joint.angle.stick;
+        output_stream["tilt"]  = state.joint.angle.tilt;
+        output_stream["spin"]  = state.joint.angle.spin;
+
+        // This is the power being sent to the motor, not necessarily position
+        // Vars are all of type float
+        // Values run from -1 to +1, and indicate full backward to full forward 
+        // The first two indicate power to the drive motors
+        output_stream["power_left"]     = state.power.left;
+        output_stream["power_right"]    = state.power.right;
+        // These variables indicate power to the joints
+        output_stream["power_fork"]     = state.power.fork;
+        output_stream["power_dump"]     = state.power.dump;
+        output_stream["power_boom"]     = state.power.boom;
+        output_stream["power_stick"]    = state.power.stick;
+        output_stream["power_tilt"]     = state.power.tilt;
+        output_stream["power_spin"]     = state.power.spin;
+        // This var represents power level sent to tool
+        output_stream["power_tool"]     = state.power.tool;
+
+        // The state.state variable is one int
+        output_stream["state_state"]     = state.state;
+
+        // state.sensor is obsolete and therefore currently omitted
+        // Later will include info such as battery voltage
+
+        // The state.loc variables represent an estimate of location 
+        // Values are of type float
+        // Variables (x, y) are in meters
+        output_stream["loc_x"]          = state.loc.x;
+        output_stream["loc_y"]          = state.loc.y;
+        // Variable (angle) are in degrees
+        output_stream["loc_angle"]      = state.loc.angle;
 
         // Test that json is formatted properly:
     
         string test = output_stream.dump();
         cout << test << endl;
 
-        // Open data_location
-        std::fstream file(data_path);
-
-        if (!file) {
-            std::cerr << "Failed to open data file" << endl;
-            return 0;
-        }
-
-        // Write json output
-        file << output_stream; 
-        fout.close();
+        // TO-DO Prep insert command for database
 
         // Reset 
         last=cur;
         aurora::data_exchange_sleep(100);
     }
-}
-
-string createNewFileName() {
-
-    // Capture time
-    string time_file = capture_time();
-
-    // Capture date
-    string date_file = capture_date();
-
-    // Convert vars to file format
-    time_file = ReplaceStringInPlace(time_file, ":", "_");
-    date_file = ReplaceStringInPlace(date_file, "/", "_");
-
-    // Craft filename
-    stringstream filename;
-    filename << "lunatic_data_" << date_file << "_" << time_file << ".json";
-
-    // Check filename accuracy
-    cout << filename << endl;
-
-    return filename.str();
-
-}
-
-// Create new file
-ofstream createNewFile(const string& filename, const string& location) {
-
-    // Create directory for the captured data
-    std::filesystem::create_directory(location);
-
-    // Create path to new file
-    const string& curr_path = location + filename;
-    cout << curr_path << endl;
-
-    // Create a new file in the tmp dir
-    ofstream fout(curr_path);
-    
-    if (!fout) {
-        cout << "Error opening output file" << endl;
-        exit(-1);
-    }
-
-    return fout;
-
 }
 
 // Capture current time
