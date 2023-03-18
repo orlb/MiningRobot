@@ -1,13 +1,9 @@
-/* Debug print the backend's encoder output */
 #include "aurora/lunatic.h"
 #include "nlohmann/json.hpp"    // json input/output
 #include <chrono>               // system_clock::time_point(), system_clock::now()
 #include <string>               // string()
 #include <sstream>              // stringstream()
-// #include <fstream>              // create, open, and close files,
-// #include <filesystem>           // create_directory()
 #include <ctime>                // put_time(), locattime()
-// #include <iomanip>              
 #include <iostream>             // cout, cin, endl
 #include <pqxx/pqxx>            // postgresql database library
 
@@ -30,9 +26,6 @@ string capture_date();
 
 // Find and replace within string (function copied from stackoverflow: https://tinyurl.com/48fvpu6n via Czarek Tomcza)
 std::string ReplaceString(std::string subject, const std::string& search, const std::string& replace);
-
-// // Set data storage location
-// const string& data_location = "/tmp/data_exchange/data_capture/";
 
 // Error message for loss of a previously established database connection
 const string& db_disconnect_msg = "Connection to the database is lost.";
@@ -68,7 +61,7 @@ int main() {
             // and, likely, also a timestamp column to indicate 
             // time data reached the database
             w.exec("CREATE TABLE IF NOT EXISTS test_conn ( \
-                robot_json VARCHAR ( 50 ) NOT NULL, \
+                robot_json VARCHAR ( 255 ) NOT NULL \
                 );"
             );
 
@@ -107,16 +100,12 @@ int main() {
         // // If there has been a change to the drive encoders, update terminal printout text for clarity
         // if (exchange_drive_encoders.updated()) printf("+");
 
+        exchange_drive_encoders.updated();
+        state = exchange_backend_state.read();
+
         // Calculate amount of change in drive encoders
         aurora::drive_encoders cur      =   exchange_drive_encoders.read();
         aurora::drive_encoders change   =   cur - last;
-
-        // Old code -- might be able to delete
-        // // Capture current time (on robot) and convert to string format
-        // // Create variables
-        // const auto now      = std::chrono::high_resolution_clock::now();
-        // const auto now_     = std::chrono::system_clock::to_time_t(now);
-        // const auto ms       = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
 
         // Craft the json output
         json output_stream;

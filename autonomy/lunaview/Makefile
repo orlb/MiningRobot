@@ -1,3 +1,4 @@
+# Note, Makefile requires a tab char to start a recipe, not 4 spaces!
 TARGET = lunacapture
 SOURCES = $(wildcard *.cpp)
 HEADERS = $(wildcard *.h*)
