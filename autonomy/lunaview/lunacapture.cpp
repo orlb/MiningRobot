@@ -4,10 +4,10 @@
 #include <chrono>               // system_clock::time_point(), system_clock::now()
 #include <string>               // string()
 #include <sstream>              // stringstream()
-#include <fstream>              // create, open, and close files,
-#include <filesystem>           // create_directory()
+// #include <fstream>              // create, open, and close files,
+// #include <filesystem>           // create_directory()
 #include <ctime>                // put_time(), locattime()
-#include <iomanip>              
+// #include <iomanip>              
 #include <iostream>             // cout, cin, endl
 #include <pqxx/pqxx>            // postgresql database library
 
@@ -58,9 +58,9 @@ int main() {
     // Create the database table, if it does not already exist
     try {
 
-        if (conn.is_open()) {
+        if (psql_conn.is_open()) {
 
-            pqxx::work w(conn);
+            pqxx::work w(psql_conn);
 
             // TO-DO
             // Establish variables for names of db, columns, etc.
@@ -97,7 +97,7 @@ int main() {
     MAKE_exchange_backend_state();
 
     // Import new var state
-    backend_state state;
+    aurora::backend_state state;
 
     // Establish initial values of state variable
     // (These values will update automatically from now on)
@@ -113,11 +113,12 @@ int main() {
         aurora::drive_encoders cur      =   exchange_drive_encoders.read();
         aurora::drive_encoders change   =   cur - last;
 
-        // Capture current time (on robot) and convert to string format
-        // Create variables
-        const auto now      = std::chrono::high_resolution_clock::now();
-        const auto now_     = std::chrono::system_clock::to_time_t(now);
-        const auto ms       = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
+        // Old code -- might be able to delete
+        // // Capture current time (on robot) and convert to string format
+        // // Create variables
+        // const auto now      = std::chrono::high_resolution_clock::now();
+        // const auto now_     = std::chrono::system_clock::to_time_t(now);
+        // const auto ms       = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
 
         // Craft the json output
         json output_stream;
@@ -206,13 +207,13 @@ string capture_time() {
 string capture_date() {
     // Capture current date
     const auto datestamp           = std::chrono::high_resolution_clock::now();
-    const auto datestamp_          = std::chrono::system_clock::to_time_t(timestamp);
+    const auto datestamp_          = std::chrono::system_clock::to_time_t(datestamp);
 
     // Convert current time to string format
     stringstream date_output;
 
     // Format variables into current time string
-    date_output << std::put_time(std::localtime(&datestamp_), "%Y/%m/%d") << ms_formatted;
+    date_output << std::put_time(std::localtime(&datestamp_), "%Y/%m/%d");
 
     return date_output.str();
 

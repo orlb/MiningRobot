@@ -12,7 +12,7 @@ all: $(PROGS)
 lunaview: lunaview.cpp
 	g++ $(CFLAGS) $< -o $@ $(LIBS)
 
-lunatic_capture_data: lunatic_capture_data.cpp
+lunacapture: lunacapture.cpp
 	g++ $(CFLAGS) $< -o $@
 
 clean:
