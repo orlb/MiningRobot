@@ -33,6 +33,9 @@ const string& db_disconnect_msg = "Connection to the database is lost.";
 // Prepare pqxx transactions
 void prepare_transactions(pqxx::connection &psql_conn);
 
+// Execute insert json data
+pqxx::result execute_insert(pqxx::transaction_base &t);
+
 int main() {
 
     // Establish connection to postgresql database
@@ -57,11 +60,6 @@ int main() {
 
             pqxx::work w(psql_conn);
 
-            // TO DO
-            // Establish variables for names of db, columns, etc.
-            // (Table is to contain most data in a single json string
-            // and, likely, also a timestamp column to indicate 
-            // time data reached the database
             w.exec("\
                 CREATE TABLE IF NOT EXISTS test_conn ( \
                 id SERIAL NOT NULL PRIMARY KEY, \
@@ -96,27 +94,26 @@ int main() {
     // Initialize data capture for the backend state
     MAKE_exchange_backend_state();
     aurora::backend_state state;
-    state = exchange_backend_state.read();
 
     while (true) {
+
+        // Craft the json output
+        json output_json;
+
+        // TO DO Simplify code by putting all of the below variable/json building into a separate function
+        // and returning the result as final string or json value
+
+        // Capture epoch time
+        output_json["epoch_time"]   = capture_epoch();
 
         // Update the backend data
         exchange_drive_encoders.updated();
         state = exchange_backend_state.read();
 
-        // TO DO Simplify code by putting all of the below variable/json building into a separate function
-        // and returning the result as final string/json value
-
         // Calculate amount of change in drive encoders
         // Drive_encoder data are of type float and provide total distance driven by each side of robot
         aurora::drive_encoders cur      =   exchange_drive_encoders.read();
         aurora::drive_encoders change   =   cur - last;
-
-        // Craft the json output
-        json output_json;
-
-        // Capture epoch time
-        output_json["epoch_time"]   = capture_epoch();
 
         // Capture drive encoder change data
         output_json["drive_encoder_left"]   = change.left;
@@ -168,6 +165,20 @@ int main() {
 
         // TO DO Prep insert command for database
 
+        try {
+
+            pqxx::transaction_base t(psql_conn);
+
+            pqxx::result res = execute_insert("test_conn", "robot_json", output_json.dump());
+
+        } catch (const std::exception& e) {
+
+            cout << e.what() << endl;
+            
+            return 0;
+
+        }
+
         // Reset 
         last=cur;
         aurora::data_exchange_sleep(500);
@@ -179,44 +190,13 @@ uint capture_epoch() {
 
     // Capture current time
     const auto timestamp           = std::chrono::high_resolution_clock::now();
-    // const auto timestamp_          = std::chrono::system_clock::to_time_t(timestamp);
-    // const auto ms                  = std::chrono::duration_cast<std::chrono::milliseconds>(timestamp.time_since_epoch()) % 1000;
     const auto epoch_time          = std::chrono::duration_cast<std::chrono::milliseconds>(timestamp.time_since_epoch());
 
-
+    // Convert to uint
     uint result = epoch_time.count();
-
-    // Convert current time to string format
-    // string ms_formatted            = std::to_string(ms.count());
-
-    // Format milliseconds to three digits
-    // while (ms_formatted.length() < 3) {
-    //     ms_formatted = ms_formatted.insert(0, "0");
-    // }
-
-    // Format variables into current time string
-    // time_output << std::put_time(std::localtime(&timestamp_), "%H:%M:%S:") << ms_formatted;
-
-    // return time_output.str();
 
     return result;
 }
-
-// // Capture current date
-// string capture_date() {
-//     // Capture current date
-//     const auto datestamp           = std::chrono::high_resolution_clock::now();
-//     const auto datestamp_          = std::chrono::system_clock::to_time_t(datestamp);
-// 
-//     // Convert current time to string format
-//     stringstream date_output;
-// 
-//     // Format variables into current time string
-//     date_output << std::put_time(std::localtime(&datestamp_), "%Y/%m/%d");
-// 
-//     return date_output.str();
-// 
-// }
 
 // Find and replace within string (function copied from stackoverflow: https://tinyurl.com/48fvpu6n via Czarek Tomcza)
 std::string ReplaceString(std::string subject, const std::string& search, const std::string& replace) {
@@ -245,3 +225,9 @@ void prepare_transactions(pqxx::connection &psql_conn) {
 
 };
 
+// Execute insert json data
+pqxx::result execute_insert(pqxx::transaction_base &t, std:string &table_name, std::string &col_name, std::string &json_data) {
+
+    return t.exec_prepared("insert_data", table_name, col_name, json_data);
+
+}
