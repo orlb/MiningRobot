@@ -19,10 +19,7 @@ using std::to_string;
 using json = nlohmann::json;
 
 // Capture the current time and return in string format
-string capture_time();
-
-// Capture the current date and return in string format
-string capture_date();
+uint capture_epoch();
 
 // Find and replace within string (function copied from stackoverflow: https://tinyurl.com/48fvpu6n via Czarek Tomcza)
 std::string ReplaceString(std::string subject, const std::string& search, const std::string& replace);
