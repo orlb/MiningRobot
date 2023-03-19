@@ -84,7 +84,11 @@ struct robot_link_geometry {
     /// Our index in the robot_joint_state.array of our rotation angle.
     ///  If this is -1, we're not in that array.
     /// If present, this is added to the joint rotation above.
-    int joint_index;     
+    int joint_index;
+    
+    /// Physical robot joint angle limits, in degrees, on raw angle (pre fixed angled)
+    ///   0.0 means no such limit applies.
+    float angle_min, angle_max; 
 };
 
 /// Look up this robot link's geometry in a fast constant table. 

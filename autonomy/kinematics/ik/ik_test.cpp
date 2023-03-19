@@ -88,31 +88,60 @@ private:
 
 using namespace aurora;
 
+float rand_float(float lo,float hi)
+{
+    int limit=0xfffff;
+    float scale=(rand()%limit)*(1.0/limit);
+    return lo+scale*(hi-lo);
+}
+
 int main() {
     MAKE_exchange_backend_state();
     excahauler_IK ik;
     
-    // Make a simple test using known angles
-    robot_joint_state test_joint={0};
-    test_joint.angle.stick=12.3;
-    test_joint.angle.boom=-23.4;
-    robot_link_coords test_fk(test_joint);
-    vec3 tilt = test_fk.coord3D(link_tilt).origin;
-    
-    //vec3 tilt=vec3(0,0.9,1.2);
-    //for (tilt.z=0.8;tilt.z<3.0;tilt.z+=0.1) 
+    srand(5);
+    for (int rep=0;rep<10000;rep++) 
     {
+        // Make a test point using known angles
+        robot_joint_state test_joint={0};
+        test_joint.angle.stick=rand_float(+1.0,+72.0);
+        test_joint.angle.boom=rand_float(-58.0,+63.0);
+        
+        robot_link_coords test_fk(test_joint);
+        vec3 tilt = test_fk.coord3D(link_tilt).origin;
+        
         robot_joint_state joint={0};
-	    int ret = ik.solve_tilt(joint,tilt);
-	    if (ret>0) { // successful solve
-	        // Recompute forward kinematics (verifies angles are correct)
-	        robot_link_coords fk(joint);
-	        vec3 re = fk.coord3D(link_tilt).origin; // recompute tilt origin
-	        
-	        printf("Tilt %.3f %.3f  -> Angle BS %.1f  %.1f -> %.3f %.3f\n", 
+        int ret = ik.solve_tilt(joint,tilt);
+        bool fail=true;
+        if (ret>0) { // successful solve
+            // Recompute forward kinematics (verifies angles are correct)
+            robot_link_coords fk(joint);
+            vec3 re = fk.coord3D(link_tilt).origin; // recompute tilt origin
+            
+            // Compute error on reconstructed position
+            float epsilon_m=1.0e-5; // error tolerance (meters)
+            float epsilon_deg=0.001; // error tolerance (degrees)
+            if (length(tilt - re)<epsilon_m &&
+                fabs(joint.angle.boom-test_joint.angle.boom)<epsilon_deg &&
+                fabs(joint.angle.stick-test_joint.angle.stick)<epsilon_deg
+               ) 
+            { // all values look good--test pass
+               fail=false;
+            }
+            
+            if (fail || rep%1000 == 0) // print angles occasionally
+            printf("Tilt %.3f %.3f  -> Angle BS %.1f  %.1f -> %.3f %.3f\n", 
                    tilt.y, tilt.z,
                    joint.angle.boom, joint.angle.stick,
                    re.y, re.z);
+
+        }
+        
+        if (fail) {
+            // Print details on failed solve:
+            printf(" IK fail %d: test BS %.1f  %.1f\n",
+                ret, 
+                test_joint.angle.boom, test_joint.angle.stick);
         }
     }
 
