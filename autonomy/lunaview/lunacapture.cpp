@@ -30,6 +30,9 @@ std::string ReplaceString(std::string subject, const std::string& search, const 
 // Error message for loss of a previously established database connection
 const string& db_disconnect_msg = "Connection to the database is lost.";
 
+// Prepare pqxx transactions
+void prepare_transactions(pqxx::connection &psql_conn);
+
 int main() {
 
     // Establish connection to postgresql database
@@ -60,8 +63,11 @@ int main() {
             // (Table is to contain most data in a single json string
             // and, likely, also a timestamp column to indicate 
             // time data reached the database
-            w.exec("CREATE TABLE IF NOT EXISTS test_conn ( \
-                robot_json VARCHAR ( 255 ) NOT NULL \
+            w.exec("\
+                CREATE TABLE IF NOT EXISTS test_conn ( \
+                id SERIAL NOT NULL PRIMARY KEY, \
+                robot_json JSONB NOT NULL, \
+                created_at TIMESTAMP NOT NULL DEFAULT NOW(), \
                 );"
             );
 
@@ -78,20 +84,16 @@ int main() {
         return 0;
     }
 
+    // From robot_base.h (included in lunatic.h), obtain info from class robot_base
+
     // Initialize data capture for the drive encoders
-    // Variables are of type float and provide total distance driven by each side of robot
     MAKE_exchange_drive_encoders();
     aurora::drive_encoders last;
     last.left   =   last.right  =   0.0f;
 
-    // From robot_base.h (included in lunatic.h), obtain info from class robot_base
+    // Initialize data capture for the backend state
     MAKE_exchange_backend_state();
-
-    // Import new var state
     aurora::backend_state state;
-
-    // Establish initial values of state variable
-    // (These values will update automatically from now on)
     state = exchange_backend_state.read();
 
     while (true) {
@@ -103,7 +105,11 @@ int main() {
         exchange_drive_encoders.updated();
         state = exchange_backend_state.read();
 
+        // TO-DO Simplify code by putting all of the below variable/json building into a separate function
+        // and returning the result as final string/json value
+
         // Calculate amount of change in drive encoders
+        // Drive_encoder data are of type float and provide total distance driven by each side of robot
         aurora::drive_encoders cur      =   exchange_drive_encoders.read();
         aurora::drive_encoders change   =   cur - last;
 
@@ -221,3 +227,15 @@ std::string ReplaceString(std::string subject, const std::string& search, const 
     return subject;
 
 }
+
+// Prepare pqxx transactions
+void prepare_transactions(pqxx::connection &psql_conn) {
+    
+    // Prepare statement to insert data into table
+    psql_conn.prepare(
+            "insert_data",
+            "INSERT INTO $1 ( $2 ) VALUES ( $3 );"
+    );
+
+};
+
