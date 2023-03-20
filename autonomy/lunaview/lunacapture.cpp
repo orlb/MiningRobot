@@ -31,7 +31,7 @@ const string& db_disconnect_msg = "Connection to the database is lost.";
 void prepare_transactions(pqxx::connection &psql_conn);
 
 // Execute insert json data
-pqxx::result execute_insert(pqxx::transaction_base &t);
+pqxx::result execute_insert(pqxx::transaction_base &t, std::string table_name, std::string col_name, std::string json_data);
 
 int main() {
 
@@ -61,7 +61,7 @@ int main() {
                 CREATE TABLE IF NOT EXISTS test_conn ( \
                 id SERIAL NOT NULL PRIMARY KEY, \
                 robot_json JSONB NOT NULL, \
-                created_at TIMESTAMP NOT NULL DEFAULT NOW(), \
+                created_at TIMESTAMP NOT NULL DEFAULT NOW()\
                 );"
             );
 
@@ -167,9 +167,11 @@ int main() {
 
         try {
 
-            pqxx::transaction_base t(psql_conn);
+            pqxx::work t(psql_conn);
 
             pqxx::result res = execute_insert(t, "test_conn", "robot_json", output_json.dump());
+
+            t.commit();
 
         } catch (const std::exception& e) {
 
@@ -226,7 +228,7 @@ void prepare_transactions(pqxx::connection &psql_conn) {
 };
 
 // Execute insert json data
-pqxx::result execute_insert(pqxx::transaction_base &t, std:string &table_name, std::string &col_name, std::string &json_data) {
+pqxx::result execute_insert(pqxx::transaction_base &t, std::string table_name, std::string col_name, std::string json_data) {
 
     return t.exec_prepared("insert_data", table_name, col_name, json_data);
 
