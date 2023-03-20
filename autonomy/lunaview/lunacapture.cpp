@@ -92,6 +92,9 @@ int main() {
     MAKE_exchange_backend_state();
     aurora::backend_state state;
 
+    // Prepare the default psql transactions
+    prepare_transactions(psql_conn);
+
     while (true) {
 
         // Craft the json output
@@ -166,7 +169,7 @@ int main() {
 
             pqxx::transaction_base t(psql_conn);
 
-            pqxx::result res = execute_insert("test_conn", "robot_json", output_json.dump());
+            pqxx::result res = execute_insert(t, "test_conn", "robot_json", output_json.dump());
 
         } catch (const std::exception& e) {
 
