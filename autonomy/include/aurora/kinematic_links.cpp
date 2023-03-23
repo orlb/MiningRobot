@@ -10,6 +10,25 @@
 
 namespace aurora {
 
+/** List of all robot links that include joints with angles */
+const static std::vector<robot_link_index> links_with_revolute_joints = {
+    link_fork, link_dump,
+    link_boom, link_stick, link_tilt, link_spin
+};
+
+/** Coarse sanity-check this set of joint angles (check limits on angles) */
+bool joint_state_sane(const robot_joint_state &joint)
+{
+    for (robot_link_index L : links_with_revolute_joints) {
+        const robot_link_geometry &G=link_geometry(L);
+        if (G.joint_index>=0) {
+            float angle = joint.array[G.joint_index];
+            if (angle<G.angle_min || angle>G.angle_max) return false;
+        }
+    }
+    return true;
+}
+
 /**
  Solves inverse kinematics (positions to joint angles)
  problems for the excahauler robot.  This robot is mostly 2D motion

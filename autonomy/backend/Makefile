@@ -1,4 +1,4 @@
-COMPILER=g++ -std=c++11
+COMPILER=g++ -std=c++17
 
 INC=../include
 DIRS=-I/usr/local/include -L/usr/local/lib -I$(INC)

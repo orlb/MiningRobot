@@ -149,6 +149,7 @@ public:
     /**
      Return the coordinate system of this child link relative to this parent.
      (Only works for non-joint coordinate systems, for now).
+     Copies child axes, ignores the child origin.
     */
     static robot_coord3D parent_from_child(robot_link_index parentL,robot_link_index childL,const robot_coord3D &child)
     {

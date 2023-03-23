@@ -123,13 +123,13 @@ void robot_3D_setup(float Zrot=-90.0f) {
 }
 
 /* Draw robot in this joint state */
-void robot_3D_draw(const robot_joint_state &jointstate)
+void robot_3D_draw(const robot_joint_state &jointstate,float alpha=1.0)
 {
     using namespace aurora;
 
-    float colorPrint[3]={0.2,0.2,0.3}; // black 3D printed parts
-    float colorBox[3]={0.7,0.7,0.6}; // electronics boxes
-    float colorFrame[3]={0.8,0.8,0.7}; // white painted steel frame
+    float colorPrint[4]={0.2,0.2,0.3,alpha}; // black 3D printed parts
+    float colorBox[4]={0.7,0.7,0.6,alpha}; // electronics boxes
+    float colorFrame[4]={0.8,0.8,0.7,alpha}; // white painted steel frame
 
     static bool meshes_OK=true;
     if (meshes_OK) {
@@ -156,7 +156,7 @@ void robot_3D_draw(const robot_joint_state &jointstate)
             robot_link_coords::glTransform(link_frame,jointstate);
                         
             // The scoop
-            glColor3fv(colorBox);
+            glColor4fv(colorBox);
             glPushMatrix();
             robot_link_coords::glTransform(link_fork,jointstate);
             mesh_fork.draw();
@@ -165,9 +165,9 @@ void robot_3D_draw(const robot_joint_state &jointstate)
             glPopMatrix();
 
             // The frame
-            glColor3fv(colorBox);
+            glColor4fv(colorBox);
             mesh_frameBox.draw();
-            glColor3fv(colorFrame);
+            glColor4fv(colorFrame);
             mesh_frame.draw();
 
             glPushMatrix();
@@ -177,24 +177,24 @@ void robot_3D_draw(const robot_joint_state &jointstate)
 
             // The stick
             robot_link_coords::glTransform(link_stick,jointstate);
-            glColor3fv(colorBox);
+            glColor4fv(colorBox);
             mesh_stickBox.draw();
-            glColor3fv(colorFrame);
+            glColor4fv(colorFrame);
             mesh_stick.draw();
-            glColor3fv(colorPrint);
+            glColor4fv(colorPrint);
             mesh_stickCamera.draw();
 
             // The tool coupler
             robot_link_coords::glTransform(link_tilt,jointstate);
-            glColor3fv(colorFrame);
+            glColor4fv(colorFrame);
             mesh_tilt.draw();
             robot_link_coords::glTransform(link_spin,jointstate);
             robot_link_coords::glTransform(link_coupler,jointstate);
-            glColor3fv(colorPrint);
+            glColor4fv(colorPrint);
             mesh_tool.draw();
 
             // The held tool
-            glColor3fv(colorBox);
+            glColor4fv(colorBox);
             mesh_grinder.draw();
             //robot_link_coords::glTransform(link_grinder,jointstate);
             // draw actual cutting point?
@@ -202,7 +202,7 @@ void robot_3D_draw(const robot_joint_state &jointstate)
             glPopMatrix(); // back to frame coords
 
             // Wheels
-            glColor3fv(colorPrint);
+            glColor4fv(colorPrint);
             float axleX = 0.400;
             for (float side : {-1.0f, +1.0f})
             for (float axleY : { -0.455f, 0.0f, +0.455f})
@@ -234,13 +234,14 @@ void robot_3D_draw(const robot_joint_state &jointstate)
             
             glPopMatrix(); // back to field coords
             
-            glColor3fv(colorFrame);
         }
         catch (std::runtime_error &e) {
             std::cout<<"Mesh load exception: "<<e.what()<<"\n";
             meshes_OK=false;
         }
     }  
+    // back to normal vertex color (so text is white)
+    glColor4f(1,1,1,1);
 }
 
 /* Clean up after 3D view of robot */
@@ -420,6 +421,11 @@ void robot_display_text(const robot_base &robot)
 			robot.loc.x,robot.loc.y,
 			robot.loc.angle);
 	}
+	
+	
+	glEnable(GL_ALPHA_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 }
 
 // Top-down view of robot
