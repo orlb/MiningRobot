@@ -180,7 +180,7 @@ float smooth_Mcount=0.0;
 
 /*********** Mining Path Planning ***************/
 /// Starting configuration during mining
-const robot_joint_state mine_joint_base={-10,-45, 0,0,0,0};
+const robot_joint_state mine_joint_base={-10,-40, 0,0,0,0};
 
 /// 0-1 progress of mine cut (0 at start, 1 at end)
 float mine_progress=0.0f;
@@ -464,25 +464,32 @@ private:
     command = limit(command,cap);
     power=command;
     
-    return fabs(err)<0.5;
+    return fabs(err)<1.5;
   }
   
-  robot_joint_state last_move_target;
+  /// Stores the last autonomous joint state target
+  robot_joint_state last_joint_target;
   
-  /// Set power values to move the robot to this joint state. 
+  /// Set power values to move the front scoop (fork & dump) to this joint state. 
   ///   Returns true when we're basically there.
-  bool move_to_joint(const robot_joint_state &j)
+  bool move_scoop(const robot_joint_state &j)
   {
-    last_move_target = j;
-    printf(" move_to_joint\tFD\t%5.1f\t%5.1f\tBSTS\t%5.1f\t%5.1f\t%5.1f\t%5.1f\n",
-                j.angle.fork, j.angle.dump,   j.angle.boom, j.angle.stick, j.angle.tilt, j.angle.spin);
+    last_joint_target = j;
     
     // SUBTLE: can't use short-circuit AND && here, it serializes joint motion.
     bool scoop = 
         move_single_joint(j.angle.fork,robot.joint.angle.fork,robot.power.fork) &
         move_single_joint(j.angle.dump,robot.joint.angle.dump,robot.power.dump);
-    
-    if (!scoop) return false; // don't move arm until scoop is in place to support it?
+    return scoop;
+  }
+  
+  /// Set power values to move the robot arm (boom, stick, tilt) to this joint state.
+  /// Returns true when we're basically there.
+  bool move_arm(const robot_joint_state &j)
+  {
+    last_joint_target = j;
+    printf(" move_arm target\tFD\t%5.1f\t%5.1f\tBSTS\t%5.1f\t%5.1f\t%5.1f\t%5.1f\n",
+                j.angle.fork, j.angle.dump,   j.angle.boom, j.angle.stick, j.angle.tilt, j.angle.spin);
     
     bool arm = 
         move_single_joint(j.angle.boom,robot.joint.angle.boom,robot.power.boom,-1.0) &
@@ -490,9 +497,10 @@ private:
         move_single_joint(j.angle.tilt,robot.joint.angle.tilt,robot.power.tilt) &
         move_single_joint(j.angle.spin,robot.joint.angle.spin,robot.power.spin);
     
-    return scoop && arm;
-        
+    return arm;        
   }
+  
+  
 
   // Set the mining head linear and dump linear to natural driving posture
   //  Return true if we're safe to drive
@@ -680,7 +688,7 @@ void robot_manager_t::autonomous_state()
     robot_joint_state mine_joint=mine_joint_base;
     if (mp.mine_plan(0.0f,mine_cut_depth_hover,mine_joint)<0) enter_state(state_scan);
     
-    if (move_to_joint(mine_joint)) {
+    if (move_scoop(mine_joint) && move_arm(mine_joint)) {
         enter_state(state_mine);
     }
   }
@@ -689,13 +697,17 @@ void robot_manager_t::autonomous_state()
     robot_joint_state mine_joint=mine_joint_base;
     if (mp.mine_plan(mine_progress,mine_cut_depth,mine_joint)<0) enter_state(state_scan);
     
-    if (move_to_joint(mine_joint)) {
+    move_scoop(mine_joint); //<- keep the scoop firmly in place
+    if (move_arm(mine_joint)) 
+    {
         mine_progress+=0.02;
         if (mine_progress>=1.0f) {
+             mine_progress=0.0f;
             enter_state(state_mine_finish);
         }
     }
     
+    /*
     // Don't mine forever (timing leash)
     double mine_time=cur_time-mine_start_time;
     double mine_duration=30.0;
@@ -703,6 +715,7 @@ void robot_manager_t::autonomous_state()
     {
         enter_state(state_mine_finish);
     } // done mining
+    */
     
     if (robot.sensor.Mstall) enter_state(state_mine_stall);
   }
@@ -932,7 +945,7 @@ void robot_manager_t::update(void) {
         if (mine_progress>1.0f) mine_progress=0.0f;
     }
     
-    robot_3D_draw(last_move_target,0.3f);
+    robot_3D_draw(last_joint_target,0.3f);
     
     robot_3D_cleanup();
 
