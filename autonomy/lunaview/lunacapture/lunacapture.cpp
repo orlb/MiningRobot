@@ -27,11 +27,13 @@ std::string ReplaceString(std::string subject, const std::string& search, const 
 // Error message for loss of a previously established database connection
 const string& db_disconnect_msg = "Connection to the database is lost.";
 
-// Prepare pqxx transactions
-void prepare_transactions(pqxx::connection &psql_conn);
+// TO DO: Debug function
+// // Prepare pqxx transactions
+// void prepare_transactions(pqxx::connection &psql_conn);
 
-// Execute insert json data
-pqxx::result execute_insert(pqxx::transaction_base &t, std::string table_name, std::string col_name, std::string json_data);
+// TO DO: Debug function
+// // Execute insert json data
+// pqxx::result execute_insert(pqxx::transaction_base &t, std::string table_name, std::string col_name, std::string json_data);
 
 int main() {
 
@@ -92,8 +94,8 @@ int main() {
     MAKE_exchange_backend_state();
     aurora::backend_state state;
 
-    // Prepare the default psql transactions
-    prepare_transactions(psql_conn);
+    // // Prepare the default psql transactions
+    // prepare_transactions(psql_conn);
 
     while (true) {
 
@@ -163,15 +165,32 @@ int main() {
     
         cout << output_json.dump() << endl;
 
+        
+        stringstream output_assembled;
+        output_assembled << "INSERT INTO test_conn ";
+        output_assembled << " ( robot_json )  VALUES  ('";
+        output_assembled << output_json.dump();
+        output_assembled << "');";
+
+        string output = output_assembled.str();
+
         // TO DO Prep insert command for database
 
         try {
 
-            pqxx::work t(psql_conn);
+            pqxx::work w(psql_conn);
 
-            pqxx::result res = execute_insert(t, "test_conn", "robot_json", output_json.dump());
+            w.exec(output);
 
-            t.commit();
+            w.commit();
+                
+
+            // TO DO: Correct functions
+            // pqxx::work t(psql_conn);
+            // 
+            // pqxx::result res = execute_insert(t, "test_conn", "robot_json", output_json.dump());
+            // 
+            // t.commit();
 
         } catch (const std::exception& e) {
 
@@ -216,20 +235,22 @@ std::string ReplaceString(std::string subject, const std::string& search, const 
 
 }
 
-// Prepare pqxx transactions
-void prepare_transactions(pqxx::connection &psql_conn) {
-    
-    // Prepare statement to insert data into table
-    psql_conn.prepare(
-            "insert_data",
-            "INSERT INTO $1 ( $2 ) VALUES ( '$3'::jsonb );"
-    );
+// TO DO: Debug these functions
+// // Prepare pqxx transactions
+// void prepare_transactions(pqxx::connection &psql_conn) {
+//     
+//     // Prepare statement to insert data into table
+//     psql_conn.prepare(
+//             "insert_data",
+//             "INSERT INTO $1 ( $2 ) VALUES ( '$3'::jsonb );"
+//     );
+// 
+// };
 
-};
-
-// Execute insert json data
-pqxx::result execute_insert(pqxx::transaction_base &t, std::string table_name, std::string col_name, std::string json_data) {
-
-    return t.exec_prepared("insert_data", table_name, col_name, json_data);
-
-}
+// TO DO: Debug function
+// // Execute insert json data
+// pqxx::result execute_insert(pqxx::transaction_base &t, std::string table_name, std::string col_name, std::string json_data) {
+// 
+//     return t.exec_prepared("insert_data", table_name, col_name, json_data);
+// 
+// }
