@@ -1,0 +1,12 @@
+#ifndef LUNAVIEWLIB_GLOBAL_H
+#define LUNAVIEWLIB_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#if defined(LUNAVIEWLIB_LIBRARY)
+#  define LUNAVIEWLIB_EXPORT Q_DECL_EXPORT
+#else
+#  define LUNAVIEWLIB_EXPORT Q_DECL_IMPORT
+#endif
+
+#endif // LUNAVIEWLIB_GLOBAL_H
