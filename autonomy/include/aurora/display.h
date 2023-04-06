@@ -42,13 +42,15 @@ void robotPrint(float x,float y,const char *str)
 {
 	if (robotPrintf_enable) {
         // Dump everything to the console, and log it too
-	fprintf(stdout,"%.3f %s\n",robotTime(),str);
+        fprintf(stdout,"%.3f %s\n",robotTime(),str);
         fflush(stdout);
 
         static FILE *flog=fopen("log.txt","w");
-	fprintf(flog,"%.3f %s\n",robotTime(),str);
-        fflush(flog);
+        if (flog) {
+	        fprintf(flog,"%.3f %s\n",robotTime(),str);
+            fflush(flog);
         }
+    }
 
         // Draw it onscreen
         void *font=GLUT_BITMAP_HELVETICA_12;

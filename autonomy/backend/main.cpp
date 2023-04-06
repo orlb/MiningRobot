@@ -418,10 +418,12 @@ private:
 
     // Log state timings to dedicate state timing file:
     static FILE *timelog=fopen("timing.log","w");
-    fprintf(timelog,"%4d spent %6.3f seconds in %s\n",
-      (int)(cur_time-autonomy_start_time),
-      cur_time-state_start_time, state_to_string(robot.state));
-    fflush(timelog);
+    if (timelog) {
+        fprintf(timelog,"%4d spent %6.3f seconds in %s\n",
+          (int)(cur_time-autonomy_start_time),
+          cur_time-state_start_time, state_to_string(robot.state));
+        fflush(timelog);
+    }
 
     // Make state transition
     last_state=robot.state; // stash old state
