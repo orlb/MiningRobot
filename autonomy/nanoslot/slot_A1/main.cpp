@@ -73,7 +73,7 @@ int main(int argc,char **argv)
         }
         
         // Limit this loop speed to this many milliseconds (varies by what's attached)
-        data_exchange_sleep(50);
+        data_exchange_sleep(delayMs);
     }
     
     return 0;

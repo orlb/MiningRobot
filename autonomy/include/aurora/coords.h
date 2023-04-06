@@ -119,6 +119,12 @@ struct robot_coord3D {
     }
 
     robot_coord3D() { reset(); }
+    robot_coord3D(const vec3 &origin_,
+        const vec3 &X_,const vec3 &Y_,const vec3 &Z_,
+        float percent_=0.0f) 
+        :origin(origin_), X(X_), Y(Y_), Z(Z_), percent(percent_)
+    {
+    }
     
     // Reset to origin at (0,0,0), no rotations on XYZ
     void reset() {

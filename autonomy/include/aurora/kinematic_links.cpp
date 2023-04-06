@@ -1,11 +1,112 @@
 /**
- Static data about each of the robot's links.
+ Robot-specific kinematics: inverse kinematic solver, and 
+ exact numeric details on each of the robot's links.
+ 
+ Dr. Orion Lawlor, lawlor@alaska.edu, 2023-03 (Public Domain)
 */
 #include <stdexcept>
 #include <stdio.h>
 #include "kinematics.h"
 
 namespace aurora {
+
+/** List of all robot links that include joints with angles */
+const static std::vector<robot_link_index> links_with_revolute_joints = {
+    link_fork, link_dump,
+    link_boom, link_stick, link_tilt, link_spin
+};
+
+/** Coarse sanity-check this set of joint angles (check limits on angles) */
+bool joint_state_sane(const robot_joint_state &joint)
+{
+    for (robot_link_index L : links_with_revolute_joints) {
+        const robot_link_geometry &G=link_geometry(L);
+        if (G.joint_index>=0) {
+            float angle = joint.array[G.joint_index];
+            if (angle<G.angle_min || angle>G.angle_max) return false;
+        }
+    }
+    return true;
+}
+
+/**
+ Solves inverse kinematics (positions to joint angles)
+ problems for the excahauler robot.  This robot is mostly 2D motion
+ in the YZ plane, so it's much easier than general multi-link IK. 
+*/
+class excahauler_IK {
+public:
+	/** Given a 3D vector in frame coords, return the angle of this
+	 direction vector in the YZ plane.
+	 The Y axis has an angle of 0, the Z axis has an angle of +90 degrees.
+	 Angle is returned in degrees around the X axis, rotating the Y axis upward.
+	*/
+	static float frame_degrees(const vec3 &v) {
+		float rad=atan2(v.z,v.y);
+		return RAD2DEG*rad;
+	}
+    
+	/**
+	  Given a 3D vector for the origin of the tilt link at the end of the stick,
+	  update the boom and stick joint angles to reach that point,
+	  and the tilt angle to reach that tool orientation (excahauler_IK::frame_degrees(tool.Y)).
+	  
+	  Returns 1 if the joint was reachable, -1 if too far
+	  (Future: -2 if collision?)
+	*/
+	int solve_tilt(robot_joint_state &joint, const vec3 &tilt_loc, float tool_deg)
+	{
+		vec3 tilt_rel = tilt_loc - boomG.origin; // to target from boom start
+		float tilt_len = length(tilt_rel);
+		float tilt_deg = frame_degrees(tilt_rel); // angle of vector from boom start to tilt pivot
+		
+		// Use law of cosines to solve for the angle from boom to tilt (BT)
+		//  Side a = boom
+		//  Side b = tilt
+		/// Side c = stick
+		float a=boom_len, b=tilt_len, c=stick_len;
+		float cos_tb = (a*a + b*b - c*c)/(2.0f*a*b);
+		if (cos_tb>1.0f || cos_tb<-1.0f) return -1; // no good
+		float tb_deg=RAD2DEG*acos(cos_tb);
+		joint.angle.boom=tilt_deg + tb_deg - boom_start; // frame to boom = frame to tilt - boom to tilt
+        
+        // Use law of cosines again on angle from stick to boom (SB)
+		float cos_sb = (a*a + c*c - b*b)/(2.0f*a*c);
+		if (cos_sb>1.0f || cos_sb<-1.0f) return -1; // no good
+		float sb_deg=RAD2DEG*acos(cos_sb);
+		joint.angle.stick=sb_deg - stick_start + boom_start - 180.0f ;
+		
+		// Update the stick-to-tool tilt angle (ST)
+		joint.angle.tilt = tool_deg - joint.angle.stick - joint.angle.boom; 
+		if (joint.angle.tilt<-180.0f) joint.angle.tilt+=360.0f;
+        
+		return 1;
+	}
+
+
+	excahauler_IK() 
+		:frameG(link_geometry(link_frame)),
+		 boomG(link_geometry(link_boom)),
+		 stickG(link_geometry(link_stick)),
+		 tiltG(link_geometry(link_tilt))
+	{
+		boom_len=length(stickG.origin); // boom connects frame to stick
+		stick_len=length(tiltG.origin); // stick connects boom to tilt
+		boom_start=frame_degrees(stickG.origin);
+		stick_start=frame_degrees(tiltG.origin);
+	}
+
+private:
+	const robot_link_geometry &frameG, &boomG, &stickG, &tiltG; 
+	// Length of arm links relative to frame
+	float boom_len, stick_len;
+	// Angle of arm link origins
+	float boom_start, stick_start;
+
+};
+
+
+
 
 const robot_link_geometry &link_geometry(robot_link_index L) 
 {
