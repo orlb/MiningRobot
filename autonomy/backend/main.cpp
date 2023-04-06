@@ -61,6 +61,12 @@ void arduino_sensor_read(robot_base &robot)
 {
     // Read sensor data from the exchange
     const nanoslot_exchange &nano=exchange_nanoslot.read();
+    
+    robot.sensor.load_TL=nano.slot_A1.sensor.load_L;
+    robot.sensor.load_TR=nano.slot_A1.sensor.load_R;
+    robot.sensor.load_SL=nano.slot_F1.sensor.load_L;
+    robot.sensor.load_SR=nano.slot_F1.sensor.load_R;
+    
     const auto &driveslot = nano.slot_D0;
     int left_wire = 0;
     int right_wire = 1;
@@ -110,11 +116,15 @@ void arduino_command_write(robot_base &robot)
     nanoslot_exchange &nano=exchange_nanoslot.write_begin();
     nano.autonomy.mode=(int)robot.state;
     
+    nano.slot_A1.command.read_L = robot.power.read_L;
+    nano.slot_F1.command.read_L = robot.power.read_L;
+    
     auto &armslot = nano.slot_A0;
     armslot.command.motor[0]=-motor_scale(robot.power.spin,"spin");
     armslot.command.motor[1]=0; // spare
     armslot.command.motor[2]=motor_scale(robot.power.tilt,"tilt");
     armslot.command.motor[3]=motor_scale(robot.power.stick,"stick");
+    
     
     auto &frontslot = nano.slot_F0;
     frontslot.command.motor[0]=-motor_scale(robot.power.dump,"dump");
@@ -177,6 +187,10 @@ int last_Mcount=0;
 int speed_Mcount=0;
 float smooth_Mcount=0.0;
 
+
+/*********** Robot Joint Planning **************/
+// Configuration for weighing scoop
+const robot_joint_state weigh_joint_scoop={0,0, 0,0,0,0};
 
 /*********** Mining Path Planning ***************/
 /// Starting configuration during mining
@@ -742,19 +756,36 @@ void robot_manager_t::autonomous_state()
    */
   }
   
-  //Weigh material beofre leaving pit
+  //Weigh material before leaving pit
   else if (robot.state==state_weigh)
   {
-    if(time_in_state<2.0) // let settle
-    {
-      // FIXME: tilt scoop so it's level
-      // FIXME: record loads on left and right
+    if (!move_scoop(weigh_joint_scoop)) 
+    { // still moving, update start time
+        state_start_time=cur_time; // hack!  need a sub-state here?
     }
-    if(drive_posture())
-      enter_state(state_haul_out);
+    else
+    {
+        if(time_in_state<1.5) {
+            // let dirt settle, read right channel
+            robot.power.read_L=0;
+        }
+        else if (time_in_state<3.0) { // read left channel
+            robot.power.read_L=1;
+        }
+        else {
+            // Record total weight here
+            float total = robot.sensor.load_SL + robot.sensor.load_SR;
+            robotPrintln("Total scoop weight: %.2f kgf\n",total);
+            
+            robot.power.read_L=0;
+            
+            //enter_state(state_haul_out);
+            enter_state(state_drive); // stop
+        }
+    }
   }
 
-  // Drive back to trough
+  // Drive back to dump area
   else if (robot.state==state_haul_out)
   {
     if (autonomous_drive(dump_target_loc) 

@@ -36,6 +36,9 @@ Raw sensor values go as bitfields, because many of them are 10-bit quantities:
 class robot_sensors_arduino
 {
 public:
+    float load_TL, load_TR; ///< load cells on tool: left and right (kgf)
+    float load_SL, load_SR; ///< load cells on scoop: left and right (kgf)
+    
 	uint32_t battery:10; // raw A/D reading at top of battery stack (voltage = this*5*2000/384)
 	uint32_t bucket:10; // raw A/D value from dump bucket lift encoder
 	uint32_t latency:5; // Arduino control loop latency
@@ -45,7 +48,7 @@ public:
 	uint32_t DRstall:1;
 
 	uint32_t stop:1; ///< EMERGENCY STOP button engaged
-  uint32_t heartbeat:3;
+    uint32_t heartbeat:3;
 
 	uint32_t McountL:8; /// Current milliseconds per encoder tick for mining head left motor (255==stopped)
 	uint32_t McountR:8; /// Encoder tick count for mining head left motor
@@ -61,8 +64,8 @@ public:
 	uint32_t limit_bottom:8;
 
 	uint32_t encoder_raw:16;
-  uint32_t stall_raw:16;
-  uint32_t pad:16; // round up to 32
+    uint32_t stall_raw:16;
+    uint32_t pad:16; // round up to 32
 };
 
 /**
@@ -88,6 +91,7 @@ public:
 	float tool; // excavation tool: + is normal forward cut
 	
 	unsigned char torque; // one bit per power: 0=torque control; 1=speed or position control
+	unsigned char read_L:1; // set this bit to read the left load cells (0 for right cells).
 
 	robot_power() { stop(); }
 	
@@ -95,6 +99,7 @@ public:
 	void stop(void) {
 		left=right=fork=dump=boom=stick=tilt=spin=tool=drive_stop; // all-stop
 		torque=0;
+		read_L=0;
 	}
 	
 	/// Blend a scaled copy of this power value into ours.

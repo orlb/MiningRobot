@@ -390,9 +390,15 @@ void robot_display_text(const robot_base &robot)
 // Output telemetry as text (for log, mostly)
 	glColor3f(1.0,1.0,1.0);
 
+    robotPrintln("Load cells: tool %.1f %.1f  scoop %.1f %.1f (%s)\n",
+        robot.sensor.load_TL,robot.sensor.load_TR,
+        robot.sensor.load_SL,robot.sensor.load_SR,
+        robot.power.read_L?"L":"R");
+/*
 	robotPrintln("Left/Right Mining Motor Counts: %d, %d",robot.sensor.McountL, robot.sensor.McountR);
 	robotPrintln("Track front encoder ticks %d L %d R", robot.sensor.DL1count, robot.sensor.DR1count);
 	robotPrintln("Track back encoder ticks %d L %d R", robot.sensor.DL2count, robot.sensor.DR2count);
+*/
 
 	std::string encoder_str("Encoder Raw ");
 	for(int ii=12-1;ii>=0;--ii)

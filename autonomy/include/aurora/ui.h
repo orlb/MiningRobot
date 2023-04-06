@@ -344,6 +344,9 @@ Joysticks have different axis and button numbering:
 	else
 		description+="  speed control\n";
 
+    if (keys_once['l']||keys_once['L']) {
+        power.read_L = !power.read_L;
+    }
 
 // Limit powers, and write them to the output struct
 	left=limit(left,driveLimit);
