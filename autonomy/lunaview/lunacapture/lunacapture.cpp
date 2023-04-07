@@ -62,7 +62,7 @@ int main() {
             w.exec("\
                 CREATE TABLE IF NOT EXISTS test_conn ( \
                 id SERIAL NOT NULL PRIMARY KEY, \
-                robot_json JSONB NOT NULL, \
+                robot_json JSON NOT NULL, \
                 created_at TIMESTAMP NOT NULL DEFAULT NOW()\
                 );"
             );
@@ -208,7 +208,7 @@ int main() {
 
         // Reset 
         last=cur;
-        aurora::data_exchange_sleep(500);
+        aurora::data_exchange_sleep(1);
     }
 }
 
