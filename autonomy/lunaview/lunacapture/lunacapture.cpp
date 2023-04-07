@@ -93,6 +93,9 @@ int main() {
     // Initialize data capture for the backend state
     MAKE_exchange_backend_state();
     aurora::backend_state state;
+    
+    MAKE_exchange_nanoslot();
+    nanoslot_exchange nano;
 
     // // Prepare the default psql transactions
     // prepare_transactions(psql_conn);
@@ -109,8 +112,8 @@ int main() {
         output_json["epoch_time"]   = capture_epoch();
 
         // Update the backend data
-        exchange_drive_encoders.updated();
         state = exchange_backend_state.read();
+        nano = exchange_nanoslot.read();
 
         // Calculate amount of change in drive encoders
         // Drive_encoder data are of type float and provide total distance driven by each side of robot
@@ -120,6 +123,9 @@ int main() {
         // Capture drive encoder change data
         output_json["drive_encoder_left"]   = change.left;
         output_json["drive_encoder_right"]  = change.right;
+        
+        // Output tool vibration on each axis
+        output_json["vibe"]  = length(nano.slot_A1.state.tool.vibe);
 
         // List of joints, in sequential order, from base to furthest point of arm
         // Vars are all of type float
