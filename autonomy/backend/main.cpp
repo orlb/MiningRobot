@@ -62,10 +62,10 @@ void arduino_sensor_read(robot_base &robot)
     // Read sensor data from the exchange
     const nanoslot_exchange &nano=exchange_nanoslot.read();
     
-    robot.sensor.load_TL=nano.slot_A1.sensor.load_L;
-    robot.sensor.load_TR=nano.slot_A1.sensor.load_R;
-    robot.sensor.load_SL=nano.slot_F1.sensor.load_L;
-    robot.sensor.load_SR=nano.slot_F1.sensor.load_R;
+    robot.sensor.load_TL=nano.slot_A1.state.load_L;
+    robot.sensor.load_TR=nano.slot_A1.state.load_R;
+    robot.sensor.load_SL=nano.slot_F1.state.load_L;
+    robot.sensor.load_SR=nano.slot_F1.state.load_R;
     
     const auto &driveslot = nano.slot_D0;
     int left_wire = 0;

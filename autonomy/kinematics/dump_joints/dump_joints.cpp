@@ -2,10 +2,12 @@
 #include <stdio.h>
 #include "aurora/lunatic.h"
 
-int main() {
+int main(int argc,char *argv[]) {
+    unsigned long n=-1;
+    if (argc>1) n=atol(argv[1]);
     MAKE_exchange_backend_state();
     
-    while (true) {
+    while (n-- != 0) {
         if (exchange_backend_state.updated()) {
             aurora::backend_state backend=exchange_backend_state.read();
             
