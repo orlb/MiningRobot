@@ -240,6 +240,15 @@ public:
         nano.sanity_check_size(); 
         last_backend=nano.backend_heartbeat; 
         exchange_nanoslot.write_end(); 
+        my_state.connected=1;
+    }
+    
+    // Mark ourselves as absent on the exchange if we exit, like unplugged
+    ~nanoslot_lunatic() {
+        my_state.connected=0;
+        nanoslot_exchange &nano=exchange_nanoslot.write_begin();
+        NANOSLOT_MY_EX.state=my_state;
+        exchange_nanoslot.write_end();        
     }
     
     // If there was a sensor update, post it to the data exchange.
