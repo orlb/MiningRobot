@@ -285,12 +285,16 @@ Joysticks have different axis and button numbering:
 	if (keys[oglSpecialUp])    ry=+1.0;
 	if (keys[oglSpecialDown])  ry=-1.0;
 	
-	
+	// limit adjustments shouldn't set the mode
+	bool notmode=(
+	    keys['t']!=1 && keys['p']!=1 && keys['m']!=1
+	    );
+    
 	// Pressing a button changes the mode persistently
-	if (js_button(button_stop,"") || keys['1']) joyMode=joyModeSTOP;
-	if (js_button(button_low,"") || keys['2']) joyMode=joyModeLow;
-	if (js_button(button_med,"") || keys['3']) joyMode=joyModeMed;
-	if (js_button(button_high,"") || keys['4']) joyMode=joyModeHigh;
+	if (js_button(button_stop,"") || (keys['1'] && notmode)) joyMode=joyModeSTOP;
+	if (js_button(button_low,"") || (keys['2'] && notmode)) joyMode=joyModeLow;
+	if (js_button(button_med,"") || (keys['3'] && notmode)) joyMode=joyModeMed;
+	if (js_button(button_high,"") || (keys['4'] && notmode)) joyMode=joyModeHigh;
 
     switch (joyMode) {
     case joyModeSTOP: default: 

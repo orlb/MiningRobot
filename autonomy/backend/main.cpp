@@ -138,10 +138,10 @@ void arduino_command_write(robot_base &robot)
     auto &driveslot = nano.slot_D0;
     nanoslot_motorpercent_t L=motor_scale(robot.power.left,"left");
     nanoslot_motorpercent_t R=motor_scale(robot.power.right,"right");
-    driveslot.command.motor[0]=-R;
-    driveslot.command.motor[1]=-L;
-    driveslot.command.motor[2]=-R;
-    driveslot.command.motor[3]=-L;
+    driveslot.command.motor[0]=-L;
+    driveslot.command.motor[1]=-R;
+    driveslot.command.motor[2]=-L;
+    driveslot.command.motor[3]=-R;
     
     nano.slot_EE.command.LED=robot.power.right; // just for debugging
     
@@ -204,8 +204,8 @@ float mine_progress=0.0f;
 
 /// Current depth to mine below the observed surface (meters)
 /// Negative = clearance above surface, for testing.
-//float mine_cut_depth=0.03f; // actual cutting
-float mine_cut_depth=-0.05f; // "air milling" for motion test
+float mine_cut_depth=0.05f; // actual cutting (very approximate)
+//float mine_cut_depth=-0.05f; // "air milling" for motion test
 float mine_cut_depth_hover=-0.1f; // distance back for repositioning
 
 class mine_planner {
@@ -513,8 +513,9 @@ private:
     bool arm = 
         move_single_joint(j.angle.boom,robot.joint.angle.boom,robot.power.boom,-1.0) &
         move_single_joint(j.angle.stick,robot.joint.angle.stick,robot.power.stick) &
-        move_single_joint(j.angle.tilt,robot.joint.angle.tilt,robot.power.tilt) &
-        move_single_joint(j.angle.spin,robot.joint.angle.spin,robot.power.spin);
+        move_single_joint(j.angle.tilt,robot.joint.angle.tilt,robot.power.tilt);
+        // &
+        //move_single_joint(j.angle.spin,robot.joint.angle.spin,robot.power.spin);
     
     return arm;        
   }
@@ -716,12 +717,14 @@ void robot_manager_t::autonomous_state()
     robot_joint_state mine_joint=mine_joint_base;
     if (mp.mine_plan(mine_progress,mine_cut_depth,mine_joint)<0) enter_state(state_scan);
     
+    robot.power.tool=0.5;
     move_scoop(mine_joint); //<- keep the scoop firmly in place
     if (move_arm(mine_joint)) 
     {
         mine_progress+=0.02;
         if (mine_progress>=1.0f) {
              mine_progress=0.0f;
+            robot.power.tool=0.0;
             enter_state(state_mine_finish);
         }
     }
