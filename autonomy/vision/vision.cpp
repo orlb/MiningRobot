@@ -40,7 +40,7 @@ public:
     {
         printf("  MARKER %d: ",ID);
         
-        double size=18.0; // physical size of marker, in centimeters
+        double size=30.5; // physical size of marker, in centimeters
         if (ID==6) {  // ghost
             size=116.7; // <- big fabric, 1.5 meters including whitespace 
         }
@@ -50,8 +50,8 @@ public:
         else if (ID==13) {  // large mullet
             size=25; 
         } 
-        else if (ID==7) {  // mask
-            size=5; 
+        else if (ID==2) {  
+            size=30.5; 
         }
         else {
             printf("Ignoring--unknown number %d\n",ID);
