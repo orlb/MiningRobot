@@ -38,6 +38,8 @@ const string& db_disconnect_msg = "Connection to the database is lost.";
 int main() {
 
     // Establish connection to postgresql database
+    // TO-DO Establish credentials
+    // TO DO: Read file .dbpass and create string
     pqxx::connection psql_conn(" \
         dbname=test_cpp \
         user=postgres \
@@ -234,6 +236,9 @@ std::string ReplaceString(std::string subject, const std::string& search, const 
     return subject;
 
 }
+
+// TO DO: Create policy function to round different aspects of numbers to set number of decimal places
+// Policies: angles, power levels, 
 
 // TO DO: Debug these functions
 // // Prepare pqxx transactions
