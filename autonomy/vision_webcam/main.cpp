@@ -51,7 +51,7 @@ or implied, of Rafael Muñoz Salinas.
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "opencv2/core/core.hpp"
+#include "opencv2/opencv.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/calib3d/calib3d.hpp"
 #include "opencv2/features2d/features2d.hpp"
@@ -60,6 +60,8 @@ or implied, of Rafael Muñoz Salinas.
 #include "aruco.h"
 #include "cvdrawingutils.h"
 #include "errno.h"
+
+#include "aurora/lunatic.h"
 
 using namespace cv;
 using namespace aruco;
@@ -141,7 +143,6 @@ extern "C" void perror(const char *str) {
 
 #include "location_binary.h"
 
-
 /**
   Convert 3D position to top-down 2D onscreen location
 */
@@ -178,7 +179,14 @@ void draw_marker_gui_2D(Mat &img,Scalar color,const Marker &m)
 }
 
 
-
+// Extract a row of this OpenCV 4x4 matrix, as a 3D vector
+vec3 extract_row(const cv::Mat &matrix4x4,int row) {
+    return vec3(
+        matrix4x4.at<float>(0,row),
+        matrix4x4.at<float>(1,row),
+        matrix4x4.at<float>(2,row)
+    );
+}
 
 /* Extract location data from this valid, detected marker. 
    Does not modify the location for an invalid marker.
@@ -222,9 +230,23 @@ if (false) {
 		printf("\n");
 	}
 }
+
+/*
+  FIXME: sanity checking, single unified header with main vision/ code.
+*/
+
+	double scale=mi.true_size;
+	
+    vec3 O = extract_row(full,3)*scale;
+    vec3 X = extract_row(full,0);
+    vec3 Y = extract_row(full,1);
+    vec3 Z = extract_row(full,2);
+    if (dot(cross(X,Y),Z)<0.0) {
+        // Y axis is facing away from camera--flip it forward again
+        printf("--FLIP DETECTED---------\n\n");
+    }
 	
 	bin.valid=1;
-	double scale=mi.true_size;
 	bin.x=back.at<float>(0,3)*scale+mi.x_shift;
 	bin.y=back.at<float>(1,3)*scale+mi.y_shift;
 	bin.z=back.at<float>(2,3)*scale+mi.z_shift;
@@ -238,6 +260,7 @@ if (false) {
 	       marker.id, bin.x,bin.y,bin.z,bin.angle
 	      );
 }
+
 
 
 int main(int argc,char **argv)
@@ -256,7 +279,7 @@ int main(int argc,char **argv)
 	int skipCount=1; // only process frames ==0 mod this
 	int skipPhase=0;
 
-	int wid=0, ht=0;
+	int wid=1280, ht=720;
 	const char *dictionary="TAG25h9";
 	for (int argi=1; argi<argc; argi++) {
 		if (0==strcmp(argv[argi],"--gui")) showGUI=true;
@@ -294,8 +317,8 @@ int main(int argc,char **argv)
 	
 //	if (ThePyrDownLevel>0)
 //		params.pyrDown(ThePyrDownLevel);
-//	params.setCornerRefinementMethod(MarkerDetector::CORNER_SUBPIX); // more accurate
-	params.setCornerRefinementMethod(aruco::CORNER_LINES); // more reliable?
+	params.setCornerRefinementMethod(aruco::CORNER_SUBPIX); // more accurate
+//	params.setCornerRefinementMethod(aruco::CORNER_LINES); // more reliable?
 	params.setDetectionMode(aruco::DM_FAST,0.1); // for distant/small markers (smaller values == smaller markers, but slower too)
 	MarkerDetector MDetector(dictionary); // dictionary of tags recognized
 
