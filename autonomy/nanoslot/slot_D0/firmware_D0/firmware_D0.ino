@@ -9,12 +9,12 @@
 void firmware_read_encoders(void)
 {
   my_sensor.heartbeat++;
-  my_sensor.stop=0; // DISABLED: (digitalRead(ESTOP_pin)!=0);
+  //my_sensor.stop=0; // DISABLED: (digitalRead(ESTOP_pin)!=0);
 }
 
 void firmware_send_motors()
 {
-  if (!comm.is_connected || my_sensor.stop) my_command.autonomy.mode=0;
+  if (!comm.is_connected) my_command.autonomy.mode=0;
   
   NANOSLOT_MOTOR_SEND_POWER();
 }

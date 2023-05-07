@@ -24,6 +24,7 @@
 typedef uint8_t nanoslot_byte_t; ///< generic data byte
 typedef uint8_t nanoslot_heartbeat_t; ///< heartbeat (watchdog-type counter)
 typedef int8_t nanoslot_motorpercent_t; ///< -100 for full reverse, 0 for stop, +100 for full forward
+typedef int16_t nanoslot_voltage_t; ///< Arduino A/D voltage reading
 typedef int8_t nanoslot_padding_t[3]; ///< padding to avoid false sharing between slots
 
 /** Generic firmware state */
@@ -162,6 +163,22 @@ struct nanoslot_state_0xF1 : public nanoslot_state {
 };
 
 
+/** slot ID 0xC0: cutter in rockgrinder head (tool, pluggable) */
+struct nanoslot_command_0xC0 {
+    nanoslot_autonomy autonomy; 
+    nanoslot_motorpercent_t mine; // run mining head
+};
+struct nanoslot_sensor_0xC0 {
+    nanoslot_heartbeat_t heartbeat;
+    nanoslot_motorpercent_t spin; ///< vaguely correlated to spin rate
+    nanoslot_voltage_t cell0; ///< ground of battery pack
+    nanoslot_voltage_t cell1; ///< first cell of battery pack
+};
+struct nanoslot_state_0xC0 : public nanoslot_state {
+    float load; ///< scaled from voltage delta on ground line
+    float cell; ///< voltage (V) on battery's first cell
+};
+
 /** slot ID 0xEE: example nano (debug / dev only) */
 struct nanoslot_command_0xEE {
     nanoslot_autonomy autonomy; 
@@ -174,6 +191,7 @@ struct nanoslot_sensor_0xEE {
 struct nanoslot_state_0xEE : public nanoslot_state {
     
 };
+
 
 /** Debug data kept per slot */
 struct nanoslot_debug_t {
@@ -216,6 +234,9 @@ struct nanoslot_exchange {
     
     nanoslot_exchange_slot<nanoslot_command_0xA1, nanoslot_sensor_0xA1, nanoslot_state_0xA1> slot_A1;
     nanoslot_padding_t pad_A1;
+    
+    nanoslot_exchange_slot<nanoslot_command_0xC0, nanoslot_sensor_0xC0, nanoslot_state_0xC0> slot_C0;
+    nanoslot_padding_t pad_C0;
     
     nanoslot_exchange_slot<nanoslot_command_0xD0, nanoslot_sensor_0xD0, nanoslot_state_0xD0> slot_D0;
     nanoslot_padding_t pad_D0;
