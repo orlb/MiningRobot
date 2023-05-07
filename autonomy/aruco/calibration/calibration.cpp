@@ -429,6 +429,10 @@ int main( int argc, char** argv )
     if( capture.isOpened() )
         printf( "%s", liveCaptureHelp );
 
+    int wid=1280, ht=720;
+	if (wid) capture.set(cv::CAP_PROP_FRAME_WIDTH, wid);
+	if (ht)  capture.set(cv::CAP_PROP_FRAME_HEIGHT, ht);
+	
     namedWindow( "Image View", 1 );
 
     for(i = 0;;i++)

@@ -1,11 +1,27 @@
 /*****************************************************************************************
-Dr. Lawlor's modified ArUco marker detector:
-	- Finds marker 16 in the webcam image
+Locates ArUco computer vision markers in a webcam image. 
+
+    - Grabs frames using OpenCV webcam capture
+	- Finds markers in the webcam image frames
 	- Reconstructs the camera's location relative to the marker
-	- Writes the camera location and orientation to "marker.bin"
+	- Writes the camera location and orientation for use by navigation
 	- Periodically saves an image to vidcap.jpg and vidcaps/<date>.jpg
 
 
+With Logitech C920, at 640x480, a 305mm marker at 7m distance detects reliably, but does flip inside and out.
+    ./camera --gui --cam 0 --res 640x480
+Time detection=11.5047 milliseconds
+Marker 2: Camera -2.554 5.488 -0.271 meters, heading 149.7 degrees
+Time detection=11.5054 milliseconds
+Marker 2: Camera 4.570 5.474 0.255 meters, heading -144.2 degrees
+
+
+
+With Genius 120 FOV wide angle, at 720p, a 305mm marker at 5m distance is not readable (blurred).
+    ./camera --gui --cam 0 --res 1280x720
+
+
+Originally based on:
 ArUco example Copyright 2011 Rafael Muñoz Salinas. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are
@@ -35,7 +51,7 @@ or implied, of Rafael Muñoz Salinas.
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include "opencv2/core/core.hpp"
+#include "opencv2/opencv.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
 #include "opencv2/calib3d/calib3d.hpp"
 #include "opencv2/features2d/features2d.hpp"
@@ -44,6 +60,8 @@ or implied, of Rafael Muñoz Salinas.
 #include "aruco.h"
 #include "cvdrawingutils.h"
 #include "errno.h"
+
+#include "aurora/lunatic.h"
 
 using namespace cv;
 using namespace aruco;
@@ -55,45 +73,20 @@ struct marker_info_t {
 	int id; // marker's ID, from 0-1023 
 	float true_size; // side length, in meters, of black part of pattern
 	
-	enum { FLAG_REFINE=1<<0,  FLAG_PARALLAX=1<<3 };
-	int flags; // e.g. refinement
-	
-	int slot; // location in output array (0 for default)
-	
 	float x_shift; // translation from origin, in meters, of center of pattern
 	float y_shift; 
 	float z_shift; 
 	
-	float rotate2D; // rotation around pattern's center, in degrees (0 for upright, 90 for rotated on side)
-	float rotate3D; // rotation about pattern's X axis, in degrees
+	float angle; // orientation, in degrees, relative to field up
 };
 
 const static marker_info_t marker_info[]={
-	{-1,0.508}, // fallback default case
+	{-1,0.305}, // fallback default case
 	
-/* 2015-05 RMC 3x3 markers */
-	{3005, 0.20, marker_info_t::FLAG_PARALLAX,0,  -0.18,-0.04,0.0, 0,90 }, // main front happy
-	{3004, 0.20, marker_info_t::FLAG_PARALLAX,1,  0.18, -0.44,0.0,  0,90 }, // main back pirate
-	{3002, 0.10, 0,2,  0.0,-0.44,0.0,  0,90 },  // lil cyclops 
+/* 2023-05 Full scale vinyl sticker on corrugated plastic */
+	{2, 0.305, 1.0,0.0,0.0,   0.0 },
+	{17,0.305, 4.0,0.0,0.0,   0.0 },
 
-/* 2015-04 Lathrop high school markers */
-	{0, 0.508, 0, 0, 1.0,0.0,0.0,   0,90 },
-	{16,0.508, 0, 0, 4.0,0.0,0.0,   0,90 },
-	{1, 0.508, 0, 0, 7.0,0.0,0.0,   0,90 },
-	{2, 0.508, 0, 0, 10.0,0.0,0.0,  0,90 },
-	{3, 0.508, 0, 0, 13.0,0.0,0.0,  0,90 },
-	{4, 0.508, 0, 0, 16.0,0.0,0.0,  0,90 },
-	{5, 0.508, 0, 0, 19.0,0.0,0.0,  0,90 },
-
-/* 2014-07 fabric marker setup */
-	{236,0.77,marker_info_t::FLAG_REFINE}, // big 'A'
-	{771,0.245, 0,1, -0.60,0.0,0.0  }, // 'U'
-	{816,0.245, 0,2, +0.60,0.0,0.0, 90}, // 'F' (rotated on its side)
-
-/* 2014-05 foam marker setup */
-	{0,0.765}, // big
-	{16,0.25,0,1,-0.5725}, // left side
-	{787,0.25,0,2,+0.5725}, // right side
 };
 
 // Look up the calibration parameters for this marker
@@ -109,7 +102,7 @@ const marker_info_t &get_marker_info(int id) {
 
 
 
-bool showGUI=false, useRefine=false;
+bool showGUI=false;
 Mat TheInputImage,TheInputImageCopy;
 
 
@@ -150,7 +143,6 @@ extern "C" void perror(const char *str) {
 
 #include "location_binary.h"
 
-
 /**
   Convert 3D position to top-down 2D onscreen location
 */
@@ -187,18 +179,14 @@ void draw_marker_gui_2D(Mat &img,Scalar color,const Marker &m)
 }
 
 
-class marker_parallax {
-public:
-	location_binary loc;
-	const Marker *marker;
-	float mean_X, mean_Y; // size of marker onscreen, in pixels
-	float range; // distance to marker
-	cv::Point2f cen; // center of marker onscreen, in pixels
-};
-
-marker_parallax parallax[8];
-
-
+// Extract a row of this OpenCV 4x4 matrix, as a 3D vector
+vec3 extract_row(const cv::Mat &matrix4x4,int row) {
+    return vec3(
+        matrix4x4.at<float>(0,row),
+        matrix4x4.at<float>(1,row),
+        matrix4x4.at<float>(2,row)
+    );
+}
 
 /* Extract location data from this valid, detected marker. 
    Does not modify the location for an invalid marker.
@@ -223,27 +211,12 @@ void extract_location(location_binary &bin,const Marker &marker)
 	full.at<float>(0,3)=marker.Tvec.at<float>(0,0);
 	full.at<float>(1,3)=marker.Tvec.at<float>(1,0);
 	full.at<float>(2,3)=marker.Tvec.at<float>(2,0);
-	
 
 	// Final row is identity (nothing happening on W axis)
 	full.at<float>(3,0)=0.0;
 	full.at<float>(3,1)=0.0;
 	full.at<float>(3,2)=0.0;
 	full.at<float>(3,3)=1.0;
-	
-	if (mi.rotate2D==90) {
-		for (int i=0; i<3; i++) {
-			std::swap(full.at<float>(i,0),full.at<float>(i,2)); // swap X and Z
-			full.at<float>(i,0)*=-1; // invert (new) X
-		}
-	}
-	if (mi.rotate3D==90) {
-		for (int i=0; i<3; i++) {
-			std::swap(full.at<float>(i,1),full.at<float>(i,2)); // swap Y and Z
-			//full.at<float>(i,1)*=-1; // invert (new) Y
-			full.at<float>(i,0)*=-1; // invert (new) X
-		}
-	}
 
 
 	// Invert, to convert marker-from-camera into camera-from-marker
@@ -257,126 +230,36 @@ if (false) {
 		printf("\n");
 	}
 }
+
+/*
+  FIXME: sanity checking, single unified header with main vision/ code.
+*/
+
+	double scale=mi.true_size;
+	
+    vec3 O = extract_row(full,3)*scale;
+    vec3 X = extract_row(full,0);
+    vec3 Y = extract_row(full,1);
+    vec3 Z = extract_row(full,2);
+    if (dot(cross(X,Y),Z)<0.0) {
+        // Y axis is facing away from camera--flip it forward again
+        printf("--FLIP DETECTED---------\n\n");
+    }
 	
 	bin.valid=1;
-	double scale=mi.true_size;
 	bin.x=back.at<float>(0,3)*scale+mi.x_shift;
 	bin.y=back.at<float>(1,3)*scale+mi.y_shift;
 	bin.z=back.at<float>(2,3)*scale+mi.z_shift;
-	bin.angle=180.0/M_PI*atan2(back.at<float>(1,0),-back.at<float>(0,0));
+	float ang_rad=atan2(back.at<float>(1,0),-back.at<float>(0,0));
+	float ang_deg=180.0/M_PI*ang_rad;
+	bin.angle=ang_deg + mi.angle;
 	bin.marker_ID=marker.id;
 
 	// Print grep-friendly output
 	printf("Marker %d: Camera %.3f %.3f %.3f meters, heading %.1f degrees\n",
 	       marker.id, bin.x,bin.y,bin.z,bin.angle
 	      );
-
-	// Dump parallax output
-	if (mi.flags&marker_info_t::FLAG_PARALLAX) {
-	/* Marker corners:
-	   [1] [2]
-	   [0] [3]
-	*/
-		marker_parallax &P=parallax[mi.slot];
-		P.loc=bin;
-		P.marker=&marker;
-		P.mean_X=0.5*(cv::norm(marker[3]-marker[0])+cv::norm(marker[1]-marker[2]));
-		P.mean_Y=0.5*(cv::norm(marker[3]-marker[0])+cv::norm(marker[1]-marker[2]));
-		P.cen=0.25*(marker[0]+marker[1]+marker[2]+marker[3]);
-		cv::Point3f xyz(bin.x,bin.y,0.0);
-		P.range=cv::norm(xyz);
-	}
 }
-
-/* Use parallax to improve this location */
-void refine_parallax(location_binary &loc) {
-
-// Extract parallax from marker locations
-	marker_parallax &L=parallax[1], &R=parallax[0];
-	float pix=cv::norm(L.cen-R.cen); // center-to-center shift, in pixels
-	float markers=pix/R.mean_X; // shift, measured in terms of right markers
-	const float norm_markers=37.5/20.0; // true X distance between marker centers, measured in right markers
-	float delX=markers-norm_markers; // X shift, measured in markers
-	const float norm_delY=1.0; // Y distance between marker centers, measured in right markers
-	float range=0.5*(L.range+R.range);
-	float scaledX=delX*norm_delY*range; // X shift in real units
-	
-// Fix up the heading by rotating about the world origin to the new X coordinates
-	float old_angle=atan2(R.loc.y,-R.loc.x);
-	float new_angle=atan2(range,-scaledX);
-	float del_angle=(new_angle-old_angle)*180.0/M_PI;
-
-// Write change to location
-	if (range>1.5) { // far enough away parallax is better than naive
-		loc.x=scaledX;
-		loc.y=range;
-		loc.angle+=del_angle;
-		loc.valid=L.loc.valid+R.loc.valid;
-	}
-	
-	printf("Parallax: %.1f pix, %.3f markers, %.3f delX, %.3f scaledX, %.1f degoff, %.1f heading\n",
-		pix,markers,delX,scaledX,del_angle,loc.angle);
-}
-
-/* Refine this marker-derived location, using the Y-offset black spike. 
-*/
-void refine_location(location_binary &loc,float Y_offset /* <- units: Y distance / true size of marker */, 
-	cv::Mat &cameraFrame,const Marker &marker)
-{
-	std::cout<<"\n\nMarker "<<marker<<"\n\n\n";
-	/* Marker corners:
-	   [1] [2]
-	   [0] [3]
-	*/
-	cv::Point2f left=marker[0], top=marker[2], right=marker[3];
-	cv::Point2f cen=right; // spike is aligned with big marker's right side
-	float hfrac=0.7;
-	cv::Point2f hdir=hfrac*(right-left); // horizontal range to check for spike
-	cv::Point2f vdir=0.12*(top-right); // vertical range to check
-	
-	cv::Rect cameraRect(cv::Point(),cameraFrame.size());
-// Search over the search space for the spike
-	int nrow=(int)abs(vdir.y);
-	int ncol=(int)abs(hdir.x);
-	enum {nrow_check=3};
-	int best_col[nrow_check]={0,0,0}; // best column number, indexed by row
-	for (int row=0;row<nrow_check;row++) { // scanlines (only check bottom few)
-		int darkest_x=-1;
-		int darkest_g=200;
-		for (int col=0;col<ncol;col++) {
-			cv::Point2f p=cen + hdir*(col*(1.0/(ncol-1.0))-0.5) + vdir*(-nrow + 1 + row)*(1.0/(nrow-1.0));
-			cv::Point pint((int)p.x,(int)p.y);
-			if (cameraRect.contains(pint)) {
-				cv::Vec3b bgr=cameraFrame.at<cv::Vec3b>(pint.y,pint.x);
-				if (darkest_g>bgr[1]) {
-					darkest_g=bgr[1];
-					darkest_x=col;
-				}
-				static cv::Vec3b mark(0,255,255); 
-				cameraFrame.at<cv::Vec3b>(pint.y,pint.x)=cv::Vec3b(bgr[0],255,bgr[2]); // green searchspace
-				//printf("(%d,%d) ",pint.x,pint.y);
-			}
-		}
-		if (darkest_x>0) {
-			printf("row %3d: min %3d at %d (%.2f)\n",row,darkest_g,darkest_x,darkest_x*1.0/(ncol-1)-0.5);
-			best_col[row]=darkest_x;
-		}
-	}
-	if (fabs(best_col[1]-best_col[0])>1) return; // we're not reading a consistent value--skip this.
-	float avg_col=(best_col[0]+best_col[1])*0.5; // column shift (relative to hdir)
-	float ang_col=(avg_col*(1.0/(ncol-1))-0.5)*hfrac/Y_offset; // tangent of angle (approx == angle in radians)
-	float radius=sqrt(loc.x*loc.x+loc.y*loc.y); // distance from origin of markers (meters)
-	float X=-radius*ang_col; // true X coordinate, in meters
-	printf("X: %.2f m.  R: %.2f m. Angle: %.2f radians.  Col: %.1f pixels\n",X,radius, ang_col,avg_col);
-	
-	// Update location to match new info
-	loc.y=radius; // HACK: should take into account X value too
-	loc.x=X;
-	// FIXME: update loc.angle too (rotate from old x to new X?)
-	
-	
-}
-
 
 
 
@@ -396,16 +279,14 @@ int main(int argc,char **argv)
 	int skipCount=1; // only process frames ==0 mod this
 	int skipPhase=0;
 
-	int wid=0, ht=0;
+	int wid=1280, ht=720;
 	const char *dictionary="TAG25h9";
 	for (int argi=1; argi<argc; argi++) {
-		if (0==strcmp(argv[argi],"-gui")) showGUI=true;
-		else if (0==strcmp(argv[argi],"-cam")) camNo=atoi(argv[++argi]);
-		else if (0==strcmp(argv[argi],"-dict")) dictionary=argv[++argi];
-		else if (0==strcmp(argv[argi],"-refine")) useRefine=true;
-		else if (0==strcmp(argv[argi],"-sz")) sscanf(argv[++argi],"%dx%d",&wid,&ht);
-		else if (0==strcmp(argv[argi],"-skip")) sscanf(argv[++argi],"%d",&skipCount);
-		else if (0==strcmp(argv[argi],"-min")) sscanf(argv[++argi],"%f",&minSize);
+		if (0==strcmp(argv[argi],"--gui")) showGUI=true;
+		else if (0==strcmp(argv[argi],"--res")) sscanf(argv[++argi],"%dx%d",&wid,&ht);
+		else if (0==strcmp(argv[argi],"--skip")) sscanf(argv[++argi],"%d",&skipCount);
+		else if (0==strcmp(argv[argi],"--cam")) camNo=atoi(argv[++argi]);		
+		else if (0==strcmp(argv[argi],"--min")) sscanf(argv[++argi],"%f",&minSize);
 		else printf("Unrecognized argument %s\n",argv[argi]);
 	}
 
@@ -436,8 +317,8 @@ int main(int argc,char **argv)
 	
 //	if (ThePyrDownLevel>0)
 //		params.pyrDown(ThePyrDownLevel);
-//	params.setCornerRefinementMethod(MarkerDetector::CORNER_SUBPIX); // more accurate
-	params.setCornerRefinementMethod(aruco::CORNER_LINES); // more reliable?
+	params.setCornerRefinementMethod(aruco::CORNER_SUBPIX); // more accurate
+//	params.setCornerRefinementMethod(aruco::CORNER_LINES); // more reliable?
 	params.setDetectionMode(aruco::DM_FAST,0.1); // for distant/small markers (smaller values == smaller markers, but slower too)
 	MarkerDetector MDetector(dictionary); // dictionary of tags recognized
 
@@ -477,17 +358,14 @@ int main(int argc,char **argv)
 		// Locations extracted from different markers:
 		enum {n_locs=8};
 		location_binary locs[n_locs];
-		
-		parallax[0].loc.valid=0; parallax[1].loc.valid=0;
-		
+				
 		for (unsigned int i=0; i<TheMarkers.size(); i++) {
+		    if (i>=n_locs) break;
 			Marker &marker=TheMarkers[i];
 			const marker_info_t &mi=get_marker_info(marker.id);
-			extract_location(locs[mi.slot],marker);
-			if (mi.flags&marker_info_t::FLAG_REFINE)
-				refine_location(locs[mi.slot],0.45/0.84,TheInputImage,marker);
+			extract_location(locs[i],marker);
 		}
-		
+		/*
 		// Extract lowest-slot location
 		location_binary bin; // invalid by default
 		for (int i=0;i<n_locs;i++) {
@@ -495,12 +373,6 @@ int main(int argc,char **argv)
 				bin=locs[i];
 				break;
 			}
-		}
-		
-		// Check for parallax info
-		if (parallax[0].loc.valid && parallax[1].loc.valid)
-		{
-			refine_parallax(bin);
 		}
 
 		// Dump to disk		
@@ -517,6 +389,7 @@ int main(int argc,char **argv)
 		} 
 		fwrite(&bin,sizeof(bin),1,fbin); // atomic(?) file write
 		fclose(fbin);
+		*/
 
 		bool vidcap=false;
 		// if ((framecount++%32) == 0) vidcap=true;
