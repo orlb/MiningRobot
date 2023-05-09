@@ -210,7 +210,7 @@ int main() {
 
         // Reset 
         last=cur;
-        aurora::data_exchange_sleep(1);
+        aurora::data_exchange_sleep(500);
     }
 }
 
