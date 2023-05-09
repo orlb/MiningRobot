@@ -134,12 +134,12 @@ int main() {
         // List of joints, in sequential order, from base to furthest point of arm
         // Vars are all of type float
         // These are all angles reconstructed from the inertial measurement units (IMUs)
-        output_json["fork"]  = state.joint.angle.fork;
-        output_json["dump"]  = state.joint.angle.dump;
-        output_json["boom"]  = state.joint.angle.boom;
-        output_json["stick"] = state.joint.angle.stick;
-        output_json["tilt"]  = state.joint.angle.tilt;
-        output_json["spin"]  = state.joint.angle.spin;
+        output_json["fork"]  = std::round(state.joint.angle.fork * 100) / 100;
+        output_json["dump"]  = std::round(state.joint.angle.dump * 100) / 100;
+        output_json["boom"]  = std::round(state.joint.angle.boom * 100) / 100;
+        output_json["stick"] = std::round(state.joint.angle.stick * 100) / 100;
+        output_json["tilt"]  = std::round(state.joint.angle.tilt * 100) / 100;
+        output_json["spin"]  = std::round(state.joint.angle.spin * 100) / 100;
 
         // This is the power being sent to the motor, not necessarily position
         // Vars are all of type float
@@ -169,11 +169,12 @@ int main() {
         output_json["loc_x"]          = state.loc.x;
         output_json["loc_y"]          = state.loc.y;
         // Variable (angle) is in degrees
-        output_json["loc_angle"]      = state.loc.angle;
+        output_json["loc_angle"]      = std::round(state.loc.angle * 100) / 100;
 
         // Test that json is formatted properly:
     
         cout << output_json.dump() << endl;
+        cout << endl;
 
         
         stringstream output_assembled;
