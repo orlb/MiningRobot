@@ -6,6 +6,8 @@
 #include <ctime>                // put_time(), locattime()
 #include <iostream>             // cout, cin, endl
 #include <pqxx/pqxx>            // postgresql database library
+#include <iomanip>              // setprecision
+#include <cmath>                // round()
 
 using std::string;
 using std::istringstream;
@@ -143,17 +145,17 @@ int main() {
         // Vars are all of type float
         // Values run from -1 to +1, and indicate full backward to full forward 
         // The first two indicate power to the drive motors
-        output_json["power_left"]     = state.power.left;
-        output_json["power_right"]    = state.power.right;
+        output_json["power_left"]     = std::round(state.power.left * 100) / 100;
+        output_json["power_right"]    = std::round(state.power.right * 100) / 100;
         // These variables indicate power to the joints
-        output_json["power_fork"]     = state.power.fork;
-        output_json["power_dump"]     = state.power.dump;
-        output_json["power_boom"]     = state.power.boom;
-        output_json["power_stick"]    = state.power.stick;
-        output_json["power_tilt"]     = state.power.tilt;
-        output_json["power_spin"]     = state.power.spin;
+        output_json["power_fork"]     = std::round(state.power.fork * 100) / 100;
+        output_json["power_dump"]     = std::round(state.power.dump * 100) / 100;
+        output_json["power_boom"]     = std::round(state.power.boom * 100) / 100;
+        output_json["power_stick"]    = std::round(state.power.stick * 100) / 100;
+        output_json["power_tilt"]     = std::round(state.power.tilt * 100) / 100;
+        output_json["power_spin"]     = std::round(state.power.spin * 100) / 100;
         // This var represents power level sent to tool
-        output_json["power_tool"]     = state.power.tool;
+        output_json["power_tool"]     = std::round(state.power.tool * 100) / 100;
 
         // The state.state variable is one int
         output_json["state_state"]     = state.state;
