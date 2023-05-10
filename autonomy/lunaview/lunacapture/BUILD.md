@@ -137,4 +137,6 @@ Enter this value as follows during the installation. For example, where the cand
 $ sudo apt-get install libpq5=14.7-0ubuntu0.22.04.1 && sudo apt-get install libpq-dev
 ```
 
+## Set Up Database Password
+
 
