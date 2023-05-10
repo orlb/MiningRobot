@@ -40,7 +40,7 @@ int main() {
     pqxx::connection psql_conn(" \
         dbname=test_cpp \
         user=postgres \
-        password=dbpass \
+        password=" + dbpass + " \
         hostaddr=127.0.0.1 \
         port=5432 \
         target_session_attrs=read-write"
