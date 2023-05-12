@@ -32,17 +32,17 @@ path planner computes an obstacle-free drive path
 
 backend talks to the robot via the nanoslot slot programs.
 
-This is the project Interface Control Document (ICD).
+This header is the project Interface Control Document (ICD).
 */
 #ifndef __AURORA_LUNATIC_H
 #define __AURORA_LUNATIC_H
 
 #include <stdio.h>
 #include <array>
-#include "../aurora/data_exchange.h"
-#include "../aurora/coords.h"
-#include "../vision/grid.hpp"
-#include "../../nanoslot/include/nanoslot/nanoslot_exchange.h"
+#include "../aurora/data_exchange.h" /* file I/O code */
+#include "../aurora/robot_base.h" /* basic structs */
+#include "../vision/grid.hpp" /* path planning */
+#include "../nanoslot/nanoslot_exchange.h" /* Arduino comms */
 
 namespace aurora {
 
@@ -55,6 +55,30 @@ namespace aurora {
     Sensors written by the slot modules for each nano
 */
 #define MAKE_exchange_nanoslot()  aurora::data_exchange<nanoslot_exchange> exchange_nanoslot={"nanoslot"}
+
+/* -------------- Backend State ---------------- 
+  This tracks the internal variables of the backend. 
+  It's written by the backend, and read by lunabug/lunatic_print_state
+  and other debug and visualization tools.
+*/
+struct backend_state : public robot_base {
+    // The fields state, joint, sensor, loc, power etc inherited from robot_base
+
+    // Times are all in seconds
+    double cur_time; ///< time since we started up the backend 
+    double state_start_time; ///< cur_time when we entered this state  
+    
+    /// Default constructor (does nothing)
+    backend_state() {}
+    /// Fancy way to copy over all the robot_base fields
+    backend_state(const robot_base &base) :robot_base(base) {}  
+};
+
+/** This macro declares the variable used to 
+coordinate with the backend's state.
+*/
+#define MAKE_exchange_backend_state()   aurora::data_exchange<aurora::backend_state> exchange_backend_state("backend.state")
+
 
 /* -------------- Drive Command ---------------- 
   Track speed commands, for the left and right tracks.
@@ -142,6 +166,30 @@ report the current drive track encoders:
 #define MAKE_exchange_drive_encoders()   aurora::data_exchange<aurora::drive_encoders> exchange_drive_encoders("backend.encoders")
 
 
+/* ------------- Mining Depth Camera Data ------------
+ This is the stripe of depth camera data we look at before mining starts.
+ FIXME: coordinates are currently frame-relative, so the robot can't move.
+ Make this pit-relative coordinates?
+*/
+struct mining_depth {
+    /// Frame-relative coordinate system used to acquire this data
+    robot_coord3D camera_coords;
+    
+    /// Number of depth samples across the camera field of view
+    enum {ndepth=200};
+    
+    /// Frame-relative 3D position of mining surface
+    vec3 depth[ndepth];
+    
+    /// FIXME: maybe add depth / distance uncertainty range, perhaps a grid_sample?
+};
+
+/* This macro declares the variable used to 
+report the current mining depth view:
+    Written by vision_miner
+    Read by the backend (and ??)
+*/
+#define MAKE_exchange_mining_depth()   aurora::data_exchange<aurora::mining_depth> exchange_mining_depth("mining.depth")
 
 
 /* -------------- Camera Pointing via Stepper Motor --------------

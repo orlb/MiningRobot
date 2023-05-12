@@ -16,28 +16,21 @@ int main(int argc,char **argv)
         // Receive data from Arduino
         A_packet p;
         if (comm.read_packet(p)) {
-            comm.handle_standard_packet(p);
+            comm.handle_standard_packet(p,comm.my_sensor);
 
             if (comm.got_sensor) 
             {
-                comm.my_sensor.imu0.acc.print("  acc0");
-                comm.my_sensor.imu0.gyro.print("  gyro0");
-                comm.my_sensor.imu1.acc.print("  acc1");
-                comm.my_sensor.imu1.gyro.print("  gyro1");
-                printf("\n");
-                fflush(stdout);
-                
-                if (comm.verbose) 
-                {
-                    printf("  A0 feedback: %02x\n",comm.my_sensor.feedback); fflush(stdout);
+                if (comm.my_sensor.stop) {
+                    printf(" A0 STOP requested\n");
+                    fflush(stdout);
                 }
             }
             
-            if (comm.need_command)
+            if (comm.lunatic_post_packet(p))
             {
                 comm.send_command(comm.my_command);
                 if (comm.verbose) {
-                    printf("  A0 motors: %3d %3d\n",comm.my_command.motor[0],comm.my_command.motor[1]); fflush(stdout);
+                    printf("  A0 motors: %3d %3d %3d %3d\n",comm.my_command.motor[0],comm.my_command.motor[1],comm.my_command.motor[2],comm.my_command.motor[3]); fflush(stdout);
                 }
             }
         }

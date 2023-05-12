@@ -6,6 +6,7 @@
 #ifndef __AURORA_SIMULATOR_H
 #define __AURORA_SIMULATOR_H
 
+#include "../aurora/kinematics.h"
 #include "../osl/vec4.h"
 #include "../osl/vec2.h"
 
@@ -33,6 +34,8 @@ void blend(robot_localization &dest, const robot_localization &src, float weight
 class robot_simulator {
 public:
 	// Actuators:
+	robot_joint_state joint; // simulated joint angles (degrees)
+	
 	double DLcount, DRcount; // driving left/right track counts
 	double Mcount; // mining head counter
 	double Rcount; // roll motor
@@ -40,6 +43,9 @@ public:
 	robot_localization loc; // current location of robot
 	
 	robot_simulator() {
+        joint.angle.boom=0.0f;
+        joint.angle.stick=0.0f;
+        joint.angle.dump=0.0f;
 		bucket=0.6; // lowered
 		DLcount=DRcount=0;
 		Mcount=0;
@@ -82,8 +88,30 @@ public:
 		return world_from_robot(vec2(right?+wheelbase:-wheelbase, front?+wheelfront:-wheelfront));
 	}
 
+/* Move this kinematic link's angle according to this much simulated power */
+    void move_joint(aurora::robot_link_index L,float &angle,float power) {
+        // Move under power
+        angle += power;
+        
+        // Limit the angle motion
+        const aurora::robot_link_geometry &G=aurora::link_geometry(L);        
+        if (angle>G.angle_max) angle=G.angle_max;
+        if (angle<G.angle_min) angle=G.angle_min;
+    }
+
 /* Simulate these robot power values, for this timestep (seconds) */
 	void simulate(const robot_power &power, double dt) {
+	// Move the linear actuators
+	    float linear_speed = dt*15.0; // degrees/sec at full power
+	    
+	    move_joint(aurora::link_fork, joint.angle.fork, power.fork*linear_speed);
+	    move_joint(aurora::link_dump, joint.angle.dump, power.dump*linear_speed);
+
+	    move_joint(aurora::link_boom, joint.angle.boom, -0.6f*power.boom*linear_speed); // boom is a little slower
+	    move_joint(aurora::link_stick, joint.angle.stick, power.stick*linear_speed);
+	    move_joint(aurora::link_tilt, joint.angle.tilt, power.tilt*linear_speed);
+	    move_joint(aurora::link_spin, joint.angle.spin, power.spin*linear_speed);
+	
 	// Move both wheels
 		vec2 side[2];  // Location of wheels:  0: Left; 1:Right
 		side[0]=world_from_robot(vec2(-wheelbase,wheelforward));
@@ -97,8 +125,8 @@ public:
 
 		for (int s=0;s<2;s++) {
 			double torque=sidepower[s]; // wheel torque command
-			if (fabs(torque)>2.0) { // friction
-				double distance=torque/100*topspeed*dt;
+			if (fabs(torque)>0.001) { // friction
+				double distance=torque*topspeed*dt;
 				sideticks[s]=distance;
 				side[s]+=distance*forward();
 			}

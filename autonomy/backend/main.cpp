@@ -1,7 +1,7 @@
 /**
   Aurora Robotics Backend Code
 
-  Orion Sky Lawlor, lawlor@alaska.edu, 2014-03-23 (Public Domain)
+  Orion Sky Lawlor, lawlor@alaska.edu, 2014--2023 (Public Domain)
 */
 #define AURORA_IS_BACKEND 1
 
@@ -13,9 +13,13 @@
 
 #include "gridnav/gridnav_RMC.h"
 
-#include "aurora/robot.h"
+#include "aurora/robot_base.h"
 #include "aurora/robot_states.cpp"
 #include "aurora/display.h"
+
+#include "aurora/kinematics.h"
+#include "aurora/kinematic_links.cpp"
+
 #include "aurora/network.h"
 #include "aurora/ui.h"
 
@@ -31,6 +35,8 @@
 
 #include "aurora/lunatic.h"
 #include "../nanoslot/include/nanoslot/nanoslot_sanity.h"
+
+using namespace aurora;
 
 // Global variables for lunatic data exchange with Arduinos via nanoslot
 MAKE_exchange_nanoslot();
@@ -55,9 +61,15 @@ void arduino_sensor_read(robot_base &robot)
 {
     // Read sensor data from the exchange
     const nanoslot_exchange &nano=exchange_nanoslot.read();
+    
+    robot.sensor.load_TL=nano.slot_A1.state.load_L;
+    robot.sensor.load_TR=nano.slot_A1.state.load_R;
+    robot.sensor.load_SL=nano.slot_F1.state.load_L;
+    robot.sensor.load_SR=nano.slot_F1.state.load_R;
+    
     const auto &driveslot = nano.slot_D0;
-    int right_wire = 3;
-    int left_wire = 1;
+    int left_wire = 0;
+    int right_wire = 1;
     robot.sensor.DR1count= - driveslot.sensor.counts[right_wire];
     robot.sensor.DRstall =   driveslot.sensor.stall&(1<<right_wire);
     
@@ -68,6 +80,34 @@ void arduino_sensor_read(robot_base &robot)
     
     robot.sensor.encoder_raw=int(driveslot.sensor.raw);
     robot.sensor.stall_raw=int(driveslot.sensor.stall);
+    
+    
+    // Copy joint orientations from IMU data
+    //   FIXME: additional sanity checking here, or in slot program?
+    robot.joint.angle.boom=nano.slot_F1.state.boom.pitch;
+    robot.joint.angle.stick=nano.slot_A1.state.stick.pitch;
+    robot.joint.angle.tilt=nano.slot_A1.state.tool.pitch;
+    robot.joint.angle.spin=nano.slot_A1.state.tool.roll;
+    
+    robot.joint.angle.fork=nano.slot_F1.state.fork.pitch;
+    robot.joint.angle.dump=nano.slot_F1.state.dump.pitch;
+}
+
+/*
+ Convert -1.0 to +1.0 float power to discrete -100 to +100 motor percent.  
+*/
+nanoslot_motorpercent_t motor_scale(float power,const char *what)
+{
+    const float sanity_limit=4.0;
+    if (power<-sanity_limit || power>sanity_limit || power!=power) {
+        printf("Power %s ERROR: value %f insane, using 0\n", what,power);
+        return 0;
+    }
+    if (power>1.0) power=1.0;
+    if (power<-1.0) power=-1.0;
+    
+    const float send_limit=100.0;
+    return (nanoslot_motorpercent_t)(send_limit*power);
 }
 
 void arduino_command_write(robot_base &robot)
@@ -76,15 +116,32 @@ void arduino_command_write(robot_base &robot)
     nanoslot_exchange &nano=exchange_nanoslot.write_begin();
     nano.autonomy.mode=(int)robot.state;
     
+    // mining head power
+    nano.slot_C0.command.mine = motor_scale(robot.power.tool,"mine");
+    
+    // load cell read side
+    nano.slot_A1.command.read_L = robot.power.read_L;
+    nano.slot_F1.command.read_L = robot.power.read_L;
+    
     auto &armslot = nano.slot_A0;
-    armslot.command.motor[0]=-robot.power.right; // HACK! need actual arm power vals
-    armslot.command.motor[1]=-robot.power.left;
+    armslot.command.motor[0]=-motor_scale(robot.power.spin,"spin");
+    armslot.command.motor[1]=0; // spare
+    armslot.command.motor[2]=motor_scale(robot.power.tilt,"tilt");
+    armslot.command.motor[3]=motor_scale(robot.power.stick,"stick");
+    
+    auto &frontslot = nano.slot_F0;
+    frontslot.command.motor[0]=-motor_scale(robot.power.dump,"dump");
+    frontslot.command.motor[1]=-motor_scale(robot.power.fork,"fork");
+    frontslot.command.motor[2]=0; // spare
+    frontslot.command.motor[3]=motor_scale(robot.power.boom,"boom");
     
     auto &driveslot = nano.slot_D0;
-    driveslot.command.motor[0]=-robot.power.right;
-    driveslot.command.motor[1]=-robot.power.left;
-    driveslot.command.motor[2]=-robot.power.right;
-    driveslot.command.motor[3]=-robot.power.left;
+    nanoslot_motorpercent_t L=motor_scale(robot.power.left,"left");
+    nanoslot_motorpercent_t R=motor_scale(robot.power.right,"right");
+    driveslot.command.motor[0]=-L;
+    driveslot.command.motor[1]=-R;
+    driveslot.command.motor[2]=-L;
+    driveslot.command.motor[3]=-R;
     
     nano.slot_EE.command.LED=robot.power.right; // just for debugging
     
@@ -93,8 +150,9 @@ void arduino_command_write(robot_base &robot)
 }
 
 
+MAKE_exchange_backend_state();
+MAKE_exchange_mining_depth();
 MAKE_exchange_drive_encoders();
-MAKE_exchange_stepper_request();
 MAKE_exchange_plan_target();
 MAKE_exchange_drive_commands();
 //Needed for localization
@@ -132,6 +190,137 @@ int last_Mcount=0;
 int speed_Mcount=0;
 float smooth_Mcount=0.0;
 
+
+/*********** Robot Joint Planning **************/
+// Configuration for weighing scoop
+const robot_joint_state weigh_joint_scoop={0,0, 0,0,0,0};
+
+/*********** Mining Path Planning ***************/
+/// Starting configuration during mining
+const robot_joint_state mine_joint_base={-10,-40, 0,0,0,0};
+
+/// 0-1 progress of mine cut (0 at start, 1 at end)
+float mine_progress=0.0f;
+
+/// Current depth to mine below the observed surface (meters)
+/// Negative = clearance above surface, for testing.
+float mine_cut_depth=0.05f; // actual cutting (very approximate)
+//float mine_cut_depth=-0.05f; // "air milling" for motion test
+float mine_cut_depth_hover=-0.1f; // distance back for repositioning
+
+class mine_planner {
+public:
+    /// Frame Y coordinates area we should consider mining
+    const float mine_Yrange_start=1.60f; // maximum distance to reach (limit tipover)
+    const float mine_Yrange_end=1.25f; // minimum distance (avoid mining front scoop)
+
+    const float mine_Zrange_lo=-0.2f; // Z check is mostly for sanity
+    //float mine_Zrange_hi=0.2f; // flat surface only
+    const float mine_Zrange_hi=1.0f; // full in-pit cliff
+
+    const float mine_Xrange_lo=-0.4f; // X check is pure sanity checking (why are these nonzero?)
+    const float mine_Xrange_hi=+0.4f;
+
+    /// Orientation of mining head while cutting, relative to robot frame coords
+    const float mine_tilt_slope=1.2; // 1.0 -> 45 deg.  2.0 -> about 60 deg
+
+    const robot_coord3D mine_cut_coord=robot_coord3D(
+        vec3(0,0,0), 
+        vec3(1,0,0), // X axis is straight and level
+        vec3(0,1,-mine_tilt_slope).dir(), // Y axis is pointing diagonal down
+        vec3(0,mine_tilt_slope,+1).dir(), // Z axis is pointing diagonal up
+        99.0 // confidence value
+    );
+
+    /// Look up the mining target for this amount of mining progress. 
+    int lookup_mine_target(float progress,float depth,vec3 &mine_target) {
+        // Pick our target Y coordinate from the progress number
+        float targetY = mine_Yrange_start + progress*(mine_Yrange_end-mine_Yrange_start);
+        
+        // Find the closest valid point in the mining depth strip
+        float closestYdist=1.0f;
+        int closestD=-1; // index of closest point in view
+        const int valid_near=3; // check this many nearby neighbors
+        const float validD=0.1; // neighbors should lie within this distance
+        for (int d=valid_near;d<aurora::mining_depth::ndepth-valid_near;d++) //< vertical samples across image
+        {
+            vec3 v=mining.depth[d]; // 3D viewed spot, in frame coords
+            float dist = fabs(targetY-v.y);
+            if (v.z!=0.0 && dist<closestYdist && 
+                (v.x<mine_Xrange_hi && v.x>mine_Xrange_lo) &&
+                (v.z<mine_Zrange_hi && v.z>mine_Zrange_lo))
+            { // new closest point--do a validity check for agreement with neighbors
+                bool valid=true;
+                
+                for (int n=-valid_near;n<=+valid_near;n++)
+                    if (length(mining.depth[d+n]-v)>validD)
+                        valid=false; 
+                
+                if (valid) {
+                    closestYdist=dist;
+                    closestD=d;
+                }
+            }
+        }
+        
+        if (closestD<0 || closestYdist>0.2f) return -93; // couldn't find this Y in depth strip
+
+        // Figure out the mining target    
+        mine_target = mining.depth[closestD];
+        mine_target.y = targetY; // <- aim for our actual target
+        mine_target += depth*mine_cut_coord.Y; // cut below imaged surface   
+        
+        return 1;
+    }
+
+
+    /// Given a 3D frame-coordinates point for the tip of the rock grinder,
+    /// set these joints to put the arm at that point. 
+    int target_plan(const vec3 &mine_target,robot_joint_state &mine_joint)
+    {
+        // Figure out the tilt axis target
+        robot_coord3D tool_coords = robot_link_coords::parent_from_child(
+            link_tilt, link_grinder, mine_cut_coord);
+        vec3 tilt_target = mine_target - mine_cut_coord.world_from_local(tool_coords.origin);
+        float tilt_deg = excahauler_IK::frame_degrees(tool_coords.Y);
+
+        // Figure out the joint angles to reach that target
+        int ret = ik.solve_tilt(mine_joint,tilt_target,tilt_deg);
+        if (ret<=0) return ret; // couldn't do IK solve
+        
+        if (1) 
+            robotPrintln("  Grinding head target %.3f, %.3f -> joint BS %.0f %.0f\n",
+                mine_target.y, mine_target.z, 
+                mine_joint.angle.boom, mine_joint.angle.stick);
+        
+        // Sanity & safety check
+        if (!joint_state_sane(mine_joint)) return -99;
+        
+        return 1;
+    }
+
+    // Given a depth image, plan the joint states for a mining pass.
+    //  Returns positive value if this joint state seems reachable and safe,
+    //  negative on error.
+    int mine_plan(float progress,float depth,robot_joint_state &mine_joint)
+    {
+        vec3 target;
+        if (lookup_mine_target(progress,depth,target)<=0) return -1;
+        return target_plan(target,mine_joint);
+    }
+
+    mine_planner(const aurora::mining_depth &mining_view)
+        :mining(mining_view)
+    {}
+
+private:
+    const aurora::mining_depth &mining;
+    excahauler_IK ik;
+    
+
+};
+
+
 /**
   This class is used to localize the robot
 */
@@ -158,12 +347,20 @@ public:
   robot_command command; // last-received command
   robot_comms comms; // network link to front end
   robot_ui ui; // keyboard interface
-  robot_realsense_comms realsense_comms;
+  
+  // Autonomous mining interface
+  aurora::mining_depth mining; // view of mined area
+  mine_planner mp;
 
   robot_simulator sim;
   int robot_insanity_counter = 0;
 
-  robot_manager_t() {
+  robot_manager_t() 
+    :mp(mining)
+  {
+    // Zero out the joints until we hear otherwise
+    for (int i=0;i<robot_joint_state::count;i++) robot.joint.array[i]=0.0f;
+    
     robot.sensor.limit_top=1;
     robot.sensor.limit_bottom=1;
     
@@ -184,13 +381,8 @@ public:
   // Do robot work.
   void update(void);
   
-  
-  void point_camera(int target) {
-    if (simulate_only) {
-      telemetry.autonomy.markers.beacon=target;
-    }
-    exchange_stepper_request.write_begin().angle=target;
-    exchange_stepper_request.write_end();
+  // Switch active camera (heading 0 is facing forward)
+  void point_camera(float heading) {
   }
 
 
@@ -240,14 +432,15 @@ private:
     exchange_plan_target.write_end();
 
     if (new_state==state_autonomy) { autonomy_start_time=cur_time; }
-    // if(!(robot.autonomous)) { new_state=state_drive; }
 
     // Log state timings to dedicate state timing file:
     static FILE *timelog=fopen("timing.log","w");
-    fprintf(timelog,"%4d spent %6.3f seconds in %s\n",
-      (int)(cur_time-autonomy_start_time),
-      cur_time-state_start_time, state_to_string(robot.state));
-    fflush(timelog);
+    if (timelog) {
+        fprintf(timelog,"%4d spent %6.3f seconds in %s\n",
+          (int)(cur_time-autonomy_start_time),
+          cur_time-state_start_time, state_to_string(robot.state));
+        fflush(timelog);
+    }
 
     // Make state transition
     last_state=robot.state; // stash old state
@@ -259,18 +452,12 @@ private:
   // Advance autonomous state machine
   void autonomous_state(void);
 
-  // Raw robot.power levels for various speeds
-  enum {
-    power_full_fw=100, // forward
-    power_stop=0,
-    power_full_bw=-100, // backward
-  };
-
   // Dump bucket encoder target a/d values
 
 
   // Limit this value to lie in this +- range
-  double limit(double v,double range) {
+  template <typename T>
+  T limit(T v,T range) {
     if (v>range) return range;
     if (v<-range) return -range;
     else return v;
@@ -279,19 +466,67 @@ private:
   // Run autonomous mining, if possible
   bool tryMineMode(void) {
     //if (drive_posture()) {    
-    robot.power.tool=100; // TUNE THIS mining head rate
+    robot.power.tool=0.5; // TUNE THIS mining head rate
     robot.power.dump=0; // TUNE THIS lowering rate
     mining_head_lowered=true;
     
     
     return true;
   }
+  
+  /// Set power values to move this joint.  Returns true once we're there
+  bool move_single_joint(float target, float cur, float &power,float scale=1.0, float cap=1.0)
+  {
+    float err=target-cur;
+    const float P=0.2; 
+    float command=P*scale*err; // + a derivative term from IMU rates?
+    command = limit(command,cap);
+    power=command;
+    
+    return fabs(err)<1.5;
+  }
+  
+  /// Stores the last autonomous joint state target
+  robot_joint_state last_joint_target;
+  
+  /// Set power values to move the front scoop (fork & dump) to this joint state. 
+  ///   Returns true when we're basically there.
+  bool move_scoop(const robot_joint_state &j)
+  {
+    last_joint_target = j;
+    
+    // SUBTLE: can't use short-circuit AND && here, it serializes joint motion.
+    bool scoop = 
+        move_single_joint(j.angle.fork,robot.joint.angle.fork,robot.power.fork) &
+        move_single_joint(j.angle.dump,robot.joint.angle.dump,robot.power.dump);
+    return scoop;
+  }
+  
+  /// Set power values to move the robot arm (boom, stick, tilt) to this joint state.
+  /// Returns true when we're basically there.
+  bool move_arm(const robot_joint_state &j)
+  {
+    last_joint_target = j;
+    printf(" move_arm target\tFD\t%5.1f\t%5.1f\tBSTS\t%5.1f\t%5.1f\t%5.1f\t%5.1f\n",
+                j.angle.fork, j.angle.dump,   j.angle.boom, j.angle.stick, j.angle.tilt, j.angle.spin);
+    
+    bool arm = 
+        move_single_joint(j.angle.boom,robot.joint.angle.boom,robot.power.boom,-1.0) &
+        move_single_joint(j.angle.stick,robot.joint.angle.stick,robot.power.stick) &
+        move_single_joint(j.angle.tilt,robot.joint.angle.tilt,robot.power.tilt);
+        // &
+        //move_single_joint(j.angle.spin,robot.joint.angle.spin,robot.power.spin);
+    
+    return arm;        
+  }
+  
+  
 
   // Set the mining head linear and dump linear to natural driving posture
   //  Return true if we're safe to drive
   bool drive_posture() {
     if(mining_head_lowered && cur_time-state_start_time <10)
-      robot.power.dump = 100;
+      robot.power.dump = 1.0;
     if (sim.bucket>0.9) { // we're back up in driving range
       mining_head_lowered=false;
     }
@@ -317,8 +552,8 @@ private:
     double d=limit(forward*0.5,drive_power);
     double L=d-t;
     double R=d+t;
-    robot.power.left= 100 * limit(L,max_autonomous_drive);
-    robot.power.right=100 * limit(R,max_autonomous_drive);
+    robot.power.left= limit(L,max_autonomous_drive);
+    robot.power.right=limit(R,max_autonomous_drive);
   }
 
   // Autonomous feeler-based backing up: drive backward slowly until both switches engage.
@@ -451,7 +686,6 @@ void robot_manager_t::autonomous_state()
 
   // full autonomy start
   if (robot.state==state_autonomy) {
-    robot.autonomous=true;
     enter_state(state_scan);
   }
   
@@ -461,31 +695,49 @@ void robot_manager_t::autonomous_state()
     
     if(time_in_state<2.0) // stare at terrain
     {
-      // FIXME: activate arm and depth camera
+      // FIXME: activate vision_mining (via backend state?)
     }
     else{
+      mine_progress=0.0f;
+      mine_start_time=cur_time; // update mine start time
       enter_state(state_mine_start);
     }
   }
   //state_mine_lower: enter mining state
   else if (robot.state==state_mine_start) {
-    tryMineMode();
-    mine_start_time=cur_time; // update mine start time
-    enter_state(state_mine);
+    robot_joint_state mine_joint=mine_joint_base;
+    if (mp.mine_plan(0.0f,mine_cut_depth_hover,mine_joint)<0) enter_state(state_scan);
+    
+    if (move_scoop(mine_joint) && move_arm(mine_joint)) {
+        enter_state(state_mine);
+    }
   }
   else if (robot.state==state_mine)
   {
-    if (!tryMineMode()) { // too high to mine (sanity check)
-      robot.power.dump=power_full_bw; // lower bucket
-      mining_head_lowered=true;
+    robot_joint_state mine_joint=mine_joint_base;
+    if (mp.mine_plan(mine_progress,mine_cut_depth,mine_joint)<0) enter_state(state_scan);
+    
+    robot.power.tool=0.5;
+    move_scoop(mine_joint); //<- keep the scoop firmly in place
+    if (move_arm(mine_joint)) 
+    {
+        mine_progress+=0.02;
+        if (mine_progress>=1.0f) {
+             mine_progress=0.0f;
+            robot.power.tool=0.0;
+            enter_state(state_mine_finish);
+        }
     }
-
+    
+    /*
+    // Don't mine forever (timing leash)
     double mine_time=cur_time-mine_start_time;
-    double mine_duration=25.0;
+    double mine_duration=30.0;
     if(mine_time>mine_duration)
     {
         enter_state(state_mine_finish);
     } // done mining
+    */
     
     if (robot.sensor.Mstall) enter_state(state_mine_stall);
   }
@@ -493,10 +745,9 @@ void robot_manager_t::autonomous_state()
   // state_mine_stall: Detect mining head stall. Raise head until cleared
   else if (robot.state==state_mine_stall)
   {
-    tryMineMode(); // Start PID based mining
     if(robot.sensor.Mstall && time_in_state<1)
     {
-      robot.power.boom=power_full_bw; // retract bucket
+      robot.power.boom=-1.0f; // retract the boom (pull out of cut)
     }
     else {enter_state(state_mine);} // not stalled? Then back to mining
   }
@@ -504,23 +755,43 @@ void robot_manager_t::autonomous_state()
   //Done mining: Raise scoop
   else if (robot.state==state_mine_finish)
   {
+    enter_state(state_drive); // DEBUG
+  /*
     if(drive_posture())
       enter_state(state_weigh);
+   */
   }
   
-  //Weigh material beofre leaving pit
+  //Weigh material before leaving pit
   else if (robot.state==state_weigh)
   {
-    if(time_in_state<2.0) // let settle
-    {
-      // FIXME: tilt scoop so it's level
-      // FIXME: record loads on left and right
+    if (!move_scoop(weigh_joint_scoop)) 
+    { // still moving, update start time
+        state_start_time=cur_time; // hack!  need a sub-state here?
     }
-    if(drive_posture())
-      enter_state(state_haul_out);
+    else
+    {
+        if(time_in_state<1.5) {
+            // let dirt settle, read right channel
+            robot.power.read_L=0;
+        }
+        else if (time_in_state<3.0) { // read left channel
+            robot.power.read_L=1;
+        }
+        else {
+            // Record total weight here
+            float total = robot.sensor.load_SL + robot.sensor.load_SR;
+            robotPrintln("Total scoop weight: %.2f kgf\n",total);
+            
+            robot.power.read_L=0;
+            
+            //enter_state(state_haul_out);
+            enter_state(state_drive); // stop
+        }
+    }
   }
 
-  // Drive back to trough
+  // Drive back to dump area
   else if (robot.state==state_haul_out)
   {
     if (autonomous_drive(dump_target_loc) 
@@ -550,7 +821,7 @@ void robot_manager_t::autonomous_state()
     if(mining_head_lowered)
       drive_posture();
     if(time_in_state<20)
-      robot.power.dump=power_full_bw;
+      robot.power.dump=-1.0f;
     enter_state(state_stowed);
 
   }
@@ -594,12 +865,6 @@ void robot_manager_t::update(void) {
   }
 #endif
 
-// Show real and simulated robots
-//needs to be updated for new data exchange?
-  robot_display(locator.merged);
-
-	robot_display_autonomy(telemetry.autonomy);
-
 // Check for a command broadcast (briefly)
   int n;
   while (0!=(n=comms.available(10))) {
@@ -628,17 +893,12 @@ void robot_manager_t::update(void) {
         robotPrintln("Incoming power command: %d bytes",n);
         if (robot.state==state_drive)
         {
-          robot.autonomous=false;
           robot.power=command.power;
         }
         else
         {
           robotPrintln("IGNORING POWER: not in drive state\n");
         }
-      }
-      if (command.realsense_comms.command=='P')
-      {
-        point_camera(command.realsense_comms.requested_angle);
       }
     } else {
       robotPrintln("ERROR: COMMAND VERSION MISMATCH!  Expected %d, got %d",
@@ -661,7 +921,6 @@ void robot_manager_t::update(void) {
   else if (robot.state==state_backend_driver)
   { // set robot power from backend UI
     robot.power=ui.power;
-    printf("Backend driver dump: %d\n",robot.power.dump);
   }
   else if (robot.state>=state_autonomy) { // autonomous mode!
     autonomous_state();
@@ -672,7 +931,7 @@ void robot_manager_t::update(void) {
   robot_sensors_arduino old_sensor=robot.sensor;
     
   if (simulate_only) { // build fake arduino data
-    robot.status.arduino=1; // pretend it's connected
+    robot.joint = sim.joint;
     robot.sensor.McountL=0xff&(int)sim.Mcount;
     robot.sensor.Rcount=0xffff&(int)sim.Rcount;
     robot.sensor.DL1count=0xffff&(int)sim.DLcount;
@@ -684,30 +943,72 @@ void robot_manager_t::update(void) {
     arduino_sensor_read(robot);
     nano=exchange_nanoslot.read();
   }
-  
   if (nano.slot_A0.sensor.stop && robot.state!=state_STOP) {
     enter_state(state_STOP);
     robot.power.stop();
     robotPrintln("Slot A0 STOP command");
   }
-  
+
+    if (nano.slot_C0.state.connected) {
+        robotPrintln("Mining head: %5.3f  %5.3f V   %.2f mine\n",
+            nano.slot_C0.state.load, nano.slot_C0.state.cell, robot.power.tool); 
+    }
+
+    // Show estimated robot location
+    robot_2D_display(locator.merged);
+    robot_display_autonomy(telemetry.autonomy);
+    
+    // Draw current robot joint configuration (side view)
+    robot_3D_setup();
+    if (0) { // visually depict physical robot tilts (neat, but mining is robot relative)
+        glRotatef(nano.slot_F1.state.frame.pitch,1,0,0);
+        glRotatef(nano.slot_F1.state.frame.roll,0,1,0);
+    }
+    robot_3D_draw(robot.joint);
+    
+    // Draw mining depths
+    mining=exchange_mining_depth.read();
+    glColor3f(0,1,0);
+    glBegin(GL_LINES);
+    for (int d=0;d<aurora::mining_depth::ndepth;d++) //< vertical samples across image
+    {
+        vec3 v=mining.depth[d]; // 3D viewed spot, in frame coords
+        if (v.z!=0.0)
+            glVertex3fv(v); 
+    }
+    glEnd();
+    
+    if (0) {
+        // Animate planned mining path
+        robot_joint_state mine_joint=mine_joint_base;
+        if (mp.mine_plan(mine_progress,mine_cut_depth,mine_joint)>=0)
+        {
+            robot_3D_draw(mine_joint,0.3f);
+        }
+        mine_progress += 0.001f;
+        if (mine_progress>1.0f) mine_progress=0.0f;
+    }
+    
+    robot_3D_draw(last_joint_target,0.3f);
+    
+    robot_3D_cleanup();
+
+
+
+/*
   if (robot.state==state_mine) 
   { // TESTING ONLY: keep the front tool level
     const float gain=5.0;
-    float drive=nano.slot_A0.sensor.imu0.acc.x;
+    float drive=nano.slot_A1.sensor.imu[0].acc.x;
     float rate=0.0;
     float pid = gain*drive + rate;
     int send=ui.limit(pid,30); //<- calmer driving
-    robot.power.left=robot.power.right=send;
+    robot.power.tilt=send;
     if (fabs(drive)<5) robot.power.stop(); //<- deadband, bigger than noise
   }
-  
-  speed_Mcount=robot.sensor.McountL-last_Mcount;
-  float smoothing=0.3;
-  smooth_Mcount=speed_Mcount*smoothing + smooth_Mcount*(1.0-smoothing);
-  robotPrintln("Mcount smoothed: %.1f, speed %d\n",
-     smooth_Mcount, speed_Mcount);
-  last_Mcount=robot.sensor.McountL;
+*/
+
+
 
   // Fake the bucket sensor from the sim (no hardware sensor for now)
   robot.sensor.bucket=sim.bucket*(950-179)+179;
@@ -742,14 +1043,15 @@ void robot_manager_t::update(void) {
   {
     last_send=cur_time;
     // robotPrintln("Sending telemetry, waiting for command");
-    telemetry.count++;
-    telemetry.state=robot.state; // copy current values out for send
-    telemetry.status=robot.status;
-    telemetry.sensor=robot.sensor;
-    telemetry.power=robot.power;
-    telemetry.loc=locator.merged; 
+    robot.loc=locator.merged;
     locator.merged.percent*=0.999; // slowly lose location fix
 
+    // Wacky way to copy over all robot_base fields from robot to telemetry:
+    *static_cast<robot_base *>(&telemetry) = robot; 
+    
+    telemetry.count++;
+    telemetry.state=robot.state; // copy current values out for send
+    
     comms.broadcast(telemetry);
   }
 
@@ -764,13 +1066,17 @@ void robot_manager_t::update(void) {
 
   if (simulate_only) // make reality track sim
   {
-    float view_robot_angle=0;
-    float beacon_FOV=30; // field of view of beacon (markers)
-    if (beacon_FOV>fabs(telemetry.autonomy.markers.beacon - view_robot_angle))
-      locator.merged.percent+=10.0;
     locator.merged.percent=std::min(100.0,locator.merged.percent*(1.0-dt));
   }
   sim.simulate(robot.power,dt);
+  
+  // Drop the current state onto the exchange
+  aurora::backend_state s{robot};
+  s.cur_time = cur_time;
+  s.state_start_time = state_start_time;
+  exchange_backend_state.write_begin() = s;
+  exchange_backend_state.write_end();
+  
 }
 
 
@@ -778,6 +1084,8 @@ void display(void) {
   robot_display_setup(robot_manager->robot);
 
   robot_manager->update();
+  
+  robot_display_text(robot_manager->robot);
 
   if (video_texture_ID) {
     glTranslatef(field_x_GUI+350.0,100.0,0.0);
@@ -803,7 +1111,7 @@ int main(int argc,char *argv[])
   glutInit(&argc,argv);
 
   // Set screen size
-  int w=1200, h=700;
+  int w=1000, h=600;
   for (int argi=1;argi<argc;argi++) {
     if (0==strcmp(argv[argi],"--sim")) {
       simulate_only=true;

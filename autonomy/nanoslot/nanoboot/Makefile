@@ -1,5 +1,5 @@
 OPTS=-O -g
-CFLAGS=-I../include -std=c++17 $(OPTS)
+CFLAGS=-I../../include -std=c++17 $(OPTS)
 PROGS=nanoboot
 
 all: $(PROGS)

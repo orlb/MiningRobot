@@ -56,6 +56,11 @@ bool oglButtonOnce(int butNo,const char *what);
 */
 double oglAxis(int axisNo,const char *what);
 
+/**
+ Return the joystick name, for handling multiple types of joystick. 
+*/
+const char *oglJoystickName(void);
+
 
 /** 
   DEPRECATED--use "oglKey" for new code.

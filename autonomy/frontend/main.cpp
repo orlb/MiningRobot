@@ -11,9 +11,10 @@
 #include <iostream>
 #include <cmath>
 
-#include "aurora/robot.h"
+#include "aurora/robot_base.h"
 #include "aurora/robot_states.cpp"
 #include "aurora/display.h" /* for graphics */
+#include "aurora/kinematic_links.cpp"
 #include "aurora/network.h"
 #include "aurora/ui.h"
 
@@ -42,7 +43,6 @@ public:
 	robot_command command; // next-sent command
 	double last_command_time;
 	robot_comms comms; // network link to back end
-	robot_realsense_comms realsense_comms;
 	
 	
 	// Do robot work.
@@ -77,7 +77,6 @@ void robot_manager_t::update(void) {
 			command.command=robot_command::command_power;
 			command.power=ui.power;
 			command.state=state_drive;
-			command.realsense_comms = ui.realsense_comms;
 		}
 		comms.broadcast(command);
 
@@ -97,7 +96,7 @@ void robot_manager_t::update(void) {
 		{ // grab telemetry from backend
 			comms.receive(telemetry);
 			
-			robot.state=(robot_state_t)telemetry.state;
+			robot=telemetry; // copy over all fields
 			
 			static int last_state=robot.state;
 			if (last_state!=robot.state)
@@ -112,24 +111,13 @@ void robot_manager_t::update(void) {
 				}
 			}
 			
-			robot.status=telemetry.status;
-			robot.sensor=telemetry.sensor;
-			robot.loc=telemetry.loc;
-			if (robot.state!=state_drive) 
-			{ // show autonomous mode power
-				robot.power=telemetry.power;
-				 
-			}	
-			
-			robotPrintln("Telemetry: state %s (%d bytes)",
-				state_to_string((robot_state_t)telemetry.state),
-				sizeof(telemetry));
 			byte next_count=1+last_telemetry_count;
-			if (telemetry.count!=next_count && next_count!=1) {
+			int distance=abs(telemetry.count - next_count);
+			if (distance>2 && next_count!=1) {
 				robotPrintln("Telemetry warning> count mismatch. Expected %d, got %d",
 					next_count,telemetry.count);
 			}
-			if (time>0.15+last_telemetry_time) {
+			if (time>0.50+last_telemetry_time) {
 				robotPrintln("Telemetry warning> time gap of %.3f seconds",
 					time-last_telemetry_time);
 			}
@@ -150,7 +138,11 @@ void robot_manager_t::update(void) {
 	
 	robotPrintln("Location %.0f,%0.0f,%0.0f",robot.loc.x,robot.loc.y,robot.loc.angle);
 	
-	robot_display(robot.loc);
+	robot_2D_display(robot.loc);
+	
+	robot_3D_setup();
+	robot_3D_draw(robot.joint);
+	robot_3D_cleanup();
 	
 	robot_display_autonomy(telemetry.autonomy);
 
@@ -163,6 +155,8 @@ extern "C" void display(void) {
 	robot_display_setup(robot_manager.robot);
 	
 	robot_manager.update();
+	
+	robot_display_text(robot_manager.robot);
 	
 	glutSwapBuffers();
 	glutPostRedisplay();

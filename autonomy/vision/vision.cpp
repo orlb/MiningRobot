@@ -40,7 +40,7 @@ public:
     {
         printf("  MARKER %d: ",ID);
         
-        double size=18.0; // physical size of marker, in centimeters
+        double size=30.5; // physical size of marker, in centimeters
         if (ID==6) {  // ghost
             size=116.7; // <- big fabric, 1.5 meters including whitespace 
         }
@@ -50,8 +50,8 @@ public:
         else if (ID==13) {  // large mullet
             size=25; 
         } 
-        else if (ID==7) {  // mask
-            size=5; 
+        else if (ID==2) {  
+            size=30.5; 
         }
         else {
             printf("Ignoring--unknown number %d\n",ID);
@@ -123,7 +123,7 @@ void project_depth_to_2D(const realsense_camera_capture &cap,
     for (int y = 0; y < cap.depth_h; y++)
     for (int x = realsense_left_start; x < cap.depth_w; x++)
     {
-        float depth=cap.get_depth(x,y);
+        float depth=cap.get_depth_cm(x,y);
         if (depth<=sanity_distance_min || depth>sanity_distance_max) 
             continue; // out of range value
         

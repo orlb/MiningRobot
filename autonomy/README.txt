@@ -1,4 +1,4 @@
-UPDATE 2020:
+UPDATED 2023-03
 
 The "Autonomy" system is separated into two halves:
 
@@ -24,13 +24,8 @@ Vision manages the realsense camera
 
 Localizer integrates the robot position
     -Reads drive encoder counts from the backend
-    -Reads aruco data from the vision subsystem
-    -Reads camera pointing from the stepper motor
+    -Reads aruco marker data from the vision subsystem
     -Publishes coordinates used by all other components
-
-Stepper talks to the camera pointing stepper motor
-    -Reads requested view angle from backend
-    -Publishes current view angle to the localizat
 
 Path planner computes an obstacle-free drive path
     -Reads the robot location from the localizer
@@ -40,24 +35,42 @@ Path planner computes an obstacle-free drive path
     -Uses an A* to plan paths. 
     	-A* is a goal area rather than a point.
 
-backend talks to the robot, using two subsystems:
-    BAC: Basic Autonomy Control 
-        -manages the autonomy state machine and pilot comms (over UDP)
-	
-    KEND: Keep Electronics Not Dying 
-	- Talks to the front end via a network socket
-	- Interfaces with sensors, like Kinect or webcam
-	- Talks to the Arduino via a USB serial connection
-		- Resets the connection if it is ever lost
+backend is the main autonomy controller
+    -Manages the autonomy state machine
+    -Manages pilot comms over UDP broadcast
+    -Communicates with nanoslot Arduinos
+
+nanoslot is how we talk to the Arduino nano microcontrollers
+    -Each Arduino knows its "ID", an 8-bit hex number
+        - slot_D0 is the main drive motor controller
+        - slot_A0 is the main arm motor controller
+        - slot_A1 is the arm IMU and strain gauge interface
+        - slot_F0 is the front linear motor controller
+        - slot_F1 is the front IMU and strain gauge interface
+    -Arduinos talk to slot programs, which are started by nanoboot
+    -Nanoboot gets run on Arduino hotplug by udev / systemd
+
 
 
 Build instructions:
-	sudo apt-get install freeglut3-dev g++ make libzmq3-dev
+	sudo apt-get install freeglut3-dev g++ make
 	cd backend
 	make
 	./backend --sim
-(The backend without --sim tries to connect to the Arduino mega.)
+(The backend without --sim tries to connect to the nanoslot data exchange.)
 
+Make Arduino comms work:
+	sudo vipw -g
+	... add your account to the dialout group and re-login ...
+	sudo apt-get remove modemmanager brltty
+	sudo apt-get install libfuse2
+	... now open autonomy/nanoslot/slot_F0/firmware_F0/firmware_F0.ino in the Arduino IDE 2.0 ...
+	
+On a Raspberry Pi:
+	A Pi compatible Arduino IDE 2.0 build is here: 
+		https://github.com/koendv/arduino-ide-raspberrypi
+	Decrease bloat with:
+		sudo apt-get remove cups avahi-daemon update-notifier
 
 For the aruco marker viewer:
 	sudo apt-get install cmake libopencv-dev
@@ -76,14 +89,32 @@ For the realsense viewer:
   mkdir build
   cd build
   cmake .. -DFORCE_RSUSB_BACKEND=true -DBUILD_PYTHON_BINDINGS=false -DBUILD_EXAMPLES=true -DBUILD_GRAPHICAL_EXAMPLES=true -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
+  make
+  sudo make install
+  sudo cp ../config/99-realsense-libusb.rules /etc/udev/rules.d/99-realsense-libusb.rules && sudo udevadm control --reload-rules && sudo udevadm trigger
 
 
+For debug operation of the nanoslot programs, you can start them 
+manually.  For full on-robot operation, you want them reliably started
+automatically on hotplug.  There is a script to do this here:
+  cd nanoslot/install
+  sudo ./install.sh
+This requires a user named "robot", and creates a directory "/nanoslot".
+Watch nanoslot operations and slot program print output with:
+  tail -f /nanoslot/log
 
-ros packages:
-	sudo apt-get install ros-noetic-apriltag-ros
 
-roscd apriltag_ros
-pwd
+ROS setup for Ubuntu 22.04 (ROS2 humble) from:
+  https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html
+
+sudo add-apt-repository universe
+sudo apt update
+sudo apt install software-properties-common curl
+sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(. /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+sudo apt update
+sudo apt install ros-humble-desktop ros-dev-tools
+
 
 
 
@@ -102,54 +133,4 @@ For the kinect classifier:
 	cd kinect
 	make
 
-
-
----------------
-2017 Hardware info:
-
-Magnetic encoders:
-	36 encoder counts per motor revolution
-
-Mining head:
-	15 mining scoops.  
-	8 holes in mining head drive, but only 4 scoops.
-
-Drive tracks:
-	16 100mm track segments per track.
-	Chain drive: 19 teeth on drive sprocket (aluminum), 27 teeth on driven sprocket (pet or ABS)
-
-
-
------------------
-OBSOLETE 2015 Hardware info:
-Drive wheels: 16 encoder edges per revolution, 25mm per encoder edge
-Mining head: 
-	16 encoder sectors
-	8 encoder edges per scoop
-	15 scoops in entire bucket
-
-Invariants:
-	- Deploy front wheels before doing any driving
-	- Must raise mining head (to about 15%) before doing any driving (keep from high-centering)
-	- Must lower mining head (below 20%) before doing any driving (keep from flipping)
-	- To enter mining mode, lower head to 10%
-
-
-----------
-Shipping:
-To avoid extra charges for oversize or overweight baggage, your checked bag must:
- weigh 50 pounds (23 kg) or less
- not exceed 62 inches (157 cm) when you total length + width + height
-
-	
------------
-3D printing:
-	- Sprockets
-	- Motor caps
-
-
-------------
-Rex Engineering DC motors
-	- Stock motors: 6 amp idle
-	- 11K RPM motors: 3amp idle
 

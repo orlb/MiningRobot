@@ -1,5 +1,8 @@
+/*
+  Support code for navigation grid. 
+*/
 #include "grid.hpp"
-#include "../../firmware/robot_base.h"
+#include "../aurora/robot_base.h"
 #include <cmath>
 
 grid_square::grid_square()

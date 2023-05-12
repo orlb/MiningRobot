@@ -1,4 +1,4 @@
-/* Robot coordinate systems, in 2D and 3D. 
+/* Robot coordinate systems, in 2D and 3D, used for localization and navigation. 
 
 
 Absolute field coordinates:
@@ -116,9 +116,15 @@ struct robot_coord3D {
 
     float extract_angle()const{
         return angle_from_dir(vec2(X.x,X.y));
-    }    
+    }
 
     robot_coord3D() { reset(); }
+    robot_coord3D(const vec3 &origin_,
+        const vec3 &X_,const vec3 &Y_,const vec3 &Z_,
+        float percent_=0.0f) 
+        :origin(origin_), X(X_), Y(Y_), Z(Z_), percent(percent_)
+    {
+    }
     
     // Reset to origin at (0,0,0), no rotations on XYZ
     void reset() {
@@ -266,7 +272,6 @@ struct robot_navtarget : public robot_center2D {
         return (error.x!=DONTCARE) || (error.y!=DONTCARE) || (error.angle!=DONTCARE);
     }
 };
-
 
 };
 

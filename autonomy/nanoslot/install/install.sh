@@ -1,5 +1,10 @@
 #!/bin/sh
-# Install udev and systemd rules for nanoslot slot handler
+# Install udev and systemd rules for nanoslot slot handler,
+# which automatically runs nanoboot and then the slot programs
+# as soon as an Arduino Nano is plugged in.
+#
+# Requires a user named "robot".  Creates a directory /nanoslot
+# (an alternative would be tailoring the paths in the scripts).
 
 sudo mkdir /nanoslot
 sudo chown robot /nanoslot
@@ -10,7 +15,7 @@ dir=`realpath ..`
 cd /nanoslot
 touch log
 sudo chown robot log
-ln -s "$dir"/nanohandler/nanoslot.sh .
+ln -s "$dir"/install/nanoslot.sh .
 ln -s "$dir" dir
 )
 

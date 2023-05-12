@@ -1,6 +1,7 @@
-COMPILER=g++ -std=c++11
+COMPILER=g++ -std=c++17
 
-DIRS=-I/usr/local/include -L/usr/local/lib -I../include
+INC=../include
+DIRS=-I/usr/local/include -L/usr/local/lib -I$(INC)
 
 ifeq ($(OS),Windows_NT)
 	LIBS+=-lWs2_32
@@ -20,8 +21,8 @@ CFLAGS=$(OPTS) -Wall -Wno-psabi -Wno-deprecated-declarations -Wno-char-subscript
 
 all: backend
 
-backend: main.cpp
-	$(COMPILER) $^ $(LIB) $(CFLAGS) $(DIRS) -o $@
+backend: main.cpp $(INC)/*/*.h
+	$(COMPILER) $< $(LIB) $(CFLAGS) $(DIRS) -o $@
 
 clean:
 	rm -f backend backend.exe

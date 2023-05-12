@@ -16,14 +16,14 @@ int main(int argc,char **argv)
         // Receive data from Arduino
         A_packet p;
         if (comm.read_packet(p)) {
-            comm.handle_standard_packet(p);
+            comm.handle_standard_packet(p,comm.my_sensor);
 
             if (comm.got_sensor) 
             {
                 printf("  Arduino latency: %d ms, heartbeat %02x\n", comm.my_sensor.latency, comm.my_sensor.heartbeat);
             }
             
-            if (comm.need_command) 
+            if (comm.lunatic_post_packet(p)) 
             {
                 comm.send_command(comm.my_command);
             }

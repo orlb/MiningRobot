@@ -1,5 +1,5 @@
 OPTS=-O -g
-CFLAGS=-I../../include -I../include -std=c++17 $(OPTS)
+CFLAGS=-I../../include -std=c++17 $(OPTS)
 
 all: $(PROG)
 
