@@ -11,16 +11,12 @@
 #ifndef LUNACAPTURE_HPP
 #define LUNACAPTURE_HPP
 
-#include "aurora/lunatic.h"
-#include "nlohmann/json.hpp"    // json input/output
 #include <chrono>               // system_clock::time_point(), system_clock::now()
 #include <string>               // string()
 #include <sstream>              // stringstream()
 #include <ctime>                // put_time(), locattime()
 #include <iostream>             // cout, cin, endl
-#include <pqxx/pqxx>            // postgresql database library
 #include <iomanip>              // setprecision
-#include <cmath>                // round()
 
 using std::string;
 using std::istringstream;
@@ -30,8 +26,6 @@ using std::cout;
 using std::endl;
 using std::ofstream;
 using std::to_string;
-
-using json = nlohmann::json;
 
 // Capture the current time and return in string format
 uint capture_epoch();
