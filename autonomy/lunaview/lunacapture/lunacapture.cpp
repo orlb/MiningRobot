@@ -1,3 +1,13 @@
+/*
+ * lunacapture.cpp
+ * Aurora Robotics
+ * University of Alaska - Fairbanks
+ * Project by Bryan Beus
+ * Under supervision of Dr. Orion Lawlor
+ * Declaration file for LunaCapture
+ * Captures data from mining Robot "Excahauler"
+ */
+
 #include <chrono>               // system_clock::time_point(), system_clock::now()
 #include <string>               // string()
 #include <sstream>              // stringstream()
