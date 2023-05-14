@@ -8,6 +8,7 @@
 #include <pqxx/pqxx>            // postgresql database library
 #include <iomanip>              // setprecision
 #include <cmath>                // round()
+#include <fstream>              // ifstream()
 
 #include "lunacapture.hpp"
 
@@ -19,6 +20,7 @@ using std::cout;
 using std::endl;
 using std::ofstream;
 using std::to_string;
+using std::ifstream;
 
 using json = nlohmann::json;
 
@@ -27,13 +29,18 @@ const string& db_disconnect_msg = "Connection to the database is lost.";
 
 int main() {
 
+    std::ifstream file_dbpass (".dbpass");
+    std::string dbpass;
+
+    if (file_dbpass.is_open()) {
+        file_dbpass >> dbpass;
+    }
+
     // Establish connection to postgresql database
-    // TO-DO Establish credentials
-    // TO DO: Read file .dbpass and create string
     pqxx::connection psql_conn(" \
         dbname=test_cpp \
         user=postgres \
-        password=asdf \
+        password=" + dbpass + " \
         hostaddr=127.0.0.1 \
         port=5432 \
         target_session_attrs=read-write"
@@ -70,7 +77,7 @@ int main() {
     } catch (const std::exception& e) {
 
         cout << e.what() << endl;
-        
+
         return 0;
 
     }
@@ -85,7 +92,7 @@ int main() {
     // Initialize data capture for the backend state
     MAKE_exchange_backend_state();
     aurora::backend_state state;
-    
+
     MAKE_exchange_nanoslot();
     nanoslot_exchange nano;
 
@@ -115,7 +122,7 @@ int main() {
         // Capture drive encoder change data
         output_json["drive_encoder_left"]   = change.left;
         output_json["drive_encoder_right"]  = change.right;
-        
+
         // Output tool vibration on each axis
         output_json["vibe"]  = length(nano.slot_A1.state.tool.vibe);
 
@@ -131,7 +138,7 @@ int main() {
 
         // This is the power being sent to the motor, not necessarily position
         // Vars are all of type float
-        // Values run from -1 to +1, and indicate full backward to full forward 
+        // Values run from -1 to +1, and indicate full backward to full forward
         // The first two indicate power to the drive motors
         output_json["power_left"]     = std::round(state.power.left * 100) / 100;
         output_json["power_right"]    = std::round(state.power.right * 100) / 100;
@@ -151,7 +158,7 @@ int main() {
         // state.sensor is obsolete and therefore currently omitted
         // Later will include info such as battery voltage
 
-        // The state.loc variables represent an estimate of location 
+        // The state.loc variables represent an estimate of location
         // Values are of type float
         // Variables (x, y) are in meters
         output_json["loc_x"]          = state.loc.x;
@@ -160,11 +167,11 @@ int main() {
         output_json["loc_angle"]      = std::round(state.loc.angle * 100) / 100;
 
         // Test that json is formatted properly:
-    
+
         cout << output_json.dump() << endl;
         cout << endl;
 
-        
+
         stringstream output_assembled;
         output_assembled << "INSERT INTO test_conn ";
         output_assembled << " ( robot_json )  VALUES  ('";
@@ -182,24 +189,24 @@ int main() {
             w.exec(output);
 
             w.commit();
-                
+
 
             // TO DO: Correct functions
             // pqxx::work t(psql_conn);
-            // 
+            //
             // pqxx::result res = execute_insert(t, "test_conn", "robot_json", output_json.dump());
-            // 
+            //
             // t.commit();
 
         } catch (const std::exception& e) {
 
             cout << e.what() << endl;
-            
+
             return 0;
 
         }
 
-        // Reset 
+        // Reset
         last=cur;
         aurora::data_exchange_sleep(500);
     }
