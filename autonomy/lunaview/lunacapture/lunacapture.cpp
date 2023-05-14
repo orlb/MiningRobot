@@ -1,19 +1,13 @@
-/*
- * lunacapture.cpp
- * Aurora Robotics
- * University of Alaska - Fairbanks
- * Project by Bryan Beus
- * Under supervision of Dr. Orion Lawlor
- * Declaration file for LunaCapture
- * Captures data from mining Robot "Excahauler"
- */
-
+#include "aurora/lunatic.h"
+#include "nlohmann/json.hpp"    // json input/output
 #include <chrono>               // system_clock::time_point(), system_clock::now()
 #include <string>               // string()
 #include <sstream>              // stringstream()
 #include <ctime>                // put_time(), locattime()
 #include <iostream>             // cout, cin, endl
+#include <pqxx/pqxx>            // postgresql database library
 #include <iomanip>              // setprecision
+#include <cmath>                // round()
 
 #include "lunacapture.hpp"	// Include lunacapture header file
 
@@ -25,6 +19,8 @@ using std::cout;
 using std::endl;
 using std::ofstream;
 using std::to_string;
+
+using json = nlohmann::json;
 
 // Capture current epoch time
 uint capture_epoch() {

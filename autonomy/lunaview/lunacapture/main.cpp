@@ -8,7 +8,6 @@
 #include <pqxx/pqxx>            // postgresql database library
 #include <iomanip>              // setprecision
 #include <cmath>                // round()
-#include <fstream>              // ifstream()
 
 #include "lunacapture.hpp"
 
@@ -20,7 +19,6 @@ using std::cout;
 using std::endl;
 using std::ofstream;
 using std::to_string;
-using std::ifstream;
 
 using json = nlohmann::json;
 
@@ -29,18 +27,13 @@ const string& db_disconnect_msg = "Connection to the database is lost.";
 
 int main() {
 
-    std::ifstream file_dbpass (".dbpass");
-    std::string dbpass;
-
-    if (file_dbpass.is_open()) {
-        file_dbpass >> dbpass;
-    }
-    
     // Establish connection to postgresql database
+    // TO-DO Establish credentials
+    // TO DO: Read file .dbpass and create string
     pqxx::connection psql_conn(" \
         dbname=test_cpp \
         user=postgres \
-        password=" + dbpass + " \
+        password=asdf \
         hostaddr=127.0.0.1 \
         port=5432 \
         target_session_attrs=read-write"
