@@ -16,6 +16,11 @@ Install the latest version of the C libraries for PostgreSQL.
 sudo apt install postgresql postgresql-contrib libpq-dev libpq5
 ```
 
+To have the robot send data to a database server machine, on the database server you'll need to:
+ - Update /etc/postgresql/14/main/postgresql.conf so it has a line: ```listen_address = '*'```
+ - Update /etc/postgresql/14/main/pg_hba.conf so it has a line like:
+ ```host test_cpp all 10.10.10.0/24  md5```
+
 
 ## libpqxx
 
@@ -24,17 +29,18 @@ Follow the installation instructions in the [BUILD-CONFIGURE.md](https://github.
 #### Tips for Installing libpqxx
 
 ```shell
-$ cd ~/Downloads && git clone https://github.com/jtv/libpqxx.git && cd libpqxx
+cd ~/Downloads && git clone https://github.com/AuroraRoboticsLab/libpqxx.git && cd libpqxx
 ```
 
-Make sure to set the `./configure` value during installation to `--disable-shared` so that it is installed as a static library.
+Configure and build
 
 ```shell
-$ ./configure --disabled-shared
-$ make
-$ sudo make install
+./configure
+make
+sudo make install
 ```
 The library will be installed in the system directory. You may delete the `~/Downloads/libpqxx` folder, if you wish.
+
 
 ## Setup for PostgreSQL
 
@@ -48,8 +54,8 @@ Automated version:
 #### Enter psql
 
 ``` shell
-$ sudo -su postgres
-$ psql
+sudo -su postgres
+psql
 ```
 
 #### Change postgres User Password
@@ -69,7 +75,7 @@ Exit out of `psql` by repeatedly entering `exit` in the command until you return
 ## Execute lunacapture Makefile
 
 ```shell
-$ make
+make
 ```
 
 ## Activate the Backend Server
@@ -77,7 +83,7 @@ $ make
 Open a separate terminal and activate the backend server in the [`/backend`](/backend) directory.
 
 ```shell
-$ ./backend --sim
+./backend --sim
 ```
 
 ## Activate lunacapture
@@ -85,7 +91,7 @@ $ ./backend --sim
 In the lunacapture terminal window, activate `lunacapture`.
 
 ```shell
-$ ./lunacapture
+./lunacapture
 ```
 
 You should see json values populating in the console. This data is automatically logged in the PostgreSQL database and is displayed here for visual purposes only.
@@ -99,8 +105,8 @@ When finished, hit `CTRL^C` to deactivate `lunacapture`.
 The following is an example of how you can pull the `power_dump` values and their associated timestamps from the json database.
 
 ```shell
-$ sudo -su postgres
-$ psql
+sudo -su postgres
+psql
 # \d test_conn;
 # SELECT id,robot_json->'power_dump' as power, created_at FROM test_conn";
 ```
@@ -120,13 +126,13 @@ If the value for `Candidate` is different than `Installed`, you may have come ac
 First delete `libpq5` and `libpq-dev` from your system.
 
 ```shell
-$ sudo apt remove --purge libpq5 libpq-dev
+sudo apt remove --purge libpq5 libpq-dev
 ```
 
 Discover what the latest version of libpq5 should be.
 
 ```shell
-$ apt-cache policy libpq5
+apt-cache policy libpq5
 ```
 
 Look for the output value associated with the `Candidate` row.
@@ -134,7 +140,7 @@ Look for the output value associated with the `Candidate` row.
 Enter this value as follows during the installation. For example, where the candidate value is `14.7-0ubuntu0.22.04.1`:
 
 ```shell
-$ sudo apt-get install libpq5=14.7-0ubuntu0.22.04.1 && sudo apt-get install libpq-dev
+sudo apt-get install libpq5=14.7-0ubuntu0.22.04.1 && sudo apt-get install libpq-dev
 ```
 
 ## Set Up Database Password
