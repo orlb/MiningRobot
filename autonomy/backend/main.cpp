@@ -34,7 +34,7 @@
 
 
 #include "aurora/lunatic.h"
-#include "../nanoslot/include/nanoslot/nanoslot_sanity.h"
+#include "nanoslot/nanoslot_sanity.h"
 
 using namespace aurora;
 
