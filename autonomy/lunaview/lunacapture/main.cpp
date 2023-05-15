@@ -51,6 +51,9 @@ int main() {
         return 0;
     }
 
+    // To Do: Create new instance for each time ./lunacapture runs and save to separate column in table
+    // Output current run instance to a file
+
     // Create the database table, if it does not already exist
     try {
 
