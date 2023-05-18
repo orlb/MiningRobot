@@ -45,9 +45,6 @@ std::string ReplaceString(std::string subject, const std::string& search, const 
 
 }
 
-// TO DO: Create policy function to round different aspects of numbers to set number of decimal places
-// Policies: angles, power levels, 
-
 // TO DO: Debug these functions
 // // Prepare pqxx transactions
 // void prepare_transactions(pqxx::connection &psql_conn) {
@@ -55,7 +52,7 @@ std::string ReplaceString(std::string subject, const std::string& search, const 
 //     // Prepare statement to insert data into table
 //     psql_conn.prepare(
 //             "insert_data",
-//             "INSERT INTO $1 ( $2 ) VALUES ( '$3'::jsonb );"
+//             "INSERT INTO $1 ( $2 ) VALUES ( '$3'::json );"
 //     );
 // 
 // };

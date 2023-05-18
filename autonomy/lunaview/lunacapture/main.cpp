@@ -25,13 +25,15 @@ using std::ifstream;
 using json = nlohmann::json;
 
 // Error message for loss of a previously established database connection
-const string& db_disconnect_msg = "Connection to the database is lost.";
+const string& db_conn_err_msg = "Connection to the database is lost.";
 
 int main() {
 
+    // Set variables to obtain database password
     std::ifstream file_dbpass (".dbpass");
     std::string dbpass;
 
+    // Obtain database password
     if (file_dbpass.is_open()) {
         file_dbpass >> dbpass;
     }
@@ -46,13 +48,11 @@ int main() {
         target_session_attrs=read-write"
     );
 
+    // If the connection does not initiate, send error message and stop the script
     if (!psql_conn.is_open()) {
-        cout << "Connection to database could not be established." << endl;
+        cout << db_conn_err_msg << endl;
         return 0;
     }
-
-    // To Do: Create new instance for each time ./lunacapture runs and save to separate column in table
-    // Output current run instance to a file
 
     // Create the database table, if it does not already exist
     try {
@@ -64,6 +64,7 @@ int main() {
             w.exec("\
                 CREATE TABLE IF NOT EXISTS test_conn ( \
                 id SERIAL NOT NULL PRIMARY KEY, \
+                instance_num INT NOT NULL, \
                 robot_json JSON NOT NULL, \
                 created_at TIMESTAMP NOT NULL DEFAULT NOW()\
                 );"
@@ -73,7 +74,7 @@ int main() {
 
         } else {
 
-            cout << db_disconnect_msg << endl;
+            cout << db_conn_err_msg << endl;
 
         }
 
@@ -85,8 +86,22 @@ int main() {
 
     }
 
-    // From robot_base.h (included in lunatic.h), obtain info from class robot_base
+    // To Do: Create new instance for each time ./lunacapture runs and save to separate column in table
+    // Output current run instance to a file
+    int instance_num = 0;
 
+//    try {
+//
+//
+//
+//
+//
+//    } catch {
+//
+//    }
+
+
+    // From robot_base.h (included in lunatic.h), obtain info from class robot_base
     // Initialize data capture for the drive encoders
     MAKE_exchange_drive_encoders();
     aurora::drive_encoders last;
@@ -99,16 +114,10 @@ int main() {
     MAKE_exchange_nanoslot();
     nanoslot_exchange nano;
 
-    // // Prepare the default psql transactions
-    // prepare_transactions(psql_conn);
-
     while (true) {
 
         // Craft the json output
         json output_json;
-
-        // TO DO Simplify code by putting all of the below variable/json building into a separate function
-        // and returning the result as final string or json value
 
         // Capture epoch time
         output_json["epoch_time"]   = capture_epoch();
@@ -170,20 +179,18 @@ int main() {
         output_json["loc_angle"]      = std::round(state.loc.angle * 100) / 100;
 
         // Test that json is formatted properly:
-
         cout << output_json.dump() << endl;
         cout << endl;
 
 
         stringstream output_assembled;
         output_assembled << "INSERT INTO test_conn ";
-        output_assembled << " ( robot_json )  VALUES  ('";
+        output_assembled << " ( instance_num, robot_json )  VALUES  ( ";
+        output_assembled << instance_num << ", '"; 
         output_assembled << output_json.dump();
         output_assembled << "');";
 
         string output = output_assembled.str();
-
-        // TO DO Prep insert command for database
 
         try {
 
@@ -192,14 +199,6 @@ int main() {
             w.exec(output);
 
             w.commit();
-
-
-            // TO DO: Correct functions
-            // pqxx::work t(psql_conn);
-            //
-            // pqxx::result res = execute_insert(t, "test_conn", "robot_json", output_json.dump());
-            //
-            // t.commit();
 
         } catch (const std::exception& e) {
 
