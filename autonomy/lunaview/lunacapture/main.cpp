@@ -9,6 +9,7 @@
 #include <iomanip>              // setprecision
 #include <cmath>                // round()
 #include <fstream>              // ifstream()
+#include <typeinfo>             // typeid()
 
 #include "lunacapture.hpp"
 
@@ -90,16 +91,27 @@ int main() {
     // Output current run instance to a file
     int instance_num = 0;
 
-//    try {
-//
-//
-//
-//
-//
-//    } catch {
-//
-//    }
+    // Check if there's an existing previous entry
+    // If so, iterate +1 over the last instance_num
+    try {
+        pqxx::work w(psql_conn);
+        pqxx::result r = w.exec("SELECT * FROM test_conn ORDER BY created_at DESC LIMIT 1;");
 
+        stringstream instance_num_str;
+        instance_num_str << r[0][1].c_str();
+        j
+        instance_num_str >> instance_num;
+        ++instance_num;
+
+    } catch (const std::exception &e) {
+
+        cout << e.what() << endl;
+        return 0;
+
+    }
+
+    cout << "Session instance number: " << instance_num << endl;
+    cout << endl;
 
     // From robot_base.h (included in lunatic.h), obtain info from class robot_base
     // Initialize data capture for the drive encoders
