@@ -1,5 +1,5 @@
 #!/bin/sh
-# Create (or update) the postgres database used to store robot data.
+# Drop the postgres database table used to store robot data.
 
 sudo -su postgres << EOF
 

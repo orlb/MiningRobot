@@ -94,14 +94,23 @@ int main() {
     // Check if there's an existing previous entry
     // If so, iterate +1 over the last instance_num
     try {
+        cout << "Reaching out to db: " << endl;
         pqxx::work w(psql_conn);
         pqxx::result r = w.exec("SELECT * FROM test_conn ORDER BY created_at DESC LIMIT 1;");
 
-        stringstream instance_num_str;
-        instance_num_str << r[0][1].c_str();
-        j
-        instance_num_str >> instance_num;
-        ++instance_num;
+        cout << "Reached" << endl;
+
+        // Test, if there is data in the returned result, then iterate
+        // If not, then keep the instance_num at 0
+        if (sizeof(r) > 0) {
+            stringstream instance_num_str;
+            instance_num_str << r[0][1].c_str();
+
+            instance_num_str >> instance_num;
+            ++instance_num;
+        }
+        cout << "Test: " << r[0][1].c_str() << endl;
+
 
     } catch (const std::exception &e) {
 
