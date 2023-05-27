@@ -30,12 +30,20 @@ using std::ifstream;
 
 using json = nlohmann::json;
 
+// Round this value to two decimal places
+double round_decimal(double x) 
+{
+    return std::round(x * 100) / 100;
+}
+
+
 // Error message for loss of a previously established database connection
 const string& db_conn_err_msg = "Connection to the database is lost.";
 
 int main() {
     int sleep_ms = 500; // time in milliseconds between database writes (small = bigger database but better data resolution)
-
+    //int sleep_ms = 30; // high resolution mode
+    
     // Set variables to obtain database password
     std::ifstream file_dbpass (".dbpass");
     std::string dbpass;
@@ -115,7 +123,7 @@ int main() {
             instance_num_str >> instance_num;
             ++instance_num;
         }
-        cout << "Test: " << r[0][1].c_str() << endl;
+        // cout << "Test: " << r[0][1].c_str() << endl;
 
 
     } catch (const std::exception &e) {
@@ -143,100 +151,108 @@ int main() {
 
     while (true) {
 
-        // Craft the json output
-        json output_json;
+        if (exchange_backend_state.updated() || exchange_nanoslot.updated())
+        {
+            // Craft the json output
+            json output_json;
 
-        // Capture epoch time
-        output_json["epoch_time"]   = capture_epoch();
+            // Capture epoch time
+            output_json["epoch_time"]   = capture_epoch();
 
-        // Update the backend data
-        state = exchange_backend_state.read();
-        nano = exchange_nanoslot.read();
+            // Update the backend data
+            state = exchange_backend_state.read();
+            nano = exchange_nanoslot.read();
 
-        // Calculate amount of change in drive encoders
-        // Drive_encoder data are of type float and provide total distance driven by each side of robot
-        aurora::drive_encoders cur      =   exchange_drive_encoders.read();
-        aurora::drive_encoders change   =   cur - last;
+            // Calculate amount of change in drive encoders
+            // Drive_encoder data are of type float and provide total distance driven by each side of robot
+            aurora::drive_encoders cur      =   exchange_drive_encoders.read();
+            aurora::drive_encoders change   =   cur - last;
+            last=cur;
 
-        // Capture drive encoder change data
-        output_json["drive_encoder_left"]   = change.left;
-        output_json["drive_encoder_right"]  = change.right;
+            // Capture drive encoder change data
+            output_json["drive_encoder_left"]   = change.left;
+            output_json["drive_encoder_right"]  = change.right;
 
-        // Output tool vibration on each axis
-        output_json["vibe"]  = length(nano.slot_A1.state.tool.vibe);
+            // Output tool vibration on each axis (in m/s^2)
+            output_json["tool_vibe"]  = length(nano.slot_A1.state.tool.vibe);
+            output_json["frame_vibe"]  = length(nano.slot_F1.state.frame.vibe);
+            
+            // Output load cell loads (in kgf)
+            output_json["load_dump"] = round_decimal(nano.slot_F1.state.load_L);
+            output_json["load_tool"] = round_decimal(nano.slot_A1.state.load_L);
 
-        // List of joints, in sequential order, from base to furthest point of arm
-        // Vars are all of type float
-        // These are all angles reconstructed from the inertial measurement units (IMUs)
-        output_json["fork"]  = std::round(state.joint.angle.fork * 100) / 100;
-        output_json["dump"]  = std::round(state.joint.angle.dump * 100) / 100;
-        output_json["boom"]  = std::round(state.joint.angle.boom * 100) / 100;
-        output_json["stick"] = std::round(state.joint.angle.stick * 100) / 100;
-        output_json["tilt"]  = std::round(state.joint.angle.tilt * 100) / 100;
-        output_json["spin"]  = std::round(state.joint.angle.spin * 100) / 100;
+            // List of joint angles, in sequential order, from base to furthest point of arm
+            // Vars are all of type float, units degrees
+            // These are all angles reconstructed from the inertial measurement units (IMUs)
+            output_json["fork"]  = round_decimal(state.joint.angle.fork);
+            output_json["dump"]  = round_decimal(state.joint.angle.dump);
+            output_json["boom"]  = round_decimal(state.joint.angle.boom);
+            output_json["stick"] = round_decimal(state.joint.angle.stick);
+            output_json["tilt"]  = round_decimal(state.joint.angle.tilt);
+            output_json["spin"]  = round_decimal(state.joint.angle.spin);
 
-        // This is the power being sent to the motor, not necessarily position
-        // Vars are all of type float
-        // Values run from -1 to +1, and indicate full backward to full forward
-        // The first two indicate power to the drive motors
-        output_json["power_left"]     = std::round(state.power.left * 100) / 100;
-        output_json["power_right"]    = std::round(state.power.right * 100) / 100;
-        // These variables indicate power to the joints
-        output_json["power_fork"]     = std::round(state.power.fork * 100) / 100;
-        output_json["power_dump"]     = std::round(state.power.dump * 100) / 100;
-        output_json["power_boom"]     = std::round(state.power.boom * 100) / 100;
-        output_json["power_stick"]    = std::round(state.power.stick * 100) / 100;
-        output_json["power_tilt"]     = std::round(state.power.tilt * 100) / 100;
-        output_json["power_spin"]     = std::round(state.power.spin * 100) / 100;
-        // This var represents power level sent to tool
-        output_json["power_tool"]     = std::round(state.power.tool * 100) / 100;
+            // This is the power being sent to the motor, not necessarily position
+            // Vars are all of type float
+            // Values run from -1 to +1, and indicate full backward to full forward
+            // The first two indicate power to the drive motors
+            output_json["power_left"]     = round_decimal(state.power.left);
+            output_json["power_right"]    = round_decimal(state.power.right);
+            // These variables indicate power to the joints
+            output_json["power_fork"]     = round_decimal(state.power.fork);
+            output_json["power_dump"]     = round_decimal(state.power.dump);
+            output_json["power_boom"]     = round_decimal(state.power.boom);
+            output_json["power_stick"]    = round_decimal(state.power.stick);
+            output_json["power_tilt"]     = round_decimal(state.power.tilt);
+            output_json["power_spin"]     = round_decimal(state.power.spin);
+            // This var represents power level sent to tool
+            output_json["power_tool"]     = round_decimal(state.power.tool);
 
-        // The state.state variable is one int
-        output_json["state_state"]     = state.state;
+            // The state.state variable is one int
+            output_json["state_state"]     = state.state;
 
-        // state.sensor is obsolete and therefore currently omitted
-        // Later will include info such as battery voltage
+            // state.sensor is obsolete and therefore currently omitted
+            // Later will include info such as battery voltage
 
-        // The state.loc variables represent an estimate of location
-        // Values are of type float
-        // Variables (x, y) are in meters
-        output_json["loc_x"]          = state.loc.x;
-        output_json["loc_y"]          = state.loc.y;
-        // Variable (angle) is in degrees
-        output_json["loc_angle"]      = std::round(state.loc.angle * 100) / 100;
+            // The state.loc variables represent an estimate of location
+            // Values are of type float
+            // Variables (x, y) are in meters
+            output_json["loc_x"]          = state.loc.x;
+            output_json["loc_y"]          = state.loc.y;
+            // Variable (angle) is in degrees
+            output_json["loc_angle"]      = round_decimal(state.loc.angle);
 
-        // Test that json is formatted properly:
-        cout << output_json.dump() << endl;
-        cout << endl;
+            // Test that json is formatted properly:
+            cout << output_json.dump() << endl;
+            cout << endl;
 
 
-        stringstream output_assembled;
-        output_assembled << "INSERT INTO test_conn ";
-        output_assembled << " ( instance_num, robot_json )  VALUES  ( ";
-        output_assembled << instance_num << ", '"; 
-        output_assembled << output_json.dump();
-        output_assembled << "');";
+            stringstream output_assembled;
+            output_assembled << "INSERT INTO test_conn ";
+            output_assembled << " ( instance_num, robot_json )  VALUES  ( ";
+            output_assembled << instance_num << ", '"; 
+            output_assembled << output_json.dump();
+            output_assembled << "');";
 
-        string output = output_assembled.str();
+            string output = output_assembled.str();
 
-        try {
+            try {
 
-            pqxx::work w(psql_conn);
+                pqxx::work w(psql_conn);
 
-            w.exec(output);
+                w.exec(output);
 
-            w.commit();
+                w.commit();
 
-        } catch (const std::exception& e) {
+            } catch (const std::exception& e) {
 
-            cout << e.what() << endl;
+                cout << e.what() << endl;
 
-            return 0;
+                return 0;
+
+            }
 
         }
-
-        // Reset
-        last=cur;
+        
         aurora::data_exchange_sleep(sleep_ms);
     }
 }
