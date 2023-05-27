@@ -1,3 +1,8 @@
+/*
+ Read robot data from the lunatic data exchange, and write it to a postgres database.
+
+ Original by Bryan Beus, 2023-04 (Public Domain)
+*/
 #include "aurora/lunatic.h"
 #include "nlohmann/json.hpp"    // json input/output
 #include <chrono>               // system_clock::time_point(), system_clock::now()
@@ -29,6 +34,7 @@ using json = nlohmann::json;
 const string& db_conn_err_msg = "Connection to the database is lost.";
 
 int main() {
+    int sleep_ms = 500; // time in milliseconds between database writes (small = bigger database but better data resolution)
 
     // Set variables to obtain database password
     std::ifstream file_dbpass (".dbpass");
@@ -102,7 +108,7 @@ int main() {
 
         // Test, if there is data in the returned result, then iterate
         // If not, then keep the instance_num at 0
-        if (sizeof(r) > 0) {
+        if (!r.empty()) {
             stringstream instance_num_str;
             instance_num_str << r[0][1].c_str();
 
@@ -231,6 +237,6 @@ int main() {
 
         // Reset
         last=cur;
-        aurora::data_exchange_sleep(500);
+        aurora::data_exchange_sleep(sleep_ms);
     }
 }
