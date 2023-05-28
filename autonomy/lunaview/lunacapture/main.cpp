@@ -87,11 +87,10 @@ int main() {
 
     }
 
-    // To Do: Create new instance for each time ./lunacapture runs and save to separate column in table
-    // Output current run instance to a file
+    // Set default instance_num to 0
     int instance_num = 0;
 
-    // Check if there's an existing previous entry
+    // Check if there's an existing previous instance_num entry
     // If so, iterate +1 over the last instance_num
     try {
         cout << "Reaching out to db: " << endl;
@@ -109,8 +108,6 @@ int main() {
             instance_num_str >> instance_num;
             ++instance_num;
         }
-        cout << "Test: " << r[0][1].c_str() << endl;
-
 
     } catch (const std::exception &e) {
 
