@@ -6,7 +6,7 @@
      exit 0
  fi
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+SCRIPT_DIR=`dirname $0`
 
 sudo mkdir $SCRIPT_DIR/file_exports
 
