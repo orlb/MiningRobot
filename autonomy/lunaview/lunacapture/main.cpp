@@ -41,8 +41,10 @@ double round_decimal(double x)
 const string& db_conn_err_msg = "Connection to the database is lost.";
 
 int main() {
-    int sleep_ms = 500; // time in milliseconds between database writes (small = bigger database but better data resolution)
-    //int sleep_ms = 30; // high resolution mode
+    //int sleep_ms = 500; // time in milliseconds between database writes (small = bigger database but better data resolution)
+    int sleep_ms = 30; // high resolution mode
+    
+    int verbose=10; // <- print this many demo values
     
     // Set variables to obtain database password
     std::ifstream file_dbpass (".dbpass");
@@ -167,12 +169,12 @@ int main() {
             last=cur;
 
             // Capture drive encoder change data
-            output_json["drive_encoder_left"]   = change.left;
-            output_json["drive_encoder_right"]  = change.right;
+            output_json["drive_encoder_left"]   = round_decimal(change.left);
+            output_json["drive_encoder_right"]  = round_decimal(change.right);
 
             // Output tool vibration on each axis (in m/s^2)
-            output_json["tool_vibe"]  = length(nano.slot_A1.state.tool.vibe);
-            output_json["frame_vibe"]  = length(nano.slot_F1.state.frame.vibe);
+            output_json["tool_vibe"]  = round_decimal(length(nano.slot_A1.state.tool.vibe));
+            output_json["frame_vibe"]  = round_decimal(length(nano.slot_F1.state.frame.vibe));
             
             // Output load cell loads (in kgf)
             output_json["load_dump"] = round_decimal(nano.slot_F1.state.load_R);
@@ -213,15 +215,18 @@ int main() {
             // The state.loc variables represent an estimate of location
             // Values are of type float
             // Variables (x, y) are in meters
-            output_json["loc_x"]          = state.loc.x;
-            output_json["loc_y"]          = state.loc.y;
+            output_json["loc_x"]          = round_decimal(state.loc.x);
+            output_json["loc_y"]          = round_decimal(state.loc.y);
             // Variable (angle) is in degrees
             output_json["loc_angle"]      = round_decimal(state.loc.angle);
 
             // Test that json is formatted properly:
-            cout << output_json.dump() << endl;
-            cout << endl;
-
+            if (verbose>0)
+            {
+                cout << output_json.dump() << endl;
+                cout << endl;
+                verbose--;
+            }
 
             stringstream output_assembled;
             output_assembled << "INSERT INTO test_conn ";
