@@ -175,8 +175,8 @@ int main() {
             output_json["frame_vibe"]  = length(nano.slot_F1.state.frame.vibe);
             
             // Output load cell loads (in kgf)
-            output_json["load_dump"] = round_decimal(nano.slot_F1.state.load_L);
-            output_json["load_tool"] = round_decimal(nano.slot_A1.state.load_L);
+            output_json["load_dump"] = round_decimal(nano.slot_F1.state.load_R);
+            output_json["load_tool"] = round_decimal(nano.slot_A1.state.load_R);
 
             // List of joint angles, in sequential order, from base to furthest point of arm
             // Vars are all of type float, units degrees
