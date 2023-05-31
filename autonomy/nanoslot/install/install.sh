@@ -13,10 +13,10 @@ cd `dirname "$0"`
 dir=`realpath ..`
 (
 cd /nanoslot
-touch log
+sudo touch log
 sudo chown robot log
-ln -s "$dir"/install/nanoslot.sh .
-ln -s "$dir" dir
+sudo ln -s "$dir"/install/nanoslot.sh .
+sudo ln -s "$dir" dir
 )
 
 sudo cp 90-nanoslot.rules /etc/udev/rules.d

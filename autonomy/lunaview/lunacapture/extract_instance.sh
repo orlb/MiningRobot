@@ -6,25 +6,24 @@
      exit 0
  fi
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+INSTANCE="$1"
+SCRIPT_DIR=`dirname "$0"`
 
-sudo mkdir $SCRIPT_DIR/file_exports
+DESTDIR="$SCRIPT_DIR/file_exports"
+mkdir -p "$DESTDIR"
+chmod 777 "$DESTDIR"
+DEST="$DESTDIR/$INSTANCE.csv"
 
 sudo -su postgres << EOF
 
 psql << SQL
 
 \c test_cpp
-\COPY (SELECT * FROM test_conn WHERE instance_num = $1) TO '/tmp/$1.csv' WITH DELIMITER ',' CSV HEADER
+\COPY (SELECT * FROM test_conn WHERE instance_num = $INSTANCE) TO '$DEST' WITH DELIMITER ',' CSV HEADER
 
 SQL
 
 EOF
 
-sudo mv /tmp/$1.csv $SCRIPT_DIR/file_exports/
-
-if test -f $SCRIPT_DIR/file_exports/$1.csv; then
-    echo "Exported instance number $1 to ./file_exports/$1.csv"
-else
-    echo "Export failed."
-fi
+if test -f "$DEST"; then
+    echo "Exported instance number $INSTANCE to $DEST"
