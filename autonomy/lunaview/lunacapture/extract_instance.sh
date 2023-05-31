@@ -25,4 +25,6 @@ sudo mv /tmp/$1.csv $SCRIPT_DIR/file_exports/
 
 if test -f $SCRIPT_DIR/file_exports/$1.csv; then
     echo "Exported instance number $1 to ./file_exports/$1.csv"
+else
+    echo "Export failed."
 fi
