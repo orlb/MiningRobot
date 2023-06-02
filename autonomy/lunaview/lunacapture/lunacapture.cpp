@@ -16,15 +16,16 @@ using std::endl;
 using std::ofstream;
 using std::to_string;
 
+// To Do: Return as uint64_t
 // Capture current epoch time
-uint capture_epoch() {
+uint64_t capture_epoch() {
 
     // Capture current time
     const auto timestamp           = std::chrono::high_resolution_clock::now();
     const auto epoch_time          = std::chrono::duration_cast<std::chrono::milliseconds>(timestamp.time_since_epoch());
 
     // Convert to uint
-    uint result = epoch_time.count();
+    uint64_t result = epoch_time.count();
 
     return result;
 }

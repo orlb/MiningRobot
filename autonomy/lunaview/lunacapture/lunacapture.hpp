@@ -28,7 +28,7 @@ using std::ofstream;
 using std::to_string;
 
 // Capture the current time and return in string format
-uint capture_epoch();
+uint64_t capture_epoch();
 
 // Find and replace within string (function copied from stackoverflow: https://tinyurl.com/48fvpu6n via Czarek Tomcza)
 std::string ReplaceString(std::string subject, const std::string& search, const std::string& replace);
