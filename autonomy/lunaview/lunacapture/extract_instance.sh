@@ -1,5 +1,5 @@
 #!/bin/sh
-# Create (or update) the postgres database used to store robot data.
+# Extract data from the database according to a provided instance number.
 
  if [ -z "$*" ] ; then
      echo "Please provide the instance number that you wish to export as a commandline argument\nFor example: ./extract_instance.sh 1"
