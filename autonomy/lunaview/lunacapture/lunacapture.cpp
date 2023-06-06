@@ -1,3 +1,5 @@
+#include "lunacapture.hpp"	// Include lunacapture header file
+
 #include <chrono>               // system_clock::time_point(), system_clock::now()
 #include <string>               // string()
 #include <sstream>              // stringstream()
@@ -6,7 +8,6 @@
 #include <iomanip>              // setprecision
 #include <cmath>                // round()
 
-#include "lunacapture.hpp"	// Include lunacapture header file
 
 using std::string;
 using std::istringstream;

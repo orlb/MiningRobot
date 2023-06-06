@@ -3,8 +3,11 @@
 
  Original by Bryan Beus, 2023-04 (Public Domain)
 */
+
 #include "aurora/lunatic.h"
 #include "nlohmann/json.hpp"    // json input/output
+#include "lunacapture.hpp"
+
 #include <string>               // string()
 #include <sstream>              // stringstream()
 #include <ctime>                // put_time(), locattime()
@@ -13,8 +16,6 @@
 #include <iomanip>              // setprecision
 #include <cmath>                // round()
 #include <fstream>              // ifstream()
-
-#include "lunacapture.hpp"
 
 using std::string;
 using std::istringstream;
