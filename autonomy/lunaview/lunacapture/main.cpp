@@ -4,28 +4,11 @@
  Original by Bryan Beus, 2023-04 (Public Domain)
 */
 
-#include "aurora/lunatic.h"
+#include "aurora/lunatic.h"     // aurora header file
+#include "lunacapture.hpp"      // lunacapture header file
 #include "nlohmann/json.hpp"    // json input/output
-#include "lunacapture.hpp"
 
-#include <string>               // string()
-#include <sstream>              // stringstream()
-#include <ctime>                // put_time(), locattime()
-#include <iostream>             // cout, cin, endl
 #include <pqxx/pqxx>            // postgresql database library
-#include <iomanip>              // setprecision
-#include <cmath>                // round()
-#include <fstream>              // ifstream()
-
-using std::string;
-using std::istringstream;
-using std::stringstream;
-using std::cin;
-using std::cout;
-using std::endl;
-using std::ofstream;
-using std::to_string;
-using std::ifstream;
 
 using json = nlohmann::json;
 

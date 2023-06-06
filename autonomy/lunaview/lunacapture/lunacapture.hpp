@@ -18,6 +18,7 @@
 #include <iostream>             // cout, cin, endl
 #include <iomanip>              // setprecision
 #include <cmath>                // round()
+#include <fstream>              // ifstream()
 
 using std::string;
 using std::istringstream;
@@ -27,6 +28,7 @@ using std::cout;
 using std::endl;
 using std::ofstream;
 using std::to_string;
+using std::ifstream;
 
 // Capture the current time and return in string format
 uint64_t capture_epoch();
