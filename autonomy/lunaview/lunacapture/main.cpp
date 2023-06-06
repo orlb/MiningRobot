@@ -54,6 +54,9 @@ int main() {
                 id SERIAL NOT NULL PRIMARY KEY, \
                 instance_num INT NOT NULL, \
                 robot_json JSON NOT NULL, \
+                power_stick FLOAT NOT NULL, \
+                stick FLOAT NOT NULL, \
+                load_tool FLOAT NOT NULL, \
                 created_at TIMESTAMP NOT NULL DEFAULT NOW()\
                 );"
             );
@@ -125,6 +128,8 @@ int main() {
 
             // Capture epoch time
             output_json["epoch_time"]   = capture_epoch();
+
+            uint64_t epoch_time = capture_epoch();
 
             // Update the backend data
             state = exchange_backend_state.read();
