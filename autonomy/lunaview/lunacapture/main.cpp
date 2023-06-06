@@ -5,7 +5,6 @@
 */
 #include "aurora/lunatic.h"
 #include "nlohmann/json.hpp"    // json input/output
-#include <chrono>               // system_clock::time_point(), system_clock::now()
 #include <string>               // string()
 #include <sstream>              // stringstream()
 #include <ctime>                // put_time(), locattime()
@@ -14,7 +13,6 @@
 #include <iomanip>              // setprecision
 #include <cmath>                // round()
 #include <fstream>              // ifstream()
-#include <typeinfo>             // typeid()
 
 #include "lunacapture.hpp"
 
@@ -102,11 +100,8 @@ int main() {
     // Check if there's an existing previous instance_num entry
     // If so, iterate +1 over the last instance_num
     try {
-        cout << "Reaching out to db: " << endl;
         pqxx::work w(psql_conn);
         pqxx::result r = w.exec("SELECT * FROM test_conn ORDER BY created_at DESC LIMIT 1;");
-
-        cout << "Reached" << endl;
 
         // Test, if there is data in the returned result, then iterate
         // If not, then keep the instance_num at 0
