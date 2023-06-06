@@ -6,21 +6,16 @@
 
 #include "aurora/lunatic.h"     // aurora header file
 #include "lunacapture.hpp"      // lunacapture header file
-#include "nlohmann/json.hpp"    // json input/output
-
-#include <pqxx/pqxx>            // postgresql database library
-
-using json = nlohmann::json;
-
-// Error message for loss of a previously established database connection
-const string& db_conn_err_msg = "Connection to the database is lost.";
 
 int main() {
     //int sleep_ms = 500; // time in milliseconds between database writes (small = bigger database but better data resolution)
     int sleep_ms = 30; // high resolution mode
     
     int verbose=10; // <- print this many demo values
-    
+
+    // Error message for loss of a previously established database connection
+    const string& db_conn_err_msg = "Connection to the database is lost.";
+
     // Set variables to obtain database password
     std::ifstream file_dbpass (".dbpass");
     std::string dbpass;

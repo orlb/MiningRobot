@@ -20,6 +20,11 @@
 #include <cmath>                // round()
 #include <fstream>              // ifstream()
 
+#include <pqxx/pqxx>            // postgresql database library
+#include "nlohmann/json.hpp"    // json input/output
+
+using json = nlohmann::json;
+
 using std::string;
 using std::istringstream;
 using std::stringstream;
