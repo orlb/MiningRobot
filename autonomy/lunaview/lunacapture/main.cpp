@@ -30,13 +30,6 @@ using std::ifstream;
 
 using json = nlohmann::json;
 
-// Round this value to two decimal places
-double round_decimal(double x) 
-{
-    return std::round(x * 100) / 100;
-}
-
-
 // Error message for loss of a previously established database connection
 const string& db_conn_err_msg = "Connection to the database is lost.";
 

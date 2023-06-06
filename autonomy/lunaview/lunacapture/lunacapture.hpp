@@ -17,6 +17,7 @@
 #include <ctime>                // put_time(), locattime()
 #include <iostream>             // cout, cin, endl
 #include <iomanip>              // setprecision
+#include <cmath>                // round()
 
 using std::string;
 using std::istringstream;
@@ -32,5 +33,7 @@ uint64_t capture_epoch();
 
 // Find and replace within string (function copied from stackoverflow: https://tinyurl.com/48fvpu6n via Czarek Tomcza)
 std::string ReplaceString(std::string subject, const std::string& search, const std::string& replace);
+
+double round_decimal(double x);
 
 #endif

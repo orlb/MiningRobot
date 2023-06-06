@@ -4,6 +4,7 @@
 #include <ctime>                // put_time(), locattime()
 #include <iostream>             // cout, cin, endl
 #include <iomanip>              // setprecision
+#include <cmath>                // round()
 
 #include "lunacapture.hpp"	// Include lunacapture header file
 
@@ -46,22 +47,8 @@ std::string ReplaceString(std::string subject, const std::string& search, const 
 
 }
 
-// TO DO: Debug these functions
-// // Prepare pqxx transactions
-// void prepare_transactions(pqxx::connection &psql_conn) {
-//     
-//     // Prepare statement to insert data into table
-//     psql_conn.prepare(
-//             "insert_data",
-//             "INSERT INTO $1 ( $2 ) VALUES ( '$3'::json );"
-//     );
-// 
-// };
-
-// TO DO: Debug function
-// // Execute insert json data
-// pqxx::result execute_insert(pqxx::transaction_base &t, std::string table_name, std::string col_name, std::string json_data) {
-// 
-//     return t.exec_prepared("insert_data", table_name, col_name, json_data);
-// 
-// }
+// Round this value to two decimal places
+double round_decimal(double x)
+{
+    return std::round(x * 100) / 100;
+}
