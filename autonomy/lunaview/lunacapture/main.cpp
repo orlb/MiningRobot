@@ -11,7 +11,8 @@ int main() {
     //int sleep_ms = 500; // time in milliseconds between database writes (small = bigger database but better data resolution)
     int sleep_ms = 30; // high resolution mode
     
-    int verbose=10; // <- print this many demo values
+    // Print this many demo values
+    int verbose=10; 
 
     // Error message for loss of a previously established database connection
     const string& db_conn_err_msg = "Connection to the database is lost.";
