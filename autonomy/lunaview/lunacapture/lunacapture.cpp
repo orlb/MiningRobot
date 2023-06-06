@@ -1,24 +1,5 @@
 #include "lunacapture.hpp"	// Include lunacapture header file
 
-#include <chrono>               // system_clock::time_point(), system_clock::now()
-#include <string>               // string()
-#include <sstream>              // stringstream()
-#include <ctime>                // put_time(), locattime()
-#include <iostream>             // cout, cin, endl
-#include <iomanip>              // setprecision
-#include <cmath>                // round()
-
-
-using std::string;
-using std::istringstream;
-using std::stringstream;
-using std::cin;
-using std::cout;
-using std::endl;
-using std::ofstream;
-using std::to_string;
-
-// To Do: Return as uint64_t
 // Capture current epoch time
 uint64_t capture_epoch() {
 
