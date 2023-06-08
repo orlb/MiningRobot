@@ -8,7 +8,8 @@
 #include "lunacapture.hpp"      // lunacapture header file
 
 int main() {
-    //int sleep_ms = 500; // time in milliseconds between database writes (small = bigger database but better data resolution)
+    // time in milliseconds between database writes (small = bigger database but better data resolution)
+    // int sleep_ms = 500; // Normal resolution mode
     int sleep_ms = 30; // high resolution mode
     
     // Print this many demo values
@@ -25,6 +26,8 @@ int main() {
     if (file_dbpass.is_open()) {
         file_dbpass >> dbpass;
     }
+
+    file_dbpass.close();
 
     // Establish connection to postgresql database
     pqxx::connection psql_conn(" \
@@ -51,10 +54,36 @@ int main() {
 
             w.exec("\
                 CREATE TABLE IF NOT EXISTS test_conn ( \
-                id SERIAL NOT NULL PRIMARY KEY, \
-                instance_num INT NOT NULL, \
-                robot_json JSON NOT NULL, \
-                created_at TIMESTAMP NOT NULL DEFAULT NOW()\
+                    id SERIAL NOT NULL PRIMARY KEY, \
+                    instance_num INT NOT NULL, \
+                    epoch_time BIGINT NOT NULL, \
+                    robot_json JSON NOT NULL, \
+                    drive_encoder_left FLOAT NOT NULL, \
+                    drive_encoder_right FLOAT NOT NULL, \
+                    tool_vibe FLOAT NOT NULL, \
+                    frame_vibe FLOAT NOT NULL, \
+                    load_dump FLOAT NOT NULL, \
+                    load_tool FLOAT NOT NULL, \
+                    fork FLOAT NOT NULL, \
+                    dump FLOAT NOT NULL, \
+                    boom FLOAT NOT NULL, \
+                    stick FLOAT NOT NULL, \
+                    tilt FLOAT NOT NULL, \
+                    spin FLOAT NOT NULL, \
+                    power_left FLOAT NOT NULL, \
+                    power_right FLOAT NOT NULL, \
+                    power_fork FLOAT NOT NULL, \
+                    power_dump FLOAT NOT NULL, \
+                    power_boom FLOAT NOT NULL, \
+                    power_stick FLOAT NOT NULL, \
+                    power_tilt FLOAT NOT NULL, \
+                    power_spin FLOAT NOT NULL, \
+                    power_tool FLOAT NOT NULL, \
+                    state_state INT NOT NULL, \
+                    loc_x FLOAT NOT NULL, \
+                    loc_y FLOAT NOT NULL, \
+                    loc_angle FLOAT NOT NULL, \
+                    created_at TIMESTAMP NOT NULL DEFAULT NOW()\
                 );"
             );
 
@@ -83,8 +112,8 @@ int main() {
         pqxx::work w(psql_conn);
         pqxx::result r = w.exec("SELECT * FROM test_conn ORDER BY created_at DESC LIMIT 1;");
 
-        // Test, if there is data in the returned result, then iterate
-        // If not, then keep the instance_num at 0
+        // Test if there is data in the returned result, then increase value by 1
+        // If there is no data, then keep the instance_num at 0
         if (!r.empty()) {
             stringstream instance_num_str;
             instance_num_str << r[0][1].c_str();
@@ -113,6 +142,7 @@ int main() {
     MAKE_exchange_backend_state();
     aurora::backend_state state;
 
+    // Initialize data capture for nanoslot
     MAKE_exchange_nanoslot();
     nanoslot_exchange nano;
 
@@ -120,11 +150,10 @@ int main() {
 
         if (exchange_backend_state.updated() || exchange_nanoslot.updated())
         {
-            // Craft the json output
+            // Craft JSON output
             json output_json;
 
-            // Capture epoch time
-            output_json["epoch_time"]   = capture_epoch();
+            output_json["sample_title"] = "sample goes here";
 
             // Update the backend data
             state = exchange_backend_state.read();
@@ -136,58 +165,6 @@ int main() {
             aurora::drive_encoders change   =   cur - last;
             last=cur;
 
-            // Capture drive encoder change data
-            output_json["drive_encoder_left"]   = round_decimal(change.left);
-            output_json["drive_encoder_right"]  = round_decimal(change.right);
-
-            // Output tool vibration on each axis (in m/s^2)
-            output_json["tool_vibe"]  = round_decimal(length(nano.slot_A1.state.tool.vibe));
-            output_json["frame_vibe"]  = round_decimal(length(nano.slot_F1.state.frame.vibe));
-            
-            // Output load cell loads (in kgf)
-            output_json["load_dump"] = round_decimal(nano.slot_F1.state.load_R);
-            output_json["load_tool"] = round_decimal(nano.slot_A1.state.load_R);
-
-            // List of joint angles, in sequential order, from base to furthest point of arm
-            // Vars are all of type float, units degrees
-            // These are all angles reconstructed from the inertial measurement units (IMUs)
-            output_json["fork"]  = round_decimal(state.joint.angle.fork);
-            output_json["dump"]  = round_decimal(state.joint.angle.dump);
-            output_json["boom"]  = round_decimal(state.joint.angle.boom);
-            output_json["stick"] = round_decimal(state.joint.angle.stick);
-            output_json["tilt"]  = round_decimal(state.joint.angle.tilt);
-            output_json["spin"]  = round_decimal(state.joint.angle.spin);
-
-            // This is the power being sent to the motor, not necessarily position
-            // Vars are all of type float
-            // Values run from -1 to +1, and indicate full backward to full forward
-            // The first two indicate power to the drive motors
-            output_json["power_left"]     = round_decimal(state.power.left);
-            output_json["power_right"]    = round_decimal(state.power.right);
-            // These variables indicate power to the joints
-            output_json["power_fork"]     = round_decimal(state.power.fork);
-            output_json["power_dump"]     = round_decimal(state.power.dump);
-            output_json["power_boom"]     = round_decimal(state.power.boom);
-            output_json["power_stick"]    = round_decimal(state.power.stick);
-            output_json["power_tilt"]     = round_decimal(state.power.tilt);
-            output_json["power_spin"]     = round_decimal(state.power.spin);
-            // This var represents power level sent to tool
-            output_json["power_tool"]     = round_decimal(state.power.tool);
-
-            // The state.state variable is one int
-            output_json["state_state"]     = state.state;
-
-            // state.sensor is obsolete and therefore currently omitted
-            // Later will include info such as battery voltage
-
-            // The state.loc variables represent an estimate of location
-            // Values are of type float
-            // Variables (x, y) are in meters
-            output_json["loc_x"]          = round_decimal(state.loc.x);
-            output_json["loc_y"]          = round_decimal(state.loc.y);
-            // Variable (angle) is in degrees
-            output_json["loc_angle"]      = round_decimal(state.loc.angle);
-
             // Test that json is formatted properly:
             if (verbose>0)
             {
@@ -196,14 +173,98 @@ int main() {
                 verbose--;
             }
 
+            // Obtain database columns
+            std::ifstream file_data_columns ("data_columns.txt");
+            std::string data_columns;
+
+            // Obtain database password
+            if (!file_data_columns.is_open()) {
+                cout << "Failed to read from file data_columns.txt" << endl;
+                return 0;
+            }
+
+            string curr_line;
+            while (getline  (file_data_columns, curr_line) ) {
+                data_columns = data_columns + curr_line;
+            }
+
+            file_data_columns.close();
+
             stringstream output_assembled;
-            output_assembled << "INSERT INTO test_conn ";
-            output_assembled << " ( instance_num, robot_json )  VALUES  ( ";
-            output_assembled << instance_num << ", '"; 
-            output_assembled << output_json.dump();
-            output_assembled << "');";
+            output_assembled << "INSERT INTO test_conn ( " << data_columns << " )";
+            output_assembled << " VALUES  ( ";
+
+            // Insert instance_num
+            output_assembled << instance_num << ", ";                                        //  instance_num
+
+            // Capture epoch time
+            output_assembled << capture_epoch() << ", ";                                            //  epoch_time
+
+            // Insert json output
+            output_assembled << "'" << output_json.dump() << "', ";                         //  robot_json
+
+            // Capture drive encoder change data
+            output_assembled << round_decimal(change.left) << ", ";                                 //  drive_encoder_left
+            output_assembled << round_decimal(change.right) << ", ";                                //  drive_encoder_right
+
+            // Output tool vibration on each axis (in m/s^2)
+            output_assembled << round_decimal(length(nano.slot_A1.state.tool.vibe)) << ", ";        //  tool_vibe
+            output_assembled << round_decimal(length(nano.slot_F1.state.frame.vibe)) << ", ";       //  frame_vibe
+
+            // Output load cell loads (in kgf)
+            output_assembled << round_decimal(nano.slot_F1.state.load_R) << ", ";                   //  load_dump
+            output_assembled << round_decimal(nano.slot_A1.state.load_R) << ", ";                   //  load_tool
+
+            // List of joint angles, in sequential order, from base to furthest point of arm
+            // Vars are all of type float, units degrees
+            // These are all angles reconstructed from the inertial measurement units (IMUs)
+            output_assembled << round_decimal(state.joint.angle.fork) << ", ";                      //  fork,
+            output_assembled << round_decimal(state.joint.angle.dump) << ", ";                      //  dump
+            output_assembled << round_decimal(state.joint.angle.boom) << ", ";                      //  boom
+            output_assembled << round_decimal(state.joint.angle.stick) << ", ";                     //  stick
+            output_assembled << round_decimal(state.joint.angle.tilt) << ", ";                      //  tilt
+            output_assembled << round_decimal(state.joint.angle.spin) << ", ";                      //  spin
+
+            // This is the power being sent to the motor, not necessarily position
+            // Vars are all of type float
+            // Values run from -1 to +1, and indicate full backward to full forward
+            // The first two indicate power to the drive motors
+            output_assembled << round_decimal(state.power.left) << ", ";                            //  power_left
+            output_assembled << round_decimal(state.power.right) << ", ";                           //  power_right
+
+            // These variables indicate power to the joints
+            output_assembled << round_decimal(state.power.fork) << ", ";                            //  power_fork
+            output_assembled << round_decimal(state.power.dump) << ", ";                            //  power_dump
+            output_assembled << round_decimal(state.power.boom) << ", ";                            //  power_boom
+            output_assembled << round_decimal(state.power.stick) << ", ";                           //  power_stick
+            output_assembled << round_decimal(state.power.tilt) << ", ";                            //  power_tilt
+            output_assembled << round_decimal(state.power.spin) << ", ";                            //  power_spin
+
+            // This var represents power level sent to tool
+            output_assembled << round_decimal(state.power.tool) << ", ";                            //  power_tool
+
+            // The state.state variable is one int
+            output_assembled << state.state << ", ";                                                //  state_state
+
+            // state.sensor is obsolete and therefore currently omitted
+            // Later will include info such as battery voltage
+
+            // The state.loc variables represent an estimate of location
+            // Values are of type float
+            // Variables (x, y) are in meters
+            output_assembled << round_decimal(state.loc.x) << ", ";                                 //  loc_x
+            output_assembled << round_decimal(state.loc.y) << ", ";                                 //  loc_y
+
+            // Variable (angle) is in degrees
+            output_assembled << round_decimal(state.loc.angle) << " ";                             //  loc_angle
+            
+            output_assembled << ")";
 
             string output = output_assembled.str();
+
+            if (verbose > 0) {
+                cout << output << endl;
+            }
 
             try {
 

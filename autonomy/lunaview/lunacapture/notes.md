@@ -34,3 +34,14 @@ from '/tmp/12.csv'
 DELIMITER ','
 CSV HEADER;
 ```
+
+2023-06-08 How to DROP TABLE when a process has locked it
+=========================================================
+```
+SELECT pid
+  FROM pg_locks l
+  JOIN pg_class t ON l.relation = t.oid AND t.relkind = 'r'
+ WHERE t.relname = 'test_conn';
+ ```
+
+ Then at normal user terminal, issue `sudo kill <insert pid>` for every pid.
