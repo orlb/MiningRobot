@@ -27,6 +27,8 @@ int main() {
         file_dbpass >> dbpass;
     }
 
+    file_dbpass.close();
+
     // Establish connection to postgresql database
     pqxx::connection psql_conn(" \
         dbname=test_cpp \
@@ -171,37 +173,25 @@ int main() {
                 verbose--;
             }
 
+            // Obtain database columns
+            std::ifstream file_data_columns ("data_columns.txt");
+            std::string data_columns;
+
+            // Obtain database password
+            if (!file_data_columns.is_open()) {
+                cout << "Failed to read from file data_columns.txt" << endl;
+                return 0;
+            }
+
+            string curr_line;
+            while (getline  (file_data_columns, curr_line) ) {
+                data_columns = data_columns + curr_line;
+            }
+
+            file_data_columns.close();
+
             stringstream output_assembled;
-            output_assembled << "INSERT INTO test_conn ( \
-                    instance_num, \
-                    epoch_time, \
-                    robot_json, \
-                    drive_encoder_left, \
-                    drive_encoder_right, \
-                    tool_vibe, \
-                    frame_vibe, \
-                    load_dump, \
-                    load_tool, \
-                    fork, \
-                    dump, \
-                    boom, \
-                    stick, \
-                    tilt, \
-                    spin, \
-                    power_left, \
-                    power_right, \
-                    power_fork, \
-                    power_dump, \
-                    power_boom, \
-                    power_stick, \
-                    power_tilt, \
-                    power_spin, \
-                    power_tool, \
-                    state_state, \
-                    loc_x, \
-                    loc_y, \
-                    loc_angle \
-                )";
+            output_assembled << "INSERT INTO test_conn ( " << data_columns << " )";
             output_assembled << " VALUES  ( ";
 
             // Insert instance_num
@@ -266,9 +256,9 @@ int main() {
             output_assembled << round_decimal(state.loc.y) << ", ";                                 //  loc_y
 
             // Variable (angle) is in degrees
-            output_assembled << round_decimal(state.loc.angle) << ", ";                             //  loc_angle
+            output_assembled << round_decimal(state.loc.angle) << " ";                             //  loc_angle
             
-            output_assembled << " )";
+            output_assembled << ")";
 
             string output = output_assembled.str();
 
@@ -276,21 +266,21 @@ int main() {
                 cout << output << endl;
             }
 
-            // try {
+            try {
 
-            //     pqxx::work w(psql_conn);
+                pqxx::work w(psql_conn);
 
-            //     w.exec(output);
+                w.exec(output);
 
-            //     w.commit();
+                w.commit();
 
-            // } catch (const std::exception& e) {
+            } catch (const std::exception& e) {
 
-            //     cout << e.what() << endl;
+                cout << e.what() << endl;
 
-            //     return 0;
+                return 0;
 
-            // }
+            }
 
         }
         
