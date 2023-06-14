@@ -38,7 +38,7 @@ int main(int argc,char **argv)
                 float filter=filter_old*(1.0f-filter_percent)+cell1*filter_percent;
                 filter_old=filter;
                 
-                const float bias=0.0; // Arduino analogRead voltage offset
+                const float bias=0.32; // Arduino analogRead voltage offset
                 comm.my_state.cell=filter-bias;
                 
                 const float cell80=3.32; // cell voltage at 80% state of charge
