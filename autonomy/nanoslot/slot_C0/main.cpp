@@ -12,6 +12,13 @@ int main(int argc,char **argv)
 {
     nanoslot_lunatic comm(&argc,&argv);
     
+    const int delay_ms=20;
+    nanoslot_counter_t last_spin=0;
+    int printcount=0;
+    
+    float filter_old=4.0f; // filtered cell voltage (avoid analogRead noise)
+    float filter_percent=0.01f; // percent of new value to blend in at each step
+    
     while (comm.is_connected) {
         // Receive data from Arduino
         A_packet p;
@@ -20,9 +27,32 @@ int main(int argc,char **argv)
 
             if (comm.got_sensor) 
             {
+                nanoslot_counter_t cur=comm.my_sensor.spincount;
+                nanoslot_counter_t diff = cur - last_spin;
+                comm.my_state.spin = diff * (1.0f / (0.001f * delay_ms));
+                
                 const float voltScale=5.0*(1.0/1023);
-                comm.my_state.load=voltScale*(comm.my_sensor.cell0);
-                comm.my_state.cell=voltScale*(comm.my_sensor.cell1 - comm.my_sensor.cell0);
+                float cell0=voltScale*(comm.my_sensor.cell0);
+                float cell1=voltScale*(comm.my_sensor.cell1);
+                comm.my_state.load=cell0;
+                
+                // Filter out temporal noise
+                float filter=filter_old*(1.0f-filter_percent)+cell1*filter_percent;
+                filter_old=filter;
+                
+                const float bias=0.3; // Arduino analogRead voltage offset
+                comm.my_state.cell=filter-bias; // cell1-cell0;
+                const float cell80=4.02; // cell voltage at 80% state of charge
+                const float cell20=3.73; // cell voltage at 20% state of charge
+                comm.my_state.charge=20.0f+(filter-bias-cell20)*(60.0f/(cell80-cell20));
+                
+                if (printcount--<0) {
+                    printf("   C0 mining: %.2fV filtered, %.2fV cell1, %.2fV cell0, spin %d\n",
+                        filter-bias, cell1-bias, cell0,
+                        (int)cur);
+                    fflush(stdout);
+                    printcount=50;
+                }
             }
             
             if (comm.lunatic_post_packet(p))
@@ -35,7 +65,7 @@ int main(int argc,char **argv)
         }
         
         // Limit this loop speed to this many milliseconds (varies by what's attached)
-        data_exchange_sleep(20);
+        data_exchange_sleep(delay_ms);
     }
     
     return 0;

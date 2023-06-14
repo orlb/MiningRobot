@@ -1,18 +1,30 @@
 /*
- Firmware that runs on robot mining head
+ Firmware that runs on robot rockgrinder mining head
 */
 #define NANOSLOT_MY_ID 0xC0
 #include "nanoslot/firmware.h"
 #include <Servo.h>
 
+const int minePin=3; // mining speed controller PWM pin
 Servo mine;
-const int pwmStop=1000;
-const int pwmFull=1000; 
+const int pwmStop=1000; // microsecond RC PWM width for stop
+const int pwmFull=1000; // microsecond RC PWM difference for full power
+
+const int spinPin=8; 
+const int spinPinVcc=9; 
+const int spinPinGnd=10; 
+int spinLast=0;
 
 void firmware_read_encoders(void)
 {
   my_sensor.heartbeat++;
-  my_sensor.spin = my_command.mine;
+  
+  int spinCur=digitalRead(spinPin);
+  if (spinCur!=spinLast) {
+      my_sensor.spincount++;
+      spinLast = spinCur;
+  }
+
   my_sensor.cell0=analogRead(A7); // JST gnd pin
   my_sensor.cell1=analogRead(A6); // JST first lipo cell
 }
@@ -36,8 +48,13 @@ bool firmware_handle_custom_packet(A_packet_serial &pkt,A_packet &p)
 }
 
 void setup() {
-  pinMode(13,OUTPUT);
-  mine.attach(3); // motor controller command pin hardwired to pin 3
+  pinMode(13,OUTPUT); // blink pin
+  
+  pinMode(spinPin,INPUT_PULLUP); // soft pull-up on spin encoder pin
+  pinMode(spinPinVcc,OUTPUT); digitalWrite(spinPinVcc,HIGH); // soft power for encoder
+  pinMode(spinPinGnd,OUTPUT); digitalWrite(spinPinGnd,LOW);
+  
+  mine.attach(minePin); // motor controller command pin
   nanoslot_firmware_start();
 }
 

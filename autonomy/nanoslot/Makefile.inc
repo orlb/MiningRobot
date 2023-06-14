@@ -1,4 +1,4 @@
-OPTS=-O -g
+OPTS=-O -g -Wall
 CFLAGS=-I../../include -std=c++17 $(OPTS)
 
 all: $(PROG)

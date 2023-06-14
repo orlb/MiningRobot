@@ -39,33 +39,25 @@ public:
     float load_TL, load_TR; ///< load cells on tool: left and right (kgf)
     float load_SL, load_SR; ///< load cells on scoop: left and right (kgf)
     
-	uint32_t battery:10; // raw A/D reading at top of battery stack (voltage = this*5*2000/384)
-	uint32_t bucket:10; // raw A/D value from dump bucket lift encoder
-	uint32_t latency:5; // Arduino control loop latency
+    float cell_M, cell_D; ///< raw voltages on mining and driving battery cells
+    float charge_M, charge_D; ///< percent charge on mining and driving batteries
+    
+    float spin; ///< mining head spin rate in counts/sec
 
-	uint32_t Mstall:1;
-	uint32_t DLstall:1;
-	uint32_t DRstall:1;
-
+    // SUBTLE: these bitfields need to add up to a multiple of 32 bits
 	uint32_t stop:1; ///< EMERGENCY STOP button engaged
-    uint32_t heartbeat:3;
+    uint32_t heartbeat:4;
+    
+    uint32_t Mstall:1;
+    uint32_t DLstall:1;
+    uint32_t DRstall:1;
 
-	uint32_t McountL:8; /// Current milliseconds per encoder tick for mining head left motor (255==stopped)
-	uint32_t McountR:8; /// Encoder tick count for mining head left motor
-
-	uint32_t DL1count:8; /// Encoder tick count for front left drive wheel
-	uint32_t DL2count:8; /// Encoder tick count for back left drive wheel
-	uint32_t DR1count:8; /// Encoder tick count for right drive wheel
-	uint32_t DR2count:8; /// Encoder tick count for back right drive wheel
-
-	int32_t Rcount:16; /// Encoder tick for bag roll motor
-
-	uint32_t limit_top:8;
-	uint32_t limit_bottom:8;
+    uint32_t Mcount:8; /// Raw encoder tick count for mining head
+	uint32_t DLcount:8; /// Raw encoder tick count for left drive wheel
+	uint32_t DRcount:8; /// Raw encoder tick count for right drive wheel
 
 	uint32_t encoder_raw:16;
     uint32_t stall_raw:16;
-    uint32_t pad:16; // round up to 32
 };
 
 /**

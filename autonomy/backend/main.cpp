@@ -67,13 +67,22 @@ void arduino_sensor_read(robot_base &robot)
     robot.sensor.load_SL=nano.slot_F1.state.load_L;
     robot.sensor.load_SR=nano.slot_F1.state.load_R;
     
+    robot.sensor.cell_M = nano.slot_C0.state.cell;
+    robot.sensor.charge_M = nano.slot_C0.state.charge;
+    robot.sensor.cell_D = nano.slot_F0.state.cell;
+    robot.sensor.charge_D = nano.slot_F0.state.charge;
+    
+    robot.sensor.spin = nano.slot_C0.state.spin;
+    robot.sensor.Mcount = nano.slot_C0.sensor.spincount;
+    robot.sensor.Mstall = (0.0==robot.sensor.spin);
+    
     const auto &driveslot = nano.slot_D0;
     int left_wire = 0;
     int right_wire = 1;
-    robot.sensor.DR1count= - driveslot.sensor.counts[right_wire];
+    robot.sensor.DRcount = - driveslot.sensor.counts[right_wire];
     robot.sensor.DRstall =   driveslot.sensor.stall&(1<<right_wire);
     
-    robot.sensor.DL1count=   driveslot.sensor.counts[left_wire];
+    robot.sensor.DLcount =   driveslot.sensor.counts[left_wire];
     robot.sensor.DLstall =   driveslot.sensor.stall&(1<<left_wire);
     
     robot.sensor.heartbeat = driveslot.debug.packet_count;
@@ -360,9 +369,6 @@ public:
   {
     // Zero out the joints until we hear otherwise
     for (int i=0;i<robot_joint_state::count;i++) robot.joint.array[i]=0.0f;
-    
-    robot.sensor.limit_top=1;
-    robot.sensor.limit_bottom=1;
     
     arduino_setup_exchange();
     atexit(arduino_exit_exchange);
@@ -932,12 +938,9 @@ void robot_manager_t::update(void) {
     
   if (simulate_only) { // build fake arduino data
     robot.joint = sim.joint;
-    robot.sensor.McountL=0xff&(int)sim.Mcount;
-    robot.sensor.Rcount=0xffff&(int)sim.Rcount;
-    robot.sensor.DL1count=0xffff&(int)sim.DLcount;
-    robot.sensor.DR1count=0xffff&(int)sim.DRcount;
-    robot.sensor.limit_top=0;
-    robot.sensor.limit_bottom=0;
+    robot.sensor.Mcount=0xff&(int)sim.Mcount;
+    robot.sensor.DLcount=0xffff&(int)sim.DLcount;
+    robot.sensor.DRcount=0xffff&(int)sim.DRcount;
   }
   else { // Send data to/from real arduino
     arduino_sensor_read(robot);
@@ -1010,16 +1013,13 @@ void robot_manager_t::update(void) {
 
 
 
-  // Fake the bucket sensor from the sim (no hardware sensor for now)
-  robot.sensor.bucket=sim.bucket*(950-179)+179;
-
   // some values for the determining location. needed by the localization.
   // FIXME: tune these for real tracks!
   //float fudge=1.06; // fudge factor to make blue printed wheels work mo betta
   //float drivecount2cm=fudge*6*5.0/36; // cm of driving per wheel encoder tick == pegs on drive sprockets, space between sprockets, 36 encoder counts per revolution
   float drivecount2cm = 10.0/40.0;
-  float driveL = fix_wrap256(robot.sensor.DL1count-old_sensor.DL1count)*drivecount2cm;
-  float driveR = fix_wrap256(robot.sensor.DR1count-old_sensor.DR1count)*drivecount2cm;
+  float driveL = fix_wrap256(robot.sensor.DLcount-old_sensor.DLcount)*drivecount2cm;
+  float driveR = fix_wrap256(robot.sensor.DRcount-old_sensor.DRcount)*drivecount2cm;
   
   // Update drive encoders data exchange
   static aurora::drive_encoders::real_t totalL = 0.0; //<- hacky!  Need to total up distance
