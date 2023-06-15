@@ -12,7 +12,7 @@ int main(int argc,char **argv)
 {
     nanoslot_lunatic comm(&argc,&argv);
     
-    const int delay_ms=20;
+    const int delay_ms=30;
     nanoslot_counter_t last_spin=0;
     int printcount=0;
     
@@ -29,6 +29,7 @@ int main(int argc,char **argv)
             {
                 nanoslot_counter_t cur=comm.my_sensor.spincount;
                 nanoslot_counter_t diff = cur - last_spin;
+                last_spin=cur;
                 comm.my_state.spin = diff * (1.0f / (0.001f * delay_ms));
                 
                 const float voltScale=5.0*(1.0/1023);

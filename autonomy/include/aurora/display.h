@@ -390,19 +390,17 @@ void robot_display_text(const robot_base &robot)
 // Output telemetry as text (for log, mostly)
 	glColor3f(1.0,1.0,1.0);
 	
-	robotPrintln("Batteries: mine %.0f%% (%.2fV), drive %.0f%% (%.2fV)\n",
+	robotPrintln("Batteries: mine %.0f%% (%.2fV), drive %.0f%% (%.2fV)",
 	    robot.sensor.charge_M, robot.sensor.cell_M,
 	    robot.sensor.charge_D, robot.sensor.cell_D);
 
-    robotPrintln("Load cells: tool %.1f %.1f  scoop %.1f %.1f (%s)\n",
+    robotPrintln("Load cells: tool %.1f %.1f  scoop %.1f %.1f (%s)",
         robot.sensor.load_TL,robot.sensor.load_TR,
         robot.sensor.load_SL,robot.sensor.load_SR,
         robot.power.read_L?"L":"R");
-/*
-	robotPrintln("Left/Right Mining Motor Counts: %d, %d",robot.sensor.McountL, robot.sensor.McountR);
-	robotPrintln("Track front encoder ticks %d L %d R", robot.sensor.DL1count, robot.sensor.DR1count);
-	robotPrintln("Track back encoder ticks %d L %d R", robot.sensor.DL2count, robot.sensor.DR2count);
-*/
+
+	robotPrintln("Mining rate %.2f (%d)",robot.sensor.spin, robot.sensor.Mcount);
+	robotPrintln("Drive encoder %d L %d R", robot.sensor.DLcount, robot.sensor.DRcount);
 
 	std::string encoder_str("Encoder Raw ");
 	for(int ii=12-1;ii>=0;--ii)
