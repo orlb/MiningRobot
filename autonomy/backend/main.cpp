@@ -370,6 +370,8 @@ public:
     // Zero out the joints until we hear otherwise
     for (int i=0;i<robot_joint_state::count;i++) robot.joint.array[i]=0.0f;
     
+    ui.joystickState = state_backend_driver; // we're the backend
+    
     arduino_setup_exchange();
     atexit(arduino_exit_exchange);
 
