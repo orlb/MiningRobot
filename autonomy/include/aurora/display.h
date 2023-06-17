@@ -390,9 +390,25 @@ void robot_display_text(const robot_base &robot)
 // Output telemetry as text (for log, mostly)
 	glColor3f(1.0,1.0,1.0);
 	
-	robotPrintln("Batteries: mine %.0f%% (%.2fV), drive %.0f%% (%.2fV)",
+	for (int bit=0;bit<robot_sensors_arduino::connected_C0;bit++) {
+	    const static char *nameFromBit[robot_sensors_arduino::connected_C0]=
+	        {"D0","F0","F1","A0","A1"};
+	    bool conn = (robot.sensor.connected>>bit)&1;
+	    if (conn==0) robotPrintln("Missing nanoslot %s",nameFromBit[bit]);
+	}
+	if (0==(robot.sensor.connected & robot_sensors_arduino::connected_C0))
+	{
+        robotPrintln("Tool not connected");
+        robotPrintln("Batteries: - - (-V), drive %.0f%% (%.2fV)",
+	    robot.sensor.charge_D, robot.sensor.cell_D);
+	}
+	else 
+	{
+		robotPrintln("Batteries: mine %.0f%% (%.2fV), drive %.0f%% (%.2fV)",
 	    robot.sensor.charge_M, robot.sensor.cell_M,
 	    robot.sensor.charge_D, robot.sensor.cell_D);
+	}
+	
 
     robotPrintln("Load cells: tool %.1f %.1f  scoop %.1f %.1f (%s)",
         robot.sensor.load_TL,robot.sensor.load_TR,

@@ -90,9 +90,17 @@ void arduino_sensor_read(robot_base &robot)
     robot.sensor.encoder_raw=int(driveslot.sensor.raw);
     robot.sensor.stall_raw=int(driveslot.sensor.stall);
     
+    int connected=0;
+    connected |= ((1&nano.slot_D0.state.connected) << robot_sensors_arduino::connected_D0);
+    connected |= ((1&nano.slot_F0.state.connected) << robot_sensors_arduino::connected_F0);
+    connected |= ((1&nano.slot_F1.state.connected) << robot_sensors_arduino::connected_F1);
+    connected |= ((1&nano.slot_A0.state.connected) << robot_sensors_arduino::connected_A0);
+    connected |= ((1&nano.slot_A1.state.connected) << robot_sensors_arduino::connected_A1);
+    connected |= ((1&nano.slot_C0.state.connected) << robot_sensors_arduino::connected_C0);
+    robot.sensor.connected = 0xFF & connected;
     
     // Copy joint orientations from IMU data
-    //   FIXME: additional sanity checking here, or in slot program?
+    //   FIXME: really need some additional sanity checking here, or in slot program?
     robot.joint.angle.boom=nano.slot_F1.state.boom.pitch;
     robot.joint.angle.stick=nano.slot_A1.state.stick.pitch;
     robot.joint.angle.tilt=nano.slot_A1.state.tool.pitch;

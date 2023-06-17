@@ -56,8 +56,20 @@ public:
 	uint32_t DLcount:8; /// Raw encoder tick count for left drive wheel
 	uint32_t DRcount:8; /// Raw encoder tick count for right drive wheel
 
-	uint32_t encoder_raw:16;
-    uint32_t stall_raw:16;
+	uint32_t encoder_raw:8;
+    uint32_t stall_raw:8;
+    
+    // Bits inside connected:
+    enum {
+        connected_D0=0, // in big rear box
+        connected_F0=1,
+        connected_F1=2, // in micro front box
+        connected_A0=3, // in arm box
+        connected_A1=4, 
+        connected_C0=5 // on tool
+    };
+    uint32_t connected:8;
+    uint32_t pad:8;
 };
 
 /**
