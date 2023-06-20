@@ -41,8 +41,8 @@ int main(int argc,char **argv)
                 const float bias=0.32; // Arduino analogRead voltage offset
                 comm.my_state.cell=filter-bias;
                 
-                const float cell80=3.32; // cell voltage at 80% state of charge
-                const float cell20=3.20; // cell voltage at 20% state of charge
+                const float cell80=3.25; // cell voltage at 80% state of charge
+                const float cell20=2.85; // cell voltage at 20% state of charge (measured)
                 comm.my_state.charge=20.0f+(comm.my_state.cell-cell20)*(60.0f/(cell80-cell20));
                 
                 if (printcount--<0) {
