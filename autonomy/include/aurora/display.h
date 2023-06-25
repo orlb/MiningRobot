@@ -272,13 +272,13 @@ void robot_display_setup(const robot_base &robot) {
 		glClearColor(0.0,0.6,0.9,0.0); // peaceful sky blue-green (safe to approach)
 	}
 	else if (robot.state==state_backend_driver) {
-		glClearColor(0.4,0.4,0.1,0.0); // backend drive: dim yellow
+		glClearColor(0.4,0.3,0.1,0.0); // backend drive: dim yellow
 	}
 	else if (robot.state==state_drive) {
-		glClearColor(0.8,0.8,0.1,0.0); // drive: bright yellow
+		glClearColor(0.4,0.5,0.1,0.0); // drive: yellow
 	}
 	else {
-		glClearColor(0.8,0.1,0.0,0.0); // danger red: full autonomy
+		glClearColor(0.6,0.1,0.0,0.0); // danger red: full autonomy
 	}
 
 	glClear(GL_COLOR_BUFFER_BIT+GL_DEPTH_BUFFER_BIT);

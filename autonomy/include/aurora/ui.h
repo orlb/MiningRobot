@@ -317,6 +317,7 @@ Joysticks have different axis and button numbering:
 		    description += " Low: drive fork-dump ";
 		    forward=ly;
 		    turn=lx;
+		    
 		    fork=ry;
 		    dump=-rx;
 		    break;
@@ -324,12 +325,16 @@ Joysticks have different axis and button numbering:
 		    description += " Med: drive stick-boom ";
 		    forward=ly;
 		    turn=lx;
+		    
 		    stick=ry;
 		    boom=rx;
 		    break;
 	    case joyModeHigh:
-		    description += " High: spin tilt-mine ";
-		    spin=lx;
+		    description += " High: stick-boom tilt-mine ";
+		    
+		    stick=ly;
+		    boom=lx;
+		    
 		    tilt=ry;
 		    tool=rx;
 		    break;
