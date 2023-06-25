@@ -27,6 +27,13 @@
 #define AD_DN2high_voltage ((AD_AREF_voltage)*(11.0)/1024.0)
 
 
+    
+// Possible connected tools
+typedef enum {
+    tool_none=0,
+    tool_rockgrinder=1
+} tool_type;
+
 /** This class contains all the robot's sensors, on Arduino, backend, or front end.
 Raw sensor values go as bitfields, because many of them are 10-bit quantities:
 	- Arduino A/D values are 10 bits each
@@ -66,10 +73,16 @@ public:
         connected_F1=2, // in micro front box
         connected_A0=3, // in arm box
         connected_A1=4, 
-        connected_C0=5 // on tool
+        connected_C0=5 // on rockgrinder tool
     };
     uint32_t connected:8;
     uint32_t pad:8;
+    
+    // Return the tool that is currently connected, or tool_none
+    tool_type connected_tool() const {
+    	if (0!=(connected & (1<<connected_C0))) return tool_rockgrinder;
+    	return tool_none;
+    }
 };
 
 /**

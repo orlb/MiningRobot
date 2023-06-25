@@ -125,7 +125,7 @@ void robot_3D_setup(float Zrot=-90.0f) {
 }
 
 /* Draw robot in this joint state */
-void robot_3D_draw(const robot_joint_state &jointstate,float alpha=1.0)
+void robot_3D_draw(const robot_joint_state &jointstate,tool_type tool=tool_none,float alpha=1.0)
 {
     using namespace aurora;
 
@@ -195,11 +195,14 @@ void robot_3D_draw(const robot_joint_state &jointstate,float alpha=1.0)
             glColor4fv(colorPrint);
             mesh_tool.draw();
 
+	    
             // The held tool
             glColor4fv(colorBox);
-            mesh_grinder.draw();
-            //robot_link_coords::glTransform(link_grinder,jointstate);
-            // draw actual cutting point?
+            if (tool==tool_rockgrinder) {
+                mesh_grinder.draw();
+                //robot_link_coords::glTransform(link_grinder,jointstate);
+                // draw actual cutting point?
+            }
 
             glPopMatrix(); // back to frame coords
 
