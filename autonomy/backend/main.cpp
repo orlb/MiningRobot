@@ -977,7 +977,8 @@ void robot_manager_t::update(void) {
         glRotatef(nano.slot_F1.state.frame.pitch,1,0,0);
         glRotatef(nano.slot_F1.state.frame.roll,0,1,0);
     }
-    robot_3D_draw(robot.joint);
+    tool_type tool=robot.sensor.connected_tool();
+    robot_3D_draw(robot.joint,tool);
     
     // Draw mining depths
     mining=exchange_mining_depth.read();
@@ -996,13 +997,13 @@ void robot_manager_t::update(void) {
         robot_joint_state mine_joint=mine_joint_base;
         if (mp.mine_plan(mine_progress,mine_cut_depth,mine_joint)>=0)
         {
-            robot_3D_draw(mine_joint,0.3f);
+            robot_3D_draw(mine_joint,tool,0.3f);
         }
         mine_progress += 0.001f;
         if (mine_progress>1.0f) mine_progress=0.0f;
     }
     
-    robot_3D_draw(last_joint_target,0.3f);
+    robot_3D_draw(last_joint_target,tool,0.3f);
     
     robot_3D_cleanup();
 
