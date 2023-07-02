@@ -209,8 +209,11 @@ float smooth_Mcount=0.0;
 
 
 /*********** Robot Joint Planning **************/
-// Configuration for weighing scoop
-const robot_joint_state weigh_joint_scoop={0,0, 0,0,0,0};
+// Configuration for weighing scoop: level, with pins aligned vertically
+const robot_joint_state weigh_joint_scoop={0,-20, 0,0,0,0};
+const robot_joint_state dump1_joint_scoop={5,-90, 0,0,0,0};
+const robot_joint_state dump2_joint_scoop={-20,-90, 0,0,0,0};
+const robot_joint_state dump3_joint_scoop={5,-75, 0,0,0,0};
 
 /*********** Mining Path Planning ***************/
 /// Starting configuration during mining
@@ -779,11 +782,9 @@ void robot_manager_t::autonomous_state()
   //Done mining: Raise scoop
   else if (robot.state==state_mine_finish)
   {
-    enter_state(state_drive); // DEBUG
-  /*
+    //enter_state(state_drive); // DEBUG
     if(drive_posture())
       enter_state(state_weigh);
-   */
   }
   
   //Weigh material before leaving pit
@@ -804,7 +805,7 @@ void robot_manager_t::autonomous_state()
         }
         else {
             // Record total weight here
-            float total = robot.sensor.load_SL + robot.sensor.load_SR;
+            float total = -(robot.sensor.load_SL + robot.sensor.load_SR);
             robotPrintln("Total scoop weight: %.2f kgf\n",total);
             
             robot.power.read_L=0;
@@ -828,9 +829,16 @@ void robot_manager_t::autonomous_state()
   // Dump material
   else if (robot.state==state_haul_dump)
   { 
-    // FIXME: do this
-    robot.accum.scoop_total += robot.accum.scoop;
-    enter_state(state_haul_back);
+    if (move_scoop(dump1_joint_scoop)
+     && move_scoop(dump2_joint_scoop) 
+     && move_scoop(dump3_joint_scoop)) 
+    {
+      robot.accum.scoop_total += robot.accum.scoop;
+      robot.accum.scoop = 0.0;
+      robot.accum.drive_total += robot.accum.drive;
+      robot.accum.drive = 0.0;
+      enter_state(state_haul_back);
+    }
   }
   // Drive back into pit
   else if (robot.state==state_haul_back)
@@ -1022,7 +1030,7 @@ void robot_manager_t::update(void) {
 
   // Accumulate drivetrain encoder counts into actual distances
   float fudge=1.0; // fudge factor to make distance equal reality
-  float drivecount2m=fudge*0.88/24; // meters of driving per wheel encoder tick == circumference of wheel divided by encoder ticks per revolution
+  float drivecount2m=fudge*0.96/12; // meters of driving per wheel encoder tick == circumference of wheel divided by encoder ticks per revolution
   float driveL = fix_wrap256(robot.sensor.DLcount-old_sensor.DLcount)*drivecount2m;
   float driveR = fix_wrap256(robot.sensor.DRcount-old_sensor.DRcount)*drivecount2m;
   
@@ -1035,8 +1043,8 @@ void robot_manager_t::update(void) {
   robot.accum.drive += fabs(driveR + driveL)*0.5; // average total drive distance (meters)
   
   // Update drive encoders data exchange
-  static aurora::drive_encoders::real_t totalL = 0.0; //<- hacky!  Need to total up distance
-  static aurora::drive_encoders::real_t totalR = 0.0;
+  static aurora::drive_encoders::real_t totalL = -driveL; //<- hacky!  Need to total up distance
+  static aurora::drive_encoders::real_t totalR = -driveR;
   totalL += driveL;
   totalR += driveR;
   aurora::drive_encoders enc;
