@@ -119,7 +119,7 @@ public:
 
 		float sidepower[2]={0.0,0.0};
 		float sideticks[2]={0.0,0.0};
-		float topspeed=130.0; // <- speed in cm/sec at 100% power (hypothetical!)
+		float topspeed=20.0; // <- drive speed in ticks/sec at 100% power
 		sidepower[0]=power.left;
 		sidepower[1]=power.right;
 
@@ -131,8 +131,8 @@ public:
 				side[s]+=distance*forward();
 			}
 		}
-		DLcount-=sideticks[0]; // <- match flip in wood test platform
-		DRcount+=sideticks[1];
+		DLcount+=fabs(sideticks[0]); //<- non-quadrature encoders always count up
+		DRcount+=fabs(sideticks[1]);
 		
 	// Set robot position and orientation from wheel positions
 		vec2 center=(side[0]+side[1])*0.5;

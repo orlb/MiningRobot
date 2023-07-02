@@ -417,6 +417,9 @@ void robot_display_text(const robot_base &robot)
         robot.sensor.load_TL,robot.sensor.load_TR,
         robot.sensor.load_SL,robot.sensor.load_SR,
         robot.power.read_L?"L":"R");
+	robotPrintln("Accum: scoop %.1f weighed %.0f total, drive %.2f trip %.0f total\n",
+	    robot.accum.scoop, robot.accum.scoop_total,
+	    robot.accum.drive, robot.accum.drive_total);
 
 	robotPrintln("Mining rate %.2f (%d)",robot.sensor.spin, robot.sensor.Mcount);
 	robotPrintln("Drive encoder %d L %d R", robot.sensor.DLcount, robot.sensor.DRcount);

@@ -9,9 +9,11 @@ const char *state_to_string(robot_state_t state)
 	const static char *table[state_last+1]={
 	"STOP", ///< EMERGENCY STOP (no motion)
 	"drive", ///< normal manual driving from frontend
+	"driveraw", ///< normal manual driving, no sanity checking
 	"backend_driver", ///< drive from backend UI
 	
-	"autonomy", ///< Begin fully autonomous operation (mine cycle)
+	"autonomy", ///< Begin fully autonomous operation (mine cycles)
+	"daily_start",  ///< clear accumulated data and start a new day
 	
 	"calibrate", ///< Calibrate internal gyros (stationary)
 	

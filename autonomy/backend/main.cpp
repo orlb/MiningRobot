@@ -79,7 +79,7 @@ void arduino_sensor_read(robot_base &robot)
     const auto &driveslot = nano.slot_D0;
     int left_wire = 0;
     int right_wire = 1;
-    robot.sensor.DRcount = - driveslot.sensor.counts[right_wire];
+    robot.sensor.DRcount =   driveslot.sensor.counts[right_wire];
     robot.sensor.DRstall =   driveslot.sensor.stall&(1<<right_wire);
     
     robot.sensor.DLcount =   driveslot.sensor.counts[left_wire];
@@ -704,6 +704,14 @@ void robot_manager_t::autonomous_state()
   if (robot.state==state_autonomy) {
     enter_state(state_scan);
   }
+  // Clear accumulated data to start a new day
+  else if (robot.state==state_daily_start)
+  {
+    robot.accum.scoop=0;
+    robot.accum.scoop_total=0;
+    robot.accum.drive=0;
+    robot.accum.drive_total=0;
+  }
   
   // scan terrain before mining
   else if (robot.state==state_scan)
@@ -800,6 +808,7 @@ void robot_manager_t::autonomous_state()
             robotPrintln("Total scoop weight: %.2f kgf\n",total);
             
             robot.power.read_L=0;
+            robot.accum.scoop=total;
             
             //enter_state(state_haul_out);
             enter_state(state_drive); // stop
@@ -820,6 +829,7 @@ void robot_manager_t::autonomous_state()
   else if (robot.state==state_haul_dump)
   { 
     // FIXME: do this
+    robot.accum.scoop_total += robot.accum.scoop;
     enter_state(state_haul_back);
   }
   // Drive back into pit
@@ -907,13 +917,14 @@ void robot_manager_t::update(void) {
       else if (command.command==robot_command::command_power)
       { // manual driving power command
         robotPrintln("Incoming power command: %d bytes",n);
-        if (robot.state==state_drive)
+        if (robot.state==state_drive || robot.state==state_driveraw)
         {
+          // if (robot.state==state_drive) FIXME: sanity-check the frontend drive commands
           robot.power=command.power;
         }
         else
         {
-          robotPrintln("IGNORING POWER: not in drive state\n");
+          robotPrintln("IGNORING frontend power: not in drive state\n");
         }
       }
     } else {
@@ -930,7 +941,7 @@ void robot_manager_t::update(void) {
     robot.power.stop();
     state_start_time=cur_time;
   }
-  else if (robot.state==state_drive)
+  else if (robot.state==state_drive || robot.state==state_driveraw)
   { // do nothing-- already got power command
     state_start_time=cur_time;
   }
@@ -1009,33 +1020,24 @@ void robot_manager_t::update(void) {
 
 
 
-/*
-  if (robot.state==state_mine) 
-  { // TESTING ONLY: keep the front tool level
-    const float gain=5.0;
-    float drive=nano.slot_A1.sensor.imu[0].acc.x;
-    float rate=0.0;
-    float pid = gain*drive + rate;
-    int send=ui.limit(pid,30); //<- calmer driving
-    robot.power.tilt=send;
-    if (fabs(drive)<5) robot.power.stop(); //<- deadband, bigger than noise
-  }
-*/
+  // Accumulate drivetrain encoder counts into actual distances
+  float fudge=1.0; // fudge factor to make distance equal reality
+  float drivecount2m=fudge*0.88/24; // meters of driving per wheel encoder tick == circumference of wheel divided by encoder ticks per revolution
+  float driveL = fix_wrap256(robot.sensor.DLcount-old_sensor.DLcount)*drivecount2m;
+  float driveR = fix_wrap256(robot.sensor.DRcount-old_sensor.DRcount)*drivecount2m;
+  
+  // Flip encoder signs to match last nonzero drive power value
+  static robot_power last_nonzero_power;
+  if (robot.power.left!=0 || robot.power.right!=0) last_nonzero_power=robot.power;
+  if (last_nonzero_power.left<0) driveL=-driveL;
+  if (last_nonzero_power.right<0) driveR=-driveR;
 
-
-
-  // some values for the determining location. needed by the localization.
-  // FIXME: tune these for real tracks!
-  //float fudge=1.06; // fudge factor to make blue printed wheels work mo betta
-  //float drivecount2cm=fudge*6*5.0/36; // cm of driving per wheel encoder tick == pegs on drive sprockets, space between sprockets, 36 encoder counts per revolution
-  float drivecount2cm = 10.0/40.0;
-  float driveL = fix_wrap256(robot.sensor.DLcount-old_sensor.DLcount)*drivecount2cm;
-  float driveR = fix_wrap256(robot.sensor.DRcount-old_sensor.DRcount)*drivecount2cm;
+  robot.accum.drive += fabs(driveR + driveL)*0.5; // average total drive distance (meters)
   
   // Update drive encoders data exchange
   static aurora::drive_encoders::real_t totalL = 0.0; //<- hacky!  Need to total up distance
   static aurora::drive_encoders::real_t totalR = 0.0;
-  totalL -= driveL;
+  totalL += driveL;
   totalR += driveR;
   aurora::drive_encoders enc;
   enc.left =totalL;

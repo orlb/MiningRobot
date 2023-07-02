@@ -159,10 +159,12 @@ public:
 */
 typedef enum {
 	state_STOP=0, ///< EMERGENCY STOP (no motion)
-	state_drive, ///< normal manual driving
+	state_drive, ///< normal manual driving from frontend
+	state_driveraw, ///< normal manual driving, no sanity checking
 	state_backend_driver, ///< drive from backend UI
 
 	state_autonomy, ///< full autonomy start state
+	state_daily_start, ///< clear accumulated data and start a new day
 	
 	state_calibrate, ///< Calibrate internal gyros (stationary)
 	
@@ -184,6 +186,41 @@ typedef enum {
 } robot_state_t;
 const char *state_to_string(robot_state_t state);
 
+/**
+ This tracks the parameters of the current robot state (above).
+ It's crammed into a bitfield because the whole active stack
+ of states gets sent with the telemetry.
+*/
+struct robot_state_params {
+public:
+    uint32_t state:8; ///< state number above (a robot_state_t, but with a defined bit width)
+    uint32_t phase:10; ///< current sub-phase, starting from zero (limit 1000)
+    uint32_t count:10; ///< repetition count, starting from zero (limit 1000)
+
+    uint32_t pad:1; ///< space for future expansion
+    
+    uint32_t pause_resume:1; ///< if 1, we should pause when returning to this state
+    uint32_t pause_finish:1; ///< if 1, we should pause after finishing this state
+    uint32_t valid:1; ///< if 1, this is a valid state
+};
+
+/**
+ This tracks the robot's hierarchical states, such as:
+  [3] state_stop: manual pause of mining run
+  [2] state_mine_stall: recovery during mining run
+  [1] state_mine: one mining run
+  [0] state_autonomy: basic overall autonomous operation
+*/
+struct robot_state_stack {
+public:
+    enum {MAXDEPTH=5}; ///< limit on how many states can be active
+    robot_state_params level[MAXDEPTH]; 
+    uint32_t top_index; ///< Index of top of the stack: the active state
+    
+    // Access the top of the stack:
+    robot_state_params & top() { return level[top_index]; }
+    const robot_state_params & top() const { return level[top_index]; }    
+};
 
 
 /** The angles, in degrees, of each robot joint. 
@@ -204,6 +241,20 @@ union robot_joint_state {
 };
 
 
+/**
+ This tracks accumulated robot performance.
+ The backend does the accumulation.
+*/
+struct robot_accumulated {
+public:
+    float scoop; ///< total mass currently inside front scoop (kg)
+    float scoop_total; ///< total mass hauled (kg)
+
+    float drive; ///< distance driven this trip (m)
+    float drive_total; ///< total distance driven (m)
+};
+
+
 // Everything about the visible computer vision markers / apriltags
 class robot_markers_all {
 public:
@@ -221,10 +272,14 @@ public:
 class robot_base {
 public:
 	robot_state_t state; ///< Current control state
+	robot_state_stack stack; ///< State parameters and parent states
+	
 	robot_joint_state joint; ///< Current joint angles
 	robot_sensors_arduino sensor;  ///< Current hardware sensor values
 	robot_localization loc; ///< Location
-	robot_power power; // Current drive commands
+	robot_power power; ///< Current drive commands
+
+	robot_accumulated accum; ///< Accumulated data
 };
 
 
