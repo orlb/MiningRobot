@@ -83,7 +83,7 @@ int main() {
                     loc_x FLOAT NOT NULL, \
                     loc_y FLOAT NOT NULL, \
                     loc_angle FLOAT NOT NULL, \
-                    created_at TIMESTAMP NOT NULL DEFAULT NOW()\
+                    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()\
                 );"
             );
 
