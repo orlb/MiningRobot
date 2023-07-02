@@ -1,5 +1,10 @@
 /*
  Read robot data from the lunatic data exchange, and write it to a postgres database.
+ 
+ To add new data columns:
+    - Create table with the column and datatype 
+    - Add to data_columns string below
+    - Write the actual data to the SQL query below
 
  Original by Bryan Beus, 2023-04 (Public Domain)
 */
@@ -80,6 +85,14 @@ int main() {
                     power_spin FLOAT NOT NULL, \
                     power_tool FLOAT NOT NULL, \
                     state_state INT NOT NULL, \
+                    cell_mine FLOAT NOT NULL, \
+                    charge_mine FLOAT NOT NULL, \
+                    cell_drive FLOAT NOT NULL, \
+                    charge_drive FLOAT NOT NULL, \
+                    accum_drive FLOAT NOT NULL, \
+                    total_drive FLOAT NOT NULL, \
+                    accum_scoop FLOAT NOT NULL, \
+                    total_scoop FLOAT NOT NULL, \
                     loc_x FLOAT NOT NULL, \
                     loc_y FLOAT NOT NULL, \
                     loc_angle FLOAT NOT NULL, \
@@ -173,22 +186,8 @@ int main() {
                 verbose--;
             }
 
-            // Obtain database columns
-            std::ifstream file_data_columns ("data_columns.txt");
-            std::string data_columns;
-
-            // Obtain database password
-            if (!file_data_columns.is_open()) {
-                cout << "Failed to read from file data_columns.txt" << endl;
-                return 0;
-            }
-
-            string curr_line;
-            while (getline  (file_data_columns, curr_line) ) {
-                data_columns = data_columns + curr_line;
-            }
-
-            file_data_columns.close();
+            // Data columns go into the SQL query
+            const static std::string data_columns = "instance_num, epoch_time, robot_json, drive_encoder_left, drive_encoder_right, tool_vibe, frame_vibe, load_dump, load_tool, fork, dump, boom, stick, tilt, spin, power_left, power_right, power_fork, power_dump, power_boom, power_stick, power_tilt, power_spin, power_tool, state_state, cell_mine, charge_mine, cell_drive,   charge_drive,  accum_drive, total_drive, accum_scoop, total_scoop,  loc_x, loc_y, loc_angle";
 
             stringstream output_assembled;
             output_assembled << "INSERT INTO test_conn ( " << data_columns << " )";
@@ -246,8 +245,17 @@ int main() {
             // The state.state variable is one int
             output_assembled << state.state << ", ";                                                //  state_state
 
-            // state.sensor is obsolete and therefore currently omitted
-            // Later will include info such as battery voltage
+            // Cell voltages (volts) and charge (percent)
+            output_assembled << round_decimal(state.sensor.cell_M) << ", ";                         // cell_mine
+            output_assembled << round_decimal(state.sensor.charge_M) << ", ";                       // charge_mine, 
+            output_assembled << round_decimal(state.sensor.cell_D) << ", ";                         // cell_drive,   
+            output_assembled << round_decimal(state.sensor.charge_D) << ", ";                       // charge_drive,  
+
+            output_assembled << round_decimal(state.accum.drive) << ", ";                           // accum_drive, 
+            output_assembled << round_decimal(state.accum.drive_total) << ", ";                     // total_drive, 
+            output_assembled << round_decimal(state.accum.scoop) << ", ";                           // accum_scoop, 
+            output_assembled << round_decimal(state.accum.scoop_total) << ", ";                     // total_scoop,
+
 
             // The state.loc variables represent an estimate of location
             // Values are of type float
