@@ -67,13 +67,22 @@ void arduino_sensor_read(robot_base &robot)
     robot.sensor.load_SL=nano.slot_F1.state.load_L;
     robot.sensor.load_SR=nano.slot_F1.state.load_R;
     
+    robot.sensor.cell_M = nano.slot_C0.state.cell;
+    robot.sensor.charge_M = nano.slot_C0.state.charge;
+    robot.sensor.cell_D = nano.slot_F0.state.cell;
+    robot.sensor.charge_D = nano.slot_F0.state.charge;
+    
+    robot.sensor.spin = nano.slot_C0.state.spin;
+    robot.sensor.Mcount = nano.slot_C0.sensor.spincount;
+    robot.sensor.Mstall = (0.0==robot.sensor.spin);
+    
     const auto &driveslot = nano.slot_D0;
     int left_wire = 0;
     int right_wire = 1;
-    robot.sensor.DR1count= - driveslot.sensor.counts[right_wire];
+    robot.sensor.DRcount =   driveslot.sensor.counts[right_wire];
     robot.sensor.DRstall =   driveslot.sensor.stall&(1<<right_wire);
     
-    robot.sensor.DL1count=   driveslot.sensor.counts[left_wire];
+    robot.sensor.DLcount =   driveslot.sensor.counts[left_wire];
     robot.sensor.DLstall =   driveslot.sensor.stall&(1<<left_wire);
     
     robot.sensor.heartbeat = driveslot.debug.packet_count;
@@ -81,9 +90,17 @@ void arduino_sensor_read(robot_base &robot)
     robot.sensor.encoder_raw=int(driveslot.sensor.raw);
     robot.sensor.stall_raw=int(driveslot.sensor.stall);
     
+    int connected=0;
+    connected |= ((1&nano.slot_D0.state.connected) << robot_sensors_arduino::connected_D0);
+    connected |= ((1&nano.slot_F0.state.connected) << robot_sensors_arduino::connected_F0);
+    connected |= ((1&nano.slot_F1.state.connected) << robot_sensors_arduino::connected_F1);
+    connected |= ((1&nano.slot_A0.state.connected) << robot_sensors_arduino::connected_A0);
+    connected |= ((1&nano.slot_A1.state.connected) << robot_sensors_arduino::connected_A1);
+    connected |= ((1&nano.slot_C0.state.connected) << robot_sensors_arduino::connected_C0);
+    robot.sensor.connected = 0xFF & connected;
     
     // Copy joint orientations from IMU data
-    //   FIXME: additional sanity checking here, or in slot program?
+    //   FIXME: really need some additional sanity checking here, or in slot program?
     robot.joint.angle.boom=nano.slot_F1.state.boom.pitch;
     robot.joint.angle.stick=nano.slot_A1.state.stick.pitch;
     robot.joint.angle.tilt=nano.slot_A1.state.tool.pitch;
@@ -192,8 +209,11 @@ float smooth_Mcount=0.0;
 
 
 /*********** Robot Joint Planning **************/
-// Configuration for weighing scoop
-const robot_joint_state weigh_joint_scoop={0,0, 0,0,0,0};
+// Configuration for weighing scoop: level, with pins aligned vertically
+const robot_joint_state weigh_joint_scoop={0,-20, 0,0,0,0};
+const robot_joint_state dump1_joint_scoop={5,-90, 0,0,0,0};
+const robot_joint_state dump2_joint_scoop={-20,-90, 0,0,0,0};
+const robot_joint_state dump3_joint_scoop={5,-75, 0,0,0,0};
 
 /*********** Mining Path Planning ***************/
 /// Starting configuration during mining
@@ -361,8 +381,7 @@ public:
     // Zero out the joints until we hear otherwise
     for (int i=0;i<robot_joint_state::count;i++) robot.joint.array[i]=0.0f;
     
-    robot.sensor.limit_top=1;
-    robot.sensor.limit_bottom=1;
+    ui.joystickState = state_backend_driver; // we're the backend
     
     arduino_setup_exchange();
     atexit(arduino_exit_exchange);
@@ -688,6 +707,14 @@ void robot_manager_t::autonomous_state()
   if (robot.state==state_autonomy) {
     enter_state(state_scan);
   }
+  // Clear accumulated data to start a new day
+  else if (robot.state==state_daily_start)
+  {
+    robot.accum.scoop=0;
+    robot.accum.scoop_total=0;
+    robot.accum.drive=0;
+    robot.accum.drive_total=0;
+  }
   
   // scan terrain before mining
   else if (robot.state==state_scan)
@@ -755,11 +782,9 @@ void robot_manager_t::autonomous_state()
   //Done mining: Raise scoop
   else if (robot.state==state_mine_finish)
   {
-    enter_state(state_drive); // DEBUG
-  /*
+    //enter_state(state_drive); // DEBUG
     if(drive_posture())
       enter_state(state_weigh);
-   */
   }
   
   //Weigh material before leaving pit
@@ -780,10 +805,11 @@ void robot_manager_t::autonomous_state()
         }
         else {
             // Record total weight here
-            float total = robot.sensor.load_SL + robot.sensor.load_SR;
+            float total = -(robot.sensor.load_SL + robot.sensor.load_SR);
             robotPrintln("Total scoop weight: %.2f kgf\n",total);
             
             robot.power.read_L=0;
+            robot.accum.scoop=total;
             
             //enter_state(state_haul_out);
             enter_state(state_drive); // stop
@@ -803,8 +829,16 @@ void robot_manager_t::autonomous_state()
   // Dump material
   else if (robot.state==state_haul_dump)
   { 
-    // FIXME: do this
-    enter_state(state_haul_back);
+    if (move_scoop(dump1_joint_scoop)
+     && move_scoop(dump2_joint_scoop) 
+     && move_scoop(dump3_joint_scoop)) 
+    {
+      robot.accum.scoop_total += robot.accum.scoop;
+      robot.accum.scoop = 0.0;
+      robot.accum.drive_total += robot.accum.drive;
+      robot.accum.drive = 0.0;
+      enter_state(state_haul_back);
+    }
   }
   // Drive back into pit
   else if (robot.state==state_haul_back)
@@ -891,13 +925,14 @@ void robot_manager_t::update(void) {
       else if (command.command==robot_command::command_power)
       { // manual driving power command
         robotPrintln("Incoming power command: %d bytes",n);
-        if (robot.state==state_drive)
+        if (robot.state==state_drive || robot.state==state_driveraw)
         {
+          // if (robot.state==state_drive) FIXME: sanity-check the frontend drive commands
           robot.power=command.power;
         }
         else
         {
-          robotPrintln("IGNORING POWER: not in drive state\n");
+          robotPrintln("IGNORING frontend power: not in drive state\n");
         }
       }
     } else {
@@ -914,7 +949,7 @@ void robot_manager_t::update(void) {
     robot.power.stop();
     state_start_time=cur_time;
   }
-  else if (robot.state==state_drive)
+  else if (robot.state==state_drive || robot.state==state_driveraw)
   { // do nothing-- already got power command
     state_start_time=cur_time;
   }
@@ -932,12 +967,9 @@ void robot_manager_t::update(void) {
     
   if (simulate_only) { // build fake arduino data
     robot.joint = sim.joint;
-    robot.sensor.McountL=0xff&(int)sim.Mcount;
-    robot.sensor.Rcount=0xffff&(int)sim.Rcount;
-    robot.sensor.DL1count=0xffff&(int)sim.DLcount;
-    robot.sensor.DR1count=0xffff&(int)sim.DRcount;
-    robot.sensor.limit_top=0;
-    robot.sensor.limit_bottom=0;
+    robot.sensor.Mcount=0xff&(int)sim.Mcount;
+    robot.sensor.DLcount=0xffff&(int)sim.DLcount;
+    robot.sensor.DRcount=0xffff&(int)sim.DRcount;
   }
   else { // Send data to/from real arduino
     arduino_sensor_read(robot);
@@ -964,7 +996,8 @@ void robot_manager_t::update(void) {
         glRotatef(nano.slot_F1.state.frame.pitch,1,0,0);
         glRotatef(nano.slot_F1.state.frame.roll,0,1,0);
     }
-    robot_3D_draw(robot.joint);
+    tool_type tool=robot.sensor.connected_tool();
+    robot_3D_draw(robot.joint,tool);
     
     // Draw mining depths
     mining=exchange_mining_depth.read();
@@ -983,48 +1016,36 @@ void robot_manager_t::update(void) {
         robot_joint_state mine_joint=mine_joint_base;
         if (mp.mine_plan(mine_progress,mine_cut_depth,mine_joint)>=0)
         {
-            robot_3D_draw(mine_joint,0.3f);
+            robot_3D_draw(mine_joint,tool,0.3f);
         }
         mine_progress += 0.001f;
         if (mine_progress>1.0f) mine_progress=0.0f;
     }
     
-    robot_3D_draw(last_joint_target,0.3f);
+    robot_3D_draw(last_joint_target,tool,0.3f);
     
     robot_3D_cleanup();
 
 
 
-/*
-  if (robot.state==state_mine) 
-  { // TESTING ONLY: keep the front tool level
-    const float gain=5.0;
-    float drive=nano.slot_A1.sensor.imu[0].acc.x;
-    float rate=0.0;
-    float pid = gain*drive + rate;
-    int send=ui.limit(pid,30); //<- calmer driving
-    robot.power.tilt=send;
-    if (fabs(drive)<5) robot.power.stop(); //<- deadband, bigger than noise
-  }
-*/
+  // Accumulate drivetrain encoder counts into actual distances
+  float fudge=1.0; // fudge factor to make distance equal reality
+  float drivecount2m=fudge*0.96/12; // meters of driving per wheel encoder tick == circumference of wheel divided by encoder ticks per revolution
+  float driveL = fix_wrap256(robot.sensor.DLcount-old_sensor.DLcount)*drivecount2m;
+  float driveR = fix_wrap256(robot.sensor.DRcount-old_sensor.DRcount)*drivecount2m;
+  
+  // Flip encoder signs to match last nonzero drive power value
+  static robot_power last_nonzero_power;
+  if (robot.power.left!=0 || robot.power.right!=0) last_nonzero_power=robot.power;
+  if (last_nonzero_power.left<0) driveL=-driveL;
+  if (last_nonzero_power.right<0) driveR=-driveR;
 
-
-
-  // Fake the bucket sensor from the sim (no hardware sensor for now)
-  robot.sensor.bucket=sim.bucket*(950-179)+179;
-
-  // some values for the determining location. needed by the localization.
-  // FIXME: tune these for real tracks!
-  //float fudge=1.06; // fudge factor to make blue printed wheels work mo betta
-  //float drivecount2cm=fudge*6*5.0/36; // cm of driving per wheel encoder tick == pegs on drive sprockets, space between sprockets, 36 encoder counts per revolution
-  float drivecount2cm = 10.0/40.0;
-  float driveL = fix_wrap256(robot.sensor.DL1count-old_sensor.DL1count)*drivecount2cm;
-  float driveR = fix_wrap256(robot.sensor.DR1count-old_sensor.DR1count)*drivecount2cm;
+  robot.accum.drive += fabs(driveR + driveL)*0.5; // average total drive distance (meters)
   
   // Update drive encoders data exchange
-  static aurora::drive_encoders::real_t totalL = 0.0; //<- hacky!  Need to total up distance
-  static aurora::drive_encoders::real_t totalR = 0.0;
-  totalL -= driveL;
+  static aurora::drive_encoders::real_t totalL = -driveL; //<- hacky!  Need to total up distance
+  static aurora::drive_encoders::real_t totalR = -driveR;
+  totalL += driveL;
   totalR += driveR;
   aurora::drive_encoders enc;
   enc.left =totalL;

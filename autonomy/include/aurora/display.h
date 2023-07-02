@@ -125,7 +125,7 @@ void robot_3D_setup(float Zrot=-90.0f) {
 }
 
 /* Draw robot in this joint state */
-void robot_3D_draw(const robot_joint_state &jointstate,float alpha=1.0)
+void robot_3D_draw(const robot_joint_state &jointstate,tool_type tool=tool_none,float alpha=1.0)
 {
     using namespace aurora;
 
@@ -195,11 +195,14 @@ void robot_3D_draw(const robot_joint_state &jointstate,float alpha=1.0)
             glColor4fv(colorPrint);
             mesh_tool.draw();
 
+	    
             // The held tool
             glColor4fv(colorBox);
-            mesh_grinder.draw();
-            //robot_link_coords::glTransform(link_grinder,jointstate);
-            // draw actual cutting point?
+            if (tool==tool_rockgrinder) {
+                mesh_grinder.draw();
+                //robot_link_coords::glTransform(link_grinder,jointstate);
+                // draw actual cutting point?
+            }
 
             glPopMatrix(); // back to frame coords
 
@@ -272,13 +275,13 @@ void robot_display_setup(const robot_base &robot) {
 		glClearColor(0.0,0.6,0.9,0.0); // peaceful sky blue-green (safe to approach)
 	}
 	else if (robot.state==state_backend_driver) {
-		glClearColor(0.4,0.4,0.1,0.0); // backend drive: dim yellow
+		glClearColor(0.4,0.3,0.1,0.0); // backend drive: dim yellow
 	}
 	else if (robot.state==state_drive) {
-		glClearColor(0.8,0.8,0.1,0.0); // drive: bright yellow
+		glClearColor(0.4,0.5,0.1,0.0); // drive: yellow
 	}
 	else {
-		glClearColor(0.8,0.1,0.0,0.0); // danger red: full autonomy
+		glClearColor(0.6,0.1,0.0,0.0); // danger red: full autonomy
 	}
 
 	glClear(GL_COLOR_BUFFER_BIT+GL_DEPTH_BUFFER_BIT);
@@ -389,16 +392,37 @@ void robot_display_text(const robot_base &robot)
 
 // Output telemetry as text (for log, mostly)
 	glColor3f(1.0,1.0,1.0);
+	
+	for (int bit=0;bit<robot_sensors_arduino::connected_C0;bit++) {
+	    const static char *nameFromBit[robot_sensors_arduino::connected_C0]=
+	        {"D0","F0","F1","A0","A1"};
+	    bool conn = (robot.sensor.connected>>bit)&1;
+	    if (conn==0) robotPrintln("Missing nanoslot %s",nameFromBit[bit]);
+	}
+	if (0==(robot.sensor.connected & robot_sensors_arduino::connected_C0))
+	{
+        robotPrintln("Tool not connected");
+        robotPrintln("Batteries: - - (-V), drive %.0f%% (%.2fV)",
+	    robot.sensor.charge_D, robot.sensor.cell_D);
+	}
+	else 
+	{
+		robotPrintln("Batteries: mine %.0f%% (%.2fV), drive %.0f%% (%.2fV)",
+	    robot.sensor.charge_M, robot.sensor.cell_M,
+	    robot.sensor.charge_D, robot.sensor.cell_D);
+	}
+	
 
-    robotPrintln("Load cells: tool %.1f %.1f  scoop %.1f %.1f (%s)\n",
+    robotPrintln("Load cells: tool %.1f %.1f  scoop %.1f %.1f (%s)",
         robot.sensor.load_TL,robot.sensor.load_TR,
         robot.sensor.load_SL,robot.sensor.load_SR,
         robot.power.read_L?"L":"R");
-/*
-	robotPrintln("Left/Right Mining Motor Counts: %d, %d",robot.sensor.McountL, robot.sensor.McountR);
-	robotPrintln("Track front encoder ticks %d L %d R", robot.sensor.DL1count, robot.sensor.DR1count);
-	robotPrintln("Track back encoder ticks %d L %d R", robot.sensor.DL2count, robot.sensor.DR2count);
-*/
+	robotPrintln("Accum: scoop %.1f weighed %.0f total, drive %.2f trip %.0f total\n",
+	    robot.accum.scoop, robot.accum.scoop_total,
+	    robot.accum.drive, robot.accum.drive_total);
+
+	robotPrintln("Mining rate %.2f (%d)",robot.sensor.spin, robot.sensor.Mcount);
+	robotPrintln("Drive encoder %d L %d R", robot.sensor.DLcount, robot.sensor.DRcount);
 
 	std::string encoder_str("Encoder Raw ");
 	for(int ii=12-1;ii>=0;--ii)

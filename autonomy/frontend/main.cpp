@@ -141,7 +141,7 @@ void robot_manager_t::update(void) {
 	robot_2D_display(robot.loc);
 	
 	robot_3D_setup();
-	robot_3D_draw(robot.joint);
+	robot_3D_draw(robot.joint,robot.sensor.connected_tool());
 	robot_3D_cleanup();
 	
 	robot_display_autonomy(telemetry.autonomy);

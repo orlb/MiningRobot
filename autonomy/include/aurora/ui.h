@@ -28,6 +28,8 @@ public:
 	float driveLimit=1.0; /* robot driving power (0.0 - 1.0) */
 	float toolLimit=0.5; /* tool power */
 	
+	robot_state_t joystickState=state_drive;
+	
 	enum {
 	    joyModeSTOP=0, // don't drive
 	    joyModeLow=1, // bottom of robot
@@ -291,36 +293,54 @@ Joysticks have different axis and button numbering:
 	    );
     
 	// Pressing a button changes the mode persistently
-	if (js_button(button_stop,"") || (keys['1'] && notmode)) joyMode=joyModeSTOP;
-	if (js_button(button_low,"") || (keys['2'] && notmode)) joyMode=joyModeLow;
-	if (js_button(button_med,"") || (keys['3'] && notmode)) joyMode=joyModeMed;
-	if (js_button(button_high,"") || (keys['4'] && notmode)) joyMode=joyModeHigh;
+	bool modeChange=false;
+	if (js_button(button_stop,"") || (keys['1'] && notmode)) 
+		{ modeChange=true; joyMode=joyModeSTOP;}
+	if (js_button(button_low,"") || (keys['2'] && notmode))  
+		{ modeChange=true; joyMode=joyModeLow; }
+	if (js_button(button_med,"") || (keys['3'] && notmode))  
+		{ modeChange=true; joyMode=joyModeMed; }
+	if (js_button(button_high,"") || (keys['4'] && notmode)) 
+		{ modeChange=true;  joyMode=joyModeHigh; }
 
-    switch (joyMode) {
-    case joyModeSTOP: default: 
+	if (joyMode==joyModeSTOP) {
 		stop();
-		robotState_requested=state_STOP;
-		break;
-    case joyModeLow: 
-        description += " Low: drive fork-dump ";
-        forward=ly;
-        turn=lx;
-        fork=ry;
-        dump=-rx;
-        break;
-    case joyModeMed:
-        description += " Med: drive stick-boom ";
-        forward=ly;
-        turn=lx;
-        stick=ry;
-        boom=rx;
-        break;
-    case joyModeHigh:
-        description += " High: spin tilt-mine ";
-        spin=lx;
-        tilt=ry;
-        tool=rx;
-        break;
+		if (modeChange) robotState_requested=state_STOP;
+	}
+	else {
+	    if (modeChange) robotState_requested=joystickState;
+	    switch (joyMode) {
+	    case joyModeSTOP: 
+	        stop(); 
+			break;
+	    case joyModeLow: 
+		    description += " Low: drive fork-dump ";
+		    forward=ly;
+		    turn=lx;
+		    
+		    fork=ry;
+		    dump=-rx;
+		    break;
+	    case joyModeMed:
+		    description += " Med: drive stick-boom ";
+		    forward=ly;
+		    turn=lx;
+		    
+		    stick=ry;
+		    boom=rx;
+		    break;
+	    case joyModeHigh:
+		    description += " High: stick-boom tilt-mine ";
+		    
+		    stick=ly;
+		    boom=lx;
+		    
+		    tilt=ry;
+		    tool=rx;
+		    break;
+	    default:
+	    	break;
+	    }
     }
 
 	if(joyDrive)

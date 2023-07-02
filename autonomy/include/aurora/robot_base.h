@@ -27,6 +27,13 @@
 #define AD_DN2high_voltage ((AD_AREF_voltage)*(11.0)/1024.0)
 
 
+    
+// Possible connected tools
+typedef enum {
+    tool_none=0,
+    tool_rockgrinder=1
+} tool_type;
+
 /** This class contains all the robot's sensors, on Arduino, backend, or front end.
 Raw sensor values go as bitfields, because many of them are 10-bit quantities:
 	- Arduino A/D values are 10 bits each
@@ -39,33 +46,43 @@ public:
     float load_TL, load_TR; ///< load cells on tool: left and right (kgf)
     float load_SL, load_SR; ///< load cells on scoop: left and right (kgf)
     
-	uint32_t battery:10; // raw A/D reading at top of battery stack (voltage = this*5*2000/384)
-	uint32_t bucket:10; // raw A/D value from dump bucket lift encoder
-	uint32_t latency:5; // Arduino control loop latency
+    float cell_M, cell_D; ///< raw voltages on mining and driving battery cells
+    float charge_M, charge_D; ///< percent charge on mining and driving batteries
+    
+    float spin; ///< mining head spin rate in counts/sec
 
-	uint32_t Mstall:1;
-	uint32_t DLstall:1;
-	uint32_t DRstall:1;
-
+    // SUBTLE: these bitfields need to add up to a multiple of 32 bits
 	uint32_t stop:1; ///< EMERGENCY STOP button engaged
-    uint32_t heartbeat:3;
+    uint32_t heartbeat:4;
+    
+    uint32_t Mstall:1;
+    uint32_t DLstall:1;
+    uint32_t DRstall:1;
 
-	uint32_t McountL:8; /// Current milliseconds per encoder tick for mining head left motor (255==stopped)
-	uint32_t McountR:8; /// Encoder tick count for mining head left motor
+    uint32_t Mcount:8; /// Raw encoder tick count for mining head
+	uint32_t DLcount:8; /// Raw encoder tick count for left drive wheel
+	uint32_t DRcount:8; /// Raw encoder tick count for right drive wheel
 
-	uint32_t DL1count:8; /// Encoder tick count for front left drive wheel
-	uint32_t DL2count:8; /// Encoder tick count for back left drive wheel
-	uint32_t DR1count:8; /// Encoder tick count for right drive wheel
-	uint32_t DR2count:8; /// Encoder tick count for back right drive wheel
-
-	int32_t Rcount:16; /// Encoder tick for bag roll motor
-
-	uint32_t limit_top:8;
-	uint32_t limit_bottom:8;
-
-	uint32_t encoder_raw:16;
-    uint32_t stall_raw:16;
-    uint32_t pad:16; // round up to 32
+	uint32_t encoder_raw:8;
+    uint32_t stall_raw:8;
+    
+    // Bits inside connected:
+    enum {
+        connected_D0=0, // in big rear box
+        connected_F0=1,
+        connected_F1=2, // in micro front box
+        connected_A0=3, // in arm box
+        connected_A1=4, 
+        connected_C0=5 // on rockgrinder tool
+    };
+    uint32_t connected:8;
+    uint32_t pad:8;
+    
+    // Return the tool that is currently connected, or tool_none
+    tool_type connected_tool() const {
+    	if (0!=(connected & (1<<connected_C0))) return tool_rockgrinder;
+    	return tool_none;
+    }
 };
 
 /**
@@ -142,10 +159,12 @@ public:
 */
 typedef enum {
 	state_STOP=0, ///< EMERGENCY STOP (no motion)
-	state_drive, ///< normal manual driving
+	state_drive, ///< normal manual driving from frontend
+	state_driveraw, ///< normal manual driving, no sanity checking
 	state_backend_driver, ///< drive from backend UI
 
 	state_autonomy, ///< full autonomy start state
+	state_daily_start, ///< clear accumulated data and start a new day
 	
 	state_calibrate, ///< Calibrate internal gyros (stationary)
 	
@@ -167,6 +186,41 @@ typedef enum {
 } robot_state_t;
 const char *state_to_string(robot_state_t state);
 
+/**
+ This tracks the parameters of the current robot state (above).
+ It's crammed into a bitfield because the whole active stack
+ of states gets sent with the telemetry.
+*/
+struct robot_state_params {
+public:
+    uint32_t state:8; ///< state number above (a robot_state_t, but with a defined bit width)
+    uint32_t phase:10; ///< current sub-phase, starting from zero (limit 1000)
+    uint32_t count:10; ///< repetition count, starting from zero (limit 1000)
+
+    uint32_t pad:1; ///< space for future expansion
+    
+    uint32_t pause_resume:1; ///< if 1, we should pause when returning to this state
+    uint32_t pause_finish:1; ///< if 1, we should pause after finishing this state
+    uint32_t valid:1; ///< if 1, this is a valid state
+};
+
+/**
+ This tracks the robot's hierarchical states, such as:
+  [3] state_stop: manual pause of mining run
+  [2] state_mine_stall: recovery during mining run
+  [1] state_mine: one mining run
+  [0] state_autonomy: basic overall autonomous operation
+*/
+struct robot_state_stack {
+public:
+    enum {MAXDEPTH=5}; ///< limit on how many states can be active
+    robot_state_params level[MAXDEPTH]; 
+    uint32_t top_index; ///< Index of top of the stack: the active state
+    
+    // Access the top of the stack:
+    robot_state_params & top() { return level[top_index]; }
+    const robot_state_params & top() const { return level[top_index]; }    
+};
 
 
 /** The angles, in degrees, of each robot joint. 
@@ -187,6 +241,20 @@ union robot_joint_state {
 };
 
 
+/**
+ This tracks accumulated robot performance.
+ The backend does the accumulation.
+*/
+struct robot_accumulated {
+public:
+    float scoop; ///< total mass currently inside front scoop (kg)
+    float scoop_total; ///< total mass hauled (kg)
+
+    float drive; ///< distance driven this trip (m)
+    float drive_total; ///< total distance driven (m)
+};
+
+
 // Everything about the visible computer vision markers / apriltags
 class robot_markers_all {
 public:
@@ -204,10 +272,14 @@ public:
 class robot_base {
 public:
 	robot_state_t state; ///< Current control state
+	robot_state_stack stack; ///< State parameters and parent states
+	
 	robot_joint_state joint; ///< Current joint angles
 	robot_sensors_arduino sensor;  ///< Current hardware sensor values
 	robot_localization loc; ///< Location
-	robot_power power; // Current drive commands
+	robot_power power; ///< Current drive commands
+
+	robot_accumulated accum; ///< Accumulated data
 };
 
 

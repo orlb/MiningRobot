@@ -25,6 +25,7 @@ typedef uint8_t nanoslot_byte_t; ///< generic data byte
 typedef uint8_t nanoslot_heartbeat_t; ///< heartbeat (watchdog-type counter)
 typedef int8_t nanoslot_motorpercent_t; ///< -100 for full reverse, 0 for stop, +100 for full forward
 typedef int16_t nanoslot_voltage_t; ///< Arduino A/D voltage reading
+typedef uint8_t nanoslot_counter_t; ///< Counter, like an encoder
 typedef int8_t nanoslot_padding_t[3]; ///< padding to avoid false sharing between slots
 
 /** Generic firmware state */
@@ -123,8 +124,11 @@ struct nanoslot_command_0xF0 {
 struct nanoslot_sensor_0xF0 {
     nanoslot_heartbeat_t heartbeat; // increments
     nanoslot_byte_t stop; // 1 == stop requested
+    nanoslot_voltage_t cell1; ///< first cell of drive battery pack
 };
 struct nanoslot_state_0xF0 : public nanoslot_state {
+    float cell; ///< voltage (V) on drive battery's first cell
+    float charge; ///< Estimated percent charge for battery, normally between 20 and 80
     
 };
 
@@ -170,13 +174,15 @@ struct nanoslot_command_0xC0 {
 };
 struct nanoslot_sensor_0xC0 {
     nanoslot_heartbeat_t heartbeat;
-    nanoslot_motorpercent_t spin; ///< vaguely correlated to spin rate
+    nanoslot_counter_t spincount; ///< mining head spin count
     nanoslot_voltage_t cell0; ///< ground of battery pack
-    nanoslot_voltage_t cell1; ///< first cell of battery pack
+    nanoslot_voltage_t cell1; ///< first cell of rockgrinder battery pack
 };
 struct nanoslot_state_0xC0 : public nanoslot_state {
-    float load; ///< scaled from voltage delta on ground line
-    float cell; ///< voltage (V) on battery's first cell
+    float spin; ///< Last spin count per second
+    float load; ///< scaled from voltage delta on ground line (always zero?)
+    float cell; ///< voltage (V) on mine battery's first cell
+    float charge; ///< Estimated percent charge for battery, normally between 20 and 80
 };
 
 /** slot ID 0xEE: example nano (debug / dev only) */

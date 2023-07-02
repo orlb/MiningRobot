@@ -78,6 +78,7 @@ For the aruco marker viewer:
 	cmake .
 	make
 	sudo make install
+	sudo ldconfig
 	cd ../../vision
 	make
 

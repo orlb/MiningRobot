@@ -4,7 +4,7 @@
 #define NANOSLOT_MY_ID 0xF0
 #include "nanoslot/firmware.h"
 
-const int ESTOP_pin=A1; /* ESTOP switch: ground=run mode, open=stop */
+// const int ESTOP_pin=A1; /* ESTOP switch: ground=run mode, open=stop */
 
 #include "nanoslot/firmware_un178.h"
 
@@ -12,6 +12,8 @@ void firmware_read_encoders(void)
 {
   my_sensor.heartbeat++;
   my_sensor.stop=0; // DISABLED: (digitalRead(ESTOP_pin)!=0);
+  
+  my_sensor.cell1=analogRead(A1); // JST first lipo cell
 }
 
 void firmware_send_motors()
@@ -28,7 +30,7 @@ bool firmware_handle_custom_packet(A_packet_serial &pkt,A_packet &p)
 }
 
 void setup() {
-  pinMode(ESTOP_pin,INPUT_PULLUP);
+  //pinMode(ESTOP_pin,INPUT_PULLUP);
   NANOSLOT_MOTOR_SETUP();
   nanoslot_firmware_start();
 }
