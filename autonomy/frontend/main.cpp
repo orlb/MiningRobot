@@ -135,6 +135,10 @@ void robot_manager_t::update(void) {
 	else {
 		robotPrintln("NO TELEMETRY");
 	}*/
+	if (time>0.50+last_telemetry_time) {
+		robotPrintln("Missing backend telemetry--is it running?  Network?");
+		
+	}
 	
 	robotPrintln("Location %.0f,%0.0f,%0.0f",robot.loc.x,robot.loc.y,robot.loc.angle);
 	
@@ -146,8 +150,8 @@ void robot_manager_t::update(void) {
 	
 	robot_display_autonomy(telemetry.autonomy);
 
-	    // Limit this loop to 100Hz (10ms/loop)
-        aurora::data_exchange_sleep(10);
+    // Limit this loop to 100Hz (10ms/loop)
+    aurora::data_exchange_sleep(10);
 
 }
 
