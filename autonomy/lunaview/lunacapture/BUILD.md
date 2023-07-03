@@ -146,3 +146,74 @@ sudo apt-get install libpq5=14.7-0ubuntu0.22.04.1 && sudo apt-get install libpq-
 ## Set Up Database Password
 
 
+## Set Up Grafana
+
+Go to [grafana.com/get](http://grafana.com/get).
+
+Click "Download Grafana."
+
+Download the version for Self-Managed and the chosen operating system.
+
+Follow the terminal prerequisite installation process.
+
+Perform the install using the `.deb` method using `wget`.
+
+Run the `.deb` package.
+
+Perform these steps to start Grafana:
+
+```
+sudo /bin/systemctl daemon-reload
+sudo /bin/systemctl enable grafana-server
+sudo /bin/systemctl start grafana-server
+```
+
+In your chosen web browser, enter `localhost:3000`.
+
+The default username and password are both `admin`.
+
+The system will force you to choose a new password.
+
+## Set Up PostgreSQL Database Connection in Grafana
+
+Click on the menu icon in the upper left corner.
+
+Click `Connections`.
+
+Click on `Data Sources`.
+
+Search for `PostgreSQL` and initiate an instance.
+
+Enter the default value for the address: `localhost:5432`.
+
+Database is currently `test_cpp`.
+
+User is `postgres`.
+
+Password is the password from the `.dbpass` file.
+
+Set the `TLS/SSL` mode to `disabled`.
+
+You may choose to set `Max Lifetime` to `0` to represent infinity.
+
+Click `Save & Test`. There should be a pop up that tells you if everything is correct.
+
+#### (Optional) Lower the default Grafana panel refresh rate to 1 second
+
+In the `/etc/grafana/grafana.ini` file search for `5s`.
+
+Replace `5s` with `1s` or whatever value you prefer.
+
+Return to the Grafana dashboard and refresh the browser page.
+
+Create a new dashboard if you have not already.
+
+In the dashboard page, click on the gear icon to go to the settings page.
+
+Scroll to the dialogue box that lists possible auto refresh options.
+
+Put in  `1s` as the minimum value in the list, and enter any other options preferred.
+
+Save the settings.
+
+Remember to save the dashboard itself by clicking the floppy disk icon.
