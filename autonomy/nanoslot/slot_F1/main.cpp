@@ -46,8 +46,8 @@ int main(int argc,char **argv)
                 dump_filter.update_parent(ST.dump, 
                     fix_coords_front(c.my_sensor.imu[3]),ST.fork);
                 
-                ST.load_L = HX711_read_scale(c.my_sensor.load_L,-4.5f);
-                ST.load_R = HX711_read_scale(c.my_sensor.load_R,-6.4f);
+                ST.load_L = HX711_read_scale(c.my_sensor.load_L,-4.3f);
+                ST.load_R = HX711_read_scale(c.my_sensor.load_R,-6.2f);
                 
                 if (printCount++ >=printInterval)
                 {
