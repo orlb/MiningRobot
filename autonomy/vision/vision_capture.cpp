@@ -2,7 +2,7 @@
 This is the computer vision system, reading color and depth data
 from a realsense camera, and writing data used by the localizer.
 
-    This version specialized for mining only.
+This version specialized to capture the depth data to an STL file.
 
 
 From the color images, we extract aruco marker locations.
@@ -153,6 +153,71 @@ void project_depth_to_mining(const realsense_camera_capture &cap,
     }   
 }
 
+
+/* Convert this x,y pixel coordinate to a 3D world-coords location,
+   or an invalid location if the depth is invalid. */
+vec3 world_from_depth(const realsense_camera_capture &cap,
+    const aurora::robot_coord3D &view3D,
+    int x,int y)
+{
+    const float sanity_distance_min = 0.5; // mostly parts of robot if they're too close
+    const float sanity_distance_max = 10.5; // depth gets ratty if it's too far out
+
+    vec3 world(0,-20.0,-20.0); // assume invalid depth
+    
+    float depth=cap.get_depth_m(x,y);    
+    if (depth>sanity_distance_min && depth<sanity_distance_max) 
+    { // value seems in-range        
+        vec3 cam = cap.project_3D(depth,x,y);
+        world = view3D.world_from_local(cam);
+    }
+    return world;
+}
+
+/* Write these three vertices to this ascii STL file as a triangle */
+void write_stl_triangle(FILE *f,
+    const vec3 &A,const vec3 &B,const vec3 &C)
+{
+    fprintf(f,"facet normal 0.0 0.0 0.0\n outer loop\n");
+    
+    fprintf(f,"  vertex %f %f %f\n", A.x, A.y, A.z);
+    fprintf(f,"  vertex %f %f %f\n", B.x, B.y, B.z);
+    fprintf(f,"  vertex %f %f %f\n", C.x, C.y, C.z);
+    
+    fprintf(f," endloop\nendfaced\n");
+}
+
+
+/* Write this depth data into an STL file on disk */
+void write_depth_to_STL(const realsense_camera_capture &cap,
+    const aurora::robot_coord3D &view3D,
+    const char *stlFileName="out.stl")
+{
+    FILE *f=fopen(stlFileName,"w");
+    if (f==NULL) return;
+    fprintf(f,"solid DEPTHCAM\n");
+    
+    for (int y = 0; y < cap.depth_h-1; y++)
+    for (int x = 0; x < cap.depth_w-1; x++)
+    {
+        write_stl_triangle(f,
+            world_from_depth(cap,view3D, x,y),
+            world_from_depth(cap,view3D, x+1,y),
+            world_from_depth(cap,view3D, x,y+1)
+        );
+
+        write_stl_triangle(f,
+            world_from_depth(cap,view3D, x,y+1),
+            world_from_depth(cap,view3D, x+1,y),
+            world_from_depth(cap,view3D, x+1,y+1)
+        ); 
+    }   
+    
+    fprintf(f,"endsolid DEPTHCAM\n");
+    fclose(f);
+    printf("Wrote depth image to %s\n",stlFileName);
+}
+
 int main(int argc,const char *argv[]) {
     int show_GUI=0;
     //Data sources need to write to, these are defined by lunatic.h for what files we will be communicating through
@@ -167,15 +232,13 @@ int main(int argc,const char *argv[]) {
     int res=480; // camera's requested vertical resolution
     int fps=5; // camera's frames per second 
     bool aruco=true; // look for computer vision markers in RGB data
-    bool obstacle=true; // look for obstacles/driveable areas in depth data
-    int erode=3; // image erosion passes
+    int erode=1; // image erosion passes (remove bad data around depth discontinuities)
     for (int argi=1;argi<argc;argi++) {
       std::string arg=argv[argi];
       if (arg=="--gui") show_GUI++;
       else if (arg=="--res") res=atoi(argv[++argi]); // manual resolution
       else if (arg=="--fps") fps=atoi(argv[++argi]); // manual framerate
       else if (arg=="--no-aruco") aruco=false; 
-      else if (arg=="--no-obstacle") obstacle=false; 
       else if (arg=="--erode") erode=atoi(argv[++argi]);
       
       else {
@@ -194,6 +257,8 @@ int main(int argc,const char *argv[]) {
     if (aruco) {
         detector = new aruco_detector();
     }
+    
+    int frame_count=0;
 
     while (true) {
         // Grab data from realsense
@@ -215,18 +280,24 @@ int main(int argc,const char *argv[]) {
             }
         }
         
-        // Run obstacle detection on depth image
-        if (obstacle) {
+        // Grab depth image (once it's stable)
+        if (frame_count++ > 40) {
             if (erode) erode_depth(cap,erode);
             
-            // Project to mining
-            robot_link_coords links(exchange_backend_state.read().joint);
+            // Project to frame coordinates
+            const robot_base &robot = exchange_backend_state.read();
+            robot_link_coords links(robot.joint);
             const robot_coord3D &view3D=links.coord3D(link_depthcam);
             
+            write_depth_to_STL(cap,view3D);
+            break;
+            
+            /*
             mining_depth mining;
             project_depth_to_mining(cap,view3D,mining);
             exchange_mining_depth.write_begin() = mining;
             exchange_mining_depth.write_end();
+            */
             
         }
         
@@ -243,7 +314,7 @@ int main(int argc,const char *argv[]) {
                 break;  
         }
         // Store The previous copy of the data before grabbing new
-        realsense_camera_capture last(cap);
+        //realsense_camera_capture last(cap);
     }
     return 0;
 }

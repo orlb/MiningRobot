@@ -276,7 +276,9 @@ public:
 	
 	robot_joint_state joint; ///< Current joint angles
 	robot_sensors_arduino sensor;  ///< Current hardware sensor values
-	robot_localization loc; ///< Location
+	robot_localization loc; ///< Location in 2D (for driving)
+	aurora::robot_coord3D loc3D; ///< Location in 3D (for depth camera)
+	
 	robot_power power; ///< Current drive commands
 
 	robot_accumulated accum; ///< Accumulated data
