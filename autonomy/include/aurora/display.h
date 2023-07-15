@@ -37,10 +37,13 @@ double robotTime(void) {
 
 
 bool robotPrintf_enable=true;
+bool robotPrintgl_enable=true;
+
 /* Render this string at this X,Y location */
 void robotPrint(float x,float y,const char *str)
 {
-	if (robotPrintf_enable) {
+	if (robotPrintf_enable) 
+	{
         // Dump everything to the console, and log it too
         fprintf(stdout,"%.3f %s\n",robotTime(),str);
         fflush(stdout);
@@ -52,7 +55,9 @@ void robotPrint(float x,float y,const char *str)
         }
     }
 
-        // Draw it onscreen
+    if (robotPrintgl_enable) 
+    {
+        // Draw it onscreen via OpenGL / glut
         void *font=GLUT_BITMAP_HELVETICA_12;
         glRasterPos2f(x,y);
         while (*str!=0) {
@@ -63,7 +68,7 @@ void robotPrint(float x,float y,const char *str)
         	}
         }
         glPopAttrib();
-
+    }
 }
 
 /** Render this string onscreen, followed by a newline. */
@@ -344,8 +349,77 @@ void robot_display_setup(const robot_base &robot) {
 	glColor3f(1.0,1.0,1.0);
 }
 
+
+// Use robotPrint to show this robot's telemetry state
+//  (no other OpenGL calls, safe for nogui version)
+void robot_display_telemetry(const robot_base &robot)
+{
+	for (int bit=0;bit<robot_sensors_arduino::connected_C0;bit++) {
+	    const static char *nameFromBit[robot_sensors_arduino::connected_C0]=
+	        {"D0","F0","F1","A0","A1"};
+	    bool conn = (robot.sensor.connected>>bit)&1;
+	    if (conn==0) robotPrintln("Missing nanoslot %s",nameFromBit[bit]);
+	}
+	if (0==(robot.sensor.connected & robot_sensors_arduino::connected_C0))
+	{
+        robotPrintln("Tool not connected");
+        robotPrintln("Batteries: - - (-V), drive %.0f%% (%.2fV)",
+	    robot.sensor.charge_D, robot.sensor.cell_D);
+	}
+	else 
+	{
+		robotPrintln("Batteries: mine %.0f%% (%.2fV), drive %.0f%% (%.2fV)",
+	    robot.sensor.charge_M, robot.sensor.cell_M,
+	    robot.sensor.charge_D, robot.sensor.cell_D);
+	}
+	
+
+    robotPrintln("Load cells: tool %.1f %.1f  scoop %.1f %.1f (%s)",
+        robot.sensor.load_TL,robot.sensor.load_TR,
+        robot.sensor.load_SL,robot.sensor.load_SR,
+        robot.power.read_L?"L":"R");
+	robotPrintln("Accum: scoop %.1f weighed %.0f total, drive %.2f trip %.0f total",
+	    robot.accum.scoop, robot.accum.scoop_total,
+	    robot.accum.drive, robot.accum.drive_total);
+
+	robotPrintln("Mining rate %.2f (%d)",robot.sensor.spin, robot.sensor.Mcount);
+	robotPrintln("Drive encoder %d L %d R", robot.sensor.DLcount, robot.sensor.DRcount);
+
+	std::string encoder_str("Encoder Raw ");
+	for(int ii=12-1;ii>=0;--ii)
+	{
+		if((robot.sensor.encoder_raw&(1<<ii))!=0)
+			encoder_str+="1";
+		else
+			encoder_str+="0";
+		if(ii==6)
+			encoder_str += " ";
+	}
+	robotPrintln(encoder_str.c_str());
+
+	std::string str("Stall Raw ");
+	for(int ii=12-1;ii>=0;--ii)
+	{
+		if((robot.sensor.stall_raw&(1<<ii))!=0)
+			str+="1";
+		else
+			str+="0";
+		if(ii==6)
+			str += " ";
+	}
+	str += "\n"; //<- leaves blank line, to space out info
+	robotPrintln(str.c_str());
+
+	if (robot.loc.percent>50.0) {
+		robotPrintln("Location:  X %.0f   Y %.0f   angle %.0f",
+			robot.loc.x,robot.loc.y,
+			robot.loc.angle);
+	}
+}
+
+
 /* Called near end of OpenGL display function */
-void robot_display_text(const robot_base &robot)
+void robot_display_finish(const robot_base &robot)
 {
 // Draw the current autonomy state
 	robotPrintf_enable=false;
@@ -393,67 +467,7 @@ void robot_display_text(const robot_base &robot)
 // Output telemetry as text (for log, mostly)
 	glColor3f(1.0,1.0,1.0);
 	
-	for (int bit=0;bit<robot_sensors_arduino::connected_C0;bit++) {
-	    const static char *nameFromBit[robot_sensors_arduino::connected_C0]=
-	        {"D0","F0","F1","A0","A1"};
-	    bool conn = (robot.sensor.connected>>bit)&1;
-	    if (conn==0) robotPrintln("Missing nanoslot %s",nameFromBit[bit]);
-	}
-	if (0==(robot.sensor.connected & robot_sensors_arduino::connected_C0))
-	{
-        robotPrintln("Tool not connected");
-        robotPrintln("Batteries: - - (-V), drive %.0f%% (%.2fV)",
-	    robot.sensor.charge_D, robot.sensor.cell_D);
-	}
-	else 
-	{
-		robotPrintln("Batteries: mine %.0f%% (%.2fV), drive %.0f%% (%.2fV)",
-	    robot.sensor.charge_M, robot.sensor.cell_M,
-	    robot.sensor.charge_D, robot.sensor.cell_D);
-	}
-	
-
-    robotPrintln("Load cells: tool %.1f %.1f  scoop %.1f %.1f (%s)",
-        robot.sensor.load_TL,robot.sensor.load_TR,
-        robot.sensor.load_SL,robot.sensor.load_SR,
-        robot.power.read_L?"L":"R");
-	robotPrintln("Accum: scoop %.1f weighed %.0f total, drive %.2f trip %.0f total\n",
-	    robot.accum.scoop, robot.accum.scoop_total,
-	    robot.accum.drive, robot.accum.drive_total);
-
-	robotPrintln("Mining rate %.2f (%d)",robot.sensor.spin, robot.sensor.Mcount);
-	robotPrintln("Drive encoder %d L %d R", robot.sensor.DLcount, robot.sensor.DRcount);
-
-	std::string encoder_str("Encoder Raw ");
-	for(int ii=12-1;ii>=0;--ii)
-	{
-		if((robot.sensor.encoder_raw&(1<<ii))!=0)
-			encoder_str+="1";
-		else
-			encoder_str+="0";
-		if(ii==6)
-			encoder_str += " ";
-	}
-	robotPrintln(encoder_str.c_str());
-
-	std::string str("Stall Raw ");
-	for(int ii=12-1;ii>=0;--ii)
-	{
-		if((robot.sensor.stall_raw&(1<<ii))!=0)
-			str+="1";
-		else
-			str+="0";
-		if(ii==6)
-			str += " ";
-	}
-	robotPrintln(str.c_str());
-
-	if (robot.loc.percent>50.0) {
-		robotPrintln("Location:  X %.0f   Y %.0f   angle %.0f",
-			robot.loc.x,robot.loc.y,
-			robot.loc.angle);
-	}
-	
+	robot_display_telemetry(robot);
 	
 	glEnable(GL_ALPHA_TEST);
 	glEnable(GL_BLEND);

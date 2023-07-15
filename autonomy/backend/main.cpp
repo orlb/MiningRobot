@@ -400,6 +400,9 @@ public:
   // Do robot work.
   void update(void);
   
+  // Do robot work, and display it onscreen
+  void update_GUI(void);
+  
   // Switch active camera (heading 0 is facing forward)
   void point_camera(float heading) {
   }
@@ -877,27 +880,17 @@ void robot_manager_t::autonomous_state()
 }
 
 
+#include <chrono>
 
+typedef std::chrono::high_resolution_clock roboclock;
 
-robot_manager_t *robot_manager;
-
-unsigned int video_texture_ID=0;
 
 void robot_manager_t::update(void) {
-  cur_time=0.001*glutGet(GLUT_ELAPSED_TIME);
-
-#if 1 /* enable for backend UI: dangerous, but useful for autonomy testing w/o frontend */
-  // Keyboard control
-  ui.update(oglKeyMap,robot);
-
-  // Click to set state:
-  if (robotState_requested<state_last) {
-    robot.state=robotState_requested;
-    robotPrintln("Entering new state %s (%d) by backend UI request",
-      state_to_string(robot.state),robot.state);
-    robotState_requested=state_last; // clear UI request
-  }
-#endif
+    static auto clock_start=roboclock::now();
+    
+    cur_time=0.001*(std::chrono::duration_cast<std::chrono::nanoseconds>(
+        roboclock::now() - clock_start
+      ).count());
 
 // Check for a command broadcast (briefly)
   int n;
@@ -970,6 +963,7 @@ void robot_manager_t::update(void) {
     robot.sensor.Mcount=0xff&(int)sim.Mcount;
     robot.sensor.DLcount=0xffff&(int)sim.DLcount;
     robot.sensor.DRcount=0xffff&(int)sim.DRcount;
+    robot.sensor.connected=0x3F; // bits 0-5 all set
   }
   else { // Send data to/from real arduino
     arduino_sensor_read(robot);
@@ -985,49 +979,7 @@ void robot_manager_t::update(void) {
         robotPrintln("Mining head: %5.3f  %5.3f V   %.2f mine\n",
             nano.slot_C0.state.load, nano.slot_C0.state.cell, robot.power.tool); 
     }
-
-    // Show estimated robot location
-    robot_2D_display(locator.merged);
-    robot_display_autonomy(telemetry.autonomy);
     
-    // Draw current robot joint configuration (side view)
-    robot_3D_setup();
-    if (0) { // visually depict physical robot tilts (neat, but mining is robot relative)
-        glRotatef(nano.slot_F1.state.frame.pitch,1,0,0);
-        glRotatef(nano.slot_F1.state.frame.roll,0,1,0);
-    }
-    tool_type tool=robot.sensor.connected_tool();
-    robot_3D_draw(robot.joint,tool);
-    
-    // Draw mining depths
-    mining=exchange_mining_depth.read();
-    glColor3f(0,1,0);
-    glBegin(GL_LINES);
-    for (int d=0;d<aurora::mining_depth::ndepth;d++) //< vertical samples across image
-    {
-        vec3 v=mining.depth[d]; // 3D viewed spot, in frame coords
-        if (v.z!=0.0)
-            glVertex3fv(v); 
-    }
-    glEnd();
-    
-    if (0) {
-        // Animate planned mining path
-        robot_joint_state mine_joint=mine_joint_base;
-        if (mp.mine_plan(mine_progress,mine_cut_depth,mine_joint)>=0)
-        {
-            robot_3D_draw(mine_joint,tool,0.3f);
-        }
-        mine_progress += 0.001f;
-        if (mine_progress>1.0f) mine_progress=0.0f;
-    }
-    
-    robot_3D_draw(last_joint_target,tool,0.3f);
-    
-    robot_3D_cleanup();
-
-
-
   // Accumulate drivetrain encoder counts into actual distances
   float fudge=1.0; // fudge factor to make distance equal reality
   float drivecount2m=fudge*0.96/12; // meters of driving per wheel encoder tick == circumference of wheel divided by encoder ticks per revolution
@@ -1101,12 +1053,75 @@ void robot_manager_t::update(void) {
 }
 
 
+robot_manager_t *robot_manager;
+unsigned int video_texture_ID=0;
+
+void robot_manager_t::update_GUI(void) {
+
+#if 1 /* enable for backend UI: dangerous, but useful for autonomy testing w/o frontend */
+  // Keyboard control
+  ui.update(oglKeyMap,robot);
+
+  // Click to set state:
+  if (robotState_requested<state_last) {
+    robot.state=robotState_requested;
+    robotPrintln("Entering new state %s (%d) by backend UI request",
+      state_to_string(robot.state),robot.state);
+    robotState_requested=state_last; // clear UI request
+  }
+#endif
+
+    update();
+
+    // Show estimated robot location
+    robot_2D_display(locator.merged);
+    robot_display_autonomy(telemetry.autonomy);
+    
+    // Draw current robot joint configuration (side view)
+    robot_3D_setup();
+    if (0) { // visually depict physical robot tilts (neat, but mining is robot relative)
+        glRotatef(nano.slot_F1.state.frame.pitch,1,0,0);
+        glRotatef(nano.slot_F1.state.frame.roll,0,1,0);
+    }
+    tool_type tool=robot.sensor.connected_tool();
+    robot_3D_draw(robot.joint,tool);
+    
+    // Draw mining depths
+    mining=exchange_mining_depth.read();
+    glColor3f(0,1,0);
+    glBegin(GL_LINES);
+    for (int d=0;d<aurora::mining_depth::ndepth;d++) //< vertical samples across image
+    {
+        vec3 v=mining.depth[d]; // 3D viewed spot, in frame coords
+        if (v.z!=0.0)
+            glVertex3fv(v); 
+    }
+    glEnd();
+    
+    if (0) {
+        // Animate planned mining path
+        robot_joint_state mine_joint=mine_joint_base;
+        if (mp.mine_plan(mine_progress,mine_cut_depth,mine_joint)>=0)
+        {
+            robot_3D_draw(mine_joint,tool,0.3f);
+        }
+        mine_progress += 0.001f;
+        if (mine_progress>1.0f) mine_progress=0.0f;
+    }
+    
+    robot_3D_draw(last_joint_target,tool,0.3f);
+    
+    robot_3D_cleanup();
+
+}
+
+
 void display(void) {
   robot_display_setup(robot_manager->robot);
 
-  robot_manager->update();
+  robot_manager->update_GUI();
   
-  robot_display_text(robot_manager->robot);
+  robot_display_finish(robot_manager->robot);
 
   if (video_texture_ID) {
     glTranslatef(field_x_GUI+350.0,100.0,0.0);
@@ -1128,9 +1143,6 @@ void display(void) {
 
 int main(int argc,char *argv[])
 {
-  // setenv("DISPLAY", ":0",1); // never forward GUI over X
-  glutInit(&argc,argv);
-
   // Set screen size
   int w=1000, h=600;
   for (int argi=1;argi<argc;argi++) {
@@ -1146,8 +1158,9 @@ int main(int argc,char *argv[])
       simulate_only=true;
       driver_test=true;
     }
-    else if (0==strcmp(argv[argi],"--nogui")) { // UNTESTED!
+    else if (0==strcmp(argv[argi],"--nogui")) { 
       show_GUI=false;
+      robotPrintgl_enable=false;
     }
     else if (0==strcmp(argv[argi],"--nodrive")) {
       nodrive=true;
@@ -1158,12 +1171,18 @@ int main(int argc,char *argv[])
       exit(1);
     }
   }
+  
+  if (show_GUI) {
+      // setenv("DISPLAY", ":0",1); // never forward GUI over X
+      glutInit(&argc,argv);
+  }
 
   robot_manager=new robot_manager_t;
   robot_manager->locator.merged.y=100;
   if (simulate_only) robot_manager->locator.merged.x=150;
 
-  if (show_GUI) {
+  if (show_GUI) 
+  { // interactive GUI version (for debugging)
     glutInitDisplayMode(GLUT_RGBA + GLUT_DOUBLE);
     glutInitWindowSize(w,h);
     glutCreateWindow("Robot Backend");
@@ -1173,9 +1192,12 @@ int main(int argc,char *argv[])
     glutMainLoop();
   }
   else
-  { // no-GUI version
+  { // fast stripped-down no-GUI version (for headless robot)
     while (true) {
       robot_manager->update();
+      robot_display_telemetry(robot_manager->robot);
+      
+      aurora::data_exchange_sleep(30); // limits CPU usage
     }
   }
   return 0;

@@ -4,7 +4,7 @@
     It interfaces with the pilot's keyboard and joystick (via aurora/ui.h).
     It displays telemetry (via aurora/robot.cpp).
   
-  Aurora Robotics, UAF, 2014-2021
+  Aurora Robotics, UAF, 2014-2023 (public domain)
 */
 #define AURORA_IS_FRONTEND 1
 
@@ -160,7 +160,7 @@ extern "C" void display(void) {
 	
 	robot_manager.update();
 	
-	robot_display_text(robot_manager.robot);
+	robot_display_finish(robot_manager.robot);
 	
 	glutSwapBuffers();
 	glutPostRedisplay();
