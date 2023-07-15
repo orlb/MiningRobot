@@ -180,9 +180,9 @@ void write_stl_triangle(FILE *f,
 {
     fprintf(f,"facet normal 0.0 0.0 0.0\n outer loop\n");
     
-    fprintf(f,"  vertex %f %f %f\n", A.x, A.y, A.z);
-    fprintf(f,"  vertex %f %f %f\n", B.x, B.y, B.z);
-    fprintf(f,"  vertex %f %f %f\n", C.x, C.y, C.z);
+    fprintf(f,"  vertex %.4f %.4f %.4f\n", A.x, A.y, A.z);
+    fprintf(f,"  vertex %.4f %.4f %.4f\n", B.x, B.y, B.z);
+    fprintf(f,"  vertex %.4f %.4f %.4f\n", C.x, C.y, C.z);
     
     fprintf(f," endloop\nendfaced\n");
 }
