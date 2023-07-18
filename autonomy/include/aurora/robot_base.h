@@ -182,6 +182,7 @@ typedef enum {
 	state_stow, ///< Begin stowing
 	state_stowed, ///< Finished stowing (wait forever)
 
+	state_POP, ///< Pop to resume previous autonomy state
 	state_last ///< end state (repeat from mine_drive)
 } robot_state_t;
 const char *state_to_string(robot_state_t state);

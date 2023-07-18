@@ -1,5 +1,5 @@
 /**
-  Aurora Robotics keyboard user interface code.
+  Aurora Robotics keyboard/joystick user interface code.
   
   This is used by both frontend (drive) and backend (backend_driver)
   to convert keyboard and joystick input into robot power commands.
@@ -156,11 +156,17 @@ public:
     std::string setPowerLimit(int keys[],char lowercase,char uppercase,const std::string &description,float &limit)
     {
 	    if (keys[lowercase]||keys[uppercase]) 
+	    {
 	        for (int num=1;num<=9;num++)
 	            if (keys['0'+num]) 
 	                limit=0.1f*num;
-	    
-	    return "\n  "+description+": "+std::to_string(limit)+"\n";
+	        if (keys['0']) limit=1.0f;
+	        if (keys['`'] || keys['~']) limit=0.0f;
+	    }
+	    //return "\n  "+description+": "+std::to_string(limit)+"\n";
+	    char buf[10];
+	    snprintf(buf,10,"%.0f%% ",limit*100.0f);
+	    return description+buf;
     }
 
 };
@@ -190,20 +196,13 @@ void robot_ui::update(int keys[],const robot_base &robot) {
 		keys_once[i]= (keys[i] && !keys_last[i]);
 		keys_last[i]=keys[i];
 	}
-	description="UI:\n";
+	description="UI ";
 
 // Power limits:
 	float scoopLimit=1.0; // limit on fork & dump
 	float armLimit=1.0; // limit on boom, stick, tilt, spin
 
 // Prepare a command:
-	if (keys[' ']) { // spacebar--full stop
-		stop();
-		robotState_requested=state_STOP;
-		return; // don't do anything else.  Just stop.
-	}
-	// else spacebar not down--check other keys for manual control
-	
 	left=right=0.0;
 	float forward=0.0, turn=0.0; //<- turned into left and right
 	
@@ -249,14 +248,14 @@ Joysticks have different axis and button numbering:
     // Defaults are for Logitech
     int axis_lx=1, axis_ly=2;
     int axis_rx=4, axis_ry=5;
-    int button_stop=3, button_low=1, button_med=2, button_high=4;
-//    int button_topleft=5, button_topright=6; // shoulder buttons
+    int button_stop=3, button_low=1, button_pop=4, button_high=2;
+    int button_topleft=5, button_topright=6; // shoulder buttons
     
     const char *joystick_name=oglJoystickName();
     if (joystick_name[0]=='S') { // Saitek
         axis_ry=3; // for some reason this uses axis 3
-        button_stop=1; button_low=3; button_med=4; button_high=2;
-//        button_topleft=7; button_topright=8;
+        button_stop=1; button_low=3; button_pop=2; button_high=4;
+        button_topleft=7; button_topright=8;
     }
 
 	/* Read left analog stick X and Y axes*/
@@ -287,87 +286,74 @@ Joysticks have different axis and button numbering:
 	if (keys[oglSpecialUp])    ry=+1.0;
 	if (keys[oglSpecialDown])  ry=-1.0;
 	
-	// limit adjustments shouldn't set the mode
-	bool notmode=(
-	    keys['t']!=1 && keys['p']!=1 && keys['m']!=1
-	    );
-    
 	// Pressing a button changes the mode persistently
-	bool modeChange=false;
-	if (js_button(button_stop,"") || (keys['1'] && notmode)) 
-		{ modeChange=true; joyMode=joyModeSTOP;}
-	if (js_button(button_low,"") || (keys['2'] && notmode))  
-		{ modeChange=true; joyMode=joyModeLow; }
-	if (js_button(button_med,"") || (keys['3'] && notmode))  
-		{ modeChange=true; joyMode=joyModeMed; }
-	if (js_button(button_high,"") || (keys['4'] && notmode)) 
-		{ modeChange=true;  joyMode=joyModeHigh; }
-
-	if (joyMode==joyModeSTOP) {
-		stop();
-		if (modeChange) robotState_requested=state_STOP;
+	if (js_button(button_low,"low") || keys['b'])  
+    { 
+        joyMode=joyModeLow; 
+        robotState_requested=joystickState; 
+    }
+	if (js_button(button_high,"high") || keys['h'])  
+	{ 
+	    joyMode=joyModeHigh; 
+        robotState_requested=joystickState; 
 	}
-	else {
-	    if (modeChange) robotState_requested=joystickState;
-	    switch (joyMode) {
-	    case joyModeSTOP: 
-	        stop(); 
-			break;
-	    case joyModeLow: 
-		    description += " Low: drive fork-dump ";
-		    forward=ly;
-		    turn=lx;
-		    
-		    fork=ry;
-		    dump=-rx;
-		    break;
-	    case joyModeMed:
-		    description += " Med: drive stick-boom ";
-		    forward=ly;
-		    turn=lx;
-		    
-		    stick=ry;
-		    boom=rx;
-		    break;
-	    case joyModeHigh:
-		    description += " High: stick-boom tilt-mine ";
-		    
-		    stick=ly;
-		    boom=lx;
-		    
-		    tilt=ry;
-		    tool=rx;
-		    break;
-	    default:
-	    	break;
-	    }
+	
+	if ((js_button_once(button_pop,"pop") && js_button(button_topright,"pop confirm")) || keys_once['p'])
+	{ 
+	    if (joyMode==joyModeSTOP) joyMode=joyModeHigh; 
+	    robotState_requested = state_POP; 
+	}
+	
+	if (js_button(button_topleft,"stop shoulder") || 
+	    js_button(button_stop,"stop button") || 
+	    keys[' ']) 
+    { 
+        joyMode=joyModeSTOP;
+        robotState_requested=state_STOP;
+	}
+    
+    switch (joyMode) {
+    case joyModeSTOP: 
+        stop(); 
+		break;
+    case joyModeLow: 
+	    description += " Low: drive fork-dump ";
+	    forward=ly;
+	    turn=lx;
+	    
+	    fork=ry;
+	    dump=-rx;
+	    break;
+    case joyModeHigh:
+	    description += " High: stick-boom tilt-mine ";
+	    
+	    stick=ly;
+	    boom=lx;
+	    
+	    tilt=ry;
+	    tool=rx;
+	    break;
+    default:
+    	break;
     }
 
 	if(joyDrive)
 	{   
-		description += "joystick\n";
+		description += " joystick";
 	}
 	joyDrive=!joyDone;
 
 // Adjust power limits
-	description+=setPowerLimit(keys,'p','P',"Drive power",driveLimit);
-	description+=setPowerLimit(keys,'t','T',"Tool power",toolLimit);
+    description+="\n  Limits:";
+	description+=setPowerLimit(keys,'p','P',"  Drive ",driveLimit);
+	description+=setPowerLimit(keys,'t','T',"  Tool ",toolLimit);
+	description+="\n";
 	
 
 // Drive keys:
 	left=driveLimit*(forward+turn);
 	right=driveLimit*(forward-turn);
-	
-    if(keys_once['t']||keys_once['T'])
-    {
-	    power.torque=~power.torque;
-    }
-
-	if(power.torque==0)
-		description+="  torque control\n";
-	else
-		description+="  speed control\n";
-
+    
     if (keys_once['l']||keys_once['L']) {
         power.read_L = !power.read_L;
     }

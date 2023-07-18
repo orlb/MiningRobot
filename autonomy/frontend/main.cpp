@@ -71,6 +71,12 @@ void robot_manager_t::update(void) {
 			command.power=ui.power;
 			command.state=robotState_requested;
 			robotPrintln("REQUESTING ROBOT STATE %s",state_to_string(robotState_requested));
+			
+			if (robotState_requested==state_POP) 
+			{
+			    /* Only send POP once, don't wait for ack */
+			    robotState_requested = state_last;
+			}
 		} 
 		else 
 		{ // normal powered driving

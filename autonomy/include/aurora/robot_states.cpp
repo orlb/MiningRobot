@@ -31,6 +31,8 @@ const char *state_to_string(robot_state_t state)
 	"stow", ///< Begin stowing
 	"stowed", ///< Finished stowing (wait forever)
 
+	"POP", ///< Pop last state
+
 	"last"
 	};
 
