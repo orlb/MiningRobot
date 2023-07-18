@@ -14,8 +14,9 @@
 
 int main() {
     // time in milliseconds between database writes (small = bigger database but better data resolution)
-    // int sleep_ms = 500; // Normal resolution mode
-    int sleep_ms = 30; // high resolution mode
+    //int sleep_ms = 500; // Low resolution mode
+    int sleep_ms = 100; // Normal resolution mode
+    //int sleep_ms = 30; // High resolution mode
     
     // Print this many demo values
     int verbose=10; 
@@ -39,7 +40,7 @@ int main() {
         dbname=test_cpp \
         user=postgres \
         password=" + dbpass + " \
-        hostaddr=127.0.0.1 \
+        hostaddr=10.10.10.2 \
         port=5432 \
         target_session_attrs=read-write"
     );

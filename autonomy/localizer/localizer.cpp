@@ -40,7 +40,7 @@ void marker_update_robot_pos(aurora::robot_loc2D & currentPos, const aurora::rob
 // Move the robot based on wheel encoder ticks
 aurora::robot_loc2D move_robot_encoder(const aurora::robot_loc2D &pos,const aurora::drive_encoders &encoderchange)
 {
-    float wheelbase=42; // cm between track centerlines
+    float wheelbase=1.9; // width in meters between tire centers (effective, including slip: actual is 1.05 meters)
     
     // Don't move if the encoders are stopped (save CPU and confidence loss)
     if (encoderchange.left == 0 && encoderchange.right==0) return pos;
@@ -62,7 +62,7 @@ aurora::robot_loc2D move_robot_encoder(const aurora::robot_loc2D &pos,const auro
 
 //How does wheels vs tracks work?
 // Move wheels forward by specified amounts
-    float maxjump=30.0f; // < avoids huge jumps due to startup
+    float maxjump=3.0f; // < avoids huge jumps due to startup
     if (fabs(encoderchange.left<maxjump) && fabs(encoderchange.right<maxjump)) 
     {
         wheel[0]+=FW*encoderchange.left;
@@ -105,7 +105,6 @@ int main() {
     //Data sources need to read from, these are defined in lunatic.h
     MAKE_exchange_drive_commands();
     MAKE_exchange_drive_encoders();
-    MAKE_exchange_stepper_report();
     MAKE_exchange_marker_reports();
 
     //Data source needed to write to, these are defined in lunatic.h
@@ -127,10 +126,10 @@ int main() {
     
     // Define our start configuration
     aurora::robot_loc2D pos;
-    pos.x = field_x_size/2;
-    pos.y = 100.0; // start location
-    pos.angle=179.0f;
-    pos.percent=5.0f; //<- placeholder, so we can see it change
+    pos.x = 1.0;
+    pos.y = 1.0; // start location
+    pos.angle=0.0f;
+    pos.percent=1.0f; //<- placeholder, so we can see it change
     
     aurora::drive_encoders lastencoder={0.0,0.0};
     int printcount=0; // <- moderate printing pace, for easier debugging
@@ -163,24 +162,17 @@ int main() {
         aurora::robot_coord3D robot3D=pos.get3D();
         
         // Start with camera coordinates relative to robot coordinates
+        // FIXME: kinematics
         aurora::robot_coord3D camera3D;
         camera3D.origin=vec3(0,-23.0,87.0); // centimeters relative to robot turning center
         
         // We define camera_heading == 0 -> camera is facing forward on robot
 
-        auto camera_heading=exchange_stepper_report.read(); 
-        std::cout << "current stability is:" << camera_heading.stable << "\n"; 
-        if (camera_heading.stable == 0)
-        {
-            camera3D.percent = 0.0;
-        }
-        else 
-        {
-            camera3D.percent = 100.0;
-        }
-        camera3D.X=aurora::vec3_from_angle(camera_heading.angle);
-            camera3D.Y=aurora::rotate_90_Z(camera3D.X);
-            camera3D.Z=vec3(0,0,1);
+        auto camera_heading=0; 
+        camera3D.percent = 100.0;
+        camera3D.X=aurora::vec3_from_angle(0.0);
+        camera3D.Y=aurora::rotate_90_Z(camera3D.X);
+        camera3D.Z=vec3(0,0,1);
             
             // Add the camera's inherent coordinate system and mounting angle
             aurora::robot_coord3D camera_downtilt;
@@ -191,7 +183,6 @@ int main() {
             camera_downtilt.Z=vec3( c, 0,-s); // camera Z is mostly robot +X (forward)
             camera_downtilt.percent = 100.0;
             aurora::robot_coord3D camera_total = robot3D.compose(camera3D.compose(camera_downtilt));
-            std::cout << "camera_total:" << camera_total.percent << "\n";
             exchange_obstacle_view.write_begin() = camera_total;
             exchange_obstacle_view.write_end();
             if (print) { printf("Camera: "); camera_total.print(); }
