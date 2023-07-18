@@ -104,7 +104,7 @@ void arduino_sensor_read(robot_base &robot)
     robot.joint.angle.boom=nano.slot_F1.state.boom.pitch;
     robot.joint.angle.stick=nano.slot_A1.state.stick.pitch;
     robot.joint.angle.tilt=nano.slot_A1.state.tool.pitch;
-    robot.joint.angle.spin=nano.slot_A1.state.tool.roll;
+    robot.joint.angle.spin=0.0f; // nano.slot_A1.state.tool.roll; // now hardware locked
     
     robot.joint.angle.fork=nano.slot_F1.state.fork.pitch;
     robot.joint.angle.dump=nano.slot_F1.state.dump.pitch;
