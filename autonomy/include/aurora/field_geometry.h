@@ -6,15 +6,16 @@
 
 /** These are the robot's dimensions, in centimeters. */
 enum {
-  robot_x=100/2, // Center to front-back of main robot, in cm
-  robot_y=50/2, // Center to left-right of main body, in cm
+  robot_x=140/2, // Chassis center to front-back of main robot, in cm
+  robot_y=120/2, // Chassis center to left-right of main body, in cm
   robot_track_y=20, // width of tracks, frame, motors, etc
   robot_inside_clearance=20, // Z between box and tracks
   
   robot_box_y=20, // half of box width
   robot_box_clearance=15, // Z clearance under storage box
   
-  robot_mine_x=robot_x+19, // center of robot's mining head
+  robot_mine_x=robot_x+30, // center of robot's mining head
+  robot_mine_width=62, // front scoop width
   robot_mine_y=0, // mining head center
   robot_mine_radius=15, // radius around robot mining head
   robot_mine_clearance=13, // Z under mining head
@@ -28,13 +29,12 @@ enum {
   Both coordinates are always positive.
 */
 enum {
-	field_y_size=680, // Y-length of field, in centimeters
-//	field_y_size=500, // Y-length of field, in centimeters for the test arena
-	field_y_start_zone=140, // y end of start area, in centimeters
-	field_y_mine_zone=field_y_start_zone+320, // y where mining area starts
+	field_y_size=3000, // Y-length of field, in centimeters
+	field_y_start_zone=250, // y end of start area, in centimeters
+	field_y_mine_zone=field_y_start_zone+350, // y where mining area starts
 	field_y_mine_start=field_y_mine_zone+30, // y where it's safe to start mining
 	
-  field_x_size=250, // X-width of field, in cm
+  field_x_size=1200, // X-width of field, in cm
 
   field_angle_trough=+90, // Robot's heading angle when dumping at trough
   

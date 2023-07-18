@@ -28,7 +28,8 @@ vec2 robotMouse_pixel; // pixel position of robot mouse
 vec2 robotMouse_cm; // field-coordinates position of mouse
 bool robotMouse_down=false;
 
-double robotPrintf_x=field_x_GUI, robotPrintf_y=0.0, robotPrintf_line=-25.0;
+double robotPrintf_x=field_x_GUI, robotPrintf_y=0.0;
+double robotPrintf_line=-75.0; // size, in field cm, between lines of displayed text
 
 /* Return the current time, in seconds */
 double robotTime(void) {
@@ -120,8 +121,8 @@ void robot_3D_setup(float Zrot=-90.0f) {
     //    X+ toward camera, Y+ screen right, Z+ screen up
     glPushMatrix();
     glScalef(100.0f,100.0f,0.1f); // from cm to meters (and squish Z so it doesn't clip)
-    glTranslatef(1.0f,0.0f,0.0f); // meters field coordinates to origin of side view of robot
-    float zoom=2.5; // Zoom from field coords to robot coords
+    glTranslatef(3.0f,0.0f,0.0f); // meters field coordinates to origin of side view of robot
+    float zoom=12.0; // Zoom from field coords to robot 3D display
     glScalef(zoom,zoom,1.0f);
     glRotatef(-90.0f,1.0f,0.0f,0.0f); // rotate around X to front view
     glRotatef(Zrot,0.0f,0.0f,1.0f); // rotate around Z to side view
@@ -292,7 +293,7 @@ void robot_display_setup(const robot_base &robot) {
 	glClear(GL_COLOR_BUFFER_BIT+GL_DEPTH_BUFFER_BIT);
 
 	// Scale to showing the whole field, in centimeter units
-	float xShift=-0.9, yShift=-0.9; // GL-coordinates origin of field
+	float xShift=-0.8, yShift=-0.9; // GL-coordinates origin of field
 	glTranslatef(xShift,yShift,0.0);
 	float yScale=1.8/field_y_size;
 	float xScale=yScale*ht/wid;
@@ -485,23 +486,34 @@ void robot_2D_display(const robot_localization &loc,double alpha=1.0)
 	glColor4f(0.8,0.8*conf,0.8*conf,alpha);
 	glBegin(GL_TRIANGLE_FAN);
 	//float ang=loc.angle*M_PI/180.0;
-	vec2 C=loc.center(); // (loc.x,loc.y); // center of robot
-	vec2 F=robot_x*loc.forward(); // (+30.0*sin(ang), +30.0*cos(ang)); // robot forward direction
-	vec2 R=robot_y*loc.right(); // (+70.0*cos(ang), -70.0*sin(ang)); // robot right side
-	double d=1.0; // front wheel deploy?
+	float m2cm=100.0; // convert meters to centimeters
+	vec2 C=m2cm*loc.center(); // (loc.x,loc.y); // center of robot
+	vec2 f=loc.forward();
+	vec2 r=loc.right();
+	vec2 F=robot_x*f; // (+30.0*sin(ang), +30.0*cos(ang)); // robot forward direction
+	vec2 R=robot_y*r; // (+70.0*cos(ang), -70.0*sin(ang)); // robot right side
+	vec2 MF=robot_mine_x*f;
+	vec2 MR=robot_mine_width*0.5*r;
 
-	glColor4f(0.0,0.8*conf,0.0,alpha); // green mining tool
-	glVertex2fv(C+robot_mine_x*loc.forward());
-
-	glColor4f(0.8*conf,0.0,0.0,alpha); // red front wheels
-	glVertex2fv(C-R+d*F);
-
-	glColor4f(0.0,0.0,0.0,alpha); // black back
-	glVertex2fv(C-R-F);
+	glColor4f(0.0,0.0,0.0,alpha); // black back wheels
+	glVertex2fv(C-F); // start at back center
 	glVertex2fv(C+R-F);
 
-	glColor4f(0.8*conf,0.0,0.0,alpha); // red front wheels
+	glColor4f(0.8*conf,0.0,0.0,alpha); // red front right wheel
 	glVertex2fv(C+R+F);
+	glVertex2fv(C+MR+F);
+	
+	glColor4f(0.0,0.8*conf,0.0,alpha); // green mining tool
+	glVertex2fv(C+MR+MF);
+	glVertex2fv(C-MR+MF);
+
+	glColor4f(0.8*conf,0.0,0.0,alpha); // red front left wheel
+	glVertex2fv(C-MR+F);
+	glVertex2fv(C-R+F);
+	
+	glColor4f(0.0,0.0,0.0,alpha); // black back left wheel
+	glVertex2fv(C-R-F);
+	
 	glEnd();
 
 	glColor4f(1.0,1.0,1.0,1.0);
