@@ -215,6 +215,11 @@ const robot_joint_state dump1_joint_scoop={5,-90, 0,0,0,0};
 const robot_joint_state dump2_joint_scoop={-20,-90, 0,0,0,0};
 const robot_joint_state dump3_joint_scoop={5,-75, 0,0,0,0};
 
+
+// Balance a heavy front load by leaning arm way back (balances 2kg on front)
+// angles	FD	 10.2	-12.7	BSTS	 34.9	 76.3	-23.0	  0.0
+const robot_joint_state balance_drive_joint_state={10,-10, 35,75,-20,0};
+
 /*********** Mining Path Planning ***************/
 /// Starting configuration during mining
 const robot_joint_state mine_joint_base={-10,-40, 0,0,0,0};
