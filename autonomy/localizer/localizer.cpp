@@ -9,8 +9,8 @@
 #include "aurora/lunatic.h"
 
 const aurora::vision_marker_reports knownMarkers {
-    aurora::vision_marker_report(field_x_trough_center, 00.0, 180.0, 13), //mullet thing
-    aurora::vision_marker_report(field_x_trough_center, 30.0, 180.0, 14), //cat
+    aurora::vision_marker_report(4.0, 5.0, 180.0, 2), //blocky, facing drive area
+    aurora::vision_marker_report(7.0, 3.0, 90.0, 17), //descending bird, facing pit
     //aurora::vision_marker_report(field_x_trough_center, 00.0, 180.0, 2), //fabric
     };
 

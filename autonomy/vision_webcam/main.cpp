@@ -67,39 +67,7 @@ using namespace cv;
 using namespace aruco;
 using namespace std;
 
-
-// Store info about how this marker is scaled, positioned and oriented
-struct marker_info_t {
-	int id; // marker's ID, from 0-1023 
-	float true_size; // side length, in meters, of black part of pattern
-	
-	float x_shift; // translation from origin, in meters, of center of pattern
-	float y_shift; 
-	float z_shift; 
-	
-	float angle; // orientation, in degrees, relative to field up
-};
-
-const static marker_info_t marker_info[]={
-	{-1,0.305}, // fallback default case
-	
-/* 2023-05 Full scale vinyl sticker on corrugated plastic */
-	{2, 0.305, 1.0,0.0,0.0,   0.0 },
-	{17,0.305, 4.0,0.0,0.0,   0.0 },
-
-};
-
-// Look up the calibration parameters for this marker
-const marker_info_t &get_marker_info(int id) {
-	for (int i=1;i<sizeof(marker_info)/sizeof(marker_info_t);i++) {
-		if (marker_info[i].id==id) 
-			return marker_info[i];
-	}
-	return marker_info[0];
-}
-
-
-
+float marker_size = 0.305; // dimensions (meters) of marker black area
 
 
 bool showGUI=false;
@@ -153,8 +121,7 @@ cv::Point2f to_2D(const Marker &m,float x=0.0,int xAxis=2,int yAxis=0)
 	Rodrigues(m.Rvec, Rot); // euler angles to rotation matrix
 
 	cv::Point2f ret;
-	const marker_info_t &mi=get_marker_info(m.id);
-	float scale=mi.true_size*70; // world meters to screen pixels
+	float scale=marker_size*70; // world meters to screen pixels
 	ret.x=scale*(m.Tvec.at<float>(xAxis,0)+x*Rot.at<float>(xAxis,xAxis));
 	ret.y=scale*(m.Tvec.at<float>(yAxis,0)+x*Rot.at<float>(yAxis,xAxis));
 	
@@ -193,8 +160,6 @@ vec3 extract_row(const cv::Mat &matrix4x4,int row) {
 */
 void extract_location(location_binary &bin,const Marker &marker)
 {
-	const marker_info_t &mi=get_marker_info(marker.id);
-
 	// Extract 3x3 rotation matrix
 	Mat Rot(3,3,CV_32FC1);
 	Rodrigues(marker.Rvec, Rot); // euler angles to rotation matrix
@@ -235,7 +200,7 @@ if (false) {
   FIXME: sanity checking, single unified header with main vision/ code.
 */
 
-	double scale=mi.true_size;
+	double scale=marker_size;
 	
     vec3 O = extract_row(full,3)*scale;
     vec3 X = extract_row(full,0);
@@ -247,12 +212,12 @@ if (false) {
     }
 	
 	bin.valid=1;
-	bin.x=back.at<float>(0,3)*scale+mi.x_shift;
-	bin.y=back.at<float>(1,3)*scale+mi.y_shift;
-	bin.z=back.at<float>(2,3)*scale+mi.z_shift;
+	bin.x=back.at<float>(0,3)*scale;//+mi.x_shift;
+	bin.y=back.at<float>(1,3)*scale;//+mi.y_shift;
+	bin.z=back.at<float>(2,3)*scale;//+mi.z_shift;
 	float ang_rad=atan2(back.at<float>(1,0),-back.at<float>(0,0));
 	float ang_deg=180.0/M_PI*ang_rad;
-	bin.angle=ang_deg + mi.angle;
+	bin.angle=ang_deg;// + mi.angle;
 	bin.marker_ID=marker.id;
 
 	// Print grep-friendly output
@@ -362,7 +327,6 @@ int main(int argc,char **argv)
 		for (unsigned int i=0; i<TheMarkers.size(); i++) {
 		    if (i>=n_locs) break;
 			Marker &marker=TheMarkers[i];
-			const marker_info_t &mi=get_marker_info(marker.id);
 			extract_location(locs[i],marker);
 		}
 		/*
