@@ -86,6 +86,7 @@ int main(int argc,const char *argv[]) {
     bool aruco=true; // look for computer vision markers in RGB data
     bool obstacle=true; // look for obstacles/driveable areas in depth data
     int erode=3; // image erosion passes
+    float minSize=0.05; // fraction of image for aruco markers
     for (int argi=1;argi<argc;argi++) {
       std::string arg=argv[argi];
       if (arg=="--gui") show_GUI++;
@@ -109,7 +110,7 @@ int main(int argc,const char *argv[]) {
     
     aruco_detector *detector=0;
     if (aruco) {
-        detector = new aruco_detector();
+        detector = new aruco_detector(minSize);
     }
 
     while (true) {

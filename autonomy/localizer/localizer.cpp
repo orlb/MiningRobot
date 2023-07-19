@@ -18,9 +18,9 @@
     angle is in degrees, facing along the +X direction of the marker
 */
 const aurora::vision_marker_reports knownMarkers {
-    aurora::vision_marker_report(4.0, 5.0, 180.0, 2), //blocky, facing out toward drive area
-    aurora::vision_marker_report(0.0, 0.0, 90.0, 6), //ghost, behind charge area
-    aurora::vision_marker_report(7.0, 3.0, -90.0, 17), //descending bird, behind the pit
+    aurora::vision_marker_report(5.0, 10.0, 180.0, 2), //blocky, facing out toward drive area
+    aurora::vision_marker_report(0.0, 2.0, 90.0, 6), //ghost, behind charge area
+    aurora::vision_marker_report(12.0, 4.0, -90.0, 17), //descending bird, behind the pit
     //aurora::vision_marker_report(field_x_trough_center, 00.0, 180.0, 2), //fabric
     };
 
@@ -190,19 +190,22 @@ int main() {
             loc_changed=true;
         }
         aurora::robot_loc2D new2D=move_robot_encoder(pos,encoder_change);
+        pos=new2D;
         lastencoder = currentencoder;
         if (loc_changed) {
-            exchange_plan_current.write_begin() = new2D;
+            exchange_plan_current.write_begin() = pos;
             exchange_plan_current.write_end();
             loc_changed=false;
         }
-        pos=new2D;
-        
-        // Create camera coordinate transform
-        aurora::robot_coord3D robot3D=pos.get3D();
         
         // FIXME: incorporate gyro data here?
-        
+
+
+        // Create camera coordinate transform
+	// Camera wants robot's X axis (rotated by 90)
+	aurora::robot_loc2D  camera2D=pos;
+	camera2D.angle -= 90.0f; // robot Y instead of X axis
+        aurora::robot_coord3D robot3D=camera2D.get3D();
         
         // If you see a newly updated aruco marker, incorporate it into your likely position
         aurora::robot_link_coords robot_links(exchange_backend_state.read().joint,robot3D);

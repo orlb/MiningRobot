@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <opencv_storage>
-<image_Width>1920</image_Width>
-<image_Height>1080</image_Height>
+<image_Width>640</image_Width>
+<image_Height>480</image_Height>
 <board_Width>7</board_Width>
 <board_Height>7</board_Height>
 <square_Size>2.5000000000000000e+00</square_Size>
@@ -13,7 +13,7 @@
   <cols>3</cols>
   <dt>d</dt>
   <data>
-    1.3382619337512929e+03 0. 960. 0. 1.3382619337512929e+03 540. 0. 0.
+    405. 0. 320. 0. 405. 240. 0. 0.
     1.</data></Camera_Matrix>
 <Distortion_Coefficients type_id="opencv-matrix">
   <rows>5</rows>
