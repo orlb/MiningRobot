@@ -249,7 +249,8 @@ int main(int argc,char *argv[]) {
     MAKE_exchange_plan_current();
     MAKE_exchange_obstacle_view();
     MAKE_exchange_field_drivable();
-    MAKE_exchange_marker_reports();
+    MAKE_exchange_marker_reports_depth();
+    MAKE_exchange_marker_reports_webcam();
     
     MAKE_exchange_plan_target();
     //MAKE_exchange_drive_commands();
@@ -275,8 +276,10 @@ int main(int argc,char *argv[]) {
         debug_coords(camera3D,"camera",img);
         
         // Draw all detected computer vision markers (only when seen though)
-        if (exchange_marker_reports.updated())
-            draw_markers(camera3D,exchange_marker_reports.read(),img);
+        if (exchange_marker_reports_depth.updated())
+            draw_markers(camera3D,exchange_marker_reports_depth.read(),img);
+        if (exchange_marker_reports_webcam.updated())
+            draw_markers(camera3D,exchange_marker_reports_webcam.read(),img);
             
         // Draw the path planning target position
         aurora::robot_navtarget navtarget=exchange_plan_target.read();
