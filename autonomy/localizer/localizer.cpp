@@ -1,23 +1,34 @@
-// Basic skeleton read/write file for the localizer, used to make sure we can read out all the data,
-// as well as write out all the data. Contains no logic, allows for a testing of the whole system
-// reading data.
+/*
+ The localizer figures out where the robot is located in 3D space, based on:
+    - Wheel encoders
+    - Computer vision markers
 
-//
+ Matt Perry & Orion Lawlor, 2019-2023 (Public Domain)
+*/
 #include <iostream>
 #include <stdio.h>
 #include "aurora/data_exchange.h"
 #include "aurora/lunatic.h"
+#include "aurora/kinematics.h"
+#include "aurora/kinematic_links.cpp"
 
+/*
+ These are the installed computer vision marker locations on the field.
+    x,y are in meters
+    angle is in degrees, facing along the +X direction of the marker
+*/
 const aurora::vision_marker_reports knownMarkers {
-    aurora::vision_marker_report(4.0, 5.0, 180.0, 2), //blocky, facing drive area
-    aurora::vision_marker_report(7.0, 3.0, 90.0, 17), //descending bird, facing pit
+    aurora::vision_marker_report(4.0, 5.0, 180.0, 2), //blocky, facing out toward drive area
+    aurora::vision_marker_report(0.0, 0.0, 90.0, 6), //ghost, behind charge area
+    aurora::vision_marker_report(7.0, 3.0, -90.0, 17), //descending bird, behind the pit
     //aurora::vision_marker_report(field_x_trough_center, 00.0, 180.0, 2), //fabric
     };
 
-void marker_update_robot_pos(aurora::robot_loc2D & currentPos, const aurora::robot_coord3D & currentReportCoord,const int32_t markerID){
+void marker_update_robot_pos(aurora::robot_loc2D & currentPos, const aurora::robot_coord3D & currentReportCoord,const int32_t markerID)
+{
     for(aurora::vision_marker_report known : knownMarkers){
          if ( markerID == known.markerID){
-            float weight=0.3; // <- blend in this much of the new report (higher=faster, more jitter).  FIXME: should depend on the confidence value or range.
+            float weight=0.2; // <- blend in this much of the new report (higher=faster, more jitter).  FIXME: should depend on the confidence value or range.
             
             vec3 diff = known.coords.origin - currentReportCoord.origin;
             float diffwt = weight;
@@ -28,12 +39,46 @@ void marker_update_robot_pos(aurora::robot_loc2D & currentPos, const aurora::rob
             float anglediff = aurora::angle_signed_diff(known.coords.extract_angle(), currentReportCoord.extract_angle());
             float anglediffwt = weight;
             currentPos.angle += anglediff*anglediffwt;
-            std::cout << anglediff << "= angle diff \n";
-            std::cout << known.coords.extract_angle() << " = known angle, " <<  currentReportCoord.extract_angle() << " = reported angle \n";
-        
+            if (0) 
+            {
+                std::cout << anglediff << "= angle diff \n";
+                std::cout << known.coords.extract_angle() << " = known angle, " <<  currentReportCoord.extract_angle() << " = reported angle \n";
+            }
+            
+            // If the differences are small, we've converged and should have more confidence.
+            if (length(diff)<0.3) currentPos.percent+=5.0;
+            else currentPos.percent *=0.98;
+            
+            if (fabs(anglediff)<2.0) currentPos.percent+=3.0;
+            else currentPos.percent *=0.99;
+            
+            if (currentPos.percent>100.0f) currentPos.percent=100.0f;
         }
     }
    
+}
+
+/// Update this robot position based on the computer vision markers seen
+void update_from_markers(aurora::robot_loc2D &pos,const aurora::robot_coord3D &camera,const aurora::vision_marker_reports &reports,bool print)
+{
+    for (aurora::vision_marker_report report : reports)
+        if (report.is_valid())
+        {
+            // Put the marker in world coordinates
+            aurora::robot_coord3D marker_coords=camera.compose(report.coords);
+            marker_coords.percent = report.coords.percent; //<- camera is essentially fixed here
+            
+            // Sanity-check marker coordinates
+            if (marker_coords.Y.z<0.7) { // not sane
+                if (print) { printf("     Invalid marker%d: ",report.markerID); marker_coords.print(); }
+            }
+            else 
+            { 
+                // Re-estimate robot position from marker position
+                marker_update_robot_pos(pos,marker_coords,report.markerID);
+                if (print) { printf("     Marker%d: ",report.markerID); marker_coords.print(); }
+            }
+        }
 }
 
 
@@ -105,15 +150,13 @@ int main() {
     //Data sources need to read from, these are defined in lunatic.h
     MAKE_exchange_drive_commands();
     MAKE_exchange_drive_encoders();
-    MAKE_exchange_marker_reports();
+    MAKE_exchange_marker_reports_depth();
+    MAKE_exchange_marker_reports_webcam();
+    MAKE_exchange_backend_state();
 
     //Data source needed to write to, these are defined in lunatic.h
     MAKE_exchange_plan_current();
     MAKE_exchange_obstacle_view();
-    
-    // Zero out all markers
-    exchange_marker_reports.write_begin()=aurora::vision_marker_reports();
-    exchange_marker_reports.write_end();
     
     // Zero out detected obstacles and such (we have no localization, so they're old)
     MAKE_exchange_field_drivable();
@@ -135,8 +178,8 @@ int main() {
     int printcount=0; // <- moderate printing pace, for easier debugging
     bool loc_changed=true;
     while (true) {
-        bool print=true;
-        if ((printcount++%50)==0) print=true;
+        bool print=false;
+        if ((printcount++%30)==0) print=true;
         
         aurora::drive_commands currentdrive = exchange_drive_commands.read();
      
@@ -154,59 +197,31 @@ int main() {
             loc_changed=false;
         }
         pos=new2D;
-        if (print) { printf("Robot: "); pos.print(); }
+        
+        // Create camera coordinate transform
+        aurora::robot_coord3D robot3D=pos.get3D();
         
         // FIXME: incorporate gyro data here?
         
-     // Create camera coordinate transform
-        aurora::robot_coord3D robot3D=pos.get3D();
         
-        // Start with camera coordinates relative to robot coordinates
-        // FIXME: kinematics
-        aurora::robot_coord3D camera3D;
-        camera3D.origin=vec3(0,-23.0,87.0); // centimeters relative to robot turning center
-        
-        // We define camera_heading == 0 -> camera is facing forward on robot
-
-        auto camera_heading=0; 
-        camera3D.percent = 100.0;
-        camera3D.X=aurora::vec3_from_angle(0.0);
-        camera3D.Y=aurora::rotate_90_Z(camera3D.X);
-        camera3D.Z=vec3(0,0,1);
+        // If you see a newly updated aruco marker, incorporate it into your likely position
+        aurora::robot_link_coords robot_links(exchange_backend_state.read().joint,robot3D);
+        if (exchange_marker_reports_depth.updated()) {
+            const aurora::robot_coord3D &camera=robot_links.coord3D(aurora::link_depthcam);
+            update_from_markers(pos,camera,exchange_marker_reports_depth.read(),print);
+            loc_changed=true;
+        }
+        if (exchange_marker_reports_webcam.updated()) {
+            const aurora::robot_coord3D &camera=robot_links.coord3D(aurora::link_drivecam);
+            update_from_markers(pos,camera,exchange_marker_reports_webcam.read(),print);
+            loc_changed=true;
+        }
             
-            // Add the camera's inherent coordinate system and mounting angle
-            aurora::robot_coord3D camera_downtilt;
-            vec3 tilt=aurora::vec3_from_angle(20.0);
-            float c=tilt.x, s=tilt.y;
-            camera_downtilt.X=vec3( 0,-1, 0); // camera X is robot -Y
-            camera_downtilt.Y=vec3(-s, 0,-c); // camera Y is mostly down
-            camera_downtilt.Z=vec3( c, 0,-s); // camera Z is mostly robot +X (forward)
-            camera_downtilt.percent = 100.0;
-            aurora::robot_coord3D camera_total = robot3D.compose(camera3D.compose(camera_downtilt));
-            exchange_obstacle_view.write_begin() = camera_total;
-            exchange_obstacle_view.write_end();
-            if (print) { printf("Camera: "); camera_total.print(); }
+        if (print) { printf("Robot: "); pos.print(); }
+        
 
-        
-        
-     // If you see a newly updated aruco marker, incorporate it into your likely position
-            if (exchange_marker_reports.updated()) {
-                const aurora::vision_marker_reports &currentvision = exchange_marker_reports.read();
-                for (aurora::vision_marker_report report : currentvision)
-                    if (report.is_valid())
-                    {
-                        // Put the marker in world coordinates
-                        aurora::robot_coord3D marker_coords=camera_total.compose(report.coords);
-                        // fixme: estimate robot position from marker position
-                        marker_update_robot_pos(pos,marker_coords,report.markerID);
-                        if (print) { printf("Marker%d: ",report.markerID); marker_coords.print(); }
-                        loc_changed=true;
-                    }
-    
-                if (print) { printf("\n"); }
-        // Limit our cycle rate to 100Hz maximum (to save CPU)
-            }
-        aurora::data_exchange_sleep(10);
+        // Limit our cycle rate (to save CPU)
+        aurora::data_exchange_sleep(30);
 
     }
     return 0;

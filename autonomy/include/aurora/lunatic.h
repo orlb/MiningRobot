@@ -265,7 +265,7 @@ struct vision_marker_report {
     // Return true if we're a valid report
     inline bool is_valid() const { return markerID!=0; }
     
-    enum {max_count=2};
+    enum {max_count=4};
     
     vision_marker_report() :markerID(0) {}
     
@@ -296,7 +296,8 @@ report a computer vision derived marker position to the localizer:
     Read by the localizer
 Coordinate system: camera-relative coordinates
 */
-#define MAKE_exchange_marker_reports()   aurora::data_exchange<aurora::vision_marker_reports> exchange_marker_reports("vision_marker.reports")
+#define MAKE_exchange_marker_reports_depth()   aurora::data_exchange<aurora::vision_marker_reports> exchange_marker_reports_depth("vision_marker_depth.reports")
+#define MAKE_exchange_marker_reports_webcam()   aurora::data_exchange<aurora::vision_marker_reports> exchange_marker_reports_webcam("vision_marker_webcam.reports")
 
 
 

@@ -20,80 +20,11 @@ From the depth images, we extract drivable / non-drivable areas.
 #include "vision/realsense_camera.hpp"
 #include "vision/realsense_camera.cpp"
 
-#include "vision/aruco_detector.hpp"
-#include "vision/aruco_detector.cpp"
-
 // Obstacle detection
 #include "vision/grid.hpp"
 #include "vision/grid.cpp"
 
 using namespace aurora;
-
-/* Fill out computer vision marker reports, based on observations from aruco */
-class vision_marker_watcher {
-public:
-    aurora::vision_marker_reports reports;
-    int index;
-    
-    // Return the number of valid markers seen
-    int found_markers() { return index; }
-    
-    vision_marker_watcher() :index(0)
-    {
-    }
-    
-    void found_marker(const cv::Mat &matrix4x4,const aruco::Marker &marker,int ID)
-    {
-        printf("  MARKER %d: ",ID);
-        
-        double size=18.0; // physical size of marker, in centimeters
-        if (ID==6) {  // ghost
-            size=116.7; // <- big fabric, 1.5 meters including whitespace 
-        }
-        else if (ID==14) {  // small cat marker (debugging)
-            size=14.5; 
-        }
-        else if (ID==13) {  // large mullet
-            size=25; 
-        } 
-        else if (ID==7) {  // mask
-            size=5; 
-        }
-        else {
-            printf("Ignoring--unknown number %d\n",ID);
-            return;
-        }
-        
-        if (index>=aurora::vision_marker_report::max_count) {
-            printf("Ignoring--too many reports already\n");
-            return;
-        }
-        aurora::vision_marker_report &report=reports[index];
-        index++;
-        
-        report.markerID=ID;
-        report.coords.origin=size*extract_row(matrix4x4,3);
-        
-        // Swap Aruco Y-out Z-down, to camera coords Y-down Z-out
-        report.coords.X=extract_row(matrix4x4,0);
-        report.coords.Y=-extract_row(matrix4x4,2); 
-        report.coords.Z=extract_row(matrix4x4,1);
-        
-        float min_area=120.0*120.0; // pixel area onscreen to reach 0% confidence
-        report.coords.percent=90.0*(1.0-min_area/(min_area+marker.getArea()));
-        
-        report.coords.print();
-    }
-private:
-    // Extract a row of this OpenCV 4x4 matrix, as a 3D vector
-    vec3 extract_row(const cv::Mat &matrix4x4,int row) {
-        return vec3(
-            matrix4x4.at<float>(0,row),
-            matrix4x4.at<float>(1,row),
-            matrix4x4.at<float>(2,row)
-        );
-    }
-};
 
 /* Erode depth data: increase black space around missing data, for reliability*/
 void erode_depth(realsense_camera_capture &cap,int erode_depth) {
@@ -163,7 +94,7 @@ vec3 world_from_depth(const realsense_camera_capture &cap,
     const float sanity_distance_min = 0.5; // mostly parts of robot if they're too close
     const float sanity_distance_max = 10.5; // depth gets ratty if it's too far out
 
-    vec3 world(0,-20.0,-20.0); // assume invalid depth
+    vec3 world(0,20.0,-20.0); // assume invalid depth
     
     float depth=cap.get_depth_m(x,y);    
     if (depth>sanity_distance_min && depth<sanity_distance_max) 
@@ -221,7 +152,6 @@ void write_depth_to_STL(const realsense_camera_capture &cap,
 int main(int argc,const char *argv[]) {
     int show_GUI=0;
     //Data sources need to write to, these are defined by lunatic.h for what files we will be communicating through
-    MAKE_exchange_marker_reports(); // for reporting aruco markers
     MAKE_exchange_backend_state(); // for joint angles
     MAKE_exchange_mining_depth(); // for viewed depth data
 
@@ -231,14 +161,12 @@ int main(int argc,const char *argv[]) {
     
     int res=480; // camera's requested vertical resolution
     int fps=5; // camera's frames per second 
-    bool aruco=true; // look for computer vision markers in RGB data
     int erode=1; // image erosion passes (remove bad data around depth discontinuities)
     for (int argi=1;argi<argc;argi++) {
       std::string arg=argv[argi];
       if (arg=="--gui") show_GUI++;
       else if (arg=="--res") res=atoi(argv[++argi]); // manual resolution
       else if (arg=="--fps") fps=atoi(argv[++argi]); // manual framerate
-      else if (arg=="--no-aruco") aruco=false; 
       else if (arg=="--erode") erode=atoi(argv[++argi]);
       
       else {
@@ -253,10 +181,6 @@ int main(int argc,const char *argv[]) {
     realsense_camera cam(res,fps);
     printf("Connected.\n");
     
-    aruco_detector *detector=0;
-    if (aruco) {
-        detector = new aruco_detector();
-    }
     
     int frame_count=0;
 
@@ -268,17 +192,6 @@ int main(int argc,const char *argv[]) {
         // Helper script maybe define an way to compare in realsense.h
         // ex: cap.blend(last);
 
-        
-        // Run aruco marker detection on color image
-        if (aruco)
-        {
-            vision_marker_watcher watcher;
-            detector->find_markers(cap.color_image,watcher,show_GUI);
-            if (watcher.found_markers()>0) { // only write if we actually saw something.
-                exchange_marker_reports.write_begin()=watcher.reports;
-                exchange_marker_reports.write_end();
-            }
-        }
         
         // Grab depth image (once it's stable)
         if (frame_count++ > 40) {

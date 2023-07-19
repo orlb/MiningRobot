@@ -15,6 +15,7 @@ detection library.
 #include "aruco/aruco.h"
 #include "aruco/cvdrawingutils.h"
 
+
 class aruco_detector {
 public:
     aruco_detector(float min_size=0.1, const char *cam_parameters="camera.xml");
