@@ -148,11 +148,12 @@ void robot_manager_t::update(void) {
 	
 	robotPrintln("Location %.0f,%0.0f,%0.0f",robot.loc.x,robot.loc.y,robot.loc.angle);
 	
-	robot_2D_display(robot.loc);
 	
 	robot_3D_setup();
 	robot_3D_draw(robot.joint,robot.sensor.connected_tool());
 	robot_3D_cleanup();
+	
+	robot_2D_display(robot.loc);
 	
 	robot_display_autonomy(telemetry.autonomy);
 
