@@ -386,6 +386,11 @@ public:
     // Zero out the joints until we hear otherwise
     for (int i=0;i<robot_joint_state::count;i++) robot.joint.array[i]=0.0f;
     
+    // Restore previous accumulated data (so we don't lose daily totals)
+    const robot_base &old_state = exchange_backend_state.read();
+    robot.accum = old_state.accum;
+    
+    
     ui.joystickState = state_backend_driver; // we're the backend
     
     arduino_setup_exchange();
