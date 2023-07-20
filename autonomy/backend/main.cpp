@@ -804,11 +804,11 @@ void robot_manager_t::autonomous_state()
     }
     else
     {
-        if(time_in_state<2.0) {
+        if(time_in_state<1.5) {
             // let dirt settle, read right channel
             robot.power.read_L=0;
         }
-        else if (time_in_state<4.0) { // read left channel
+        else if (time_in_state<3.0) { // read left channel
             robot.power.read_L=1;
         }
         else {
