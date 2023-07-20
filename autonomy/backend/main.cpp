@@ -804,11 +804,11 @@ void robot_manager_t::autonomous_state()
     }
     else
     {
-        if(time_in_state<1.5) {
+        if(time_in_state<2.0) {
             // let dirt settle, read right channel
             robot.power.read_L=0;
         }
-        else if (time_in_state<3.0) { // read left channel
+        else if (time_in_state<4.0) { // read left channel
             robot.power.read_L=1;
         }
         else {
@@ -893,7 +893,7 @@ typedef std::chrono::high_resolution_clock roboclock;
 void robot_manager_t::update(void) {
     static auto clock_start=roboclock::now();
     
-    cur_time=0.001*(std::chrono::duration_cast<std::chrono::nanoseconds>(
+    cur_time=0.001*(std::chrono::duration_cast<std::chrono::milliseconds>(
         roboclock::now() - clock_start
       ).count());
 
