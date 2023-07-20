@@ -66,9 +66,10 @@ public:
     }
     
     /** State update for a relative link, with a parent.
-        Our coordinate system and parent will have the same X axis (if possible)
+        Our coordinate system and parent will have the same X axis (if possible),
+        after rotating our parent by parent_spin (if passed).
     */
-    void update_parent(nanoslot_IMU_state &state,const nanoslot_IMU_t &reading,const nanoslot_IMU_state &parent)
+    void update_parent(nanoslot_IMU_state &state,const nanoslot_IMU_t &reading,const nanoslot_IMU_state &parent, const FusionQuaternion *parent_spin=0)
     {
         //float heading=parent.yaw-90; // yaw has 0 along X axis, heading along Y axis.
         // update_reading(state,reading,delayMs,true,heading); //<- not great
@@ -76,10 +77,16 @@ public:
         update_reading(state,reading,delayMs);
         
         if (state.valid && parent.valid) {
+            FusionQuaternion P = parent.orient;
+            if (parent_spin) {
+                P = FusionQuaternionMultiply(parent.orient,*parent_spin);
+            }
+            
             // Rotate around Z, until our X axis matches our parent's:
-            FusionAhrsMatchX(&ahrs,FusionQuaternionXaxis(parent.orient));
+            FusionAhrsMatchX(&ahrs,FusionQuaternionXaxis(P));
         
-            angles_relative(state,parent.orient);
+            // Compute roll, pitch, yaw relative to parent
+            angles_relative(state,P);
         }
     }
 

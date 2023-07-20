@@ -15,10 +15,14 @@ int printCount=0;
 int printInterval=30;
 
 /* The vec3 here are hardware offset values, collected with autonomy/kinematics/IMU_calibrate
- The accelerometer values are collected in reference orientation, might be off a degree or two.
+ The accelerometer values are collected in reference orientation, might be off a degree or two, more in hot weather.
 */
 nanoslot_IMU_filter stick_filter(delayMs,vec3(-0.0136,0.09,-0.0111),vec3(-1.5821,1.9100,-0.1994),vec3(1,1.1f,1));
 nanoslot_IMU_filter tool_filter(delayMs,vec3(-0.0094,0.0073,0.0372),vec3(0.1127,3.3704,-26.7998));
+
+// Tool IMU is rotated 180 degrees around Y axis of stick.
+//  Quaternion for 180 degree rotation has W 0 and XYZ = axis of rotation.
+FusionQuaternion stick_to_tool_rotate={0.0f, 0.0f,1.0f,0.0f};
 
 int main(int argc,char **argv)
 {
@@ -40,7 +44,7 @@ int main(int argc,char **argv)
                     fix_coords_cross(c.my_sensor.imu[1]),nano.slot_F1.state.boom);
                 
                 tool_filter.update_parent(ST.tool, 
-                    fix_coords_cross(c.my_sensor.imu[0],-1),ST.stick);
+                    fix_coords_cross(c.my_sensor.imu[0],-1),ST.stick,&stick_to_tool_rotate);
                 
                 ST.load_L = HX711_read_scale(c.my_sensor.load_L,-6.6f);
                 ST.load_R = HX711_read_scale(c.my_sensor.load_R,-1.7f);
