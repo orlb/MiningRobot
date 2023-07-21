@@ -293,9 +293,9 @@ void robot_display_setup(const robot_base &robot) {
 	glClear(GL_COLOR_BUFFER_BIT+GL_DEPTH_BUFFER_BIT);
 
 	// Scale to showing the whole field, in centimeter units
-	float xShift=-0.8, yShift=-0.9; // GL-coordinates origin of field
+	float xShift=-0.8, yShift=-0.8; // GL-coordinates origin of field
 	glTranslatef(xShift,yShift,0.0);
-	float yScale=1.8/field_y_size;
+	float yScale=1.6/field_y_size;
 	float xScale=yScale*ht/wid;
 	glScalef(xScale, yScale, 0.1);
 	robotPrintf_y=(1.0-yShift)/yScale+robotPrintf_line;
