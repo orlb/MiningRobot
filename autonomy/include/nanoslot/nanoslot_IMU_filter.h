@@ -78,15 +78,16 @@ public:
         
         if (state.valid && parent.valid) {
             FusionQuaternion P = parent.orient;
-            if (parent_spin) {
-                P = FusionQuaternionMultiply(parent.orient,*parent_spin);
+            if (parent_spin) { // does this ever help?
+                // P = FusionQuaternionMultiply(parent.orient, *parent_spin);
+                P = FusionQuaternionMultiply(*parent_spin, parent.orient);
             }
             
             // Rotate around Z, until our X axis matches our parent's:
             FusionAhrsMatchX(&ahrs,FusionQuaternionXaxis(P));
         
             // Compute roll, pitch, yaw relative to parent
-            angles_relative(state,P);
+            angles_relative(state,parent.orient);
         }
     }
 

@@ -19,8 +19,8 @@
 */
 const aurora::vision_marker_reports knownMarkers {
     aurora::vision_marker_report(5.0, 10.0, 180.0, 2), //blocky, facing out toward drive area
-    aurora::vision_marker_report(0.0, 2.0, 90.0, 6), //ghost, behind charge area
-    aurora::vision_marker_report(12.0, 4.0, -90.0, 17), //descending bird, behind the pit
+    aurora::vision_marker_report(0.0, 3.0, 83.0, 6), //ghost, behind charge area
+    aurora::vision_marker_report(12.0, 5.0, -90.0, 17), //descending bird, behind the pit
     //aurora::vision_marker_report(field_x_trough_center, 00.0, 180.0, 2), //fabric
     };
 

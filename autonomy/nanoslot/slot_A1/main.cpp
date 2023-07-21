@@ -22,7 +22,7 @@ nanoslot_IMU_filter tool_filter(delayMs,vec3(-0.0094,0.0073,0.0372),vec3(0.1127,
 
 // Tool IMU is rotated 180 degrees around Y axis of stick.
 //  Quaternion for 180 degree rotation has W 0 and XYZ = axis of rotation.
-FusionQuaternion stick_to_tool_rotate={0.0f, 0.0f,1.0f,0.0f};
+FusionQuaternion stick_to_tool_rotate={0.0f, 0.0f,0.0f,1.0f};
 
 int main(int argc,char **argv)
 {
@@ -44,7 +44,7 @@ int main(int argc,char **argv)
                     fix_coords_cross(c.my_sensor.imu[1]),nano.slot_F1.state.boom);
                 
                 tool_filter.update_parent(ST.tool, 
-                    fix_coords_cross(c.my_sensor.imu[0],-1),ST.stick,&stick_to_tool_rotate);
+                    fix_coords_cross(c.my_sensor.imu[0],-1),ST.stick); // ,&stick_to_tool_rotate);
                 
                 ST.load_L = HX711_read_scale(c.my_sensor.load_L,-6.6f);
                 ST.load_R = HX711_read_scale(c.my_sensor.load_R,-1.7f);
