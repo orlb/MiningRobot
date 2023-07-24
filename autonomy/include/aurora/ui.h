@@ -25,8 +25,9 @@
 */
 class robot_ui : private robot_power {
 public:
-	float driveLimit=1.0; /* robot driving power (0.0 - 1.0) */
-	float toolLimit=0.5; /* tool power */
+	float driveLimit=0.6; /* robot driving power (0.0 - 1.0) */
+	float toolLimit=0.5; /* tool power (actual output) */
+	float toolLimitUI=0.5; /* tool power for UI buttons */
 	
 	robot_state_t joystickState=state_drive;
 	
@@ -151,9 +152,8 @@ public:
     /* Set this keyboard-controlled power limit--
       Use P + number keys to set drive power, in percent:
         P-1 = 10%, P-2=20%, etc. 
-      Returns a human-readable description of the current limit.
     */
-    std::string setPowerLimit(int keys[],char lowercase,char uppercase,const std::string &description,float &limit)
+    void setPowerLimit(int keys[],char lowercase,char uppercase,float &limit)
     {
 	    if (keys[lowercase]||keys[uppercase]) 
 	    {
@@ -163,6 +163,10 @@ public:
 	        if (keys['0']) limit=1.0f;
 	        if (keys['`'] || keys['~']) limit=0.0f;
 	    }
+	}
+	
+	std::string showPowerLimit(const std::string &description,const float &limit)
+	{
 	    //return "\n  "+description+": "+std::to_string(limit)+"\n";
 	    char buf[10];
 	    snprintf(buf,10,"%.0f%% ",limit*100.0f);
@@ -344,9 +348,13 @@ Joysticks have different axis and button numbering:
 	joyDrive=!joyDone;
 
 // Adjust power limits
+	setPowerLimit(keys,'p','P',driveLimit);
+	setPowerLimit(keys,'t','T',toolLimitUI);
+	toolLimit = 0.4f + 0.2f*toolLimitUI;
+	
     description+="\n  Limits:";
-	description+=setPowerLimit(keys,'p','P',"  Drive ",driveLimit);
-	description+=setPowerLimit(keys,'t','T',"  Tool ",toolLimit);
+	description+=showPowerLimit("  Drive ",driveLimit);
+	description+=showPowerLimit("  Tool ",toolLimit);
 	description+="\n";
 	
 
