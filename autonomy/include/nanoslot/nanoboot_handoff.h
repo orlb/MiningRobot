@@ -24,7 +24,9 @@
 static inline float HX711_read_scale(int32_t raw,float zerocal=0.0f)
 {
     // This scale factor converts raw readings to kilograms
-#define HX711_CALIBRATION 1.48e-04  /* output kgf from raw numbers */
+//#define HX711_CALIBRATION 1.48e-04  /* output kgf from raw numbers */
+#define HX711_CALIBRATION 1.4e-04  /* output kgf from raw numbers */
+
 
     if (raw==0) return 0.0f; // uninitialized channel?
     else return raw*HX711_CALIBRATION - zerocal;
