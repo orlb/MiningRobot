@@ -14,8 +14,8 @@
 
 int main() {
     // time in milliseconds between database writes (small = bigger database but better data resolution)
-    //int sleep_ms = 500; // Low resolution mode
-    int sleep_ms = 100; // Normal resolution mode
+    int sleep_ms = 500; // Low resolution mode
+    //int sleep_ms = 100; // Normal resolution mode
     //int sleep_ms = 30; // High resolution mode
     
     // Print this many demo values
