@@ -32,7 +32,7 @@ int main(int argc,char **argv)
                 last_spin=cur;
                 comm.my_state.spin = diff * (1.0f / (0.001f * delay_ms));
                 
-                const float voltScale=5.0*(1.0/1023);
+                const float voltScale=4.6*(1.0/1023);
                 float cell0=voltScale*(comm.my_sensor.cell0);
                 float cell1=voltScale*(comm.my_sensor.cell1);
                 comm.my_state.load=cell0;
@@ -41,7 +41,7 @@ int main(int argc,char **argv)
                 float filter=filter_old*(1.0f-filter_percent)+cell1*filter_percent;
                 filter_old=filter;
                 
-                const float bias=0.3; // Arduino analogRead voltage offset
+                const float bias=0.0; // Arduino analogRead voltage offset
                 comm.my_state.cell=filter-bias; // cell1-cell0;
                 const float cell80=4.02; // cell voltage at 80% state of charge
                 const float cell20=3.73; // cell voltage at 20% state of charge
