@@ -112,7 +112,7 @@ inline float state_to_Y(int state) {
 }
 
 /* Set up for 3D side view of robot */
-void robot_3D_setup(float Zrot=-90.0f) {
+void robot_3D_setup(float Xrot=0, float Zrot=-90.0f) {
     // Incoming coordinate system: centimeters field coordinates
     //    X+ screen right, Y+ screen up, Z+ toward camera
     // Intermediate coordinate system: robot frame coordinates for front view
@@ -126,6 +126,7 @@ void robot_3D_setup(float Zrot=-90.0f) {
     glScalef(zoom,zoom,1.0f);
     glRotatef(-90.0f,1.0f,0.0f,0.0f); // rotate around X to front view
     glRotatef(Zrot,0.0f,0.0f,1.0f); // rotate around Z to side view
+    glRotatef(Xrot,1.0f,0.0f,0.0f); // pitch rotate
     
     //glRotatef(-5.0f,0.0f,1.0f,0.0f); // rotate around Y to gently tip the view  
 }
@@ -379,11 +380,12 @@ void robot_display_telemetry(const robot_base &robot)
         robot.sensor.load_TL,robot.sensor.load_TR,
         robot.sensor.load_SL,robot.sensor.load_SR,
         robot.power.read_L?"L":"R");
-	robotPrintln("Accum: scoop %.1f weighed %.0f total, drive %.2f trip %.0f total",
+	robotPrintln("Accum: scoop %.1f weighed %.0f total, drive %.2f trip %.0f total, op %.3f hr",
 	    robot.accum.scoop, robot.accum.scoop_total,
-	    robot.accum.drive, robot.accum.drive_total);
+	    robot.accum.drive, robot.accum.drive_total,
+	    robot.accum.op_total/3600.0);
 
-	robotPrintln("Mining rate %.2f (%d)",robot.sensor.spin, robot.sensor.Mcount);
+	robotPrintln("Mining rate %.2f (%d)",robot.sensor.minerate, robot.sensor.Mcount);
 	robotPrintln("Drive encoder %d L %d R", robot.sensor.DLcount, robot.sensor.DRcount);
 
 	std::string encoder_str("Encoder Raw ");

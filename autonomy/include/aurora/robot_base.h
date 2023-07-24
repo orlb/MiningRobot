@@ -49,7 +49,9 @@ public:
     float cell_M, cell_D; ///< raw voltages on mining and driving battery cells
     float charge_M, charge_D; ///< percent charge on mining and driving batteries
     
-    float spin; ///< mining head spin rate in counts/sec
+    float minerate; ///< mining head spin rate in counts/sec
+    
+    float frame_yaw, frame_pitch, frame_roll; ///< IMU-derived Euler angles. degrees relative to vertical
 
     // SUBTLE: these bitfields need to add up to a multiple of 32 bits
 	uint32_t stop:1; ///< EMERGENCY STOP button engaged
@@ -253,6 +255,8 @@ public:
 
     float drive; ///< distance driven this trip (m)
     float drive_total; ///< total distance driven (m)
+    
+    float op_total; ///< total time not in STOP mode (seconds)
 };
 
 
@@ -276,6 +280,8 @@ public:
 	robot_state_stack stack; ///< State parameters and parent states
 	
 	robot_joint_state joint; ///< Current joint angles
+	robot_joint_state joint_plan; ///< Planned future joint angles
+	
 	robot_sensors_arduino sensor;  ///< Current hardware sensor values
 	robot_localization loc; ///< Location in 2D (for driving)
 	aurora::robot_coord3D loc3D; ///< Location in 3D (for depth camera)
