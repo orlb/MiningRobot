@@ -566,19 +566,20 @@ private:
   // Set the mining head linear and dump linear to natural driving posture
   //  Return true if we're safe to drive
   bool drive_posture() {
+/*
     if(mining_head_lowered && cur_time-state_start_time <10)
       robot.power.dump = 1.0;
     if (sim.bucket>0.9) { // we're back up in driving range
       mining_head_lowered=false;
     }
-
+*/
     return true; // Kept for compatiiblity
   }
 
   // Autonomous driving rate:
   //  Returns 0-1.0 float power value.
   float drive_speed(float forward,float turn=0.0) {
-    return 0.2; // confident but conservative
+    return 0.6; // confident but conservative
   }
 
   // Autonomous drive power from float values:
@@ -589,8 +590,8 @@ private:
     double max_autonomous_drive=1.0; //<- can set a cap for debugging autonomous
 
     double drive_power=drive_speed(+1.0);
-    double t=limit(turn*0.5,drive_power);
-    double d=limit(forward*0.5,drive_power);
+    double t=limit(turn,drive_power);
+    double d=limit(forward,drive_power);
     double L=d-t;
     double R=d+t;
     robot.power.left= limit(L,max_autonomous_drive);
@@ -670,22 +671,28 @@ private:
   // ToDo: Point camera to an appropriate angle as you turn
   bool autonomous_turn(double angle_target_deg=0.0,bool do_posture=true)
   {
-    if (do_posture) { if (!drive_posture()) return false; } // don't drive yet 
+    //if (do_posture) { if (!drive_posture()) return false; } // don't drive yet 
     double angle_err_deg=locator.merged.angle-angle_target_deg;
     reduce_angle(angle_err_deg);
     robotPrintln("Autonomous turn to %.0f from %.0f deg\n",
       angle_target_deg, locator.merged.angle);
    
     double turn=angle_err_deg*0.1; // proportional control
-    double maxturn=drive_speed(0.0,1.0);
+    double maxturn=0.8*drive_speed(0.0,1.0);
     turn=limit(turn,maxturn);
-    set_drive_powers(0.0,turn);
+    set_drive_powers(0.0,-turn);
     return fabs(angle_err_deg)<5.0; // angle error tolerance
+  }
+
+  /// Call when something has gone wrong with autonomous operations
+  void autonomous_fail(const char *what) {
+    printf("\n\nAUTONOMOUS FAIL: %s\n\n",what);
+    enter_state(state_drive);
   }
 
   // Make sure we're still facing this angle.  If not, pivot to face it.
   bool check_angle(double target_deg) {
-    if (locator.merged.percent<20.0) return true; // we don't know where we are--just keep driving?
+    if (locator.merged.percent<10.0) autonomous_fail("check_angle needs location");
     double err=locator.merged.angle-target_deg;
     robotPrintln("check_angle: cur %.1f deg, target %.1f deg",locator.merged.angle,target_deg);
     
@@ -696,18 +703,14 @@ private:
   
   bool haul_out_phase = true; // outbound: increasing Y.  inbound: decreasing Y
   
-  /// Call when something has gone wrong with hauling
-  void haul_fail(const char *what) {
-    enter_state(state_drive);
-  }
   
   /// Return true if we're done doing autonomous hauling trip
   bool haul_drive_done() {
     const float haul_distance = 500.0; // meters to drive
     const float haul_power = 0.6; 
     
-    const float haul_Y_start = 18.0;
-    const float haul_Y_dist = 12.0;
+    const float haul_Y_start = 15.0;
+    const float haul_Y_dist = 8.0;
     
     // Stop driving when we reach the total required distance
     if (robot.accum.drive >= haul_distance) return true;
@@ -719,8 +722,8 @@ private:
         if (progress>1.0) progress=1.0;
         if (!haul_out_phase) progress = 1.0-progress;
         
-        const float base_power=0.4f;
-        const float done_power=0.5f;
+        const float base_power=0.3f;
+        const float done_power=0.35f;
 
         float power = base_power+sin(progress*M_PI)*8.0;
         if (power>1.0f) power=1.0f;
