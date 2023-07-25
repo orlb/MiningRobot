@@ -687,6 +687,18 @@ private:
   /// Call when something has gone wrong with autonomous operations
   void autonomous_fail(const char *what) {
     printf("\n\nAUTONOMOUS FAIL: %s\n\n",what);
+    
+    // Log state timings to dedicate state timing file:
+    static FILE *autolog=fopen("autonomous.log","w");
+    if (autolog) {
+        fprintf(autolog,"%.3f: Fail at time %.3f into state %s: %s\n",
+          cur_time,
+          cur_time-state_start_time, 
+          state_to_string(robot.state),
+          what);
+        fflush(autolog);
+    }
+
     enter_state(state_drive);
   }
 
@@ -704,6 +716,12 @@ private:
   bool haul_out_phase = true; // outbound: increasing Y.  inbound: decreasing Y
   
   
+  /// Check the drive battery, if bad fail now
+  void drive_battery_check(float threshold_percent=0.0) {
+    if (robot.sensor.charge_D<threshold_percent) autonomous_fail("Low drive battery");
+  }
+  
+  
   /// Return true if we're done doing autonomous hauling trip
   bool haul_drive_done() {
     const float haul_distance = 500.0; // meters to drive
@@ -711,6 +729,8 @@ private:
     
     const float haul_Y_start = 15.0;
     const float haul_Y_dist = 8.0;
+    
+    drive_battery_check();
     
     // Stop driving when we reach the total required distance
     if (robot.accum.drive >= haul_distance) return true;
