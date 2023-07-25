@@ -679,16 +679,52 @@ private:
     return fabs(angle_err_deg)<5.0; // angle error tolerance
   }
 
-  // Make sure we're still facing the collection bin.  If not, pivot to face it.
-  bool check_angle() {
+  // Make sure we're still facing this angle.  If not, pivot to face it.
+  bool check_angle(double target_deg) {
     if (locator.merged.percent<20.0) return true; // we don't know where we are--just keep driving?
-    double target=180.0/M_PI*atan2(locator.merged.y+200.0,locator.merged.x);
-    double err=locator.merged.angle-target;
-    robotPrintln("check_angle: cur %.1f deg, target %.1f deg",locator.merged.angle,target);
+    double err=locator.merged.angle-target_deg;
+    robotPrintln("check_angle: cur %.1f deg, target %.1f deg",locator.merged.angle,target_deg);
     
     reduce_angle(err);
     if (fabs(err)<10.0) return true; // keep driving--straight enough
-    else return autonomous_turn(target,false); // turn to face target
+    else return autonomous_turn(target_deg,false); // turn to face target
+  }
+  
+  bool haul_out_phase = true; // outbound: increasing Y.  inbound: decreasing Y
+  
+  /// Call when something has gone wrong with hauling
+  void haul_fail(const char *what) {
+    enter_state(state_drive);
+  }
+  
+  /// Return true if we're done doing autonomous hauling trip
+  bool haul_drive_done() {
+    const float haul_distance = 500.0; // meters to drive
+    const float haul_power = 0.6; 
+    
+    const float haul_Y_start = 18.0;
+    const float haul_Y_dist = 12.0;
+    
+    // Stop driving when we reach the total required distance
+    if (robot.accum.drive >= haul_distance) return true;
+    
+    /* Else we're on a drive cycle: */
+    if (check_angle(90.0f)) {
+        float progress = haul_Y_start + locator.merged.y/haul_Y_dist;
+        if (progress<0.0) progress=0.0;
+        if (progress>1.0) progress=1.0;
+        if (!haul_out_phase) progress = 1.0-progress;
+        
+        const float base_power=0.4f;
+        float power = base_power+sin(progress*M_PI)*8.0;
+        if (power>1.0f) power=1.0f;
+        if (power<base_power && progress > 0.5f) {
+            power=0.0f;
+            haul_out_phase = !haul_out_phase; // flip to next phase
+        }
+        set_drive_powers(power * haul_power, 0.0);
+    }
+    
   }
 };
 
@@ -830,27 +866,33 @@ void robot_manager_t::autonomous_state()
             robot.power.read_L=0;
             robot.accum.scoop=total;
             
-            //enter_state(state_haul_out);
-            enter_state(state_drive); // stop
+            //enter_state(state_haul_start);
+            enter_state(state_drive); // manual control
         }
     }
+  }
+  
+  // Begin haul cycle
+  else if (robot.state==state_haul_start)
+  {
+    robot.accum.drive_total += robot.accum.drive;
+    robot.accum.drive = 0.0f;
+    enter_state(state_haul_out);
   }
 
   // Drive back to dump area
   else if (robot.state==state_haul_out)
   {
-    if (autonomous_drive(dump_target_loc) 
-     || locator.merged.y<dump_target_loc.y+50.0)
-    {
-      enter_state(state_haul_dump);
-    }
+    if (haul_drive_done()) enter_state(state_drive); // position for dumping
+    
   }
   // Dump material
   else if (robot.state==state_haul_dump)
   { 
-    if (move_scoop(dump1_joint_scoop)
-     && move_scoop(dump2_joint_scoop) 
-     && move_scoop(dump3_joint_scoop)) 
+    robot.accum.drive_total += robot.accum.drive;
+    robot.accum.drive = 0.0f;
+    
+    if (move_scoop(dump1_joint_scoop)) 
     {
       robot.accum.scoop_total += robot.accum.scoop;
       robot.accum.scoop = 0.0;
@@ -862,11 +904,19 @@ void robot_manager_t::autonomous_state()
   // Drive back into pit
   else if (robot.state==state_haul_back)
   {
-    if (autonomous_drive(mine_target_loc))
-    {
-      enter_state(state_scan);
-    }
+    if (haul_drive_done()) enter_state(state_drive); // position for dumping
+    
   }
+  else if (robot.state==state_haul_finish)
+  {
+    robot.accum.drive_total += robot.accum.drive;
+    robot.accum.drive = 0.0f;
+    
+    enter_state(state_drive); // manual control
+  }
+  
+  
+  
   
   // Stow the robot (like for moving it)
   else if (robot.state==state_stow)

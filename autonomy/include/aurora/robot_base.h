@@ -177,9 +177,12 @@ typedef enum {
 	state_mine_finish, ///< Finish up mining (pick up scoop)
 	
 	state_weigh, ///< Weigh material in front scoop
+	
+	state_haul_start, ///< Begin haul cycle (zero driving)
 	state_haul_out, ///< Haul material out of pit
 	state_haul_dump, ///< Dump material out of scoop
-	state_haul_back, ///< Drive back into pit
+	state_haul_back, ///< Drive back into pit area
+	state_haul_finish, ///< Done with haul cycle (zero drive distance)
 	
 	state_stow, ///< Begin stowing
 	state_stowed, ///< Finished stowing (wait forever)

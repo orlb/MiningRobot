@@ -24,9 +24,12 @@ const char *state_to_string(robot_state_t state)
 	"mine_finish", ///< Finish up mining (pick up scoop)
 	
 	"weigh", ///< Weigh material in front scoop
+
+	"haul_start", ///< Begin haul cycle (zero driving)
 	"haul_out", ///< Haul material out of pit
 	"haul_dump", ///< Dump material out of scoop
 	"haul_back", ///< Drive back into pit
+	"haul_finish", ///< Done with haul cycle (zero drive distance)
 	
 	"stow", ///< Begin stowing
 	"stowed", ///< Finished stowing (wait forever)
