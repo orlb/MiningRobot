@@ -72,9 +72,14 @@ void arduino_sensor_read(robot_base &robot)
     robot.sensor.cell_D = nano.slot_F0.state.cell;
     robot.sensor.charge_D = nano.slot_F0.state.charge;
     
-    robot.sensor.spin = nano.slot_C0.state.spin;
+    robot.sensor.minerate = nano.slot_C0.state.spin;
     robot.sensor.Mcount = nano.slot_C0.sensor.spincount;
-    robot.sensor.Mstall = (0.0==robot.sensor.spin);
+    robot.sensor.Mstall = (0.0==robot.sensor.minerate);
+    
+    const static float pitch_cal = 4.0;
+    robot.sensor.frame_yaw   = nano.slot_F1.state.frame.yaw;
+    robot.sensor.frame_pitch = nano.slot_F1.state.frame.pitch - pitch_cal;
+    robot.sensor.frame_roll  = nano.slot_F1.state.frame.roll;
     
     const auto &driveslot = nano.slot_D0;
     int left_wire = 0;
@@ -727,6 +732,7 @@ void robot_manager_t::autonomous_state()
     robot.accum.scoop_total=0;
     robot.accum.drive=0;
     robot.accum.drive_total=0;
+    robot.accum.op_total=0;
   }
   
   // scan terrain before mining
@@ -896,12 +902,17 @@ typedef std::chrono::high_resolution_clock roboclock;
 
 
 void robot_manager_t::update(void) {
-    static auto clock_start=roboclock::now();
+  static auto clock_start=roboclock::now();
     
-    cur_time=0.001*(std::chrono::duration_cast<std::chrono::milliseconds>(
+  cur_time=0.001*(std::chrono::duration_cast<std::chrono::milliseconds>(
         roboclock::now() - clock_start
       ).count());
 
+  static double last_time=cur_time;
+  double dt=cur_time-last_time;
+  if (dt>0.1) dt=0.1;
+  last_time=cur_time;
+  
 // Check for a command broadcast (briefly)
   int n;
   while (0!=(n=comms.available(10))) {
@@ -1004,6 +1015,8 @@ void robot_manager_t::update(void) {
 
   robot.accum.drive += fabs(driveR + driveL)*0.5; // average total drive distance (meters)
   
+  if (robot.state > state_STOP) robot.accum.op_total += dt;
+  
   // Update drive encoders data exchange
   static aurora::drive_encoders::real_t totalL = -driveL; //<- hacky!  Need to total up distance
   static aurora::drive_encoders::real_t totalR = -driveR;
@@ -1037,12 +1050,6 @@ void robot_manager_t::update(void) {
     
     comms.broadcast(telemetry);
   }
-
-
-  static double last_time=0.0;
-  double dt=cur_time-last_time;
-  if (dt>0.1) dt=0.1;
-  last_time=cur_time;
 
   if (locator.merged.percent>=10.0)  // make sim track reality
     sim.loc=locator.merged;
