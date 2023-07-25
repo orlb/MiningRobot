@@ -216,9 +216,13 @@ float smooth_Mcount=0.0;
 /*********** Robot Joint Planning **************/
 // Configuration for weighing scoop: level, with pins aligned vertically
 const robot_joint_state weigh_joint_scoop={0,-20, 0,0,0,0};
-const robot_joint_state dump1_joint_scoop={5,-90, 0,0,0,0};
-const robot_joint_state dump2_joint_scoop={-20,-90, 0,0,0,0};
-const robot_joint_state dump3_joint_scoop={5,-75, 0,0,0,0};
+
+const robot_joint_state drive_joint_scoop={10,-40, 0,0,0,0};
+
+
+const robot_joint_state dump1_joint_scoop={-10,-80, 0,0,0,0};
+//const robot_joint_state dump2_joint_scoop={-20,-80, 0,0,0,0};
+//const robot_joint_state dump3_joint_scoop={5,-75, 0,0,0,0};
 
 
 // Balance a heavy front load by leaning arm way back (balances 2kg on front)
@@ -710,21 +714,27 @@ private:
     
     /* Else we're on a drive cycle: */
     if (check_angle(90.0f)) {
-        float progress = haul_Y_start + locator.merged.y/haul_Y_dist;
+        float progress = (locator.merged.y - haul_Y_start)/haul_Y_dist;
         if (progress<0.0) progress=0.0;
         if (progress>1.0) progress=1.0;
         if (!haul_out_phase) progress = 1.0-progress;
         
         const float base_power=0.4f;
+        const float done_power=0.5f;
+
         float power = base_power+sin(progress*M_PI)*8.0;
         if (power>1.0f) power=1.0f;
-        if (power<base_power && progress > 0.5f) {
+        if (power<done_power && progress > 0.5f) {
             power=0.0f;
             haul_out_phase = !haul_out_phase; // flip to next phase
         }
+        if (haul_out_phase==false) power=-power; // drive backwards on return cycle
+        robotPrintln("Autohaul: progress %.2f  power %.2f  %s", 
+            progress, power, haul_out_phase?"out":"back");
+        
         set_drive_powers(power * haul_power, 0.0);
     }
-    
+    return false; //<- still trying!
   }
 };
 
