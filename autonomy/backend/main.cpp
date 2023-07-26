@@ -931,7 +931,9 @@ void robot_manager_t::autonomous_state()
       robot.accum.scoop = 0.0;
       robot.accum.drive_total += robot.accum.drive;
       robot.accum.drive = 0.0;
-      enter_state(state_haul_back);
+
+      // enter_state(state_haul_back); // need to lower scoop before we can drive again
+      enter_state(state_drive);
     }
   }
   // Drive back into pit
