@@ -129,14 +129,14 @@ const robot_link_geometry &link_geometry(robot_link_index L)
             link_fork, linktype_revolute,
             link_frame, vec3(0,0.455,0.150),
             axisX, 0.0f, 0,
-            -58.7, +15.2
+            -58.7, +10
         },
         { /* Dump the front scoop out */
             "dump",
             link_dump, linktype_revolute,
             link_fork, vec3(0,0.250,0.020),
             axisX, 0.0f, 1,
-            -72.7, +31.6
+            -80, -10
         },
         
         { /* First arm link */
@@ -144,21 +144,21 @@ const robot_link_geometry &link_geometry(robot_link_index L)
             link_boom, linktype_revolute,
             link_frame, vec3(0,0.570,0.215),
             axisX, 0.0f, 2,
-            -58, +63
+            -58, +52
         },
         {
             "stick",
             link_stick, linktype_revolute,
             link_boom, vec3(0,-0.312,0.750),
             axisX, 0.0f, 3,
-            -15.3, +71.6
+            -32, +70
         },
         {
             "tilt",
             link_tilt, linktype_revolute,
             link_stick, vec3(0,0.735,0.012),
             axisX, 0.0f, 4,
-            -77.2, +59.7
+            -75, +52
         },
         {
             "spin",

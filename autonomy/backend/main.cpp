@@ -216,6 +216,7 @@ float smooth_Mcount=0.0;
 /*********** Robot Joint Planning **************/
 // Configuration for weighing scoop: level, with pins aligned vertically
 const robot_joint_state weigh_joint_scoop={0,-20, 0,0,0,0};
+const robot_joint_state weigh_joint_finish={-10,-40,0,0,0,0};
 
 const robot_joint_state drive_joint_scoop={10,-40, 0,0,0,0};
 
@@ -230,30 +231,26 @@ const robot_joint_state dump1_joint_scoop={-10,-80, 0,0,0,0};
 const robot_joint_state balance_drive_joint_state={10,-10, 35,75,-20,0};
 
 /*********** Mining Path Planning ***************/
+#include "aurora/mining.h"
+
 /// Starting configuration during mining
-const robot_joint_state mine_joint_base={-10,-40, 0,0,0,0};
+const robot_joint_state mine_joint_base={-17,-30, 20,0,-30,0};
+
+const robot_joint_state mine_joint_finish={-17,-30, 40,7,-45,0};
 
 /// 0-1 progress of mine cut (0 at start, 1 at end)
 float mine_progress=0.0f;
 
 /// Current depth to mine below the observed surface (meters)
 /// Negative = clearance above surface, for testing.
-float mine_cut_depth=0.05f; // actual cutting (very approximate)
+float mine_cut_depth=0.0f; // actual cutting (very approximate)
 //float mine_cut_depth=-0.05f; // "air milling" for motion test
 float mine_cut_depth_hover=-0.1f; // distance back for repositioning
 
 class mine_planner {
 public:
-    /// Frame Y coordinates area we should consider mining
-    const float mine_Yrange_start=1.60f; // maximum distance to reach (limit tipover)
-    const float mine_Yrange_end=1.25f; // minimum distance (avoid mining front scoop)
-
-    const float mine_Zrange_lo=-0.2f; // Z check is mostly for sanity
-    //float mine_Zrange_hi=0.2f; // flat surface only
-    const float mine_Zrange_hi=1.0f; // full in-pit cliff
-
-    const float mine_Xrange_lo=-0.4f; // X check is pure sanity checking (why are these nonzero?)
-    const float mine_Xrange_hi=+0.4f;
+    /// Location of the tip of the mining head scoop, in frame coordinates
+    vec3 scoop_tip;
 
     /// Orientation of mining head while cutting, relative to robot frame coords
     const float mine_tilt_slope=1.2; // 1.0 -> 45 deg.  2.0 -> about 60 deg
@@ -265,44 +262,18 @@ public:
         vec3(0,mine_tilt_slope,+1).dir(), // Z axis is pointing diagonal up
         99.0 // confidence value
     );
+    
+    vec3 vec_from_mineangle(float angle_deg) {
+        vec3 r=vec3_from_angle(angle_deg);
+        return vec3(r.z,r.x,r.y);
+    }
 
-    /// Look up the mining target for this amount of mining progress. 
+    /// Compute the mining target (in frame coords) for this amount of mining progress. 
     int lookup_mine_target(float progress,float depth,vec3 &mine_target) {
-        // Pick our target Y coordinate from the progress number
-        float targetY = mine_Yrange_start + progress*(mine_Yrange_end-mine_Yrange_start);
-        
-        // Find the closest valid point in the mining depth strip
-        float closestYdist=1.0f;
-        int closestD=-1; // index of closest point in view
-        const int valid_near=3; // check this many nearby neighbors
-        const float validD=0.1; // neighbors should lie within this distance
-        for (int d=valid_near;d<aurora::mining_depth::ndepth-valid_near;d++) //< vertical samples across image
-        {
-            vec3 v=mining.depth[d]; // 3D viewed spot, in frame coords
-            float dist = fabs(targetY-v.y);
-            if (v.z!=0.0 && dist<closestYdist && 
-                (v.x<mine_Xrange_hi && v.x>mine_Xrange_lo) &&
-                (v.z<mine_Zrange_hi && v.z>mine_Zrange_lo))
-            { // new closest point--do a validity check for agreement with neighbors
-                bool valid=true;
-                
-                for (int n=-valid_near;n<=+valid_near;n++)
-                    if (length(mining.depth[d+n]-v)>validD)
-                        valid=false; 
-                
-                if (valid) {
-                    closestYdist=dist;
-                    closestD=d;
-                }
-            }
-        }
-        
-        if (closestD<0 || closestYdist>0.2f) return -93; // couldn't find this Y in depth strip
-
-        // Figure out the mining target    
-        mine_target = mining.depth[closestD];
-        mine_target.y = targetY; // <- aim for our actual target
-        mine_target += depth*mine_cut_coord.Y; // cut below imaged surface   
+        vec3 up = vec_from_mineangle(mine_pit_angle);
+        vec3 in = vec3(0,1,0); // advance along Y (forward only)
+        vec3 start = scoop_tip + vec3(0,aurora::mine_start_distance,mine_floor_height);
+        mine_target = start + up*progress + in*depth;
         
         return 1;
     }
@@ -312,11 +283,25 @@ public:
     /// set these joints to put the arm at that point. 
     int target_plan(const vec3 &mine_target,robot_joint_state &mine_joint)
     {
+        // mine head angle pivots around this point
+        vec3 head_center = vec3(0,0,1.2);
+        
+        vec3 head_look = (mine_target - head_center).dir();
+        robot_coord3D head_coords=robot_coord3D(
+            vec3(0,0,0),
+            vec3(1,0,0), // X axis is straight and level
+            head_look, // Y axis is pointing diagonal down
+            vec3(0,-head_look.z,head_look.y), // Z axis is pointing diagonal up
+            99.0 // confidence value
+        );
+        
         // Figure out the tilt axis target
         robot_coord3D tool_coords = robot_link_coords::parent_from_child(
-            link_tilt, link_grinder, mine_cut_coord);
-        vec3 tilt_target = mine_target - mine_cut_coord.world_from_local(tool_coords.origin);
-        float tilt_deg = excahauler_IK::frame_degrees(tool_coords.Y);
+            link_tilt, link_grinder, head_coords);
+       
+        vec3 tilt_target = mine_target - head_coords.world_from_local(tool_coords.origin);
+        
+        float tilt_deg = excahauler_IK::frame_degrees(head_coords.Y);
 
         // Figure out the joint angles to reach that target
         int ret = ik.solve_tilt(mine_joint,tilt_target,tilt_deg);
@@ -328,7 +313,9 @@ public:
                 mine_joint.angle.boom, mine_joint.angle.stick);
         
         // Sanity & safety check
-        if (!joint_state_sane(mine_joint)) return -99;
+        if (!joint_state_sane(mine_joint)) {
+            return -99;
+        }
         
         return 1;
     }
@@ -345,7 +332,13 @@ public:
 
     mine_planner(const aurora::mining_depth &mining_view)
         :mining(mining_view)
-    {}
+    {
+        robot_link_coords coord(mine_joint_base);
+        
+        vec3 scoop_tip_local(0,0.308,0.168);
+        
+        scoop_tip = coord.coord3D(link_dump).world_from_local(scoop_tip_local);
+    }
 
 private:
     const aurora::mining_depth &mining;
@@ -547,8 +540,8 @@ private:
   /// Returns true when we're basically there.
   bool move_arm(const robot_joint_state &j)
   {
-    last_joint_target = j;
-    printf(" move_arm target\tFD\t%5.1f\t%5.1f\tBSTS\t%5.1f\t%5.1f\t%5.1f\t%5.1f\n",
+    robot.joint_plan = j;
+    robotPrintln(" move_arm target\tFD\t%5.1f\t%5.1f\tBSTS\t%5.1f\t%5.1f\t%5.1f\t%5.1f",
                 j.angle.fork, j.angle.dump,   j.angle.boom, j.angle.stick, j.angle.tilt, j.angle.spin);
     
     bool arm = 
@@ -813,7 +806,6 @@ void robot_manager_t::autonomous_state()
       // FIXME: activate vision_mining (via backend state?)
     }
     else{
-      mine_progress=0.0f;
       mine_start_time=cur_time; // update mine start time
       enter_state(state_mine_start);
     }
@@ -821,7 +813,7 @@ void robot_manager_t::autonomous_state()
   //state_mine_lower: enter mining state
   else if (robot.state==state_mine_start) {
     robot_joint_state mine_joint=mine_joint_base;
-    if (mp.mine_plan(0.0f,mine_cut_depth_hover,mine_joint)<0) enter_state(state_scan);
+    mine_progress=0.0f;
     
     if (move_scoop(mine_joint) && move_arm(mine_joint)) {
         enter_state(state_mine);
@@ -830,13 +822,14 @@ void robot_manager_t::autonomous_state()
   else if (robot.state==state_mine)
   {
     robot_joint_state mine_joint=mine_joint_base;
-    if (mp.mine_plan(mine_progress,mine_cut_depth,mine_joint)<0) enter_state(state_scan);
+    if (mp.mine_plan(mine_progress,mine_cut_depth,mine_joint)<0) enter_state(state_STOP);
+    robotPrintln("Mining: progress %.3f",mine_progress);
     
-    robot.power.tool=0.5;
+    robot.power.tool=mine_power_limit;
     move_scoop(mine_joint); //<- keep the scoop firmly in place
     if (move_arm(mine_joint)) 
     {
-        mine_progress+=0.02;
+        mine_progress+=0.002;
         if (mine_progress>=1.0f) {
              mine_progress=0.0f;
             robot.power.tool=0.0;
@@ -854,7 +847,7 @@ void robot_manager_t::autonomous_state()
     } // done mining
     */
     
-    if (robot.sensor.Mstall) enter_state(state_mine_stall);
+    // if (robot.sensor.Mstall) enter_state(state_mine_stall);
   }
 
   // state_mine_stall: Detect mining head stall. Raise head until cleared
@@ -870,9 +863,10 @@ void robot_manager_t::autonomous_state()
   //Done mining: Raise scoop
   else if (robot.state==state_mine_finish)
   {
-    //enter_state(state_drive); // DEBUG
-    if(drive_posture())
-      enter_state(state_weigh);
+    if (move_arm(mine_joint_finish)) { 
+        enter_state(state_STOP); 
+        // enter_state(state_weigh);
+    }
   }
   
   //Weigh material before leaving pit
@@ -891,16 +885,20 @@ void robot_manager_t::autonomous_state()
         else if (time_in_state<3.0) { // read left channel
             robot.power.read_L=1;
         }
-        else {
+        else if (time_in_state<3.3) { // total
             // Record total weight here
             float total = -(robot.sensor.load_SL + robot.sensor.load_SR);
             robotPrintln("Total scoop weight: %.2f kgf\n",total);
             
             robot.power.read_L=0;
             robot.accum.scoop=total;
-            
-            //enter_state(state_haul_start);
-            enter_state(state_drive); // manual control
+        }
+        else {
+            if (move_scoop(weigh_joint_finish)) 
+            {
+                //enter_state(state_haul_start);
+                enter_state(state_STOP); // manual control
+            }
         }
     }
   }
@@ -933,7 +931,7 @@ void robot_manager_t::autonomous_state()
       robot.accum.drive = 0.0;
 
       // enter_state(state_haul_back); // need to lower scoop before we can drive again
-      enter_state(state_drive);
+      enter_state(state_STOP);
     }
   }
   // Drive back into pit
@@ -1211,7 +1209,7 @@ void robot_manager_t::update_GUI(void) {
         if (mine_progress>1.0f) mine_progress=0.0f;
     }
     
-    robot_3D_draw(last_joint_target,tool,0.3f);
+    robot_3D_draw(robot.joint_plan,tool,0.3f);
     
     robot_3D_cleanup();
 
