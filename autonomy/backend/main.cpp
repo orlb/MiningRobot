@@ -108,7 +108,8 @@ void arduino_sensor_read(robot_base &robot)
     //   FIXME: really need some additional sanity checking here, or in slot program?
     robot.joint.angle.boom=nano.slot_F1.state.boom.pitch;
     robot.joint.angle.stick=nano.slot_A1.state.stick.pitch;
-    robot.joint.angle.tilt=nano.slot_A1.state.tool.pitch;
+    float tool_pitch_cal = +7.0;
+    robot.joint.angle.tilt=nano.slot_A1.state.tool.pitch + tool_pitch_cal;
     robot.joint.angle.spin=0.0f; // nano.slot_A1.state.tool.roll; // now hardware locked
     
     robot.joint.angle.fork=nano.slot_F1.state.fork.pitch;
@@ -234,7 +235,7 @@ const robot_joint_state balance_drive_joint_state={10,-10, 35,75,-20,0};
 #include "aurora/mining.h"
 
 /// Starting configuration during mining
-const robot_joint_state mine_joint_base={-17,-30, 20,0,-30,0};
+const robot_joint_state mine_joint_base={-17,-30, 30,0,-30,0};
 
 const robot_joint_state mine_joint_finish={-17,-30, 40,7,-45,0};
 
