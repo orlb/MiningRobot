@@ -101,6 +101,7 @@ public:
 	byte state; ///<  A state code from robot_base.h. (Only valid if command==command_state.)
 	
 	robot_power power;
+	robot_tuneables tuneable;
 	
 	// FIXME: authentication code here (HMAC?)
 	

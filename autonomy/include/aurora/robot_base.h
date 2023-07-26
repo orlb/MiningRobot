@@ -88,6 +88,18 @@ public:
 };
 
 /**
+ UI-tuneable parameters used by autonomous.
+*/
+class robot_tuneables {
+public:
+    float tool; ///< 't' speed of the cutting tool (0-1, normally like 0.46)
+    float cut; ///< 'c' front-back cutting depth, in cm (1-10)
+    float aggro; ///< 'g' aggression during mining
+    float drive; ///< 'f' autonomous driving speed
+};
+
+
+/**
  This class contains a power setting for each of the robot's actuators.
 
  The float power values run from -1.0 (full backwards) to 0 (stop) to +1.0 (full forwards)
@@ -292,6 +304,8 @@ public:
 	robot_power power; ///< Current drive commands
 
 	robot_accumulated accum; ///< Accumulated data
+	
+	robot_tuneables tuneable; ///< tuneable autonomy parameters
 };
 
 

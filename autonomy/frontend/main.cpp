@@ -82,6 +82,7 @@ void robot_manager_t::update(void) {
 		{ // normal powered driving
 			command.command=robot_command::command_power;
 			command.power=ui.power;
+			command.tuneable=ui.tuneable;
 			command.state=state_drive;
 		}
 		comms.broadcast(command);

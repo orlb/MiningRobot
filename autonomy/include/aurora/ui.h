@@ -26,8 +26,7 @@
 class robot_ui : private robot_power {
 public:
 	float driveLimit=0.6; /* robot driving power (0.0 - 1.0) */
-	float toolLimit=0.5; /* tool power (actual output) */
-	float toolLimitUI=0.5; /* tool power for UI buttons */
+	robot_tuneables tuneable;
 	
 	robot_state_t joystickState=state_drive;
 	
@@ -116,6 +115,11 @@ public:
 		#endif
 		stop();
 		description="Starting up";
+		
+		tuneable.tool=0.46;
+		tuneable.cut=5.0;
+		tuneable.aggro=0.5;
+		tuneable.drive=0.6;
 	}
 
 	// Clamp this float within this maximum range
@@ -153,15 +157,16 @@ public:
       Use P + number keys to set drive power, in percent:
         P-1 = 10%, P-2=20%, etc. 
     */
-    void setPowerLimit(int keys[],char lowercase,char uppercase,float &limit)
+    void setPowerLimit(int keys[],char lowercase,char uppercase,float &limit,
+        float base=0.0, float scale=1.0)
     {
 	    if (keys[lowercase]||keys[uppercase]) 
 	    {
 	        for (int num=1;num<=9;num++)
 	            if (keys['0'+num]) 
-	                limit=0.1f*num;
-	        if (keys['0']) limit=1.0f;
-	        if (keys['`'] || keys['~']) limit=0.0f;
+	                limit=base+scale*0.1f*num;
+	        if (keys['0']) limit=base+scale*1.0f;
+	        if (keys['`'] || keys['~']) limit=base+scale*0.0f;
 	    }
 	}
 	
@@ -348,13 +353,19 @@ Joysticks have different axis and button numbering:
 	joyDrive=!joyDone;
 
 // Adjust power limits
+    
 	setPowerLimit(keys,'p','P',driveLimit);
-	setPowerLimit(keys,'t','T',toolLimitUI);
-	toolLimit = 0.4f + 0.2f*toolLimitUI;
+	setPowerLimit(keys,'t','T',tuneable.tool,0.4f,0.2f);
+	setPowerLimit(keys,'c','C',tuneable.cut,0.0f,10.0f);
+	setPowerLimit(keys,'g','G',tuneable.aggro);
+	setPowerLimit(keys,'f','F',tuneable.drive);
 	
-    description+="\n  Limits:";
+    description+="\n  Tuneables:";
 	description+=showPowerLimit("  Drive ",driveLimit);
-	description+=showPowerLimit("  Tool ",toolLimit);
+	description+=showPowerLimit("  Tool ",tuneable.tool);
+	description+=showPowerLimit("  Cut ",tuneable.cut);
+	description+=showPowerLimit("  Aggro ",tuneable.aggro);
+	description+=showPowerLimit("  Auto ",tuneable.drive);
 	description+="\n";
 	
 
@@ -362,9 +373,12 @@ Joysticks have different axis and button numbering:
 	left=driveLimit*(forward+turn);
 	right=driveLimit*(forward-turn);
     
+    power.read_L = keys['l'] || keys['L'];
+    /*
     if (keys_once['l']||keys_once['L']) {
         power.read_L = !power.read_L;
     }
+    */
 
 // Limit powers, and write them to the output struct
 	left=limit(left,driveLimit);
@@ -378,7 +392,7 @@ Joysticks have different axis and button numbering:
 	tilt=limit(tilt,armLimit);
 	spin=limit(spin,armLimit);
 	
-	tool=limit(tool,toolLimit);
+	tool=limit(tool,tuneable.tool);
 
 	// Blend in power to smooth our motion commands, for less jerky operation
     power.blend_from(*this,0.2);
