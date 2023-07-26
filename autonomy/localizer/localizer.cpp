@@ -46,11 +46,13 @@ void marker_update_robot_pos(aurora::robot_loc2D & currentPos, const aurora::rob
             }
             
             // If the differences are small, we've converged and should have more confidence.
-            if (length(diff)<0.3) currentPos.percent+=5.0;
-            else currentPos.percent *=0.98;
-            
-            if (fabs(anglediff)<2.0) currentPos.percent+=3.0;
+            if (length(diff)<0.5) currentPos.percent+=5.0;
+            else if (length(diff)<1.0) { /* stay with confidence */ }
             else currentPos.percent *=0.99;
+            
+            if (fabs(anglediff)<5.0) currentPos.percent+=5.0;
+            else if (fabs(anglediff)<10.0) { /* stay constant */ }
+            else currentPos.percent *=0.99; /* disagree with estimate */
             
             if (currentPos.percent>100.0f) currentPos.percent=100.0f;
         }
