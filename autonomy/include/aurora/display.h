@@ -349,6 +349,10 @@ void robot_display_setup(const robot_base &robot) {
 	
 	// Leave text white
 	glColor3f(1.0,1.0,1.0);
+	
+	glEnable(GL_ALPHA_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 }
 
 
@@ -472,10 +476,6 @@ void robot_display_finish(const robot_base &robot)
 	glColor3f(1.0,1.0,1.0);
 	
 	robot_display_telemetry(robot);
-	
-	glEnable(GL_ALPHA_TEST);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
 }
 
 // Top-down view of robot

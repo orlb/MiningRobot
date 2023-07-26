@@ -151,7 +151,10 @@ void robot_manager_t::update(void) {
 	
 	robot_3D_setup(robot.sensor.frame_pitch);
 	robot_3D_draw(robot.joint,robot.sensor.connected_tool());
-	robot_3D_draw(robot.joint_plan,robot.sensor.connected_tool(),0.3f);
+        if (robot.state > state_autonomy)
+        {
+           robot_3D_draw(robot.joint_plan,robot.sensor.connected_tool(),0.3f);
+        }
     robot_3D_cleanup();
 	
 	robot_2D_display(robot.loc);
