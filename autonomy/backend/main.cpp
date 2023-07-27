@@ -233,10 +233,22 @@ int speed_Mcount=0;
 float smooth_Mcount=0.0;
 
 
+float last_drive_L=0.0f;
+float last_drive_R=0.0f;
+void smooth_robot_drive(robot_base &robot,float amount)
+{
+    robot.power.left  = amount * last_drive_L + (1.0f-amount) * robot.power.left;
+    robot.power.right = amount * last_drive_R + (1.0f-amount) * robot.power.right;
+    last_drive_L = robot.power.left;
+    last_drive_R = robot.power.right;
+}
+
+
+
 /*********** Robot Joint Planning **************/
 // Configuration for weighing scoop: level, with pins aligned vertically
 const robot_joint_state weigh_joint_scoop={0,-20, 0,0,0,0};
-const robot_joint_state weigh_joint_finish={-10,-40,0,0,0,0};
+const robot_joint_state weigh_joint_finish={7,-10,0,0,0,0};
 
 const robot_joint_state drive_joint_scoop={10,-40, 0,0,0,0};
 
@@ -254,7 +266,7 @@ const robot_joint_state balance_drive_joint_state={10,-10, 35,75,-20,0};
 #include "aurora/mining.h"
 
 /// Starting configuration during mining
-const robot_joint_state mine_joint_base={-17,-30, 30,0,-30,0};
+const robot_joint_state mine_joint_base={-17,-30, 20,0,-30,0};
 
 const robot_joint_state mine_joint_finish={-17,-30, 40,7,-45,0};
 
@@ -401,6 +413,8 @@ class robot_manager_t
 public:
   robot_base robot; // overall integrated current state
 
+  int substep=0; // within an autonomous step, this is a sub-step (starts at 0)
+
   // Read (write?) copy of nano data
   nanoslot_exchange nano;
   
@@ -517,6 +531,9 @@ private:
     robot.state=new_state;
     robotPrintln("Entering new state %s",state_to_string(robot.state));
     state_start_time=cur_time;
+    substep=0;
+    last_drive_L=0.0f;
+    last_drive_R=0.0f;
   }
 
   // Advance autonomous state machine
@@ -754,7 +771,7 @@ private:
   /// Return true if we're done doing autonomous hauling trip
   bool haul_drive_done() {
     const float haul_distance = 500.0; // meters to drive
-    const float haul_power = 0.6; 
+    const float haul_power = robot.tuneable.drive; 
     
     const float haul_Y_start = 15.0;
     const float haul_Y_dist = 8.0;
@@ -785,7 +802,11 @@ private:
             progress, power, haul_out_phase?"out":"back");
         
         set_drive_powers(power * haul_power, 0.0);
+        
     }
+    // Avoid jerky driving by averaging drive commands
+    smooth_robot_drive(robot,0.85); 
+
     return false; //<- still trying!
   }
 };
@@ -870,14 +891,15 @@ void robot_manager_t::autonomous_state()
             stall_backoff += 0.01f;
             const float max_backoff = 0.1f;
             if (stall_backoff > max_backoff) {
-                stall_backoff=max_backoff*0.4; //< allow cautious restart
+                stall_backoff=max_backoff*0.4; //< allow a cautious restart
                 enter_state(state_STOP); 
             }
         }
         
     }
-    else { // normal cut, advance back again
-        stall_backoff *= 0.98;
+    else { // normal cut, less backoff
+        stall_backoff = stall_backoff*0.98 - 0.001;
+        if (stall_backoff<0.0) stall_backoff=0.0;
     }
     
     // Path planning into the cut face
@@ -951,20 +973,29 @@ void robot_manager_t::autonomous_state()
   //Weigh material before leaving pit
   else if (robot.state==state_weigh)
   {
-    if (!move_scoop(weigh_joint_scoop)) 
-    { // still moving, update start time
-        state_start_time=cur_time; // hack!  need a sub-state here?
-    }
-    else
-    {
+    switch (substep) {
+    case 0: // move to weigh configuration
+        state_start_time=cur_time; // hack!  need a "time in sub-state" here?
+        if (move_scoop(weigh_joint_scoop)) 
+        {
+            substep++;
+        }
+        break;
+    case 1: // weigh left        
         if(time_in_state<1.5) {
             // let dirt settle, read right channel
             robot.power.read_L=0;
         }
-        else if (time_in_state<3.0) { // read left channel
+        else substep++;
+        break;
+
+    case 2: // weigh right
+        if (time_in_state<3.0) { // read left channel
             robot.power.read_L=1;
         }
-        else if (time_in_state<3.3) { // total
+        else {
+            substep++;
+            
             // Record total weight here
             float total = -(robot.sensor.load_SL + robot.sensor.load_SR);
             robotPrintln("Total scoop weight: %.2f kgf\n",total);
@@ -972,13 +1003,15 @@ void robot_manager_t::autonomous_state()
             robot.power.read_L=0;
             robot.accum.scoop=total;
         }
-        else {
-            if (move_scoop(weigh_joint_finish)) 
-            {
+        break;
+     
+     case 3: // move back to driving configuration
+        if (move_scoop(weigh_joint_finish)) 
+        {
                 //enter_state(state_haul_start);
                 enter_state(state_STOP); // manual control
-            }
         }
+        break;
     }
   }
   
