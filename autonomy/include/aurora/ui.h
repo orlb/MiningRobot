@@ -170,12 +170,17 @@ public:
 	    }
 	}
 	
-	std::string showPowerLimit(const std::string &description,const float &limit)
+	std::string showPowerPercent(const float &limit)
 	{
-	    //return "\n  "+description+": "+std::to_string(limit)+"\n";
-	    char buf[10];
-	    snprintf(buf,10,"%.0f%% ",limit*100.0f);
-	    return description+buf;
+	    char buf[32];
+	    snprintf(buf,32,"%.0f%% ",(double)limit*100.0f);
+	    return buf;
+    }
+	std::string showPowerFrac(const float &limit)
+	{
+	    char buf[32];
+	    snprintf(buf,32,"%.2f  ",(double)limit);
+	    return buf;
     }
 
 };
@@ -307,7 +312,7 @@ Joysticks have different axis and button numbering:
         robotState_requested=joystickState; 
 	}
 	
-	if ((js_button_once(button_pop,"pop") && js_button(button_topright,"pop confirm")) || keys_once['p'])
+	if ((js_button_once(button_pop,"pop") && js_button(button_topright,"pop confirm")) || keys_once['P'])
 	{ 
 	    if (joyMode==joyModeSTOP) joyMode=joyModeHigh; 
 	    robotState_requested = state_POP; 
@@ -354,18 +359,19 @@ Joysticks have different axis and button numbering:
 
 // Adjust power limits
     
-	setPowerLimit(keys,'p','P',driveLimit);
+	setPowerLimit(keys,'p','p',driveLimit);
 	setPowerLimit(keys,'t','T',tuneable.tool,0.4f,0.2f);
 	setPowerLimit(keys,'c','C',tuneable.cut,0.0f,10.0f);
 	setPowerLimit(keys,'g','G',tuneable.aggro);
 	setPowerLimit(keys,'f','F',tuneable.drive);
 	
+    std::cout<<"UI desc pretune: "<<description<<std::endl;
     description+="\n  Tuneables:";
-	description+=showPowerLimit("  Drive ",driveLimit);
-	description+=showPowerLimit("  Tool ",tuneable.tool);
-	description+=showPowerLimit("  Cut ",tuneable.cut);
-	description+=showPowerLimit("  Aggro ",tuneable.aggro);
-	description+=showPowerLimit("  Auto ",tuneable.drive);
+	description+="  Drive "+showPowerPercent(driveLimit);
+	description+="  Tool "+showPowerPercent(tuneable.tool);
+	description+="  Cut "+showPowerFrac(tuneable.cut);
+	description+="  Aggro "+showPowerFrac(tuneable.aggro);
+	description+="  Auto "+showPowerPercent(tuneable.drive);
 	description+="\n";
 	
 
@@ -397,6 +403,7 @@ Joysticks have different axis and button numbering:
 	// Blend in power to smooth our motion commands, for less jerky operation
     power.blend_from(*this,0.2);
     
+    std::cout<<"UI desc end: "<<description<<std::endl;
 	robotPrintLines(description);
 	power.print("UI power");
 }

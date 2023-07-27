@@ -83,13 +83,17 @@ void robotPrintln(const char *fmt,...) {
 
 void robotPrintLines(const std::string& text)
 {
+    /// Why doesn't this work?
+    //robotPrint(robotPrintf_x,robotPrintf_y,text.c_str());
+    
 	std::string temp;
 
 	for(size_t ii=0;ii<text.size();++ii)
 	{
 		if(text[ii]=='\n'||ii+1>=text.size())
 		{
-			robotPrintln(temp.c_str());
+			//robotPrintln(temp.c_str());
+            robotPrint(robotPrintf_x,robotPrintf_y,temp.c_str());
 			temp="";
 			continue;
 		}
