@@ -83,14 +83,16 @@ int main(int argc,const char *argv[]) {
     
     int res=480; // camera's requested vertical resolution
     int fps=5; // camera's frames per second 
-    int downscale=2; // size scale factor to save network bandwidth
+    int downscale=1; // size scale factor to save network bandwidth
     bool aruco=true; // look for computer vision markers in RGB data
     bool obstacle=true; // look for obstacles/driveable areas in depth data
     int erode=3; // image erosion passes
     float minSize=0.05; // fraction of image for aruco markers
+    bool show_depth=false;
     for (int argi=1;argi<argc;argi++) {
       std::string arg=argv[argi];
       if (arg=="--gui") show_GUI++;
+      else if (arg=="--showdepth") show_depth=true;
       else if (arg=="--res") res=atoi(argv[++argi]); // manual resolution
       else if (arg=="--fps") fps=atoi(argv[++argi]); // manual framerate
       else if (arg=="--no-aruco") aruco=false; 
@@ -152,10 +154,18 @@ int main(int argc,const char *argv[]) {
         // Show debug GUI
         if (show_GUI) {
             const cv::Mat &src=cap.color_image;
-            cv::Mat img;
-            cv::resize(src,img,cv::Size(src.cols/downscale,src.rows/downscale));
-            imshow("Color image",img);
-            //imshow("Depth image",8.0f*cap.depth_image); // scale up brightness
+            if (downscale>1) {
+                cv::Mat img;
+                cv::resize(src,img,cv::Size(src.cols/downscale,src.rows/downscale));
+                imshow("Color image (downscale)",img);
+            }
+            else 
+            {
+                imshow("Color image",src);
+            }
+            if (show_depth) {
+                imshow("Depth image",32.0f*(cap.depth_image)); // scale up brightness
+            }
         }
 
         

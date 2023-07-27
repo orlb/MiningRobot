@@ -124,6 +124,7 @@ int main(int argc,char **argv)
 	pair<double,double> AvrgTime(0,0) ;//determines the average time required for detection
 	int skipCount=1; // only process frames ==0 mod this
 	int skipPhase=0;
+        int downscale=2;
     
 	int wid=1280, ht=720;
 	const char *dictionary="TAG25h9";
@@ -198,12 +199,17 @@ int main(int argc,char **argv)
 			vidcap_count++;
 		}
 		if (show_GUI) {
-			//show input with augmented information and  the thresholded image
-			cv::imshow("in",TheInputImage);
-			// cv::imshow("thres",MDetector.getThresholdedImage());
+                    const cv::Mat &src=TheInputImage; // cap.color_image;
+           	    cv::Mat img;
+        	    cv::resize(src,img,cv::Size(src.cols/downscale,src.rows/downscale));
+	            imshow("Color image",img);
 
-			char key=cv::waitKey(1);//wait for key to be pressed
-			if (key=='q' || key=='x' || key==0x13) exit(0);
+		    //show input with augmented information and  the thresholded image
+		    //cv::imshow("in",TheInputImage);
+		    // cv::imshow("thres",MDetector.getThresholdedImage());
+
+		    char key=cv::waitKey(1);//wait for key to be pressed
+		    if (key=='q' || key=='x' || key==0x13) exit(0);
 		} /* end show_GUI */
 	} /* end frame loop */
 
