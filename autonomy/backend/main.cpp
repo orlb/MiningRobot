@@ -57,6 +57,24 @@ void arduino_exit_exchange()
     exchange_nanoslot.write_end();
 }
 
+// Rolling filtered mining rates (to avoid odd zero/low dropouts)
+float filter_minerate(float next_rate)
+{
+    enum {n=3}; // number of spins to average: smooth (higher) vs responsive (low)
+
+    static float lastspins[n]={0};
+    static int index=0;
+    lastspins[index] = next_rate;
+    index++;
+    if (index>=n) index=0;
+    
+    float peak=0.0;
+    for (float s : lastspins) if (s>peak) peak=s;
+    //sum+=s; return sum*(1.0/n);
+    return peak;
+}
+
+
 void arduino_sensor_read(robot_base &robot)
 {
     // Read sensor data from the exchange
@@ -72,7 +90,8 @@ void arduino_sensor_read(robot_base &robot)
     robot.sensor.cell_D = nano.slot_F0.state.cell;
     robot.sensor.charge_D = nano.slot_F0.state.charge;
     
-    robot.sensor.minerate = nano.slot_C0.state.spin;
+    robot.sensor.minerate = filter_minerate(nano.slot_C0.state.spin);
+    
     robot.sensor.Mcount = nano.slot_C0.sensor.spincount;
     robot.sensor.Mstall = (0.0==robot.sensor.minerate);
     
@@ -242,11 +261,26 @@ const robot_joint_state mine_joint_finish={-17,-30, 40,7,-45,0};
 /// 0-1 progress of mine cut (0 at start, 1 at end)
 float mine_progress=0.0f;
 
-/// Current depth to mine below the observed surface (meters)
-/// Negative = clearance above surface, for testing.
-float mine_cut_depth=0.0f; // actual cutting (very approximate)
-//float mine_cut_depth=-0.05f; // "air milling" for motion test
-float mine_cut_depth_hover=-0.1f; // distance back for repositioning
+// Split single progress into out and up components
+void split_progress(float progress,float &out,float &up) 
+{
+    float iend=0.1; // fraction of cut for lead in/out
+    float oend=0.03; // fraction of cut for lead in/out
+    float lead=0.05; // meters length of lead in/out
+    if (progress<iend) { // start of cut: lead in
+        up=0.0f;
+        out=(iend-progress)/iend*lead;
+    }
+    else if (progress>1.0-oend) { // end of cut: lead out
+        up=1.0;
+        out=(progress - (1.0-oend))/oend*lead;
+    }
+    else { // middle of cut
+        out=0.0;
+        up=(progress-iend)/(1.0-iend-oend);
+    }
+}
+
 
 class mine_planner {
 public:
@@ -379,6 +413,7 @@ public:
   // Autonomous mining interface
   aurora::mining_depth mining; // view of mined area
   mine_planner mp;
+  float stall_backoff = 0.0f; // mining head stall response
 
   robot_simulator sim;
   int robot_insanity_counter = 0;
@@ -394,7 +429,7 @@ public:
     robot.accum = old_state.accum;
     
     
-    ui.joystickState = state_backend_driver; // we're the backend
+    ui.joystickState = state_STOP; // backend_driver; // we're the backend
     
     arduino_setup_exchange();
     atexit(arduino_exit_exchange);
@@ -406,7 +441,7 @@ public:
     sim.loc.percent=50.0;
 
     // Boot into BTI robot config
-    robot.state=state_backend_driver;
+    robot.state=state_STOP; // state_backend_driver;
     ui.power.torque=0;
   }
 
@@ -776,7 +811,6 @@ bool speed_limit(int &howfast,int cur,int target,int dir=+1)
   return true;
 }
 
-
 void robot_manager_t::autonomous_state()
 {
   robot.power.stop(); // each state starts from scratch
@@ -815,22 +849,58 @@ void robot_manager_t::autonomous_state()
   else if (robot.state==state_mine_start) {
     robot_joint_state mine_joint=mine_joint_base;
     mine_progress=0.0f;
+    stall_backoff=0.0f;
     
-    if (move_scoop(mine_joint) && move_arm(mine_joint)) {
+    if ( // move_scoop(mine_joint) && 
+        move_arm(mine_joint)) {
         enter_state(state_mine);
     }
   }
   else if (robot.state==state_mine)
   {
-    robot_joint_state mine_joint=mine_joint_base;
-    if (mp.mine_plan(mine_progress,mine_cut_depth,mine_joint)<0) enter_state(state_STOP);
-    robotPrintln("Mining: progress %.3f",mine_progress);
+    // Tool is running
+    robot.power.tool=std::min(robot.tuneable.tool, mine_power_limit);
     
-    robot.power.tool=mine_power_limit;
-    move_scoop(mine_joint); //<- keep the scoop firmly in place
+    
+    // Stall check
+    bool advance = true;
+    if (robot.sensor.minerate < 80.0) { // stall potential?
+        advance = false;
+        if (robot.sensor.minerate ==0.0) { // definitely stalled!
+            stall_backoff += 0.01f;
+            const float max_backoff = 0.1f;
+            if (stall_backoff > max_backoff) {
+                stall_backoff=max_backoff*0.4; //< allow cautious restart
+                enter_state(state_STOP); 
+            }
+        }
+        
+    }
+    else { // normal cut, advance back again
+        stall_backoff *= 0.98;
+    }
+    
+    // Path planning into the cut face
+    robot_joint_state mine_joint=mine_joint_base;
+    float out=0.0f; // meters extra distance back
+    float up=0.0f; // 0-1 progress up
+    split_progress(mine_progress,out,up);
+    
+    /// Current depth to mine below the observed surface (meters)
+    /// Negative = clearance above surface, for testing.
+    float mine_cut_depth=0.0f + 0.01f*robot.tuneable.cut - stall_backoff - out; // m
+    
+    if (mp.mine_plan(up,mine_cut_depth,mine_joint)<0) enter_state(state_STOP);
+    robotPrintln("Mining: progress %.3f -> out %.3f up %.3f",
+        mine_progress,out,up);
+    
+    // move_scoop(mine_joint); //<- keep the scoop firmly in place
     if (move_arm(mine_joint)) 
     {
-        mine_progress+=0.002;
+        if (advance) {
+            mine_progress+=0.002;
+        }
+        
         if (mine_progress>=1.0f) {
              mine_progress=0.0f;
             robot.power.tool=0.0;
@@ -854,6 +924,14 @@ void robot_manager_t::autonomous_state()
   // state_mine_stall: Detect mining head stall. Raise head until cleared
   else if (robot.state==state_mine_stall)
   {
+    if (time_in_state<1) {
+        
+        enter_state(state_mine); 
+    }
+    else { // too long
+        enter_state(state_STOP); 
+    }
+    
     if(robot.sensor.Mstall && time_in_state<1)
     {
       robot.power.boom=-1.0f; // retract the boom (pull out of cut)
@@ -1023,6 +1101,7 @@ void robot_manager_t::update(void) {
       else if (command.command==robot_command::command_power)
       { // manual driving power command
         robotPrintln("Incoming power command: %d bytes",n);
+        robot.tuneable = command.tuneable;
         if (robot.state==state_drive || robot.state==state_driveraw)
         {
           // if (robot.state==state_drive) FIXME: sanity-check the frontend drive commands
@@ -1080,11 +1159,13 @@ void robot_manager_t::update(void) {
     robotPrintln("Slot A0 STOP command");
   }
 
+/*
     if (nano.slot_C0.state.connected) {
         robotPrintln("Mining head: %5.3f  %5.3f V   %.2f mine\n",
             nano.slot_C0.state.load, nano.slot_C0.state.cell, robot.power.tool); 
     }
-    
+ */
+   
   // Accumulate drivetrain encoder counts into actual distances
   float fudge=1.0; // fudge factor to make distance equal reality
   float drivecount2m=fudge*0.96/12; // meters of driving per wheel encoder tick == circumference of wheel divided by encoder ticks per revolution
@@ -1198,17 +1279,6 @@ void robot_manager_t::update_GUI(void) {
             glVertex3fv(v); 
     }
     glEnd();
-    
-    if (0) {
-        // Animate planned mining path
-        robot_joint_state mine_joint=mine_joint_base;
-        if (mp.mine_plan(mine_progress,mine_cut_depth,mine_joint)>=0)
-        {
-            robot_3D_draw(mine_joint,tool,0.3f);
-        }
-        mine_progress += 0.001f;
-        if (mine_progress>1.0f) mine_progress=0.0f;
-    }
     
     robot_3D_draw(robot.joint_plan,tool,0.3f);
     
