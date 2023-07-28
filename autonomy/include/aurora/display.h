@@ -388,7 +388,7 @@ void robot_display_telemetry(const robot_base &robot)
         robot.sensor.load_TL,robot.sensor.load_TR,
         robot.sensor.load_SL,robot.sensor.load_SR,
         robot.power.read_L?"L":"R");
-	robotPrintln("Accum: scoop %.1f total %.0f kg, drive %.1f total %.0f m, op %.2f hr",
+	robotPrintln("Accum: scoop %.1f total %.1f kg, drive %.1f total %.0f m, op %.2f hr",
 	    robot.accum.scoop, robot.accum.scoop_total,
 	    robot.accum.drive, robot.accum.drive_total,
 	    robot.accum.op_total/3600.0);
