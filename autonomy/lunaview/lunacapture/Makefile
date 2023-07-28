@@ -13,7 +13,7 @@ LDFLAGS = -lpqxx -lpq
 all: $(TARGET)
 
 clean:
-	$(RM) src/*.o
+	$(RM) main.o src/*.o
 	$(RM) $(TARGET)
 
 $(TARGET): $(OBJECTS)
