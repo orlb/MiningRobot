@@ -362,6 +362,7 @@ Joysticks have different axis and button numbering:
 	setPowerLimit(keys,'p','p',driveLimit);
 	setPowerLimit(keys,'t','T',tuneable.tool,0.4f,0.2f);
 	setPowerLimit(keys,'c','C',tuneable.cut,0.0f,10.0f);
+	setPowerLimit(keys,'v','V',tuneable.cut,0.5f,10.0f);
 	setPowerLimit(keys,'g','G',tuneable.aggro);
 	setPowerLimit(keys,'f','F',tuneable.drive);
 	
