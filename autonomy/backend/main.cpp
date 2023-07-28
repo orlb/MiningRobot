@@ -591,16 +591,16 @@ private:
   
   /// Set power values to move the robot arm (boom, stick, tilt) to this joint state.
   /// Returns true when we're basically there.
-  bool move_arm(const robot_joint_state &j)
+  bool move_arm(const robot_joint_state &j,float speed=1.0)
   {
     robot.joint_plan = j;
     robotPrintln(" move_arm target\tFD\t%5.1f\t%5.1f\tBSTS\t%5.1f\t%5.1f\t%5.1f\t%5.1f",
                 j.angle.fork, j.angle.dump,   j.angle.boom, j.angle.stick, j.angle.tilt, j.angle.spin);
     
     bool arm = 
-        move_single_joint(j.angle.boom,robot.joint.angle.boom,robot.power.boom,-1.0) &
-        move_single_joint(j.angle.stick,robot.joint.angle.stick,robot.power.stick) &
-        move_single_joint(j.angle.tilt,robot.joint.angle.tilt,robot.power.tilt);
+        move_single_joint(j.angle.boom,robot.joint.angle.boom,robot.power.boom,-speed) &
+        move_single_joint(j.angle.stick,robot.joint.angle.stick,robot.power.stick,speed) &
+        move_single_joint(j.angle.tilt,robot.joint.angle.tilt,robot.power.tilt,speed);
         // &
         //move_single_joint(j.angle.spin,robot.joint.angle.spin,robot.power.spin);
     
@@ -788,8 +788,8 @@ private:
         if (progress>1.0) progress=1.0;
         if (!haul_out_phase) progress = 1.0-progress;
         
-        const float base_power=0.3f;
-        const float done_power=0.35f;
+        const float base_power=0.6f;
+        const float done_power=0.65f;
 
         float power = base_power+sin(progress*M_PI)*8.0;
         if (power>1.0f) power=1.0f;
@@ -805,7 +805,7 @@ private:
         
     }
     // Avoid jerky driving by averaging drive commands
-    smooth_robot_drive(robot,0.85); 
+    smooth_robot_drive(robot,0.9); 
 
     return false; //<- still trying!
   }
@@ -882,8 +882,8 @@ void robot_manager_t::autonomous_state()
     // Tool is running
     robot.power.tool=std::min(robot.tuneable.tool, mine_power_limit);
     
-    
     // Stall check
+    float aggro = robot.tuneable.aggro; // aggression during mining
     bool advance = true;
     if (robot.sensor.minerate < 80.0) { // stall potential?
         advance = false;
@@ -897,10 +897,12 @@ void robot_manager_t::autonomous_state()
         }
         
     }
-    else { // normal cut, less backoff
-        stall_backoff = stall_backoff*0.98 - 0.001;
+    else { // normal cut, reduce backoff
+        stall_backoff = stall_backoff*0.98 - 0.002*aggro;
         if (stall_backoff<0.0) stall_backoff=0.0;
     }
+    
+    if (stall_backoff>0.005f) advance=false;
     
     // Path planning into the cut face
     robot_joint_state mine_joint=mine_joint_base;
@@ -917,10 +919,10 @@ void robot_manager_t::autonomous_state()
         mine_progress,out,up);
     
     // move_scoop(mine_joint); //<- keep the scoop firmly in place
-    if (move_arm(mine_joint)) 
+    if (move_arm(mine_joint,0.8)) 
     {
         if (advance) {
-            mine_progress+=0.002;
+            mine_progress+=0.004*aggro;
         }
         
         if (mine_progress>=1.0f) {
