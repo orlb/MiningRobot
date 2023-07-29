@@ -147,7 +147,12 @@ void reinitialize_field(aurora::field_drivable &field) {
             field.at(x,y)=aurora::field_fixed;
 }
 
-int main() {
+int main(int argc, const char *argv[]) {
+    bool sim=false;
+    for (int argi=1;argi<argc;argi++) {
+        if (0==strcmp(argv[argi],"--sim")) { sim=true; }
+        else { printf("Unrecognized command line argument %s\n",argv[argi]); return 1; }
+    }
     
     //Data sources need to read from, these are defined in lunatic.h
     MAKE_exchange_drive_commands();
@@ -183,9 +188,11 @@ int main() {
         bool print=false;
         if ((printcount++%30)==0) print=true;
         
+        if (sim) pos.percent=83.0;
+        
         aurora::drive_commands currentdrive = exchange_drive_commands.read();
-     
-    // Update position based on new encoder values
+        
+        // Update position based on new encoder values
         aurora::drive_encoders currentencoder = exchange_drive_encoders.read();
         aurora::drive_encoders encoder_change = currentencoder - lastencoder;
         if (encoder_change.left!=0 || encoder_change.right!=0) {
@@ -204,9 +211,9 @@ int main() {
 
 
         // Create camera coordinate transform
-	// Camera wants robot's X axis (rotated by 90)
-	aurora::robot_loc2D  camera2D=pos;
-	camera2D.angle -= 90.0f; // robot Y instead of X axis
+        // Camera wants robot's X axis (rotated by 90)
+        aurora::robot_loc2D  camera2D=pos;
+        camera2D.angle -= 90.0f; // robot Y instead of X axis
         aurora::robot_coord3D robot3D=camera2D.get3D();
         
         // If you see a newly updated aruco marker, incorporate it into your likely position
