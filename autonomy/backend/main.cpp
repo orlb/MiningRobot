@@ -1264,7 +1264,23 @@ void robot_manager_t::update(void) {
   if (last_nonzero_power.left<0) driveL=-driveL;
   if (last_nonzero_power.right<0) driveR=-driveR;
 
-  robot.accum.drive += fabs(driveR + driveL)*0.5; // average total drive distance (meters)
+  // robot.accum.drive += fabs(driveR + driveL)*0.5; // average wheel drive distance (meters)
+  
+  static double last_distance_time = cur_time;
+  const double time_per_distance_check=0.3;
+  const double max_speed = 2.0; // maximum plausible drive speed, m/s
+  if ((driveL !=0 || driveR != 0) && (cur_time - last_distance_time)>time_per_distance_check) 
+  { // Track accumulated driving distance
+    static vec2 old_loc = locator.merged.center();
+    vec2 new_loc = locator.merged.center();
+    float dist = length(new_loc - old_loc);
+    old_loc = new_loc;
+    const double max_dist = max_speed * time_per_distance_check;
+    if (dist>0.0 && dist<max_dist) { // seems like a valid motion
+        robot.accum.drive += dist;
+    }
+    last_distance_time = cur_time;
+  }
   
   if (robot.state > state_STOP) robot.accum.op_total += dt;
   
