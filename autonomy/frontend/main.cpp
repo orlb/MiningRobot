@@ -147,7 +147,7 @@ void robot_manager_t::update(void) {
 		
 	}
 	
-	robotPrintln("Location %.0f,%0.0f,%0.0f",robot.loc.x,robot.loc.y,robot.loc.angle);
+	//robotPrintln("Location %.0f,%0.0f,%0.0f",robot.loc.x,robot.loc.y,robot.loc.angle);
 	
 	
 	robot_3D_setup(robot.sensor.frame_pitch);

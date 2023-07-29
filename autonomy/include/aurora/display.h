@@ -423,7 +423,7 @@ void robot_display_telemetry(const robot_base &robot)
 	robotPrintln(str.c_str());
 
 	if (robot.loc.percent>50.0) {
-		robotPrintln("Location:  X %.0f   Y %.0f   angle %.0f",
+		robotPrintln("Location:  X %.1f   Y %.1f   angle %.0f",
 			robot.loc.x,robot.loc.y,
 			robot.loc.angle);
 	}
