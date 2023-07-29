@@ -276,7 +276,7 @@ float mine_progress=0.0f;
 // Split single progress into out and up components
 void split_progress(float progress,float &out,float &up) 
 {
-    float iend=0.1; // fraction of cut for lead in/out
+    float iend=0.15; // fraction of cut for lead in/out
     float oend=0.03; // fraction of cut for lead in/out
     float lead=0.05; // meters length of lead in/out
     if (progress<iend) { // start of cut: lead in
@@ -882,20 +882,33 @@ void robot_manager_t::autonomous_state()
     // Tool is running
     robot.power.tool=std::min(robot.tuneable.tool, mine_power_limit);
     
-    // Stall check
+    // Stall check using mining rate:
     float aggro = robot.tuneable.aggro; // aggression during mining
     bool advance = true;
-    if (robot.sensor.minerate < 80.0) { // stall potential?
+    bool backoff = false;
+    if (robot.sensor.minerate < 50.0) { // stall potential?
         advance = false;
         if (robot.sensor.minerate ==0.0) { // definitely stalled!
-            stall_backoff += 0.01f;
-            const float max_backoff = 0.1f;
-            if (stall_backoff > max_backoff) {
-                stall_backoff=max_backoff*0.4; //< allow a cautious restart
-                enter_state(state_STOP); 
-            }
+            backoff = true;
         }
-        
+    }
+    
+    /*
+    // Bounce detection using tool load cell:
+    if (robot.sensor.load_TR<-12.0f) {
+        advance=false;
+        backoff=true;
+    }
+    */
+    
+    if (backoff) 
+    { // cut not going well, increase backoff
+        stall_backoff += 0.01f;
+        const float max_backoff = 0.1f;
+        if (stall_backoff > max_backoff) {
+            stall_backoff=max_backoff*0.4; //< allow a cautious restart
+            enter_state(state_STOP); 
+        }
     }
     else { // normal cut, reduce backoff
         stall_backoff = stall_backoff*0.98 - 0.002*aggro;
@@ -919,7 +932,7 @@ void robot_manager_t::autonomous_state()
         mine_progress,out,up);
     
     // move_scoop(mine_joint); //<- keep the scoop firmly in place
-    if (move_arm(mine_joint,0.8)) 
+    if (move_arm(mine_joint)) 
     {
         if (advance) {
             mine_progress+=0.004*aggro;
