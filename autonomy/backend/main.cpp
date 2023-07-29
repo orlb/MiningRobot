@@ -658,7 +658,8 @@ private:
   }
 
   //  Returns true once we're basically at the target location.
-  bool autonomous_drive(const aurora::robot_navtarget &target) {
+  //  Uses the autonomous driving path planner.
+  bool autonomous_drive_planner(const aurora::robot_navtarget &target) {
     if (!drive_posture()) return false; // don't drive yet
      vec2 cur(locator.merged.x,locator.merged.y); // robot location
     // Send off request to the path planner
@@ -711,6 +712,36 @@ private:
     while (angle>=180) angle-=360; // reduce
     while (angle<-180) angle+=360; // reduce
   }
+  
+  //  Drive in straight line toward this target. 
+  //   Ideally put the target just past where you want to end up.
+  bool autonomous_drive_dumb(const aurora::robot_navtarget &targ, float speed=1.0) {
+    if (!drive_posture()) return false; // don't drive yet
+    vec2 cur(locator.merged.x,locator.merged.y); // robot location
+    vec2 target(targ.x,targ.y);
+    
+    double drive_power=speed * drive_speed(+1.0);
+    
+    double angle=locator.merged.angle; // degrees
+    double arad=angle*M_PI/180.0; // radians
+    vec2 orient(cos(arad),sin(arad)); // orientation vector (forward vector of robot)
+    vec2 should=normalize(cur-target); // we should be facing this way
+
+    double turn=orient.x*should.y-orient.y*should.x; // cross product (sin of angle)
+    double drive=dot(orient,should); // dot product (like distance)
+
+    double t=limit(turn,drive_power);
+    double d=limit(drive,drive_power);
+    double L=-d+t;
+    double R=-d-t;
+    robot.power.left=limit(L,drive_power);
+    robot.power.right=limit(R,drive_power);
+
+    return length(cur-target)<20.0; // we're basically there
+    
+    
+  }
+
 
   // Autonomous turning: rotate robot so it's facing this direction.
   //  Returns true once we're basically at the target angle.
@@ -771,10 +802,13 @@ private:
   /// Return true if we're done doing autonomous hauling trip
   bool haul_drive_done() {
     const float haul_distance = 500.0; // meters to drive
-    const float haul_power = robot.tuneable.drive; 
     
     const float haul_Y_start = 15.0;
     const float haul_Y_dist = 8.0;
+    const float haul_X_target = 5.0;
+    aurora::robot_navtarget target_out(haul_X_target, haul_Y_start + haul_Y_dist + 5.0,90.0);
+    aurora::robot_navtarget target_back(haul_X_target, haul_Y_start - 5.0,90.0);
+    
     
     drive_battery_check();
     
@@ -782,26 +816,27 @@ private:
     if (robot.accum.drive >= haul_distance) return true;
     
     /* Else we're on a drive cycle: */
-    if (check_angle(90.0f)) {
+    // if (check_angle(90.0f)) 
+    {
         float progress = (locator.merged.y - haul_Y_start)/haul_Y_dist;
         if (progress<0.0) progress=0.0;
         if (progress>1.0) progress=1.0;
         if (!haul_out_phase) progress = 1.0-progress;
         
-        const float base_power=0.6f;
-        const float done_power=0.65f;
-
-        float power = base_power+sin(progress*M_PI)*8.0;
-        if (power>1.0f) power=1.0f;
-        if (power<done_power && progress > 0.5f) {
-            power=0.0f;
+        if (progress >= 1.0) { // we're there!
             haul_out_phase = !haul_out_phase; // flip to next phase
         }
-        if (haul_out_phase==false) power=-power; // drive backwards on return cycle
-        robotPrintln("Autohaul: progress %.2f  power %.2f  %s", 
-            progress, power, haul_out_phase?"out":"back");
         
-        set_drive_powers(power * haul_power, 0.0);
+        if (haul_out_phase==true) {
+            autonomous_drive_dumb(target_out);
+        }
+        else {
+            autonomous_drive_dumb(target_back);
+        }
+        robotPrintln("Autohaul: progress %.2f   %s", 
+            progress, haul_out_phase?"out":"back");
+        
+        //set_drive_powers(power * haul_power, 0.0);
         
     }
     // Avoid jerky driving by averaging drive commands
