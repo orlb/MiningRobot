@@ -658,7 +658,7 @@ private:
   }
 
   //  Returns true once we're basically at the target location.
-  //  Uses the autonomous driving path planner.
+  //  Uses the autonomous driving path planner, a separate process.
   bool autonomous_drive_planner(const aurora::robot_navtarget &target) {
     if (!drive_posture()) return false; // don't drive yet
      vec2 cur(locator.merged.x,locator.merged.y); // robot location
@@ -715,19 +715,22 @@ private:
   
   //  Drive in straight line toward this target. 
   //   Ideally put the target just past where you want to end up.
-  bool autonomous_drive_dumb(const aurora::robot_navtarget &targ, float speed=1.0) {
+  bool autonomous_drive_dumb(const aurora::robot_navtarget &target, float speed=1.0) {
     if (!drive_posture()) return false; // don't drive yet
-    vec2 cur(locator.merged.x,locator.merged.y); // robot location
-    vec2 target(targ.x,targ.y);
+    vec2 cur2D(locator.merged.x,locator.merged.y); // robot location
+    vec2 target2D(target.x,target.y);
+    
+    // vec2 target_orient = target.forward(); //<- FIXME: this is ignored for now
     
     double drive_power=speed * drive_speed(+1.0);
     
-    double angle=locator.merged.angle; // degrees
-    double arad=angle*M_PI/180.0; // radians
-    vec2 orient(cos(arad),sin(arad)); // orientation vector (forward vector of robot)
-    vec2 should=normalize(cur-target); // we should be facing this way
+    vec2 orient = locator.merged.forward(); // orientation vector (forward vector of robot)
+    vec2 should=normalize(cur2D-target2D); // we should be facing this way
 
-    double turn=orient.x*should.y-orient.y*should.x; // cross product (sin of angle)
+    double turn=orient.x*should.y-orient.y*should.x; // cross product (like sin of angle)
+    
+    if (orient.dot(should)>0.0) turn = -turn; // if backing up, turn the opposite way
+    
     double drive=dot(orient,should); // dot product (like distance)
 
     double t=limit(turn,drive_power);
@@ -737,7 +740,7 @@ private:
     robot.power.left=limit(L,drive_power);
     robot.power.right=limit(R,drive_power);
 
-    return length(cur-target)<20.0; // we're basically there
+    return length(cur2D-target2D)<20.0; // we're basically there
     
     
   }
