@@ -83,7 +83,7 @@ int main(int argc,const char *argv[]) {
     
     int res=480; // camera's requested vertical resolution
     int fps=5; // camera's frames per second 
-    int downscale=1; // size scale factor to save network bandwidth
+    int downscale=2; // size scale factor to save network bandwidth
     bool aruco=true; // look for computer vision markers in RGB data
     bool obstacle=true; // look for obstacles/driveable areas in depth data
     int erode=3; // image erosion passes
@@ -93,6 +93,7 @@ int main(int argc,const char *argv[]) {
       std::string arg=argv[argi];
       if (arg=="--gui") show_GUI++;
       else if (arg=="--showdepth") show_depth=true;
+      else if (arg=="--downscale") downscale=atoi(argv[++argi]);
       else if (arg=="--res") res=atoi(argv[++argi]); // manual resolution
       else if (arg=="--fps") fps=atoi(argv[++argi]); // manual framerate
       else if (arg=="--no-aruco") aruco=false; 

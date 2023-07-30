@@ -163,6 +163,26 @@ const robot_link_geometry &link_geometry(robot_link_index L)
         {
             "spin",
             link_spin, linktype_revolute,
+            link_tilt, vec3(0,0.000,-0.075),
+            axisY, 0.0, 5,
+            -30, +30
+        },
+        {
+            "coupler",
+            link_coupler, linktype_fixed,
+            link_spin, vec3(0,0.0,0.085),
+            axisNONE, 0.0f, -1
+        },
+        {
+            "grinder",
+            link_grinder, linktype_fixed,
+            link_coupler, vec3(0,0.50,-0.311),
+            axisNONE, 0.0f, -1
+        },
+        /*
+        {
+            "spin",
+            link_spin, linktype_revolute,
             link_tilt, vec3(0,0.060,-0.075),
             axisY, 0.0, 5,
             -30, +30
@@ -179,6 +199,7 @@ const robot_link_geometry &link_geometry(robot_link_index L)
             link_coupler, vec3(0,0.513,-0.311),
             axisNONE, 0.0f, -1
         },
+        */
         
         
         { /* Realsense depth camera on top of stick */
