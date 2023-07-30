@@ -176,7 +176,7 @@ const robot_link_geometry &link_geometry(robot_link_index L)
         {
             "grinder",
             link_grinder, linktype_fixed,
-            link_coupler, vec3(0,0.50,-0.311),
+            link_coupler, vec3(0,0.50,-0.311-0.05),
             axisNONE, 0.0f, -1
         },
         /*
