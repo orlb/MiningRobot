@@ -331,7 +331,8 @@ public:
     int target_plan(const vec3 &mine_target,robot_joint_state &mine_joint)
     {
         // mine head angle pivots around this point
-        vec3 head_center = vec3(0,0,1.2);
+        //vec3 head_center = vec3(0,0,1.2); // with tool coupler
+        vec3 head_center = vec3(0,-0.2,1.2); // without tool coupler
         
         vec3 head_look = (mine_target - head_center).dir();
         robot_coord3D head_coords=robot_coord3D(

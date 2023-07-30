@@ -14,7 +14,7 @@ const float mine_power_limit=0.6;
 const float mine_start_distance=0.25;
 
 /// Distance up from scoop floor to start mining
-const float mine_floor_height=-0.075;
+const float mine_floor_height=-0.05;
 
 /// Pit excavation angle, measured up from horizontal.
 const float mine_pit_angle=57.0; 
