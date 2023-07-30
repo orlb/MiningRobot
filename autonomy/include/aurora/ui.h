@@ -160,13 +160,14 @@ public:
     void setPowerLimit(int keys[],char lowercase,char uppercase,float &limit,
         float base=0.0, float scale=1.0)
     {
-        const static char powerkeys[13]={
+        const int nkeys=13; // 0 through 12 inclusive
+        const static char powerkeys[nkeys]={
             '`','1','2','3','4','5','6','7','8','9','0','-','='
         };
         
 	    if (keys[lowercase]||keys[uppercase]) 
 	    {
-	        for (int i=0;i<sizeof(powerkeys);i++)
+	        for (int i=0;i<nkeys;i++)
 	            if (keys[powerkeys[i]]) limit = base + scale*0.1f*i;
 	    /*
 	        for (int num=1;num<=9;num++)
