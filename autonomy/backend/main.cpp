@@ -949,8 +949,8 @@ void robot_manager_t::autonomous_state()
             enter_state(state_STOP); 
         }
     }
-    else { // normal cut, reduce backoff
-        stall_backoff = stall_backoff*0.98 - 0.002*aggro;
+    else if (advance) { // normal cut, reduce backoff
+        stall_backoff = stall_backoff*0.96 - 0.005*aggro;
         if (stall_backoff<0.0) stall_backoff=0.0;
     }
     
