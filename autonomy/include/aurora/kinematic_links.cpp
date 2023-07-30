@@ -170,13 +170,13 @@ const robot_link_geometry &link_geometry(robot_link_index L)
         {
             "coupler",
             link_coupler, linktype_fixed,
-            link_spin, vec3(0,0.0,0.085),
+            link_spin, vec3(0,0.0,0.035),
             axisNONE, 0.0f, -1
         },
         {
             "grinder",
             link_grinder, linktype_fixed,
-            link_coupler, vec3(0,0.50,-0.311+0.05),
+            link_coupler, vec3(0,0.475,-0.311),
             axisNONE, 0.0f, -1
         },
         /*
