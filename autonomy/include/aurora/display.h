@@ -395,7 +395,7 @@ void robot_display_telemetry(const robot_base &robot)
 
 	robotPrintln("Mining rate %.0f (%d)",robot.sensor.minerate, robot.sensor.Mcount);
 	robotPrintln("Drive encoder %d L %d R", robot.sensor.DLcount, robot.sensor.DRcount);
-	robotPrintln("Frame PRY: %.0f %.0f %.0f deg", robot.sensor.frame_pitch, robot.sensor.frame_roll, robot.sensor.frame_yaw);
+	robotPrintln("Frame PRY: %.1f %.0f %.0f deg", robot.sensor.frame_pitch, robot.sensor.frame_roll, robot.sensor.frame_yaw);
 
 	std::string encoder_str("Encoder Raw ");
 	for(int ii=12-1;ii>=0;--ii)
