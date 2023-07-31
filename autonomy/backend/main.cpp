@@ -248,7 +248,7 @@ void smooth_robot_drive(robot_base &robot,float amount)
 /*********** Robot Joint Planning **************/
 // Configuration for weighing scoop: level, with pins aligned vertically
 const robot_joint_state weigh_joint_scoop={0,-20, 0,0,0,0};
-const robot_joint_state weigh_joint_finish={7,-10,0,0,0,0};
+const robot_joint_state weigh_joint_finish={6,-15,0,0,0,0};
 
 const robot_joint_state drive_joint_scoop={10,-40, 0,0,0,0};
 
@@ -574,14 +574,12 @@ private:
     return fabs(err)<1.5;
   }
   
-  /// Stores the last autonomous joint state target
-  robot_joint_state last_joint_target;
-  
   /// Set power values to move the front scoop (fork & dump) to this joint state. 
   ///   Returns true when we're basically there.
   bool move_scoop(const robot_joint_state &j)
   {
-    last_joint_target = j;
+    robot.joint_plan.angle.fork = j.angle.fork;
+    robot.joint_plan.angle.dump = j.angle.dump;
     
     // SUBTLE: can't use short-circuit AND && here, it serializes joint motion.
     bool scoop = 
@@ -921,40 +919,44 @@ void robot_manager_t::autonomous_state()
     // Tool is running
     robot.power.tool=std::min(robot.tuneable.tool, mine_power_limit);
     
-    // Stall check using mining rate:
     float aggro = robot.tuneable.aggro; // aggression during mining
-    bool advance = true;
-    bool backoff = false;
+    bool advance = true; // cutting head should progress along the cut
+    bool backoff = false; // cutting head should move back from the cut face
+    
+    // Stall check using mining rate:
     if (robot.sensor.minerate < 50.0) { // stall potential?
         advance = false;
+        //stall_backoff += 0.001f; // ease back just a bit
         if (robot.sensor.minerate ==0.0) { // definitely stalled!
             backoff = true;
         }
     }
     
-    /*
-    // Bounce detection using tool load cell:
-    if (robot.sensor.load_TR<-12.0f) {
+    // Side wedge detection using tool load cell:
+    if (robot.sensor.load_TR<-10.0f) {
         advance=false;
         backoff=true;
     }
-    */
     
+    // Apply bools to adjust cut parameters
+    const float cap_backoff = 0.1f; // don't physically back off more than this
+
     if (backoff) 
     { // cut not going well, increase backoff
-        stall_backoff += 0.01f;
-        const float max_backoff = 0.1f;
+        stall_backoff += 0.02f;
+        const float max_backoff = 0.3f;
         if (stall_backoff > max_backoff) {
-            stall_backoff=max_backoff*0.4; //< allow a cautious restart
+            stall_backoff=max_backoff*0.4; //< allow a faster restart
             enter_state(state_STOP); 
         }
     }
     else if (advance) { // normal cut, reduce backoff
+        stall_backoff = std::min(cap_backoff,stall_backoff); // limit backoff
         stall_backoff = stall_backoff*0.96 - 0.005*aggro;
         if (stall_backoff<0.0) stall_backoff=0.0;
     }
     
-    if (stall_backoff>0.005f) advance=false;
+    if (stall_backoff>0.0f) advance=false;
     
     // Path planning into the cut face
     robot_joint_state mine_joint=mine_joint_base;
@@ -963,8 +965,9 @@ void robot_manager_t::autonomous_state()
     split_progress(mine_progress,out,up);
     
     /// Current depth to mine below the observed surface (meters)
-    /// Negative = clearance above surface, for testing.
-    float mine_cut_depth=0.0f + 0.01f*robot.tuneable.cut - stall_backoff - out; // m
+    /// Negative = clearance above surface, to clear obstacles.
+    float mine_cut_depth=0.0f + 0.01f*robot.tuneable.cut 
+        - std::min(cap_backoff, stall_backoff) - out; // m
     
     if (mp.mine_plan(up,mine_cut_depth,mine_joint)<0) enter_state(state_STOP);
     robotPrintln("Mining: progress %.3f -> out %.3f up %.3f",
