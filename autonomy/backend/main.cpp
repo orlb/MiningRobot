@@ -315,9 +315,10 @@ public:
         return vec3(r.z,r.x,r.y);
     }
 
-    /// Compute the mining target (in frame coords) for this amount of mining progress. 
-    int lookup_mine_target(float progress,float depth,vec3 &mine_target) {
-        vec3 up = vec_from_mineangle(mine_pit_angle);
+    /// Compute the mining target (in frame coords) for this amount of mining progress.
+    ///  Frame pitch is in degrees. 
+    int lookup_mine_target(float frame_pitch,float progress,float depth,vec3 &mine_target) {
+        vec3 up = vec_from_mineangle(mine_pit_angle-frame_pitch);
         vec3 in = vec3(0,1,0); // advance along Y (forward only)
         vec3 start = scoop_tip + vec3(0,aurora::mine_start_distance,mine_floor_height);
         mine_target = start + up*progress + in*depth;
@@ -371,10 +372,10 @@ public:
     // Given a depth image, plan the joint states for a mining pass.
     //  Returns positive value if this joint state seems reachable and safe,
     //  negative on error.
-    int mine_plan(float progress,float depth,robot_joint_state &mine_joint)
+    int mine_plan(float frame_pitch,float progress,float depth,robot_joint_state &mine_joint)
     {
         vec3 target;
-        if (lookup_mine_target(progress,depth,target)<=0) return -1;
+        if (lookup_mine_target(frame_pitch,progress,depth,target)<=0) return -1;
         return target_plan(target,mine_joint);
     }
 
@@ -969,7 +970,7 @@ void robot_manager_t::autonomous_state()
     float mine_cut_depth=0.0f + 0.01f*robot.tuneable.cut 
         - std::min(cap_backoff, stall_backoff) - out; // m
     
-    if (mp.mine_plan(up,mine_cut_depth,mine_joint)<0) enter_state(state_STOP);
+    if (mp.mine_plan(robot.sensor.frame_pitch,up,mine_cut_depth,mine_joint)<0) enter_state(state_STOP);
     robotPrintln("Mining: progress %.3f -> out %.3f up %.3f",
         mine_progress,out,up);
     
