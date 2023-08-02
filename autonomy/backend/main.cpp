@@ -266,30 +266,51 @@ const robot_joint_state balance_drive_joint_state={10,-10, 35,75,-20,0};
 #include "aurora/mining.h"
 
 /// Starting configuration during mining
-const robot_joint_state mine_joint_base={-17,-30, 20,0,-30,0};
+//const robot_joint_state mine_joint_base={-17,-30, 20,0,-30,0}; // back
+const robot_joint_state mine_joint_base={-17,-30, 0,0,-30,0}; // fairly forward
+
 
 const robot_joint_state mine_joint_finish={-17,-30, 40,7,-45,0};
 
 /// 0-1 progress of mine cut (0 at start, 1 at end)
 float mine_progress=0.0f;
 
+
+/// Distance away from scoop tip to start mining
+const float mine_start_distance=0.25; // allows full depth cut
+//const float mine_start_distance=0.0; // viable only up high
+
 // Split single progress into out and up components
 void split_progress(float progress,float &out,float &up) 
 {
+#if 0 // top half, up cut
+    float upstart=0.5; // where "up" begins
+    float uplen=0.5; // length of "up" cut
+#elif 0// top half, down cut
+    float upstart=1.0; // where "up" begins
+    float uplen=-0.6; // length of "up" cut
+#elif 1 // bottom half cut
+    float upstart=0.0; // where "up" begins
+    float uplen=0.6; // length of "up" cut
+#else // full length cut
+    float upstart=0.0; // where "up" begins
+    float uplen=1.0; // length of "up" cut
+#endif
+
     float iend=0.15; // fraction of cut for lead in/out
     float oend=0.03; // fraction of cut for lead in/out
     float lead=0.05; // meters length of lead in/out
     if (progress<iend) { // start of cut: lead in
-        up=0.0f;
+        up=upstart;
         out=(iend-progress)/iend*lead;
     }
     else if (progress>1.0-oend) { // end of cut: lead out
-        up=1.0;
+        up=upstart+uplen;
         out=(progress - (1.0-oend))/oend*lead;
     }
     else { // middle of cut
         out=0.0;
-        up=(progress-iend)/(1.0-iend-oend);
+        up=upstart+uplen*(progress-iend)/(1.0-iend-oend);
     }
 }
 
@@ -320,7 +341,7 @@ public:
     int lookup_mine_target(float frame_pitch,float progress,float depth,vec3 &mine_target) {
         vec3 up = vec_from_mineangle(mine_pit_angle-frame_pitch);
         vec3 in = vec3(0,1,0); // advance along Y (forward only)
-        vec3 start = scoop_tip + vec3(0,aurora::mine_start_distance,mine_floor_height);
+        vec3 start = scoop_tip + vec3(0,mine_start_distance,mine_floor_height);
         mine_target = start + up*progress + in*depth;
         
         return 1;
@@ -334,6 +355,7 @@ public:
         // mine head angle pivots around this point
         //vec3 head_center = vec3(0,0,1.2); // with tool coupler
         vec3 head_center = vec3(0,-0.2,1.2); // without tool coupler
+        //vec3 head_center = vec3(0,0.5,0.5); // angle head up during hard cuts (broke gear?)
         
         vec3 head_look = (mine_target - head_center).dir();
         robot_coord3D head_coords=robot_coord3D(
