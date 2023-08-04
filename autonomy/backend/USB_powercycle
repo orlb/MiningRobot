@@ -3,7 +3,18 @@
 # Basically unloads/reloads the kernel driver like: https://www.iram.fr/~blanchet/ethercat/unbind_manually_pci_device.html
 # Trick discovered by the amazing John Pender in 2014. 
 
+# Power off all Raspberry Pi ports:
+sudo uhubctl -l 1-1 -a 0
+sudo uhubctl -l 2 -a 0
+
 sudo su << EOF
 echo -n "0000:01:00.0" > /sys/bus/pci/drivers/xhci_hcd/unbind
+sleep 1
 echo -n "0000:01:00.0" > /sys/bus/pci/drivers/xhci_hcd/bind
 EOF
+
+# Power all ports back on:
+sleep 1
+sudo uhubctl -l 1-1 -a 1
+sudo uhubctl -l 2 -a 1
+
