@@ -38,6 +38,28 @@
 
 using namespace aurora;
 
+
+// Inertial measurement unit sanity check
+bool robot_IMUs_OK = true; 
+
+void IMU_sanity_check(const nanoslot_IMU_state &s,const char *what)
+{
+    const vec3 global_should(0,0,9.8); // Earth gravity vector
+    float g_err = length(s.global - global_should);
+    if (g_err > 3.0*length(s.vibe) + 4.0) { // global gravity vector is totally wrong--either sudden-onset vibe or a bad IMU
+        robot_IMUs_OK = false;
+        printf("IMU %s error: g_err = %.3f m/s^2\n", what,g_err);
+        static FILE *IMU_errs = fopen("imu.errs","w+");
+        if (IMU_errs) {
+            fprintf(IMU_errs, "IMU %s error: g_err = %.3f m/s^2   info:", what,g_err);
+            s.print(what,IMU_errs);
+            fprintf(IMU_errs,"\n");
+            fflush(IMU_errs);
+        }
+    }
+}
+
+
 // Global variables for lunatic data exchange with Arduinos via nanoslot
 MAKE_exchange_nanoslot();
 void arduino_setup_exchange()
@@ -124,7 +146,16 @@ void arduino_sensor_read(robot_base &robot)
     robot.sensor.connected = 0xFF & connected;
     
     // Copy joint orientations from IMU data
-    //   FIXME: really need some additional sanity checking here, or in slot program?
+    
+    //  For safe autonomy, really need some additional sanity checking (here, or in slot program?)
+    robot_IMUs_OK = true;
+    IMU_sanity_check(nano.slot_F1.state.frame,"frame");
+    IMU_sanity_check(nano.slot_F1.state.boom,"boom");
+    IMU_sanity_check(nano.slot_A1.state.stick,"stick");
+    IMU_sanity_check(nano.slot_A1.state.tool,"tool");
+    IMU_sanity_check(nano.slot_F1.state.fork,"fork");
+    IMU_sanity_check(nano.slot_F1.state.dump,"dump");
+    
     robot.joint.angle.boom=nano.slot_F1.state.boom.pitch;
     robot.joint.angle.stick=nano.slot_A1.state.stick.pitch;
     float tool_pitch_cal = +7.0;
@@ -262,12 +293,13 @@ const robot_joint_state dump1_joint_scoop={-10,-80, 0,0,0,0};
 // angles	FD	 10.2	-12.7	BSTS	 34.9	 76.3	-23.0	  0.0
 const robot_joint_state balance_drive_joint_state={10,-10, 35,75,-20,0};
 
+
 /*********** Mining Path Planning ***************/
 #include "aurora/mining.h"
 
 /// Starting configuration during mining
 //const robot_joint_state mine_joint_base={-17,-30, 20,0,-30,0}; // back
-const robot_joint_state mine_joint_base={-17,-30, 0,0,-30,0}; // fairly forward
+const robot_joint_state mine_joint_base={-17,-30, 10,0,-30,0}; // fairly forward
 
 
 const robot_joint_state mine_joint_finish={-17,-30, 40,7,-45,0};
@@ -932,6 +964,10 @@ void robot_manager_t::autonomous_state()
     mine_progress=0.0f;
     stall_backoff=0.0f;
     
+    /*if (!robot_IMUs_OK) {
+        enter_state(state_drive); // bad IMUs, don't try to mine
+    }
+    else*/
     if ( // move_scoop(mine_joint) && 
         move_arm(mine_joint)) {
         enter_state(state_mine);
@@ -1055,10 +1091,15 @@ void robot_manager_t::autonomous_state()
   {
     switch (substep) {
     case 0: // move to weigh configuration
-        state_start_time=cur_time; // hack!  need a "time in sub-state" here?
-        if (move_scoop(weigh_joint_scoop)) 
-        {
-            substep++;
+        if (!robot_IMUs_OK) { // avoid dumping material all over ground
+            enter_state(state_drive);
+        }
+        else {
+            state_start_time=cur_time; // hack!  need a "time in sub-state" here?
+            if (move_scoop(weigh_joint_scoop)) 
+            {
+                substep++;
+            }
         }
         break;
     case 1: // weigh left        
