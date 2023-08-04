@@ -122,22 +122,22 @@ public:
     
 #if _STDIO_H
 
-    void print(const FusionQuaternion &q) const {
-        printf(" Q(%+.2f,+%.2f,+%.2f,+%.2f) ",q.element.w,q.element.x,q.element.y,q.element.z);
+    void print(const FusionQuaternion &q,FILE *dest=stdout) const {
+        fprintf(dest," Q(%+.2f,+%.2f,+%.2f,+%.2f) ",q.element.w,q.element.x,q.element.y,q.element.z);
     }
-    void print(const char *what,const vec3 &v) const {
-        printf(" %s(%.2f,%.2f,%.2f) ", what,v.x,v.y,v.z);
+    void print(const char *what,const vec3 &v,FILE *dest=stdout) const {
+        fprintf(dest," %s(%.2f,%.2f,%.2f) ", what,v.x,v.y,v.z);
     }
     
-    void print(const char *what) const
+    void print(const char *what,FILE *dest=stdout) const
     {
-        printf("  %s { ",what);
-        print(orient);
-        printf(" YRP: %.0f %.0f %.0f  ",yaw,roll,pitch);
-        print("local",local);
-        print("global",global);
-        print("vibe",vibe);
-        printf(" } ");
+        fprintf(dest,"  %s { ",what);
+        print(orient,dest);
+        fprintf(dest," YRP: %.0f %.0f %.0f  ",yaw,roll,pitch);
+        print("local",local,dest);
+        print("global",global,dest);
+        print("vibe",vibe,dest);
+        fprintf(dest," } ");
     }
 #endif
 };

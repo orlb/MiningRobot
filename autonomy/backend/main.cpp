@@ -679,7 +679,7 @@ private:
   // Autonomous driving rate:
   //  Returns 0-1.0 float power value.
   float drive_speed(float forward,float turn=0.0) {
-    return 0.6; // confident but conservative
+    return robot.tuneable.drive;
   }
 
   // Autonomous drive power from float values:
