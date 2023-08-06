@@ -312,16 +312,21 @@ float mine_progress=0.0f;
 const float mine_start_distance=0.25; // allows full depth cut
 //const float mine_start_distance=0.0; // viable only up high
 
-// Split single progress into out and up components
-void split_progress(float progress,float &out,float &up) 
+// Split single progress into out and up components. 
+//   Progress is 0-1 distance into the full cut
+//   length determines how far up we will cut
+void split_progress(float progress,float &out,float &up,float length) 
 {
-#if 0 // top half, up cut
+#if 1 // use 'aggro' to determine how far up we go
+    float upstart = 0.0;
+    float uplen = length;
+#elif 0 // top half, up cut
     float upstart=0.5; // where "up" begins
     float uplen=0.5; // length of "up" cut
 #elif 0// top half, down cut
     float upstart=1.0; // where "up" begins
     float uplen=-0.6; // length of "up" cut
-#elif 1 // bottom half cut
+#elif 0 // bottom half cut
     float upstart=0.0; // where "up" begins
     float uplen=0.6; // length of "up" cut
 #else // full length cut
@@ -978,7 +983,7 @@ void robot_manager_t::autonomous_state()
     // Tool is running
     robot.power.tool=std::min(robot.tuneable.tool, mine_power_limit);
     
-    float aggro = robot.tuneable.aggro; // aggression during mining
+    float aggro = 0.5; // robot.tuneable.aggro; // aggression during mining
     bool advance = true; // cutting head should progress along the cut
     bool backoff = false; // cutting head should move back from the cut face
     
@@ -1021,7 +1026,7 @@ void robot_manager_t::autonomous_state()
     robot_joint_state mine_joint=mine_joint_base;
     float out=0.0f; // meters extra distance back
     float up=0.0f; // 0-1 progress up
-    split_progress(mine_progress,out,up);
+    split_progress(mine_progress,out,up,robot.tuneable.aggro);
     
     /// Current depth to mine below the observed surface (meters)
     /// Negative = clearance above surface, to clear obstacles.
@@ -1322,9 +1327,10 @@ void robot_manager_t::update(void) {
    
   // Accumulate drivetrain encoder counts into actual distances
   float fudge=1.0; // fudge factor to make distance equal reality
+  float rightCal=0.7; // (did we lose a magnet?)
   float drivecount2m=fudge*0.96/12; // meters of driving per wheel encoder tick == circumference of wheel divided by encoder ticks per revolution
   float driveL = fix_wrap256(robot.sensor.DLcount-old_sensor.DLcount)*drivecount2m;
-  float driveR = fix_wrap256(robot.sensor.DRcount-old_sensor.DRcount)*drivecount2m;
+  float driveR = fix_wrap256(robot.sensor.DRcount-old_sensor.DRcount)*drivecount2m*rightCal;
   
   // Flip encoder signs to match last nonzero drive power value
   static robot_power last_nonzero_power;
