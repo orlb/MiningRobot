@@ -1234,6 +1234,21 @@ void robot_manager_t::update(void) {
   if (dt>0.1) dt=0.1;
   last_time=cur_time;
   
+  
+#if 1 /* enable for backend UI: dangerous, but useful for autonomy testing w/o frontend */
+  // Keyboard control
+  ui.update(oglKeyMap,robot);
+
+  // Click to set state:
+  if (robotState_requested<state_last) {
+    robot.state=robotState_requested;
+    robotPrintln("Entering new state %s (%d) by backend UI request",
+      state_to_string(robot.state),robot.state);
+    robotState_requested=state_last; // clear UI request
+  }
+#endif
+
+  
 // Check for a command broadcast (briefly)
   int n;
   while (0!=(n=comms.available(10))) {
@@ -1415,20 +1430,6 @@ robot_manager_t *robot_manager;
 unsigned int video_texture_ID=0;
 
 void robot_manager_t::update_GUI(void) {
-
-#if 1 /* enable for backend UI: dangerous, but useful for autonomy testing w/o frontend */
-  // Keyboard control
-  ui.update(oglKeyMap,robot);
-
-  // Click to set state:
-  if (robotState_requested<state_last) {
-    robot.state=robotState_requested;
-    robotPrintln("Entering new state %s (%d) by backend UI request",
-      state_to_string(robot.state),robot.state);
-    robotState_requested=state_last; // clear UI request
-  }
-#endif
-
     update();
 
     // Show estimated robot location
