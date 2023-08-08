@@ -5,6 +5,7 @@ export DISPLAY=:0
 DIR="$( dirname $0)"
 cd "${DIR}"
 #(cd ../kend; date >> log; ./kend >> log) &
-(date >> log; ./backend --nogui "$@" >> log) &
+#(date >> log; ./backend --nogui "$@" >> log) &
+(date >> log; ./backend "$@" >> log) &
 
 

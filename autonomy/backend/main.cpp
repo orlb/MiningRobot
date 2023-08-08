@@ -504,7 +504,7 @@ public:
     robot.accum = old_state.accum;
     
     
-    ui.joystickState = state_STOP; // backend_driver; // we're the backend
+    ui.joystickState = state_backend_driver; // we're the backend
     
     arduino_setup_exchange();
     atexit(arduino_exit_exchange);
@@ -515,8 +515,8 @@ public:
     sim.loc.angle=((rand()%8)*8)/360;
     sim.loc.percent=50.0;
 
-    // Boot into BTI robot config
-    robot.state=state_STOP; // state_backend_driver;
+    // robot.state = state_STOP;  // physical robot: safe mode
+    robot.state = state_backend_driver; // sim or testing: drive from backend (e.g., joystick)
     ui.power.torque=0;
   }
 
