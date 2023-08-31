@@ -33,7 +33,7 @@ Special Commands:
 Lower Front wheels: 5
 Raise Front wheels: 6
 Raise/Lower Dump bucket: right Y
-Toggle miing mode: 1
+Toggle mining mode: 1
 Run mining head: right +X (-X : reverse)
 
 
