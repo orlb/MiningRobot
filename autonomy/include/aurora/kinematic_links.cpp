@@ -29,6 +29,55 @@ bool joint_state_sane(const robot_joint_state &joint)
     return true;
 }
 
+/** Detailed sanity-check this motion with these joint angles: 
+  Return NULL if these power commands keep the robot in a safe configuration,
+  or a short human-readable description string of the hazards if unsafe.
+*/
+const char* joint_move_hazards(const robot_joint_state &joint,const robot_power &power)
+{
+// (1) Simple crude angle tests:
+    float small=0.01; // nominal 1% power
+    
+    // Check for scoop down while driving
+    bool scoop_down = joint.angle.fork<-10 || joint.angle.dump<-70;
+    bool driving = fabs(power.left)>small || fabs(power.right)>small;
+    if (scoop_down && driving) return "scoop dragging on ground";
+    
+    // Check for arm elbow mashing back electronics box
+    bool back_tilted = joint.angle.boom>40 && joint.angle.stick>20;
+    bool back_move = power.boom<-small || power.stick>small; 
+    if (back_tilted && back_move) return "hitting back ebox";
+    
+// (2) Fancy coordinate system calculations
+    robot_link_coords links(joint);
+    
+    // Get frame-relative orientations of major parts
+    const robot_coord3D &tool = links.coord3D(link_grinder);
+    const robot_coord3D &scoop = links.coord3D(link_dump);
+    
+    // Figure out where the tool tip is relative to the scoop
+    //   (scoop coordinates are annoyingly rotated by 45 degrees, to match that IMU)
+    vec3 tip = scoop.local_from_world(tool.world_from_local(vec3(0,0,0)));
+    robotPrintln(" Scoop tip: %.3f, %.3f, %.3f",tip.x,tip.y,tip.z);
+    tip.x=0.0f; // on centerline
+    bool in_scoop = tip.y<0.31f; // behind the front of the scoop
+    bool below_base = tip.z<tip.y-0.13f; // below scoop bottom
+    if (in_scoop && below_base) {
+        // We're below the scoop surface
+        // return "underneath scoop!"; // debugging
+
+        if (power.tool>small) return "can't spin inside scoop";
+        
+        // moves that would push us deeper
+        if (power.boom>small) return "boom pushing tool into scoop"; 
+        if (power.stick<-small) return "stick pushing tool into scoop"; 
+        if (fabs(power.tilt)>small) return "tilting tool into scoop";
+    }
+    
+    // Otherwise we don't see any hazards
+    return NULL;
+}
+
 /**
  Solves inverse kinematics (positions to joint angles)
  problems for the excahauler robot.  This robot is mostly 2D motion

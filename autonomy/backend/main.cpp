@@ -1311,6 +1311,16 @@ void robot_manager_t::update(void) {
   else if (robot.state>=state_autonomy) { // autonomous mode!
     autonomous_state();
   }
+  
+  
+  // Sanity check joint state and power commands
+  bool driveraw = robot.state==state_driveraw; 
+  const char *hazards = joint_move_hazards(robot.joint,robot.power);
+  if (hazards !=NULL && !driveraw) 
+  {
+    robotPrintln(" -- HAZARD: %s --", hazards);
+    robot.power.stop();
+  }
 
 
   // Send commands to Arduino
@@ -1332,6 +1342,8 @@ void robot_manager_t::update(void) {
     robot.power.stop();
     robotPrintln("Slot A0 STOP command");
   }
+  
+  
 
 /*
     if (nano.slot_C0.state.connected) {
