@@ -69,11 +69,11 @@ const char* joint_move_hazards(const robot_joint_state &joint,const robot_power 
         if (power.tool>small) return "can't spin inside scoop";
         
         // moves that would push us deeper
-        if (power.boom>small) return "boom pushing tool into scoop"; //moving arm
+        if (power.boom>small) return "boom pushing tool into scoop"; // moving arm
         if (power.stick<-small) return "stick pushing tool into scoop"; 
         if (fabs(power.tilt)>small) return "tilting tool into scoop";
-		if (power.dump>small) return "dump pushing scoop into tool"; // moving scoop
-		if (power.fork>small) return "fork pushing scoop into tool";
+	if (power.dump>small) return "dump pushing scoop into tool"; // moving scoop
+	if (power.fork>small) return "fork pushing scoop into tool";
     }
     
     // Otherwise we don't see any hazards
