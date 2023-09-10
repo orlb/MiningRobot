@@ -54,26 +54,60 @@ const char* joint_move_hazards(const robot_joint_state &joint,const robot_power 
     // Get frame-relative orientations of major parts
     const robot_coord3D &tool = links.coord3D(link_grinder);
     const robot_coord3D &scoop = links.coord3D(link_dump);
+    robotPrintln("Tool origin vectors: %.3f, %.3f, %.3f", tool.origin.x, tool.origin.y, tool.origin.z);
+
+    // Fix the 45 degree scoop offset
+    robot_coord3D mod_scoop = scoop;
+    float scoop_Y_angle_old = atan(scoop.Y.z/scoop.Y.y);
+    float scoop_Y_angle_new = scoop_Y_angle_old + (3.1416f/4.0f);
+    float scoop_Z_angle_old = atan(scoop.Z.z/scoop.Z.y);
+    float scoop_Z_angle_new = scoop_Z_angle_old + (3.1416f/4.0f);
+
+    
+    mod_scoop.Y = vec3(0, cos(scoop_Y_angle_new), sin(scoop_Y_angle_new));
+    mod_scoop.Z = vec3(0, cos(scoop_Z_angle_new), sin(scoop_Z_angle_new));
     
     // Figure out where the tool tip is relative to the scoop
-    //   (scoop coordinates are annoyingly rotated by 45 degrees, to match that IMU)
-    vec3 tip = scoop.local_from_world(tool.world_from_local(vec3(0,0,0)));
-    robotPrintln(" Scoop tip: %.3f, %.3f, %.3f",tip.x,tip.y,tip.z);
+    vec3 tip = mod_scoop.local_from_world(tool.world_from_local(vec3(0,0,0)));
+    robotPrintln(" Tool tip: %.3f, %.3f, %.3f",tip.x,tip.y,tip.z);
     tip.x=0.0f; // on centerline
-    bool in_scoop = tip.y<0.31f; // behind the front of the scoop
-    bool below_base = tip.z<tip.y-0.13f; // below scoop bottom
+    
+    bool in_scoop = (tip.y<0.42f)&&(tip.z<0.31f)&&(tip.y>-0.02f); // inside the scoop
+    bool below_base = (tip.z<-0.07f)&&(tip.y<0.4f); // below scoop bottom
+    bool behind_scoop_front = (tip.y<0.1f)&&(tip.z>-0.038f); // tool exiting scoop through back
+	bool behind_scoop_back = (tip.y>-0.072f)&&(tip.y<-0.0f)&&(tip.z<0.26f); // tool entering scoop through back
+    
+    if (in_scoop) {
+        // We're in the scoop; sometimes this is okay.
+        if (fabs(power.tool)>small)
+            return "can't spin inside scoop";
+    }
     if (in_scoop && below_base) {
-        // We're below the scoop surface
-        // return "underneath scoop!"; // debugging
-
-        if (power.tool>small) return "can't spin inside scoop";
-        
-        // moves that would push us deeper
+        // We're in and going below the scoop surface; not okay.
         if (power.boom>small) return "boom pushing tool into scoop"; // moving arm
+        // It's possible to move stick/tilt through bottom of scoop in some
+        // configs w/o fabs. With the boom, though, it never seems possible.
+        // Hence, "use boom!"
+        if (fabs(power.stick)>small) return "stick pushing tool into scoop (use boom!)"; 
+        if (fabs(power.tilt)>small) return "tilting tool into scoop (use boom!)";
+        if (power.dump>small) return "dump pushing scoop into tool"; // moving scoop
+        if (power.fork>small) return "fork pushing scoop into tool";
+    }
+    if (in_scoop && behind_scoop_front) {
+        // We're in and going behind the scoop; not okay.
+        if (power.boom<-small) return "boom pushing tool into scoop"; // moving arm
         if (power.stick<-small) return "stick pushing tool into scoop"; 
-        if (fabs(power.tilt)>small) return "tilting tool into scoop";
-	if (power.dump>small) return "dump pushing scoop into tool"; // moving scoop
-	if (power.fork>small) return "fork pushing scoop into tool";
+        if (power.tilt<-small) return "tilting tool into scoop";
+        if (power.dump<-small) return "dump pushing scoop into tool"; // moving scoop
+        if (power.fork<-small) return "fork pushing scoop into tool";
+    }
+    if (behind_scoop_back) {
+        // We're not in the scoop, but we're trying to be, by going through the scoop.
+        if (power.boom>small) return "boom pushing tool into scoop"; // moving arm
+        if (fabs(power.stick)>small) return "stick pushing tool into scoop"; 
+        if (power.tilt>small) return "tilting tool into scoop";
+        if (power.dump>small) return "dump pushing scoop into tool"; // moving scoop
+        if (power.fork>small) return "fork pushing scoop into tool";
     }
     
     // Otherwise we don't see any hazards
