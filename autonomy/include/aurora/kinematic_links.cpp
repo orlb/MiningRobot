@@ -54,7 +54,6 @@ const char* joint_move_hazards(const robot_joint_state &joint,const robot_power 
     // Get frame-relative orientations of major parts
     const robot_coord3D &tool = links.coord3D(link_grinder);
     const robot_coord3D &scoop = links.coord3D(link_dump);
-    robotPrintln("Tool origin vectors: %.3f, %.3f, %.3f", tool.origin.x, tool.origin.y, tool.origin.z);
 
     // Fix the 45 degree scoop offset
     robot_coord3D mod_scoop = scoop;
@@ -69,7 +68,10 @@ const char* joint_move_hazards(const robot_joint_state &joint,const robot_power 
     
     // Figure out where the tool tip is relative to the scoop
     vec3 tip = mod_scoop.local_from_world(tool.world_from_local(vec3(0,0,0)));
+#ifdef __AURORA_ROBOTICS__DISPLAY_H
+    robotPrintln("Tool origin vectors: %.3f, %.3f, %.3f", tool.origin.x, tool.origin.y, tool.origin.z);
     robotPrintln(" Tool tip: %.3f, %.3f, %.3f",tip.x,tip.y,tip.z);
+#endif
     tip.x=0.0f; // on centerline
     
     bool in_scoop = (tip.y<0.42f)&&(tip.z<0.31f)&&(tip.y>-0.02f); // inside the scoop
