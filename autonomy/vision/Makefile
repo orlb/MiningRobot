@@ -3,7 +3,7 @@ include ../Makefile.inc
 OPTS=-O4
 CFLAGS=-Wall -I../include -std=c++11 $(OPTS) $(CVCFLAGS)
 LIBS=-laruco -lrealsense2 $(CVLINK)
-PROGS=vision_mining vision_capture
+PROGS=vision vision_mining vision_capture
 
 all: $(PROGS)
 
