@@ -54,6 +54,7 @@ const char* joint_move_hazards(const robot_joint_state &joint,const robot_power 
     // Get frame-relative orientations of major parts
     const robot_coord3D &tool = links.coord3D(link_grinder);
     const robot_coord3D &scoop = links.coord3D(link_dump);
+    const robot_coord3D &boom = links.coord3D(link_boom);
 
     // Fix the 45 degree scoop offset
     robot_coord3D mod_scoop = scoop;
@@ -110,6 +111,21 @@ const char* joint_move_hazards(const robot_joint_state &joint,const robot_power 
         if (power.tilt>small) return "tilting tool into scoop";
         if (power.dump>small) return "dump pushing scoop into tool"; // moving scoop
         if (power.fork>small) return "fork pushing scoop into tool";
+    }
+    
+    // TODO: The back of the tool on the scoop!
+    
+    // Tool tip on boom/frame collisions
+    // Figure out where the tool tip is relative to the boom
+    vec3 tip_to_boom = boom.local_from_world(tool.world_from_local(vec3(0,0,0)));
+    tip_to_boom.x=0;
+    
+    bool in_boom_upper = (tip_to_boom.y<0.11f)&&(tip_to_boom.z>0.0f);
+    bool in_boom_lower = (tip_to_boom.y<0.14)&&(tip_to_boom.z<0.0f);
+    
+    if (in_boom_upper||in_boom_lower) {
+        if (power.stick<-small) return "stick pushing tool into boom"; 
+        if (power.tilt<-small) return "tilting tool into boom";
     }
     
     // Otherwise we don't see any hazards
