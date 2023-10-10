@@ -53,6 +53,7 @@ const char* joint_move_hazards(const robot_joint_state &joint,const robot_power 
     
     // Get frame-relative orientations of major parts
     const robot_coord3D &tool = links.coord3D(link_grinder);
+    const robot_coord3D &spin = links.coord3D(link_spin);
     const robot_coord3D &scoop = links.coord3D(link_dump);
     const robot_coord3D &boom = links.coord3D(link_boom);
 
@@ -80,6 +81,9 @@ const char* joint_move_hazards(const robot_joint_state &joint,const robot_power 
     bool behind_scoop_front = (tip.y<0.1f)&&(tip.z>-0.038f); // tool exiting scoop through back
 	bool behind_scoop_back = (tip.y>-0.072f)&&(tip.y<-0.0f)&&(tip.z<0.26f); // tool entering scoop through back
     
+    // TODO: MOVE ORIGIN OF TIP AND MAKE CIRCLE TO CHECK?
+    
+    
     if (in_scoop) {
         // We're in the scoop; sometimes this is okay.
         if (fabs(power.tool)>small)
@@ -98,7 +102,7 @@ const char* joint_move_hazards(const robot_joint_state &joint,const robot_power 
     }
     if (in_scoop && behind_scoop_front) {
         // We're in and going behind the scoop; not okay.
-        if (power.boom<-small) return "boom pushing tool into scoop"; // moving arm
+        if (fabs(power.boom)>small) return "boom pushing tool into scoop (use stick!)"; // moving arm
         if (power.stick<-small) return "stick pushing tool into scoop"; 
         if (power.tilt<-small) return "tilting tool into scoop";
         if (power.dump<-small) return "dump pushing scoop into tool"; // moving scoop
@@ -107,13 +111,46 @@ const char* joint_move_hazards(const robot_joint_state &joint,const robot_power 
     if (behind_scoop_back) {
         // We're not in the scoop, but we're trying to be, by going through the scoop.
         if (power.boom>small) return "boom pushing tool into scoop"; // moving arm
-        if (fabs(power.stick)>small) return "stick pushing tool into scoop"; 
+        if (power.stick>small) return "stick pushing tool into scoop"; 
         if (power.tilt>small) return "tilting tool into scoop";
         if (power.dump>small) return "dump pushing scoop into tool"; // moving scoop
         if (power.fork>small) return "fork pushing scoop into tool";
     }
     
-    // TODO: The back of the tool on the scoop!
+    // Tool back and bottom on scoop upper tip
+    vec3 tool_back_lower = mod_scoop.local_from_world(tool.world_from_local(vec3(0,-0.442f,0)));
+    vec3 tool_back_upper = mod_scoop.local_from_world(tool.world_from_local(vec3(0,-0.502f,0.24f)));
+    vec3 new_tip = mod_scoop.local_from_world(tool.world_from_local(vec3(0,-0.032f,0)));
+    robotPrintln("Tool back: %.3f, %.3f, %.3f", tool_back_upper.x, tool_back_upper.y, tool_back_upper.z);
+    
+    float tool_slope_lower = (new_tip.z-tool_back_lower.z)/(new_tip.y-tool_back_lower.y);
+    float tool_slope_upper = (tool_back_lower.z-tool_back_upper.z)/(tool_back_lower.y-tool_back_upper.y);
+    // at y=0 on line, 0.26 must be greater than solved-for z,
+    // and line segment must be within scoop. HANDLES TOOL BOTTOM ON UPPER SCOOP
+    bool tool_back_lower_in_scoop = (0.26>(tool_slope_lower*(0-new_tip.y)+new_tip.z))
+                                    &&(tool_back_lower.y<0)&&(new_tip.y>0);
+    // at z=0.26 on line, 0 must be < solved-for y, and line 
+    // segment must be within scoop. HANDLES TOOL BACK ON UPPER SCOOP
+    bool tool_back_upper_in_scoop = (0>((0.26-tool_back_upper.z)/tool_slope_upper+tool_back_upper.y))
+                                    &&(tool_back_lower.z<0.26)&&(0<tool_back_lower.y);
+    
+    if (tool_back_lower_in_scoop) {
+        if (fabs(power.boom)>small) return "boom pushing tool into scoop (use stick!)"; // moving arm
+        if (power.stick<-small) return "stick pushing tool into scoop"; 
+        if (power.tilt<-small) return "tilting tool into scoop";
+        if (fabs(power.dump)>small) return "dump pushing scoop into tool"; // moving scoop
+        if (power.fork>small) return "fork pushing scoop into tool";
+    }
+    
+    if (tool_back_upper_in_scoop) {
+        if (power.boom<-small) return "boom pushing tool into scoop"; // moving arm
+        if (power.stick<-small) return "stick pushing tool into scoop"; 
+        if (power.tilt<-small) return "tilting tool into scoop";
+        if (power.dump<-small) return "dump pushing scoop into tool"; // moving scoop
+        if (power.fork>small) return "fork pushing scoop into tool";
+    }
+    
+    // TODO: Scoop tip on tool back and bottom
     
     // Tool tip on boom/frame collisions
     // Figure out where the tool tip is relative to the boom
