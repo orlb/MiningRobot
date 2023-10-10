@@ -121,7 +121,6 @@ const char* joint_move_hazards(const robot_joint_state &joint,const robot_power 
     vec3 tool_back_lower = mod_scoop.local_from_world(tool.world_from_local(vec3(0,-0.442f,0)));
     vec3 tool_back_upper = mod_scoop.local_from_world(tool.world_from_local(vec3(0,-0.502f,0.24f)));
     vec3 new_tip = mod_scoop.local_from_world(tool.world_from_local(vec3(0,-0.032f,0)));
-    robotPrintln("Tool back: %.3f, %.3f, %.3f", tool_back_upper.x, tool_back_upper.y, tool_back_upper.z);
     
     float tool_slope_lower = (new_tip.z-tool_back_lower.z)/(new_tip.y-tool_back_lower.y);
     float tool_slope_upper = (tool_back_lower.z-tool_back_upper.z)/(tool_back_lower.y-tool_back_upper.y);
