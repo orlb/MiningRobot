@@ -53,7 +53,6 @@ const char* joint_move_hazards(const robot_joint_state &joint,const robot_power 
     
     // Get frame-relative orientations of major parts
     const robot_coord3D &tool = links.coord3D(link_grinder);
-    const robot_coord3D &spin = links.coord3D(link_spin);
     const robot_coord3D &scoop = links.coord3D(link_dump);
     const robot_coord3D &boom = links.coord3D(link_boom);
 
