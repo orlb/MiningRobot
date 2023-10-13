@@ -16,6 +16,29 @@ const static std::vector<robot_link_index> links_with_revolute_joints = {
     link_boom, link_stick, link_tilt, link_spin
 };
 
+//*** THESE CONSTANTS SHOULD PROBABLY BE MOVED TO A HEADER ***//
+// Buffer distance between moving parts
+const static float SAFE_DIST = 0.03f; // Safety gap between moving parts
+
+// Part parameters
+const static float MINING_HEAD_R = 0.09f; // Radius of mining head
+
+// Parent-relative offset points
+const static vec3 TOOL_BACK_LOWER = vec3(0,-0.442f,0);
+const static vec3 TOOL_BACK_UPPER = vec3(0,-0.502f,0.24f); 
+const static vec3 MINING_HEAD_MID = vec3(0,-0.05f, 0.03f); // Tip-relative head center
+
+// Hazardous points (scoop relative)
+const static vec3 SCOOP_HAZ_UPPER = vec3(0,0.02f,0.275f);
+const static vec3 SCOOP_HAZ_MID = vec3(0,-0.015f,-0.122f);
+const static vec3 SCOOP_HAZ_LOWER = vec3(0,0.333f,-0.09f);
+const static vec3 SCOOP_HAZ_OUTER = vec3(0,0.142f,0.243f); // Only used for spin
+
+// Hazardous points (boom relative)
+const static vec3 BOOM_HAZ_LOWER = vec3(0,0,0); // Base of boom
+const static vec3 BOOM_HAZ_UPPER = vec3(0,0,0.25f); // Upper boom
+//************************************************************//
+
 /** Coarse sanity-check this set of joint angles (check limits on angles) */
 bool joint_state_sane(const robot_joint_state &joint)
 {
@@ -27,6 +50,36 @@ bool joint_state_sane(const robot_joint_state &joint)
         }
     }
     return true;
+}
+
+// Some of the following functions could be included in vec2.h
+float dist_squared(vec2 v, vec2 w) {
+    return (v.x-w.x)*(v.x-w.x)+(v.y-w.y)*(v.y-w.y);
+}
+
+float dist(vec2 v, vec2 w) {
+    return sqrt(dist_squared(v, w));
+}
+
+// Distance between (line between v and w) and (point p)
+// Code derived from code by Grumdrig, 2021
+float point_to_line_dist_2D(vec2 v, vec2 w, vec2 p) {
+    float len2 = dist_squared(v, w);
+    if (len2 < 0.0001f) return dist(p, v);   // v == w case
+    // Consider the line extending the segment, parameterized as v + t (w - v).
+    // We find projection of point p onto the line. 
+    // It falls where t = [(p-v) . (w-v)] / |w-v|^2
+    // We clamp t from [0,1] to handle points outside the segment vw.
+    const float t_res = dot(p - v, w - v) / len2;
+    const float t_min = t_res>1.0f ? 1.0f : t_res;
+    const float t = t_min<0 ? 0 : t_min;
+    const vec2 projection = v + (w - v)*t;  // Projection falls on the segment
+    return dist(p, projection);
+}
+
+// We don't use the x-axis for collision detection (yet).
+float point_to_line_dist(vec3 v, vec3 w, vec3 p) {
+    return point_to_line_dist_2D(vec2(v.y,v.z), vec2(w.y,w.z), vec2(p.y,p.z));
 }
 
 /** Detailed sanity-check this motion with these joint angles: 
@@ -63,76 +116,85 @@ const char* joint_move_hazards(const robot_joint_state &joint,const robot_power 
     float scoop_Z_angle_old = atan(scoop.Z.z/scoop.Z.y);
     float scoop_Z_angle_new = scoop_Z_angle_old + (3.1416f/4.0f);
 
-    
     mod_scoop.Y = vec3(0, cos(scoop_Y_angle_new), sin(scoop_Y_angle_new));
     mod_scoop.Z = vec3(0, cos(scoop_Z_angle_new), sin(scoop_Z_angle_new));
     
-    // Figure out where the tool tip is relative to the scoop
-    vec3 tip = mod_scoop.local_from_world(tool.world_from_local(vec3(0,0,0)));
-#ifdef __AURORA_ROBOTICS__DISPLAY_H
-    robotPrintln("Tool origin vectors: %.3f, %.3f, %.3f", tool.origin.x, tool.origin.y, tool.origin.z);
-    robotPrintln(" Tool tip: %.3f, %.3f, %.3f",tip.x,tip.y,tip.z);
-#endif
-    tip.x=0.0f; // on centerline
+    // vec3 point_finder = mod_scoop.local_from_world(tool.world_from_local(vec3(0,0,0))); // debugging
     
-    bool in_scoop = (tip.y<0.42f)&&(tip.z<0.31f)&&(tip.y>-0.02f); // inside the scoop
-    bool below_base = (tip.z<-0.07f)&&(tip.y<0.4f); // below scoop bottom
-    bool behind_scoop_front = (tip.y<0.1f)&&(tip.z>-0.038f); // tool exiting scoop through back
-	bool behind_scoop_back = (tip.y>-0.072f)&&(tip.y<-0.0f)&&(tip.z<0.26f); // tool entering scoop through back
+    // Is tool in scoop?
+    vec3 tip = mod_scoop.local_from_world(tool.world_from_local(MINING_HEAD_MID));
+    vec3 tool_back_lower = mod_scoop.local_from_world(tool.world_from_local(TOOL_BACK_LOWER));
+    vec3 tool_back_upper = mod_scoop.local_from_world(tool.world_from_local(TOOL_BACK_UPPER));
     
-    // TODO: MOVE ORIGIN OF TIP AND MAKE CIRCLE TO CHECK?
+    bool head_in_scoop = (tip.y+MINING_HEAD_R+SAFE_DIST>SCOOP_HAZ_UPPER.y) &&
+                         (tip.z-(MINING_HEAD_R+SAFE_DIST)<SCOOP_HAZ_UPPER.z) && 
+                         (tip.y-(MINING_HEAD_R+SAFE_DIST)<SCOOP_HAZ_LOWER.y) && 
+                         (tip.z+MINING_HEAD_R+SAFE_DIST>SCOOP_HAZ_LOWER.z);
+    bool tool_back_in_scoop = (tool_back_lower.y+SAFE_DIST>SCOOP_HAZ_UPPER.y) &&
+                              (tool_back_lower.z-SAFE_DIST<SCOOP_HAZ_UPPER.z) && 
+                              (tool_back_lower.y-SAFE_DIST<SCOOP_HAZ_LOWER.y) && 
+                              (tool_back_lower.z+SAFE_DIST>SCOOP_HAZ_LOWER.z);
     
+    bool in_scoop = head_in_scoop || tool_back_in_scoop;
     
     if (in_scoop) {
         // We're in the scoop; sometimes this is okay.
         if (fabs(power.tool)>small)
             return "can't spin inside scoop";
     }
-    if (in_scoop && below_base) {
+    
+    // Mining head on scoop
+    float dist_to_scoop_bottom = point_to_line_dist(SCOOP_HAZ_MID, SCOOP_HAZ_LOWER, tip);
+    bool head_near_bottom = dist_to_scoop_bottom<MINING_HEAD_R+SAFE_DIST;
+    bool head_under_scoop = (tip.z-MINING_HEAD_R<SCOOP_HAZ_MID.z) || (tip.z-MINING_HEAD_R<SCOOP_HAZ_LOWER.z);
+    
+    float dist_to_scoop_back = point_to_line_dist(SCOOP_HAZ_MID, SCOOP_HAZ_UPPER, tip);
+    bool head_near_back = dist_to_scoop_back<MINING_HEAD_R+SAFE_DIST;
+    bool head_behind_scoop = (tip.y<SCOOP_HAZ_MID.y) && (tip.z-MINING_HEAD_R<SCOOP_HAZ_UPPER.z);
+    
+    if (head_near_bottom && !head_under_scoop) {
         // We're in and going below the scoop surface; not okay.
         if (power.boom>small) return "boom pushing tool into scoop"; // moving arm
-        // It's possible to move stick/tilt through bottom of scoop in some
-        // configs w/o fabs. With the boom, though, it never seems possible.
-        // Hence, "use boom!"
-        if (fabs(power.stick)>small) return "stick pushing tool into scoop (use boom!)"; 
-        if (fabs(power.tilt)>small) return "tilting tool into scoop (use boom!)";
+        if (power.stick<-small) return "stick pushing tool into scoop"; 
+        if (power.tilt>small) return "tilting tool into scoop";
         if (power.dump>small) return "dump pushing scoop into tool"; // moving scoop
         if (power.fork>small) return "fork pushing scoop into tool";
     }
-    if (in_scoop && behind_scoop_front) {
-        // We're in and going behind the scoop; not okay.
-        if (fabs(power.boom)>small) return "boom pushing tool into scoop (use stick!)"; // moving arm
+    if (head_near_bottom && head_under_scoop) {
+        // We're in and going below the scoop surface; not okay.
+        if (power.boom<-small) return "boom pushing tool into scoop"; // moving arm
         if (power.stick<-small) return "stick pushing tool into scoop"; 
         if (power.tilt<-small) return "tilting tool into scoop";
         if (power.dump<-small) return "dump pushing scoop into tool"; // moving scoop
         if (power.fork<-small) return "fork pushing scoop into tool";
     }
-    if (behind_scoop_back) {
+    if (head_near_back && !head_behind_scoop) {
+        // We're in and going behind the scoop; not okay.
+        if (power.boom<-small) return "boom pushing tool into scoop"; // moving arm
+        if (power.stick<-small) return "stick pushing tool into scoop"; 
+        if (power.tilt<-small) return "tilting tool into scoop";
+        if (power.dump<-small) return "dump pushing scoop into tool"; // moving scoop
+        if (fabs(power.fork)>small) return "fork pushing scoop into tool";
+    } 
+    if (head_near_back && head_behind_scoop) {
         // We're not in the scoop, but we're trying to be, by going through the scoop.
         if (power.boom>small) return "boom pushing tool into scoop"; // moving arm
-        if (power.stick>small) return "stick pushing tool into scoop"; 
-        if (power.tilt>small) return "tilting tool into scoop";
+        if (power.stick<-small) return "stick pushing tool into scoop"; 
+        if (fabs(power.tilt)>small) return "tilting tool into scoop (use stick/boom)";
         if (power.dump>small) return "dump pushing scoop into tool"; // moving scoop
         if (power.fork>small) return "fork pushing scoop into tool";
     }
+
+    // Back of tool on scoop
+    float tool_upper_scoop_upper_dist = point_to_line_dist(tool_back_upper, tool_back_lower, SCOOP_HAZ_UPPER);
+    float tool_lower_scoop_upper_dist = point_to_line_dist(tool_back_lower, tip, SCOOP_HAZ_UPPER);
+    float tool_upper_scoop_lower_dist = point_to_line_dist(tool_back_upper, tool_back_lower, SCOOP_HAZ_LOWER);
+    float tool_lower_scoop_lower_dist = point_to_line_dist(tool_back_lower, tip, SCOOP_HAZ_LOWER);
     
-    // Tool back and bottom on scoop upper tip
-    vec3 tool_back_lower = mod_scoop.local_from_world(tool.world_from_local(vec3(0,-0.442f,0)));
-    vec3 tool_back_upper = mod_scoop.local_from_world(tool.world_from_local(vec3(0,-0.502f,0.24f)));
-    vec3 new_tip = mod_scoop.local_from_world(tool.world_from_local(vec3(0,-0.032f,0)));
+    bool tool_back_near_scoop_upper = (tool_upper_scoop_upper_dist < SAFE_DIST) || (tool_lower_scoop_upper_dist < SAFE_DIST);
+    bool tool_back_near_scoop_lower = (tool_upper_scoop_lower_dist < SAFE_DIST) || (tool_lower_scoop_lower_dist < SAFE_DIST);
     
-    float tool_slope_lower = (new_tip.z-tool_back_lower.z)/(new_tip.y-tool_back_lower.y);
-    float tool_slope_upper = (tool_back_lower.z-tool_back_upper.z)/(tool_back_lower.y-tool_back_upper.y);
-    // at y=0 on line, 0.26 must be greater than solved-for z,
-    // and line segment must be within scoop. HANDLES TOOL BOTTOM ON UPPER SCOOP
-    bool tool_back_lower_in_scoop = (0.26>(tool_slope_lower*(0-new_tip.y)+new_tip.z))
-                                    &&(tool_back_lower.y<0)&&(new_tip.y>0);
-    // at z=0.26 on line, 0 must be < solved-for y, and line 
-    // segment must be within scoop. HANDLES TOOL BACK ON UPPER SCOOP
-    bool tool_back_upper_in_scoop = (0>((0.26-tool_back_upper.z)/tool_slope_upper+tool_back_upper.y))
-                                    &&(tool_back_lower.z<0.26)&&(0<tool_back_lower.y);
-    
-    if (tool_back_lower_in_scoop) {
+    if (tool_back_near_scoop_upper) {
         if (fabs(power.boom)>small) return "boom pushing tool into scoop (use stick!)"; // moving arm
         if (power.stick<-small) return "stick pushing tool into scoop"; 
         if (power.tilt<-small) return "tilting tool into scoop";
@@ -140,28 +202,31 @@ const char* joint_move_hazards(const robot_joint_state &joint,const robot_power 
         if (power.fork>small) return "fork pushing scoop into tool";
     }
     
-    if (tool_back_upper_in_scoop) {
-        if (power.boom<-small) return "boom pushing tool into scoop"; // moving arm
+    if (tool_back_near_scoop_lower) {
+        if (power.boom>small) return "boom pushing tool into scoop"; // moving arm
         if (power.stick<-small) return "stick pushing tool into scoop"; 
         if (power.tilt<-small) return "tilting tool into scoop";
         if (power.dump<-small) return "dump pushing scoop into tool"; // moving scoop
         if (power.fork>small) return "fork pushing scoop into tool";
     }
-    
-    // TODO: Scoop tip on tool back and bottom
-    
-    // Tool tip on boom/frame collisions
-    // Figure out where the tool tip is relative to the boom
+        
+    // Mining head on on boom (add head on frame, too? May not be needed.)
     vec3 tip_to_boom = boom.local_from_world(tool.world_from_local(vec3(0,0,0)));
-    tip_to_boom.x=0;
+    vec3 tool_back_to_boom = boom.local_from_world(tool.world_from_local(TOOL_BACK_LOWER));
     
-    bool in_boom_upper = (tip_to_boom.y<0.11f)&&(tip_to_boom.z>0.0f);
-    bool in_boom_lower = (tip_to_boom.y<0.14)&&(tip_to_boom.z<0.0f);
+    float head_dist_to_boom = point_to_line_dist(BOOM_HAZ_LOWER, BOOM_HAZ_UPPER, tip_to_boom);
+    float tool_dist_to_boom = point_to_line_dist(BOOM_HAZ_LOWER, BOOM_HAZ_UPPER, tool_back_to_boom);
     
-    if (in_boom_upper||in_boom_lower) {
+    bool in_boom = (head_dist_to_boom < MINING_HEAD_R+SAFE_DIST) || (tool_dist_to_boom < SAFE_DIST);
+    
+    if (in_boom) {
         if (power.stick<-small) return "stick pushing tool into boom"; 
         if (power.tilt<-small) return "tilting tool into boom";
     }
+    
+#ifdef __AURORA_ROBOTICS__DISPLAY_H
+    //robotPrintln(" Tool tip to boom: %.3f, %.3f, %.3f",point_finder.x,point_finder.y,point_finder.z); // debugging
+#endif
     
     // Otherwise we don't see any hazards
     return NULL;
