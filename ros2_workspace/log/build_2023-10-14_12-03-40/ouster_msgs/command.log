@@ -1,0 +1,4 @@
+Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/ouster_msgs': _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/ouster_msgs -- -j4 -l4
+Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/ouster_msgs' returned '0': _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/ouster_msgs -- -j4 -l4
+Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/ouster_msgs': _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/ros2_workspace/build/ouster_msgs
+Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/ouster_msgs' returned '0': _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/ros2_workspace/build/ouster_msgs

@@ -1,0 +1,762 @@
+[1.683s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[1.683s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=4, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7f53b0fb4250>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7f53b102a8d0>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7f53b102a8d0>>)
+[1.797s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[1.797s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[1.797s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[1.797s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[1.797s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[1.797s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[1.798s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/brown/Projects/MiningRobot/ros2_workspace'
+[1.798s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[1.798s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[1.798s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[1.798s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[1.798s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[1.798s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[1.799s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[1.799s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[1.799s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[1.832s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[1.832s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[1.832s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[1.832s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[1.832s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[1.832s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[1.832s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[1.832s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[1.833s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[1.833s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[1.833s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[1.833s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[1.833s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[1.833s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[1.833s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[1.833s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[1.833s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[1.834s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[1.834s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[1.834s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[1.834s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[1.834s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[1.834s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[1.834s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[1.834s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[1.834s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[1.834s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[1.834s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[1.834s] Level 1:colcon.colcon_core.package_identification:_identify(src/aurora_core) by extensions ['ignore', 'ignore_ament_install']
+[1.834s] Level 1:colcon.colcon_core.package_identification:_identify(src/aurora_core) by extension 'ignore'
+[1.835s] Level 1:colcon.colcon_core.package_identification:_identify(src/aurora_core) by extension 'ignore_ament_install'
+[1.835s] Level 1:colcon.colcon_core.package_identification:_identify(src/aurora_core) by extensions ['colcon_pkg']
+[1.835s] Level 1:colcon.colcon_core.package_identification:_identify(src/aurora_core) by extension 'colcon_pkg'
+[1.835s] Level 1:colcon.colcon_core.package_identification:_identify(src/aurora_core) by extensions ['colcon_meta']
+[1.835s] Level 1:colcon.colcon_core.package_identification:_identify(src/aurora_core) by extension 'colcon_meta'
+[1.835s] Level 1:colcon.colcon_core.package_identification:_identify(src/aurora_core) by extensions ['ros']
+[1.835s] Level 1:colcon.colcon_core.package_identification:_identify(src/aurora_core) by extension 'ros'
+[1.841s] DEBUG:colcon.colcon_core.package_identification:Package 'src/aurora_core' with type 'ros.ament_cmake' and name 'aurora_core'
+[1.841s] Level 1:colcon.colcon_core.package_identification:_identify(src/pcl_msgs) by extensions ['ignore', 'ignore_ament_install']
+[1.841s] Level 1:colcon.colcon_core.package_identification:_identify(src/pcl_msgs) by extension 'ignore'
+[1.841s] Level 1:colcon.colcon_core.package_identification:_identify(src/pcl_msgs) by extension 'ignore_ament_install'
+[1.841s] Level 1:colcon.colcon_core.package_identification:_identify(src/pcl_msgs) by extensions ['colcon_pkg']
+[1.842s] Level 1:colcon.colcon_core.package_identification:_identify(src/pcl_msgs) by extension 'colcon_pkg'
+[1.842s] Level 1:colcon.colcon_core.package_identification:_identify(src/pcl_msgs) by extensions ['colcon_meta']
+[1.842s] Level 1:colcon.colcon_core.package_identification:_identify(src/pcl_msgs) by extension 'colcon_meta'
+[1.842s] Level 1:colcon.colcon_core.package_identification:_identify(src/pcl_msgs) by extensions ['ros']
+[1.842s] Level 1:colcon.colcon_core.package_identification:_identify(src/pcl_msgs) by extension 'ros'
+[1.843s] DEBUG:colcon.colcon_core.package_identification:Package 'src/pcl_msgs' with type 'ros.ament_cmake' and name 'pcl_msgs'
+[1.843s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl) by extensions ['ignore', 'ignore_ament_install']
+[1.843s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl) by extension 'ignore'
+[1.843s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl) by extension 'ignore_ament_install'
+[1.843s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl) by extensions ['colcon_pkg']
+[1.843s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl) by extension 'colcon_pkg'
+[1.843s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl) by extensions ['colcon_meta']
+[1.843s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl) by extension 'colcon_meta'
+[1.843s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl) by extensions ['ros']
+[1.843s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl) by extension 'ros'
+[1.843s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl) by extensions ['cmake', 'python']
+[1.844s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl) by extension 'cmake'
+[1.844s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl) by extension 'python'
+[1.844s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl) by extensions ['python_setup_py']
+[1.844s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl) by extension 'python_setup_py'
+[1.844s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/pcl_conversions) by extensions ['ignore', 'ignore_ament_install']
+[1.844s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/pcl_conversions) by extension 'ignore'
+[1.844s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/pcl_conversions) by extension 'ignore_ament_install'
+[1.844s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/pcl_conversions) by extensions ['colcon_pkg']
+[1.844s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/pcl_conversions) by extension 'colcon_pkg'
+[1.844s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/pcl_conversions) by extensions ['colcon_meta']
+[1.844s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/pcl_conversions) by extension 'colcon_meta'
+[1.844s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/pcl_conversions) by extensions ['ros']
+[1.844s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/pcl_conversions) by extension 'ros'
+[1.846s] DEBUG:colcon.colcon_core.package_identification:Package 'src/perception_pcl/pcl_conversions' with type 'ros.ament_cmake' and name 'pcl_conversions'
+[1.846s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/pcl_ros) by extensions ['ignore', 'ignore_ament_install']
+[1.846s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/pcl_ros) by extension 'ignore'
+[1.846s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/pcl_ros) by extension 'ignore_ament_install'
+[1.847s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/pcl_ros) by extensions ['colcon_pkg']
+[1.847s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/pcl_ros) by extension 'colcon_pkg'
+[1.847s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/pcl_ros) by extensions ['colcon_meta']
+[1.847s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/pcl_ros) by extension 'colcon_meta'
+[1.847s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/pcl_ros) by extensions ['ros']
+[1.847s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/pcl_ros) by extension 'ros'
+[1.849s] DEBUG:colcon.colcon_core.package_identification:Package 'src/perception_pcl/pcl_ros' with type 'ros.ament_cmake' and name 'pcl_ros'
+[1.849s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/perception_pcl) by extensions ['ignore', 'ignore_ament_install']
+[1.849s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/perception_pcl) by extension 'ignore'
+[1.849s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/perception_pcl) by extension 'ignore_ament_install'
+[1.849s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/perception_pcl) by extensions ['colcon_pkg']
+[1.849s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/perception_pcl) by extension 'colcon_pkg'
+[1.849s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/perception_pcl) by extensions ['colcon_meta']
+[1.850s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/perception_pcl) by extension 'colcon_meta'
+[1.850s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/perception_pcl) by extensions ['ros']
+[1.850s] Level 1:colcon.colcon_core.package_identification:_identify(src/perception_pcl/perception_pcl) by extension 'ros'
+[1.851s] DEBUG:colcon.colcon_core.package_identification:Package 'src/perception_pcl/perception_pcl' with type 'ros.ament_cmake' and name 'perception_pcl'
+[1.851s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers) by extensions ['ignore', 'ignore_ament_install']
+[1.851s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers) by extension 'ignore'
+[1.851s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers) by extension 'ignore_ament_install'
+[1.851s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers) by extensions ['colcon_pkg']
+[1.851s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers) by extension 'colcon_pkg'
+[1.851s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers) by extensions ['colcon_meta']
+[1.851s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers) by extension 'colcon_meta'
+[1.851s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers) by extensions ['ros']
+[1.851s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers) by extension 'ros'
+[1.851s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers) by extensions ['cmake', 'python']
+[1.851s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers) by extension 'cmake'
+[1.852s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers) by extension 'python'
+[1.852s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers) by extensions ['python_setup_py']
+[1.852s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers) by extension 'python_setup_py'
+[1.852s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build) by extensions ['ignore', 'ignore_ament_install']
+[1.852s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build) by extension 'ignore'
+[1.852s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build) by extension 'ignore_ament_install'
+[1.852s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build) by extensions ['colcon_pkg']
+[1.852s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build) by extension 'colcon_pkg'
+[1.852s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build) by extensions ['colcon_meta']
+[1.852s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build) by extension 'colcon_meta'
+[1.852s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build) by extensions ['ros']
+[1.852s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build) by extension 'ros'
+[1.852s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build) by extensions ['cmake', 'python']
+[1.853s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build) by extension 'cmake'
+[1.853s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build) by extension 'python'
+[1.853s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build) by extensions ['python_setup_py']
+[1.853s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build) by extension 'python_setup_py'
+[1.853s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles) by extensions ['ignore', 'ignore_ament_install']
+[1.853s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles) by extension 'ignore'
+[1.853s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles) by extension 'ignore_ament_install'
+[1.853s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles) by extensions ['colcon_pkg']
+[1.853s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles) by extension 'colcon_pkg'
+[1.853s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles) by extensions ['colcon_meta']
+[1.853s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles) by extension 'colcon_meta'
+[1.854s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles) by extensions ['ros']
+[1.854s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles) by extension 'ros'
+[1.854s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles) by extensions ['cmake', 'python']
+[1.854s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles) by extension 'cmake'
+[1.854s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles) by extension 'python'
+[1.854s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles) by extensions ['python_setup_py']
+[1.854s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles) by extension 'python_setup_py'
+[1.854s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6) by extensions ['ignore', 'ignore_ament_install']
+[1.855s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6) by extension 'ignore'
+[1.855s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6) by extension 'ignore_ament_install'
+[1.855s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6) by extensions ['colcon_pkg']
+[1.855s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6) by extension 'colcon_pkg'
+[1.855s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6) by extensions ['colcon_meta']
+[1.855s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6) by extension 'colcon_meta'
+[1.855s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6) by extensions ['ros']
+[1.855s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6) by extension 'ros'
+[1.855s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6) by extensions ['cmake', 'python']
+[1.855s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6) by extension 'cmake'
+[1.855s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6) by extension 'python'
+[1.855s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6) by extensions ['python_setup_py']
+[1.856s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6) by extension 'python_setup_py'
+[1.856s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC) by extensions ['ignore', 'ignore_ament_install']
+[1.856s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC) by extension 'ignore'
+[1.856s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC) by extension 'ignore_ament_install'
+[1.856s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC) by extensions ['colcon_pkg']
+[1.856s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC) by extension 'colcon_pkg'
+[1.856s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC) by extensions ['colcon_meta']
+[1.856s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC) by extension 'colcon_meta'
+[1.856s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC) by extensions ['ros']
+[1.856s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC) by extension 'ros'
+[1.857s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC) by extensions ['cmake', 'python']
+[1.857s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC) by extension 'cmake'
+[1.857s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC) by extension 'python'
+[1.857s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC) by extensions ['python_setup_py']
+[1.857s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC) by extension 'python_setup_py'
+[1.857s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC/tmp) by extensions ['ignore', 'ignore_ament_install']
+[1.857s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC/tmp) by extension 'ignore'
+[1.857s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC/tmp) by extension 'ignore_ament_install'
+[1.858s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC/tmp) by extensions ['colcon_pkg']
+[1.858s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC/tmp) by extension 'colcon_pkg'
+[1.858s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC/tmp) by extensions ['colcon_meta']
+[1.858s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC/tmp) by extension 'colcon_meta'
+[1.858s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC/tmp) by extensions ['ros']
+[1.858s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC/tmp) by extension 'ros'
+[1.858s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC/tmp) by extensions ['cmake', 'python']
+[1.858s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC/tmp) by extension 'cmake'
+[1.858s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC/tmp) by extension 'python'
+[1.858s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC/tmp) by extensions ['python_setup_py']
+[1.858s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdC/tmp) by extension 'python_setup_py'
+[1.859s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX) by extensions ['ignore', 'ignore_ament_install']
+[1.859s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX) by extension 'ignore'
+[1.859s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX) by extension 'ignore_ament_install'
+[1.859s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX) by extensions ['colcon_pkg']
+[1.859s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX) by extension 'colcon_pkg'
+[1.859s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX) by extensions ['colcon_meta']
+[1.859s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX) by extension 'colcon_meta'
+[1.859s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX) by extensions ['ros']
+[1.859s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX) by extension 'ros'
+[1.860s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX) by extensions ['cmake', 'python']
+[1.860s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX) by extension 'cmake'
+[1.860s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX) by extension 'python'
+[1.860s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX) by extensions ['python_setup_py']
+[1.860s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX) by extension 'python_setup_py'
+[1.860s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX/tmp) by extensions ['ignore', 'ignore_ament_install']
+[1.860s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX/tmp) by extension 'ignore'
+[1.860s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX/tmp) by extension 'ignore_ament_install'
+[1.861s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX/tmp) by extensions ['colcon_pkg']
+[1.861s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX/tmp) by extension 'colcon_pkg'
+[1.861s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX/tmp) by extensions ['colcon_meta']
+[1.861s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX/tmp) by extension 'colcon_meta'
+[1.861s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX/tmp) by extensions ['ros']
+[1.861s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX/tmp) by extension 'ros'
+[1.861s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX/tmp) by extensions ['cmake', 'python']
+[1.861s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX/tmp) by extension 'cmake'
+[1.861s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX/tmp) by extension 'python'
+[1.861s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX/tmp) by extensions ['python_setup_py']
+[1.861s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/3.27.6/CompilerIdCXX/tmp) by extension 'python_setup_py'
+[1.862s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/pkgRedirects) by extensions ['ignore', 'ignore_ament_install']
+[1.862s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/pkgRedirects) by extension 'ignore'
+[1.862s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/pkgRedirects) by extension 'ignore_ament_install'
+[1.862s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/pkgRedirects) by extensions ['colcon_pkg']
+[1.862s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/pkgRedirects) by extension 'colcon_pkg'
+[1.862s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/pkgRedirects) by extensions ['colcon_meta']
+[1.862s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/pkgRedirects) by extension 'colcon_meta'
+[1.862s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/pkgRedirects) by extensions ['ros']
+[1.862s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/pkgRedirects) by extension 'ros'
+[1.862s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/pkgRedirects) by extensions ['cmake', 'python']
+[1.863s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/pkgRedirects) by extension 'cmake'
+[1.863s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/pkgRedirects) by extension 'python'
+[1.863s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/pkgRedirects) by extensions ['python_setup_py']
+[1.863s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/CMakeFiles/pkgRedirects) by extension 'python_setup_py'
+[1.863s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core) by extensions ['ignore', 'ignore_ament_install']
+[1.863s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core) by extension 'ignore'
+[1.863s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core) by extension 'ignore_ament_install'
+[1.863s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core) by extensions ['colcon_pkg']
+[1.863s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core) by extension 'colcon_pkg'
+[1.864s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core) by extensions ['colcon_meta']
+[1.864s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core) by extension 'colcon_meta'
+[1.864s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core) by extensions ['ros']
+[1.864s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core) by extension 'ros'
+[1.864s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core) by extensions ['cmake', 'python']
+[1.864s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core) by extension 'cmake'
+[1.864s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core) by extension 'python'
+[1.864s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core) by extensions ['python_setup_py']
+[1.864s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core) by extension 'python_setup_py'
+[1.865s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core/stamps) by extensions ['ignore', 'ignore_ament_install']
+[1.865s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core/stamps) by extension 'ignore'
+[1.865s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core/stamps) by extension 'ignore_ament_install'
+[1.865s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core/stamps) by extensions ['colcon_pkg']
+[1.865s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core/stamps) by extension 'colcon_pkg'
+[1.865s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core/stamps) by extensions ['colcon_meta']
+[1.865s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core/stamps) by extension 'colcon_meta'
+[1.865s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core/stamps) by extensions ['ros']
+[1.865s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core/stamps) by extension 'ros'
+[1.865s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core/stamps) by extensions ['cmake', 'python']
+[1.865s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core/stamps) by extension 'cmake'
+[1.865s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core/stamps) by extension 'python'
+[1.866s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core/stamps) by extensions ['python_setup_py']
+[1.866s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_core/stamps) by extension 'python_setup_py'
+[1.866s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_package_templates) by extensions ['ignore', 'ignore_ament_install']
+[1.866s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_package_templates) by extension 'ignore'
+[1.866s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_package_templates) by extension 'ignore_ament_install'
+[1.866s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_package_templates) by extensions ['colcon_pkg']
+[1.866s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_package_templates) by extension 'colcon_pkg'
+[1.866s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_package_templates) by extensions ['colcon_meta']
+[1.866s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_package_templates) by extension 'colcon_meta'
+[1.867s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_package_templates) by extensions ['ros']
+[1.867s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_package_templates) by extension 'ros'
+[1.867s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_package_templates) by extensions ['cmake', 'python']
+[1.867s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_package_templates) by extension 'cmake'
+[1.867s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_package_templates) by extension 'python'
+[1.867s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_package_templates) by extensions ['python_setup_py']
+[1.867s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_package_templates) by extension 'python_setup_py'
+[1.867s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_uninstall_target) by extensions ['ignore', 'ignore_ament_install']
+[1.868s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_uninstall_target) by extension 'ignore'
+[1.868s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_uninstall_target) by extension 'ignore_ament_install'
+[1.868s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_uninstall_target) by extensions ['colcon_pkg']
+[1.868s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_uninstall_target) by extension 'colcon_pkg'
+[1.868s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_uninstall_target) by extensions ['colcon_meta']
+[1.868s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_uninstall_target) by extension 'colcon_meta'
+[1.868s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_uninstall_target) by extensions ['ros']
+[1.868s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_uninstall_target) by extension 'ros'
+[1.868s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_uninstall_target) by extensions ['cmake', 'python']
+[1.868s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_uninstall_target) by extension 'cmake'
+[1.868s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_uninstall_target) by extension 'python'
+[1.868s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_uninstall_target) by extensions ['python_setup_py']
+[1.868s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/build/ament_cmake_uninstall_target) by extension 'python_setup_py'
+[1.869s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/ouster_msgs) by extensions ['ignore', 'ignore_ament_install']
+[1.869s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/ouster_msgs) by extension 'ignore'
+[1.869s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/ouster_msgs) by extension 'ignore_ament_install'
+[1.869s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/ouster_msgs) by extensions ['colcon_pkg']
+[1.869s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/ouster_msgs) by extension 'colcon_pkg'
+[1.869s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/ouster_msgs) by extensions ['colcon_meta']
+[1.869s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/ouster_msgs) by extension 'colcon_meta'
+[1.869s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/ouster_msgs) by extensions ['ros']
+[1.869s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/ouster_msgs) by extension 'ros'
+[1.870s] DEBUG:colcon.colcon_core.package_identification:Package 'src/ros2_ouster_drivers/ouster_msgs' with type 'ros.ament_cmake' and name 'ouster_msgs'
+[1.871s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/ros2_ouster) by extensions ['ignore', 'ignore_ament_install']
+[1.871s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/ros2_ouster) by extension 'ignore'
+[1.871s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/ros2_ouster) by extension 'ignore_ament_install'
+[1.871s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/ros2_ouster) by extensions ['colcon_pkg']
+[1.871s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/ros2_ouster) by extension 'colcon_pkg'
+[1.871s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/ros2_ouster) by extensions ['colcon_meta']
+[1.871s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/ros2_ouster) by extension 'colcon_meta'
+[1.871s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/ros2_ouster) by extensions ['ros']
+[1.871s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros2_ouster_drivers/ros2_ouster) by extension 'ros'
+[1.873s] DEBUG:colcon.colcon_core.package_identification:Package 'src/ros2_ouster_drivers/ros2_ouster' with type 'ros.ament_cmake' and name 'ros2_ouster'
+[1.874s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[1.874s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[1.874s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[1.874s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[1.874s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[2.016s] Level 5:colcon.colcon_core.verb:set package 'ouster_msgs' build argument 'cmake_args' from command line to 'None'
+[2.016s] Level 5:colcon.colcon_core.verb:set package 'ouster_msgs' build argument 'cmake_target' from command line to 'None'
+[2.016s] Level 5:colcon.colcon_core.verb:set package 'ouster_msgs' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[2.016s] Level 5:colcon.colcon_core.verb:set package 'ouster_msgs' build argument 'cmake_clean_cache' from command line to 'False'
+[2.016s] Level 5:colcon.colcon_core.verb:set package 'ouster_msgs' build argument 'cmake_clean_first' from command line to 'False'
+[2.016s] Level 5:colcon.colcon_core.verb:set package 'ouster_msgs' build argument 'cmake_force_configure' from command line to 'False'
+[2.016s] Level 5:colcon.colcon_core.verb:set package 'ouster_msgs' build argument 'ament_cmake_args' from command line to 'None'
+[2.017s] Level 5:colcon.colcon_core.verb:set package 'ouster_msgs' build argument 'catkin_cmake_args' from command line to 'None'
+[2.017s] Level 5:colcon.colcon_core.verb:set package 'ouster_msgs' build argument 'catkin_skip_building_tests' from command line to 'False'
+[2.017s] DEBUG:colcon.colcon_core.verb:Building package 'ouster_msgs' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/brown/Projects/MiningRobot/ros2_workspace/build/ouster_msgs', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs', 'merge_install': False, 'path': '/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ouster_msgs', 'symlink_install': False, 'test_result_base': None}
+[2.041s] Level 5:colcon.colcon_core.verb:set package 'pcl_msgs' build argument 'cmake_args' from command line to 'None'
+[2.041s] Level 5:colcon.colcon_core.verb:set package 'pcl_msgs' build argument 'cmake_target' from command line to 'None'
+[2.041s] Level 5:colcon.colcon_core.verb:set package 'pcl_msgs' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[2.041s] Level 5:colcon.colcon_core.verb:set package 'pcl_msgs' build argument 'cmake_clean_cache' from command line to 'False'
+[2.041s] Level 5:colcon.colcon_core.verb:set package 'pcl_msgs' build argument 'cmake_clean_first' from command line to 'False'
+[2.041s] Level 5:colcon.colcon_core.verb:set package 'pcl_msgs' build argument 'cmake_force_configure' from command line to 'False'
+[2.042s] Level 5:colcon.colcon_core.verb:set package 'pcl_msgs' build argument 'ament_cmake_args' from command line to 'None'
+[2.042s] Level 5:colcon.colcon_core.verb:set package 'pcl_msgs' build argument 'catkin_cmake_args' from command line to 'None'
+[2.042s] Level 5:colcon.colcon_core.verb:set package 'pcl_msgs' build argument 'catkin_skip_building_tests' from command line to 'False'
+[2.042s] DEBUG:colcon.colcon_core.verb:Building package 'pcl_msgs' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_msgs', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs', 'merge_install': False, 'path': '/home/brown/Projects/MiningRobot/ros2_workspace/src/pcl_msgs', 'symlink_install': False, 'test_result_base': None}
+[2.066s] Level 5:colcon.colcon_core.verb:set package 'pcl_conversions' build argument 'cmake_args' from command line to 'None'
+[2.066s] Level 5:colcon.colcon_core.verb:set package 'pcl_conversions' build argument 'cmake_target' from command line to 'None'
+[2.066s] Level 5:colcon.colcon_core.verb:set package 'pcl_conversions' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[2.066s] Level 5:colcon.colcon_core.verb:set package 'pcl_conversions' build argument 'cmake_clean_cache' from command line to 'False'
+[2.066s] Level 5:colcon.colcon_core.verb:set package 'pcl_conversions' build argument 'cmake_clean_first' from command line to 'False'
+[2.066s] Level 5:colcon.colcon_core.verb:set package 'pcl_conversions' build argument 'cmake_force_configure' from command line to 'False'
+[2.066s] Level 5:colcon.colcon_core.verb:set package 'pcl_conversions' build argument 'ament_cmake_args' from command line to 'None'
+[2.066s] Level 5:colcon.colcon_core.verb:set package 'pcl_conversions' build argument 'catkin_cmake_args' from command line to 'None'
+[2.067s] Level 5:colcon.colcon_core.verb:set package 'pcl_conversions' build argument 'catkin_skip_building_tests' from command line to 'False'
+[2.067s] DEBUG:colcon.colcon_core.verb:Building package 'pcl_conversions' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_conversions', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions', 'merge_install': False, 'path': '/home/brown/Projects/MiningRobot/ros2_workspace/src/perception_pcl/pcl_conversions', 'symlink_install': False, 'test_result_base': None}
+[2.091s] Level 5:colcon.colcon_core.verb:set package 'pcl_ros' build argument 'cmake_args' from command line to 'None'
+[2.091s] Level 5:colcon.colcon_core.verb:set package 'pcl_ros' build argument 'cmake_target' from command line to 'None'
+[2.091s] Level 5:colcon.colcon_core.verb:set package 'pcl_ros' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[2.091s] Level 5:colcon.colcon_core.verb:set package 'pcl_ros' build argument 'cmake_clean_cache' from command line to 'False'
+[2.092s] Level 5:colcon.colcon_core.verb:set package 'pcl_ros' build argument 'cmake_clean_first' from command line to 'False'
+[2.092s] Level 5:colcon.colcon_core.verb:set package 'pcl_ros' build argument 'cmake_force_configure' from command line to 'False'
+[2.092s] Level 5:colcon.colcon_core.verb:set package 'pcl_ros' build argument 'ament_cmake_args' from command line to 'None'
+[2.092s] Level 5:colcon.colcon_core.verb:set package 'pcl_ros' build argument 'catkin_cmake_args' from command line to 'None'
+[2.092s] Level 5:colcon.colcon_core.verb:set package 'pcl_ros' build argument 'catkin_skip_building_tests' from command line to 'False'
+[2.092s] DEBUG:colcon.colcon_core.verb:Building package 'pcl_ros' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_ros', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros', 'merge_install': False, 'path': '/home/brown/Projects/MiningRobot/ros2_workspace/src/perception_pcl/pcl_ros', 'symlink_install': False, 'test_result_base': None}
+[2.116s] Level 5:colcon.colcon_core.verb:set package 'ros2_ouster' build argument 'cmake_args' from command line to 'None'
+[2.116s] Level 5:colcon.colcon_core.verb:set package 'ros2_ouster' build argument 'cmake_target' from command line to 'None'
+[2.116s] Level 5:colcon.colcon_core.verb:set package 'ros2_ouster' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[2.116s] Level 5:colcon.colcon_core.verb:set package 'ros2_ouster' build argument 'cmake_clean_cache' from command line to 'False'
+[2.116s] Level 5:colcon.colcon_core.verb:set package 'ros2_ouster' build argument 'cmake_clean_first' from command line to 'False'
+[2.116s] Level 5:colcon.colcon_core.verb:set package 'ros2_ouster' build argument 'cmake_force_configure' from command line to 'False'
+[2.117s] Level 5:colcon.colcon_core.verb:set package 'ros2_ouster' build argument 'ament_cmake_args' from command line to 'None'
+[2.117s] Level 5:colcon.colcon_core.verb:set package 'ros2_ouster' build argument 'catkin_cmake_args' from command line to 'None'
+[2.117s] Level 5:colcon.colcon_core.verb:set package 'ros2_ouster' build argument 'catkin_skip_building_tests' from command line to 'False'
+[2.117s] DEBUG:colcon.colcon_core.verb:Building package 'ros2_ouster' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/brown/Projects/MiningRobot/ros2_workspace/build/ros2_ouster', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster', 'merge_install': False, 'path': '/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster', 'symlink_install': False, 'test_result_base': None}
+[2.141s] Level 5:colcon.colcon_core.verb:set package 'aurora_core' build argument 'cmake_args' from command line to 'None'
+[2.141s] Level 5:colcon.colcon_core.verb:set package 'aurora_core' build argument 'cmake_target' from command line to 'None'
+[2.141s] Level 5:colcon.colcon_core.verb:set package 'aurora_core' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[2.141s] Level 5:colcon.colcon_core.verb:set package 'aurora_core' build argument 'cmake_clean_cache' from command line to 'False'
+[2.141s] Level 5:colcon.colcon_core.verb:set package 'aurora_core' build argument 'cmake_clean_first' from command line to 'False'
+[2.141s] Level 5:colcon.colcon_core.verb:set package 'aurora_core' build argument 'cmake_force_configure' from command line to 'False'
+[2.141s] Level 5:colcon.colcon_core.verb:set package 'aurora_core' build argument 'ament_cmake_args' from command line to 'None'
+[2.141s] Level 5:colcon.colcon_core.verb:set package 'aurora_core' build argument 'catkin_cmake_args' from command line to 'None'
+[2.141s] Level 5:colcon.colcon_core.verb:set package 'aurora_core' build argument 'catkin_skip_building_tests' from command line to 'False'
+[2.142s] DEBUG:colcon.colcon_core.verb:Building package 'aurora_core' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core', 'merge_install': False, 'path': '/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core', 'symlink_install': False, 'test_result_base': None}
+[2.166s] Level 5:colcon.colcon_core.verb:set package 'perception_pcl' build argument 'cmake_args' from command line to 'None'
+[2.166s] Level 5:colcon.colcon_core.verb:set package 'perception_pcl' build argument 'cmake_target' from command line to 'None'
+[2.166s] Level 5:colcon.colcon_core.verb:set package 'perception_pcl' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[2.166s] Level 5:colcon.colcon_core.verb:set package 'perception_pcl' build argument 'cmake_clean_cache' from command line to 'False'
+[2.166s] Level 5:colcon.colcon_core.verb:set package 'perception_pcl' build argument 'cmake_clean_first' from command line to 'False'
+[2.166s] Level 5:colcon.colcon_core.verb:set package 'perception_pcl' build argument 'cmake_force_configure' from command line to 'False'
+[2.166s] Level 5:colcon.colcon_core.verb:set package 'perception_pcl' build argument 'ament_cmake_args' from command line to 'None'
+[2.166s] Level 5:colcon.colcon_core.verb:set package 'perception_pcl' build argument 'catkin_cmake_args' from command line to 'None'
+[2.166s] Level 5:colcon.colcon_core.verb:set package 'perception_pcl' build argument 'catkin_skip_building_tests' from command line to 'False'
+[2.166s] DEBUG:colcon.colcon_core.verb:Building package 'perception_pcl' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/brown/Projects/MiningRobot/ros2_workspace/build/perception_pcl', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl', 'merge_install': False, 'path': '/home/brown/Projects/MiningRobot/ros2_workspace/src/perception_pcl/perception_pcl', 'symlink_install': False, 'test_result_base': None}
+[2.190s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[2.215s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[2.215s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/brown/Projects/MiningRobot/ros2_workspace/src/pcl_msgs' with build type 'ament_cmake'
+[2.215s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/brown/Projects/MiningRobot/ros2_workspace/src/pcl_msgs'
+[2.260s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[2.260s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[2.260s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[2.350s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ouster_msgs' with build type 'ament_cmake'
+[2.350s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ouster_msgs'
+[2.388s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[2.388s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[2.484s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_msgs': _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_msgs -- -j4 -l4
+[2.493s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/ouster_msgs': _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/ouster_msgs -- -j4 -l4
+[16.206s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/ouster_msgs' returned '0': _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/ouster_msgs -- -j4 -l4
+[16.718s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/ouster_msgs': _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/ros2_workspace/build/ouster_msgs
+[16.882s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(ouster_msgs)
+[16.883s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/ouster_msgs' returned '0': _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/ros2_workspace/build/ouster_msgs
+[16.953s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs' for CMake module files
+[16.955s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs' for CMake config files
+[16.956s] Level 1:colcon.colcon_core.shell:create_environment_hook('ouster_msgs', 'cmake_prefix_path')
+[17.010s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/hook/cmake_prefix_path.ps1'
+[17.024s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/hook/cmake_prefix_path.dsv'
+[17.025s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/hook/cmake_prefix_path.sh'
+[17.029s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib'
+[17.030s] Level 1:colcon.colcon_core.shell:create_environment_hook('ouster_msgs', 'ld_library_path_lib')
+[17.078s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/hook/ld_library_path_lib.ps1'
+[17.079s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/hook/ld_library_path_lib.dsv'
+[17.080s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/hook/ld_library_path_lib.sh'
+[17.081s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/bin'
+[17.084s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib/pkgconfig/ouster_msgs.pc'
+[17.086s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib/python3.11/site-packages'
+[17.087s] Level 1:colcon.colcon_core.shell:create_environment_hook('ouster_msgs', 'pythonpath')
+[17.163s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/hook/pythonpath.ps1'
+[17.164s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/hook/pythonpath.dsv'
+[17.165s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/hook/pythonpath.sh'
+[17.166s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/bin'
+[17.212s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/package.ps1'
+[17.216s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/package.dsv'
+[17.218s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/package.sh'
+[17.221s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/package.bash'
+[17.231s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/package.zsh'
+[17.233s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/colcon-core/packages/ouster_msgs)
+[17.902s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(ouster_msgs)
+[17.933s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs' for CMake module files
+[17.934s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs' for CMake config files
+[17.935s] Level 1:colcon.colcon_core.shell:create_environment_hook('ouster_msgs', 'cmake_prefix_path')
+[17.962s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/hook/cmake_prefix_path.ps1'
+[17.963s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/hook/cmake_prefix_path.dsv'
+[17.963s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/hook/cmake_prefix_path.sh'
+[17.964s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib'
+[17.964s] Level 1:colcon.colcon_core.shell:create_environment_hook('ouster_msgs', 'ld_library_path_lib')
+[17.991s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/hook/ld_library_path_lib.ps1'
+[17.992s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/hook/ld_library_path_lib.dsv'
+[17.992s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/hook/ld_library_path_lib.sh'
+[17.993s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/bin'
+[17.993s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib/pkgconfig/ouster_msgs.pc'
+[17.993s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib/python3.11/site-packages'
+[17.993s] Level 1:colcon.colcon_core.shell:create_environment_hook('ouster_msgs', 'pythonpath')
+[18.020s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/hook/pythonpath.ps1'
+[18.021s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/hook/pythonpath.dsv'
+[18.022s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/hook/pythonpath.sh'
+[18.022s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/bin'
+[18.051s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/package.ps1'
+[18.053s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/package.dsv'
+[18.053s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/package.sh'
+[18.054s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/package.bash'
+[18.054s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/package.zsh'
+[18.055s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/colcon-core/packages/ouster_msgs)
+[21.194s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_msgs' returned '0': _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_msgs -- -j4 -l4
+[21.801s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_msgs': _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_msgs
+[21.939s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(pcl_msgs)
+[21.941s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_msgs' returned '0': _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_msgs
+[21.970s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs' for CMake module files
+[21.971s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs' for CMake config files
+[21.972s] Level 1:colcon.colcon_core.shell:create_environment_hook('pcl_msgs', 'cmake_prefix_path')
+[22.000s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/hook/cmake_prefix_path.ps1'
+[22.003s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/hook/cmake_prefix_path.dsv'
+[22.003s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/hook/cmake_prefix_path.sh'
+[22.013s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib'
+[22.013s] Level 1:colcon.colcon_core.shell:create_environment_hook('pcl_msgs', 'ld_library_path_lib')
+[22.051s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/hook/ld_library_path_lib.ps1'
+[22.052s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/hook/ld_library_path_lib.dsv'
+[22.053s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/hook/ld_library_path_lib.sh'
+[22.054s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/bin'
+[22.054s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib/pkgconfig/pcl_msgs.pc'
+[22.055s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages'
+[22.055s] Level 1:colcon.colcon_core.shell:create_environment_hook('pcl_msgs', 'pythonpath')
+[22.085s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/hook/pythonpath.ps1'
+[22.086s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/hook/pythonpath.dsv'
+[22.087s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/hook/pythonpath.sh'
+[22.088s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/bin'
+[22.117s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/package.ps1'
+[22.118s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/package.dsv'
+[22.118s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/package.sh'
+[22.119s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/package.bash'
+[22.120s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/package.zsh'
+[22.120s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/colcon-core/packages/pcl_msgs)
+[22.784s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(pcl_msgs)
+[22.812s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs' for CMake module files
+[22.814s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs' for CMake config files
+[22.815s] Level 1:colcon.colcon_core.shell:create_environment_hook('pcl_msgs', 'cmake_prefix_path')
+[22.846s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/hook/cmake_prefix_path.ps1'
+[22.847s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/hook/cmake_prefix_path.dsv'
+[22.847s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/hook/cmake_prefix_path.sh'
+[22.848s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib'
+[22.848s] Level 1:colcon.colcon_core.shell:create_environment_hook('pcl_msgs', 'ld_library_path_lib')
+[22.882s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/hook/ld_library_path_lib.ps1'
+[22.883s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/hook/ld_library_path_lib.dsv'
+[22.883s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/hook/ld_library_path_lib.sh'
+[22.884s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/bin'
+[22.884s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib/pkgconfig/pcl_msgs.pc'
+[22.884s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages'
+[22.884s] Level 1:colcon.colcon_core.shell:create_environment_hook('pcl_msgs', 'pythonpath')
+[22.916s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/hook/pythonpath.ps1'
+[22.916s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/hook/pythonpath.dsv'
+[22.917s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/hook/pythonpath.sh'
+[22.918s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/bin'
+[22.947s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/package.ps1'
+[22.948s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/package.dsv'
+[22.949s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/package.sh'
+[22.950s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/package.bash'
+[22.950s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/package.zsh'
+[22.951s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/colcon-core/packages/pcl_msgs)
+[22.951s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/brown/Projects/MiningRobot/ros2_workspace/src/perception_pcl/pcl_conversions' with build type 'ament_cmake'
+[22.952s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/brown/Projects/MiningRobot/ros2_workspace/src/perception_pcl/pcl_conversions'
+[23.018s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[23.019s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[23.160s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_conversions': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_conversions -- -j4 -l4
+[40.478s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_conversions' returned '0': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_conversions -- -j4 -l4
+[40.561s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_conversions': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_conversions
+[40.578s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(pcl_conversions)
+[40.579s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_conversions' returned '0': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_conversions
+[40.604s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions' for CMake module files
+[40.604s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions' for CMake config files
+[40.605s] Level 1:colcon.colcon_core.shell:create_environment_hook('pcl_conversions', 'cmake_prefix_path')
+[40.630s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/hook/cmake_prefix_path.ps1'
+[40.632s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/hook/cmake_prefix_path.dsv'
+[40.632s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/hook/cmake_prefix_path.sh'
+[40.633s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/bin'
+[40.633s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/lib/pkgconfig/pcl_conversions.pc'
+[40.634s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/lib/python3.11/site-packages'
+[40.634s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/bin'
+[40.659s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/package.ps1'
+[40.660s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/package.dsv'
+[40.660s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/package.sh'
+[40.661s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/package.bash'
+[40.661s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/package.zsh'
+[40.662s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/colcon-core/packages/pcl_conversions)
+[40.789s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(pcl_conversions)
+[40.824s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions' for CMake module files
+[40.826s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions' for CMake config files
+[40.826s] Level 1:colcon.colcon_core.shell:create_environment_hook('pcl_conversions', 'cmake_prefix_path')
+[40.861s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/hook/cmake_prefix_path.ps1'
+[40.862s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/hook/cmake_prefix_path.dsv'
+[40.863s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/hook/cmake_prefix_path.sh'
+[40.864s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/bin'
+[40.864s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/lib/pkgconfig/pcl_conversions.pc'
+[40.864s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/lib/python3.11/site-packages'
+[40.865s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/bin'
+[40.901s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/package.ps1'
+[40.902s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/package.dsv'
+[40.903s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/package.sh'
+[40.904s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/package.bash'
+[40.905s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/package.zsh'
+[40.905s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/colcon-core/packages/pcl_conversions)
+[40.906s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/brown/Projects/MiningRobot/ros2_workspace/src/perception_pcl/pcl_ros' with build type 'ament_cmake'
+[40.906s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/brown/Projects/MiningRobot/ros2_workspace/src/perception_pcl/pcl_ros'
+[40.934s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[40.934s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[41.015s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster' with build type 'ament_cmake'
+[41.016s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster'
+[41.049s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[41.050s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[41.146s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_ros': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_ros -- -j4 -l4
+[41.177s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/ros2_ouster': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/ros2_ouster -- -j4 -l4
+[217.452s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/ros2_ouster' returned '0': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/ros2_ouster -- -j4 -l4
+[217.966s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/ros2_ouster': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/ros2_workspace/build/ros2_ouster
+[218.106s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(ros2_ouster)
+[218.107s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/ros2_ouster' returned '0': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/ros2_workspace/build/ros2_ouster
+[218.370s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster' for CMake module files
+[218.381s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster' for CMake config files
+[218.386s] Level 1:colcon.colcon_core.shell:create_environment_hook('ros2_ouster', 'cmake_prefix_path')
+[218.449s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/hook/cmake_prefix_path.ps1'
+[218.466s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/hook/cmake_prefix_path.dsv'
+[218.467s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/hook/cmake_prefix_path.sh'
+[218.469s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib'
+[218.469s] Level 1:colcon.colcon_core.shell:create_environment_hook('ros2_ouster', 'ld_library_path_lib')
+[218.539s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/hook/ld_library_path_lib.ps1'
+[218.544s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/hook/ld_library_path_lib.dsv'
+[218.549s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/hook/ld_library_path_lib.sh'
+[218.549s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/bin'
+[218.549s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib/pkgconfig/ros2_ouster.pc'
+[218.550s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib/python3.11/site-packages'
+[218.551s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/bin'
+[218.602s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/package.ps1'
+[218.611s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/package.dsv'
+[218.612s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/package.sh'
+[218.613s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/package.bash'
+[218.614s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/package.zsh'
+[218.616s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/colcon-core/packages/ros2_ouster)
+[219.076s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(ros2_ouster)
+[219.118s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster' for CMake module files
+[219.120s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster' for CMake config files
+[219.120s] Level 1:colcon.colcon_core.shell:create_environment_hook('ros2_ouster', 'cmake_prefix_path')
+[219.162s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/hook/cmake_prefix_path.ps1'
+[219.163s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/hook/cmake_prefix_path.dsv'
+[219.164s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/hook/cmake_prefix_path.sh'
+[219.165s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib'
+[219.165s] Level 1:colcon.colcon_core.shell:create_environment_hook('ros2_ouster', 'ld_library_path_lib')
+[219.207s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/hook/ld_library_path_lib.ps1'
+[219.207s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/hook/ld_library_path_lib.dsv'
+[219.208s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/hook/ld_library_path_lib.sh'
+[219.209s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/bin'
+[219.209s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib/pkgconfig/ros2_ouster.pc'
+[219.210s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib/python3.11/site-packages'
+[219.210s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/bin'
+[219.252s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/package.ps1'
+[219.253s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/package.dsv'
+[219.254s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/package.sh'
+[219.255s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/package.bash'
+[219.256s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/package.zsh'
+[219.257s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/colcon-core/packages/ros2_ouster)
+[219.260s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core' with build type 'ament_cmake'
+[219.260s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core'
+[219.331s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[219.331s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[219.544s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake /home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core -DCMAKE_INSTALL_PREFIX=/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core
+[243.161s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core' returned '0': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake /home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core -DCMAKE_INSTALL_PREFIX=/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core
+[243.163s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core -- -j4 -l4
+[266.196s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core' returned '0': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core -- -j4 -l4
+[266.478s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core
+[266.557s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(aurora_core)
+[266.558s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core' returned '0': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core
+[266.740s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core' for CMake module files
+[266.742s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core' for CMake config files
+[266.743s] Level 1:colcon.colcon_core.shell:create_environment_hook('aurora_core', 'cmake_prefix_path')
+[266.851s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/hook/cmake_prefix_path.ps1'
+[266.852s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/hook/cmake_prefix_path.dsv'
+[266.853s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/hook/cmake_prefix_path.sh'
+[266.854s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/lib'
+[266.854s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/bin'
+[266.854s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/lib/pkgconfig/aurora_core.pc'
+[266.855s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/lib/python3.11/site-packages'
+[266.855s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/bin'
+[266.972s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/package.ps1'
+[266.973s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/package.dsv'
+[266.977s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/package.sh'
+[266.978s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/package.bash'
+[266.981s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/package.zsh'
+[266.984s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/colcon-core/packages/aurora_core)
+[267.359s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(aurora_core)
+[267.466s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core' for CMake module files
+[267.474s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core' for CMake config files
+[267.475s] Level 1:colcon.colcon_core.shell:create_environment_hook('aurora_core', 'cmake_prefix_path')
+[267.604s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/hook/cmake_prefix_path.ps1'
+[267.605s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/hook/cmake_prefix_path.dsv'
+[267.620s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/hook/cmake_prefix_path.sh'
+[267.627s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/lib'
+[267.629s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/bin'
+[267.629s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/lib/pkgconfig/aurora_core.pc'
+[267.629s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/lib/python3.11/site-packages'
+[267.638s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/bin'
+[267.722s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/package.ps1'
+[267.726s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/package.dsv'
+[267.728s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/package.sh'
+[267.734s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/package.bash'
+[267.740s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/package.zsh'
+[267.742s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/colcon-core/packages/aurora_core)
+[298.825s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_ros' returned '0': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_ros -- -j4 -l4
+[299.520s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_ros': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_ros
+[299.766s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(pcl_ros)
+[299.775s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_ros' returned '0': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_ros
+[299.833s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros' for CMake module files
+[299.836s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros' for CMake config files
+[299.838s] Level 1:colcon.colcon_core.shell:create_environment_hook('pcl_ros', 'cmake_prefix_path')
+[299.899s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/hook/cmake_prefix_path.ps1'
+[299.902s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/hook/cmake_prefix_path.dsv'
+[299.903s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/hook/cmake_prefix_path.sh'
+[299.905s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib'
+[299.905s] Level 1:colcon.colcon_core.shell:create_environment_hook('pcl_ros', 'ld_library_path_lib')
+[299.961s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/hook/ld_library_path_lib.ps1'
+[299.962s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/hook/ld_library_path_lib.dsv'
+[299.963s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/hook/ld_library_path_lib.sh'
+[299.964s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/bin'
+[299.964s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib/pkgconfig/pcl_ros.pc'
+[299.965s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib/python3.11/site-packages'
+[299.965s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/bin'
+[300.024s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/package.ps1'
+[300.027s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/package.dsv'
+[300.029s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/package.sh'
+[300.032s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/package.bash'
+[300.034s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/package.zsh'
+[300.036s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/colcon-core/packages/pcl_ros)
+[300.720s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(pcl_ros)
+[300.773s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros' for CMake module files
+[300.775s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros' for CMake config files
+[300.777s] Level 1:colcon.colcon_core.shell:create_environment_hook('pcl_ros', 'cmake_prefix_path')
+[300.830s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/hook/cmake_prefix_path.ps1'
+[300.831s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/hook/cmake_prefix_path.dsv'
+[300.833s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/hook/cmake_prefix_path.sh'
+[300.835s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib'
+[300.836s] Level 1:colcon.colcon_core.shell:create_environment_hook('pcl_ros', 'ld_library_path_lib')
+[300.891s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/hook/ld_library_path_lib.ps1'
+[300.893s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/hook/ld_library_path_lib.dsv'
+[300.894s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/hook/ld_library_path_lib.sh'
+[300.896s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/bin'
+[300.896s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib/pkgconfig/pcl_ros.pc'
+[300.896s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib/python3.11/site-packages'
+[300.897s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/bin'
+[300.956s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/package.ps1'
+[300.958s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/package.dsv'
+[300.960s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/package.sh'
+[300.961s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/package.bash'
+[300.963s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/pcl_ros/package.zsh'
+[300.964s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/share/colcon-core/packages/pcl_ros)
+[300.965s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/brown/Projects/MiningRobot/ros2_workspace/src/perception_pcl/perception_pcl' with build type 'ament_cmake'
+[300.969s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/brown/Projects/MiningRobot/ros2_workspace/src/perception_pcl/perception_pcl'
+[301.023s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[301.023s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[301.264s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/perception_pcl': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/perception_pcl -- -j4 -l4
+[302.712s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/perception_pcl' returned '0': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/perception_pcl -- -j4 -l4
+[302.884s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/perception_pcl': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/ros2_workspace/build/perception_pcl
+[302.931s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(perception_pcl)
+[302.941s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/perception_pcl' returned '0': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/ros2_workspace/build/perception_pcl
+[302.997s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl' for CMake module files
+[302.999s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl' for CMake config files
+[303.000s] Level 1:colcon.colcon_core.shell:create_environment_hook('perception_pcl', 'cmake_prefix_path')
+[303.059s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/share/perception_pcl/hook/cmake_prefix_path.ps1'
+[303.061s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/share/perception_pcl/hook/cmake_prefix_path.dsv'
+[303.064s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/share/perception_pcl/hook/cmake_prefix_path.sh'
+[303.065s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/bin'
+[303.065s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/lib/pkgconfig/perception_pcl.pc'
+[303.066s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/lib/python3.11/site-packages'
+[303.066s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/bin'
+[303.141s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/share/perception_pcl/package.ps1'
+[303.142s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/share/perception_pcl/package.dsv'
+[303.144s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/share/perception_pcl/package.sh'
+[303.146s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/share/perception_pcl/package.bash'
+[303.148s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/share/perception_pcl/package.zsh'
+[303.150s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/share/colcon-core/packages/perception_pcl)
+[303.368s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(perception_pcl)
+[303.422s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl' for CMake module files
+[303.423s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl' for CMake config files
+[303.424s] Level 1:colcon.colcon_core.shell:create_environment_hook('perception_pcl', 'cmake_prefix_path')
+[303.476s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/share/perception_pcl/hook/cmake_prefix_path.ps1'
+[303.478s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/share/perception_pcl/hook/cmake_prefix_path.dsv'
+[303.479s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/share/perception_pcl/hook/cmake_prefix_path.sh'
+[303.480s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/bin'
+[303.480s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/lib/pkgconfig/perception_pcl.pc'
+[303.481s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/lib/python3.11/site-packages'
+[303.482s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/bin'
+[303.548s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/share/perception_pcl/package.ps1'
+[303.549s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/share/perception_pcl/package.dsv'
+[303.550s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/share/perception_pcl/package.sh'
+[303.552s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/share/perception_pcl/package.bash'
+[303.553s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/share/perception_pcl/package.zsh'
+[303.554s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl/share/colcon-core/packages/perception_pcl)
+[303.555s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[303.557s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[303.558s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[303.558s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[303.652s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[303.652s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[303.652s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[303.757s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[303.818s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/brown/Projects/MiningRobot/ros2_workspace/install/local_setup.ps1'
+[303.835s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/brown/Projects/MiningRobot/ros2_workspace/install/_local_setup_util_ps1.py'
+[303.847s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/brown/Projects/MiningRobot/ros2_workspace/install/setup.ps1'
+[303.933s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/brown/Projects/MiningRobot/ros2_workspace/install/local_setup.sh'
+[303.935s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/brown/Projects/MiningRobot/ros2_workspace/install/_local_setup_util_sh.py'
+[303.941s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/brown/Projects/MiningRobot/ros2_workspace/install/setup.sh'
+[304.026s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/brown/Projects/MiningRobot/ros2_workspace/install/local_setup.bash'
+[304.028s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/brown/Projects/MiningRobot/ros2_workspace/install/setup.bash'
+[304.085s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/brown/Projects/MiningRobot/ros2_workspace/install/local_setup.zsh'
+[304.087s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/brown/Projects/MiningRobot/ros2_workspace/install/setup.zsh'

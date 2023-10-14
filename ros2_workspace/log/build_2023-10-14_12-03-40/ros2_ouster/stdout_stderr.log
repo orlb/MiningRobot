@@ -1,0 +1,230 @@
+-- Found ament_cmake: 1.3.5 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found rclcpp: 16.0.6 (/opt/ros/humble/share/rclcpp/cmake)
+-- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+-- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+-- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+-- Found rmw_implementation_cmake: 6.1.1 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+-- Found rmw_fastrtps_cpp: 6.2.4 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+-- Using RMW implementation 'rmw_fastrtps_cpp' as default
+-- Found rclcpp_lifecycle: 16.0.6 (/opt/ros/humble/share/rclcpp_lifecycle/cmake)
+-- Found rclcpp_components: 16.0.6 (/opt/ros/humble/share/rclcpp_components/cmake)
+-- Found std_srvs: 4.2.3 (/opt/ros/humble/share/std_srvs/cmake)
+-- Found sensor_msgs: 4.2.3 (/opt/ros/humble/share/sensor_msgs/cmake)
+-- Found tf2_geometry_msgs: 0.25.4 (/opt/ros/humble/share/tf2_geometry_msgs/cmake)
+-- Found eigen3_cmake_module: 0.1.1 (/opt/ros/humble/share/eigen3_cmake_module/cmake)
+-- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+-- Found pcl_conversions: 2.4.1 (/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake)
+[33mCMake Warning (dev) at /usr/share/pcl-1.13/PCLConfig.cmake:143 (find_package):
+  Policy CMP0144 is not set: find_package uses upper-case <PACKAGENAME>_ROOT
+  variables.  Run "cmake --help-policy CMP0144" for policy details.  Use the
+  cmake_policy command to set the policy and suppress this warning.
+
+  CMake variable EIGEN_ROOT is set to:
+
+    /usr/include/eigen3
+
+  For compatibility, find_package is ignoring the variable, but code in a
+  .cmake module might still use it.
+Call Stack (most recent call first):
+  /usr/share/pcl-1.13/PCLConfig.cmake:296 (find_eigen)
+  /usr/share/pcl-1.13/PCLConfig.cmake:549 (find_external_library)
+  /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)
+  /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/pcl_conversionsConfig.cmake:41 (include)
+  CMakeLists.txt:21 (find_package)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+[0m
+-- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+[33mCMake Warning (dev) at /usr/share/pcl-1.13/Modules/FindFLANN.cmake:45 (find_package):
+  Policy CMP0144 is not set: find_package uses upper-case <PACKAGENAME>_ROOT
+  variables.  Run "cmake --help-policy CMP0144" for policy details.  Use the
+  cmake_policy command to set the policy and suppress this warning.
+
+  CMake variable FLANN_ROOT is set to:
+
+    /usr
+
+  For compatibility, find_package is ignoring the variable, but code in a
+  .cmake module might still use it.
+Call Stack (most recent call first):
+  /usr/share/pcl-1.13/PCLConfig.cmake:253 (find_package)
+  /usr/share/pcl-1.13/PCLConfig.cmake:298 (find_flann)
+  /usr/share/pcl-1.13/PCLConfig.cmake:549 (find_external_library)
+  /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)
+  /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/pcl_conversionsConfig.cmake:41 (include)
+  CMakeLists.txt:21 (find_package)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+[0m
+-- Found flann version 1.9.2
+-- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+-- Found Qhull version 8.0.2
+-- Found ouster_msgs: 0.5.0 (/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/share/ouster_msgs/cmake)
+[33mCMake Warning (dev) at CMakeLists.txt:23 (find_package):
+  Policy CMP0074 is not set: find_package uses <PackageName>_ROOT variables.
+  Run "cmake --help-policy CMP0074" for policy details.  Use the cmake_policy
+  command to set the policy and suppress this warning.
+
+  CMake variable PCL_ROOT is set to:
+
+    /usr
+
+  For compatibility, CMake is ignoring the variable.
+This warning is for project developers.  Use -Wno-dev to suppress it.
+[0m
+[0mCMake Deprecation Warning at /usr/lib/cmake/jsoncpp/jsoncppConfig.cmake:2 (cmake_policy):
+  Compatibility with CMake < 3.5 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+Call Stack (most recent call first):
+  CMakeLists.txt:24 (find_package)
+
+[0m
+-- Found ament_lint_auto: 0.12.8 (/opt/ros/humble/share/ament_lint_auto/cmake)
+-- Added test 'copyright' to check source files copyright and LICENSE
+-- Added test 'cppcheck' to perform static code analysis on C / C++ code
+-- Configured cppcheck include dirs: /home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/include
+-- Configured cppcheck exclude dirs and/or files: 
+-- Added test 'cpplint' to check C / C++ code against the Google style
+-- Configured cpplint exclude dirs and/or files: 
+-- Added test 'flake8' to check Python code syntax and style conventions
+-- Added test 'lint_cmake' to check CMake code style
+-- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+-- Added test 'uncrustify' to check C / C++ code style
+-- Configured uncrustify additional arguments: 
+-- Added test 'xmllint' to check XML markup files
+-- Configuring done (8.2s)
+-- Generating done (0.1s)
+-- Build files have been written to: /home/brown/Projects/MiningRobot/ros2_workspace/build/ros2_ouster
+[  7%] [32mBuilding CXX object CMakeFiles/ouster_driver_core.dir/src/driver_types.cpp.o[0m
+[ 14%] [32mBuilding CXX object CMakeFiles/ouster_driver_core.dir/src/ouster_driver.cpp.o[0m
+In file included from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/include/ros2_ouster/conversions.hpp:35[m[K,
+                 from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/include/ros2_ouster/ouster_driver.hpp:23[m[K,
+                 from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/include/ros2_ouster/driver_types.hpp:17[m[K,
+                 from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/src/driver_types.cpp:18[m[K:
+[01m[K/opt/ros/humble/include/tf2_geometry_msgs/tf2_geometry_msgs/tf2_geometry_msgs.h:35:2:[m[K [01;35m[Kwarning: [m[K#warning This header is obsolete, please include tf2_geometry_msgs/tf2_geometry_msgs.hpp instead [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wcpp-Wcpp]8;;[m[K]
+   35 | #[01;35m[Kwarning[m[K This header is obsolete, please include tf2_geometry_msgs/tf2_geometry_msgs.hpp instead
+      |  [01;35m[K^~~~~~~[m[K
+In file included from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/include/ros2_ouster/conversions.hpp:35[m[K,
+                 from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/include/ros2_ouster/ouster_driver.hpp:23[m[K,
+                 from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/src/ouster_driver.cpp:24[m[K:
+[01m[K/opt/ros/humble/include/tf2_geometry_msgs/tf2_geometry_msgs/tf2_geometry_msgs.h:35:2:[m[K [01;35m[Kwarning: [m[K#warning This header is obsolete, please include tf2_geometry_msgs/tf2_geometry_msgs.hpp instead [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wcpp-Wcpp]8;;[m[K]
+   35 | #[01;35m[Kwarning[m[K This header is obsolete, please include tf2_geometry_msgs/tf2_geometry_msgs.hpp instead
+      |  [01;35m[K^~~~~~~[m[K
+[ 21%] [32mBuilding CXX object CMakeFiles/ouster_driver_core.dir/src/sensor_tins.cpp.o[0m
+In file included from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/include/ros2_ouster/conversions.hpp:35[m[K,
+                 from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/include/ros2_ouster/processors/image_processor.hpp:26[m[K,
+                 from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/include/ros2_ouster/processors/processor_factories.hpp:23[m[K,
+                 from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/include/ros2_ouster/sensor_tins.hpp:28[m[K,
+                 from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/src/sensor_tins.cpp:19[m[K:
+[01m[K/opt/ros/humble/include/tf2_geometry_msgs/tf2_geometry_msgs/tf2_geometry_msgs.h:35:2:[m[K [01;35m[Kwarning: [m[K#warning This header is obsolete, please include tf2_geometry_msgs/tf2_geometry_msgs.hpp instead [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wcpp-Wcpp]8;;[m[K]
+   35 | #[01;35m[Kwarning[m[K This header is obsolete, please include tf2_geometry_msgs/tf2_geometry_msgs.hpp instead
+      |  [01;35m[K^~~~~~~[m[K
+[ 28%] [32mBuilding CXX object CMakeFiles/ouster_driver_core.dir/src/sensor.cpp.o[0m
+In file included from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/include/ros2_ouster/conversions.hpp:35[m[K,
+                 from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/include/ros2_ouster/processors/image_processor.hpp:26[m[K,
+                 from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/include/ros2_ouster/processors/processor_factories.hpp:23[m[K,
+                 from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/include/ros2_ouster/sensor.hpp:21[m[K,
+                 from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/src/sensor.cpp:20[m[K:
+[01m[K/opt/ros/humble/include/tf2_geometry_msgs/tf2_geometry_msgs/tf2_geometry_msgs.h:35:2:[m[K [01;35m[Kwarning: [m[K#warning This header is obsolete, please include tf2_geometry_msgs/tf2_geometry_msgs.hpp instead [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wcpp-Wcpp]8;;[m[K]
+   35 | #[01;35m[Kwarning[m[K This header is obsolete, please include tf2_geometry_msgs/tf2_geometry_msgs.hpp instead
+      |  [01;35m[K^~~~~~~[m[K
+[ 35%] [32m[1mLinking CXX shared library libouster_driver_core.so[0m
+[ 71%] Built target ouster_driver_core
+[ 78%] [32mBuilding CXX object CMakeFiles/ouster_driver.dir/src/main.cpp.o[0m
+In file included from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/include/ros2_ouster/conversions.hpp:35[m[K,
+                 from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/include/ros2_ouster/ouster_driver.hpp:23[m[K,
+                 from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/include/ros2_ouster/driver_types.hpp:17[m[K,
+                 from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/src/main.cpp:17[m[K:
+[01m[K/opt/ros/humble/include/tf2_geometry_msgs/tf2_geometry_msgs/tf2_geometry_msgs.h:35:2:[m[K [01;35m[Kwarning: [m[K#warning This header is obsolete, please include tf2_geometry_msgs/tf2_geometry_msgs.hpp instead [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wcpp-Wcpp]8;;[m[K]
+   35 | #[01;35m[Kwarning[m[K This header is obsolete, please include tf2_geometry_msgs/tf2_geometry_msgs.hpp instead
+      |  [01;35m[K^~~~~~~[m[K
+[ 85%] [32m[1mLinking CXX executable ouster_driver[0m
+[ 85%] Built target ouster_driver
+[ 92%] [32mBuilding CXX object CMakeFiles/ouster_tins_driver.dir/src/main_tins.cpp.o[0m
+In file included from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/include/ros2_ouster/conversions.hpp:35[m[K,
+                 from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/include/ros2_ouster/ouster_driver.hpp:23[m[K,
+                 from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/include/ros2_ouster/driver_types.hpp:17[m[K,
+                 from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ros2_ouster/src/main_tins.cpp:17[m[K:
+[01m[K/opt/ros/humble/include/tf2_geometry_msgs/tf2_geometry_msgs/tf2_geometry_msgs.h:35:2:[m[K [01;35m[Kwarning: [m[K#warning This header is obsolete, please include tf2_geometry_msgs/tf2_geometry_msgs.hpp instead [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wcpp-Wcpp]8;;[m[K]
+   35 | #[01;35m[Kwarning[m[K This header is obsolete, please include tf2_geometry_msgs/tf2_geometry_msgs.hpp instead
+      |  [01;35m[K^~~~~~~[m[K
+[100%] [32m[1mLinking CXX executable ouster_tins_driver[0m
+[100%] Built target ouster_tins_driver
+-- Install configuration: "Release"
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib/ros2_ouster/ouster_driver
+-- Set runtime path of "/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib/ros2_ouster/ouster_driver" to ""
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib/ros2_ouster/ouster_tins_driver
+-- Set runtime path of "/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib/ros2_ouster/ouster_tins_driver" to ""
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib/libouster_driver_core.so
+-- Set runtime path of "/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib/libouster_driver_core.so" to ""
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include/
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/ringbuffer.hpp
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/processors
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/processors/processor_factories.hpp
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/processors/imu_processor.hpp
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/processors/image_processor.hpp
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/processors/pointcloud_processor.hpp
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/processors/scan_processor.hpp
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/full_rotation_accumulator.hpp
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/interfaces
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/interfaces/sensor_interface.hpp
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/interfaces/metadata.hpp
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/interfaces/lifecycle_interface.hpp
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/interfaces/configuration.hpp
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/interfaces/data_processor_interface.hpp
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/exception.hpp
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/sensor.hpp
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/conversions.hpp
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/string_utils.hpp
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/client
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/client/point.h
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/client/impl
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/client/impl/parsing.h
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/client/impl/netcompat.h
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/client/optional-lite
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/client/optional-lite/optional.hpp
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/client/optional-lite/LICENSE.txt
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/client/viz
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/client/viz/beam_uniformity.h
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/client/viz/autoexposure.h
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/client/version.h
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/client/types.h
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/client/client.h
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/client/lidar_scan.h
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/driver_types.hpp
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/sensor_tins.hpp
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/ouster_driver.hpp
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/include//ros2_ouster/ros2_utils.hpp
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/launch
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/launch/tins_driver_launch.py
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/launch/driver_launch.py
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/params
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/params/driver_config.yaml
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/params/ouster_os0128_2048_metadata.json
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/params/tins_driver_config.yaml
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/params/ouster_os0128_1024_metadata.json
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/environment/library_path.sh
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/environment/library_path.dsv
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ament_index/resource_index/package_run_dependencies/ros2_ouster
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ament_index/resource_index/parent_prefix_path/ros2_ouster
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/environment/ament_prefix_path.sh
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/environment/ament_prefix_path.dsv
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/environment/path.sh
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/environment/path.dsv
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/local_setup.bash
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/local_setup.sh
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/local_setup.zsh
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/local_setup.dsv
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/package.dsv
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ament_index/resource_index/packages/ros2_ouster
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ament_index/resource_index/rclcpp_components/ros2_ouster
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ament_cmake_export_include_directories-extras.cmake
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ament_cmake_export_libraries-extras.cmake
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ament_cmake_export_dependencies-extras.cmake
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ros2_ousterConfig.cmake
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ros2_ousterConfig-version.cmake
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/package.xml
