@@ -1,0 +1,10 @@
+{
+  "package_name": "pcl_msgs",
+  "non_idl_tuples": [
+    "/home/brown/Projects/MiningRobot/ros2_workspace/src/pcl_msgs:msg/ModelCoefficients.msg",
+    "/home/brown/Projects/MiningRobot/ros2_workspace/src/pcl_msgs:msg/PointIndices.msg",
+    "/home/brown/Projects/MiningRobot/ros2_workspace/src/pcl_msgs:msg/PolygonMesh.msg",
+    "/home/brown/Projects/MiningRobot/ros2_workspace/src/pcl_msgs:msg/Vertices.msg",
+    "/home/brown/Projects/MiningRobot/ros2_workspace/src/pcl_msgs:srv/UpdateFilename.srv"
+  ]
+}

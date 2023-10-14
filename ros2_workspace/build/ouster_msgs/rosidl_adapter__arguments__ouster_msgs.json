@@ -1,0 +1,7 @@
+{
+  "package_name": "ouster_msgs",
+  "non_idl_tuples": [
+    "/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ouster_msgs:srv/GetMetadata.srv",
+    "/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ouster_msgs:msg/Metadata.msg"
+  ]
+}

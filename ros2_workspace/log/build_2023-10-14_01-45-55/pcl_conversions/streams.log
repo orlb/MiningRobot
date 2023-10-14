@@ -1,0 +1,105 @@
+[0.116s] Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_conversions': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake /home/brown/Projects/MiningRobot/ros2_workspace/src/perception_pcl/pcl_conversions -DCMAKE_INSTALL_PREFIX=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions
+[0.203s] -- The C compiler identification is GNU 13.2.1
+[0.345s] -- The CXX compiler identification is GNU 13.2.1
+[0.377s] -- Detecting C compiler ABI info
+[0.493s] -- Detecting C compiler ABI info - done
+[0.510s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.511s] -- Detecting C compile features
+[0.511s] -- Detecting C compile features - done
+[0.529s] -- Detecting CXX compiler ABI info
+[0.703s] -- Detecting CXX compiler ABI info - done
+[0.716s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.716s] -- Detecting CXX compile features
+[0.717s] -- Detecting CXX compile features - done
+[0.721s] -- Found ament_cmake: 1.3.5 (/opt/ros/humble/share/ament_cmake/cmake)
+[1.697s] -- Found Python3: /usr/bin/python3.11 (found version "3.11.5") found components: Interpreter 
+[1.858s] -- Found Boost: /usr/lib/cmake/Boost-1.83.0/BoostConfig.cmake (found version "1.83.0")  
+[1.877s] -- Found message_filters: 4.3.3 (/opt/ros/humble/share/message_filters/cmake)
+[1.954s] -- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[1.961s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[1.975s] -- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[1.998s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[2.032s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[2.175s] -- Found rmw_implementation_cmake: 6.1.1 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[2.180s] -- Found rmw_fastrtps_cpp: 6.2.4 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[2.321s] -- Found OpenSSL: /usr/lib/libcrypto.so (found version "3.1.3")  
+[2.360s] -- Found FastRTPS: /opt/ros/humble/include  
+[2.409s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[2.425s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[2.574s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[2.576s] -- Found Threads: TRUE  
+[2.919s] [33mCMake Warning (dev) at /usr/share/pcl-1.13/PCLConfig.cmake:143 (find_package):
+[2.919s]   Policy CMP0144 is not set: find_package uses upper-case <PACKAGENAME>_ROOT
+[2.919s]   variables.  Run "cmake --help-policy CMP0144" for policy details.  Use the
+[2.919s]   cmake_policy command to set the policy and suppress this warning.
+[2.920s] 
+[2.920s]   CMake variable EIGEN_ROOT is set to:
+[2.920s] 
+[2.920s]     /usr/include/eigen3
+[2.920s] 
+[2.920s]   For compatibility, find_package is ignoring the variable, but code in a
+[2.920s]   .cmake module might still use it.
+[2.920s] Call Stack (most recent call first):
+[2.920s]   /usr/share/pcl-1.13/PCLConfig.cmake:296 (find_eigen)
+[2.920s]   /usr/share/pcl-1.13/PCLConfig.cmake:549 (find_external_library)
+[2.920s]   CMakeLists.txt:17 (find_package)
+[2.921s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[2.921s] [0m
+[2.926s] -- Checking for module 'eigen3'
+[2.939s] --   Found eigen3, version 3.4.0
+[2.974s] -- Found Eigen: /usr/include/eigen3 (Required is at least version "3.3") 
+[2.974s] -- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+[3.011s] -- Found Pcap: /usr/lib/libpcap.so  
+[3.050s] -- Found ZLIB: /usr/lib/libz.so (found version "1.3")  
+[3.099s] -- Found PNG: /usr/lib/libpng.so (found version "1.6.40") 
+[4.114s] -- Found MPI_C: /usr/lib/libmpi.so (found version "3.1") 
+[7.464s] -- Found MPI_CXX: /usr/lib/libmpi_cxx.so (found version "3.1") 
+[7.464s] -- Found MPI: TRUE (found version "3.1")  
+[9.273s] -- Checking for module 'libusb-1.0'
+[9.291s] --   Found libusb-1.0, version 1.0.26
+[9.329s] -- Found libusb: /usr/lib/libusb-1.0.so  
+[9.350s] -- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+[9.352s] -- Found PCL_COMMON: /usr/lib/libpcl_common.so  
+[9.357s] -- Found PCL_OCTREE: /usr/lib/libpcl_octree.so  
+[9.359s] -- Found PCL_IO: /usr/lib/libpcl_io.so  
+[9.361s] -- Found pcl_msgs: 1.0.0 (/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake)
+[9.807s] -- Found ament_cmake_gtest: 1.3.5 (/opt/ros/humble/share/ament_cmake_gtest/cmake)
+[9.815s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[9.963s] -- Configuring done (9.8s)
+[10.008s] -- Generating done (0.0s)
+[10.012s] -- Build files have been written to: /home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_conversions
+[10.039s] Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_conversions' returned '0': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake /home/brown/Projects/MiningRobot/ros2_workspace/src/perception_pcl/pcl_conversions -DCMAKE_INSTALL_PREFIX=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions
+[10.042s] Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_conversions': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_conversions -- -j4 -l4
+[10.123s] [ 33%] [32mBuilding CXX object gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o[0m
+[10.123s] [ 33%] [32mBuilding CXX object gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o[0m
+[11.714s] [ 50%] [32m[1mLinking CXX static library libgtest_main.a[0m
+[11.996s] [ 50%] Built target gtest_main
+[15.929s] [ 66%] [32m[1mLinking CXX static library libgtest.a[0m
+[16.063s] [ 66%] Built target gtest
+[16.097s] [ 83%] [32mBuilding CXX object CMakeFiles/pcl_conversions-test.dir/test/test_pcl_conversions.cpp.o[0m
+[27.976s] [100%] [32m[1mLinking CXX executable pcl_conversions-test[0m
+[29.053s] [100%] Built target pcl_conversions-test
+[29.067s] Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_conversions' returned '0': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_conversions -- -j4 -l4
+[29.154s] Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_conversions': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_conversions
+[29.163s] -- Install configuration: ""
+[29.163s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/include/pcl_conversions
+[29.164s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/include/pcl_conversions/pcl_conversions
+[29.164s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/include/pcl_conversions/pcl_conversions/pcl_conversions.h
+[29.165s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/ament_index/resource_index/package_run_dependencies/pcl_conversions
+[29.165s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/ament_index/resource_index/parent_prefix_path/pcl_conversions
+[29.165s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/environment/ament_prefix_path.sh
+[29.166s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/environment/ament_prefix_path.dsv
+[29.166s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/environment/path.sh
+[29.167s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/environment/path.dsv
+[29.167s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/local_setup.bash
+[29.168s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/local_setup.sh
+[29.168s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/local_setup.zsh
+[29.169s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/local_setup.dsv
+[29.169s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/package.dsv
+[29.169s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/ament_index/resource_index/packages/pcl_conversions
+[29.169s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/ament_cmake_export_include_directories-extras.cmake
+[29.170s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/ament_cmake_export_dependencies-extras.cmake
+[29.170s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/pcl_conversionsConfig.cmake
+[29.170s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/pcl_conversionsConfig-version.cmake
+[29.170s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/package.xml
+[29.173s] Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_conversions' returned '0': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_conversions
