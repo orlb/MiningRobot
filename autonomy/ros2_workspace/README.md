@@ -17,6 +17,14 @@ to src, run `colcon build` here then `source install/setup.bash`
 
 run `colcon build --packages-select aurora_core`
 
-## Running executable
+## Launching aurora_core
 
 `ros2 run aurora_core aurora_node_core`
+
+or
+
+`ros2 launch launchfile.py`
+
+or
+
+`./run_aurora_core.sh`
