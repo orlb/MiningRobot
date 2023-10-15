@@ -1,0 +1,171 @@
+[0.000000] (-) TimerEvent: {}
+[0.000288] (-) JobUnselected: {'identifier': 'ouster_msgs'}
+[0.000494] (-) JobUnselected: {'identifier': 'pcl_conversions'}
+[0.000565] (-) JobUnselected: {'identifier': 'pcl_msgs'}
+[0.000625] (-) JobUnselected: {'identifier': 'pcl_ros'}
+[0.000755] (-) JobUnselected: {'identifier': 'perception_pcl'}
+[0.000931] (-) JobUnselected: {'identifier': 'ros2_ouster'}
+[0.001136] (aurora_core) JobQueued: {'identifier': 'aurora_core', 'dependencies': OrderedDict([('ouster_msgs', '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs'), ('pcl_msgs', '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs'), ('pcl_conversions', '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions'), ('ros2_ouster', '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster')])}
+[0.001335] (aurora_core) JobStarted: {'identifier': 'aurora_core'}
+[0.098809] (-) TimerEvent: {}
+[0.169356] (aurora_core) JobProgress: {'identifier': 'aurora_core', 'progress': 'cmake'}
+[0.170799] (aurora_core) JobProgress: {'identifier': 'aurora_core', 'progress': 'build'}
+[0.172112] (aurora_core) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core', '--', '-j4', '-l4'], 'cwd': '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core', 'env': OrderedDict([('SHELL', '/bin/bash'), ('ROS_VERSION', '2'), ('WINDOWID', '1'), ('COLORTERM', 'truecolor'), ('XDG_CONFIG_DIRS', '/home/brown/.config/kdedefaults:/etc/xdg'), ('KGLOBALACCELD_PLATFORM', 'org.kde.kwin'), ('TERM_PROGRAM_VERSION', '3.3a'), ('TMUX', '/tmp/tmux-1000/default,1806,0'), ('PKG_CONFIG_PATH', '/opt/ros/humble/lib/pkgconfig'), ('ROS_PYTHON_VERSION', '3'), ('LANGUAGE', ''), ('SHELL_SESSION_ID', 'adab33755f16428db603933a933b68e7'), ('MEMORY_PRESSURE_WRITE', 'c29tZSAyMDAwMDAgMjAwMDAwMAA='), ('XCURSOR_SIZE', '24'), ('EDITOR', '/usr/bin/nvim'), ('XDG_SEAT', 'seat0'), ('PWD', '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core'), ('LOGNAME', 'brown'), ('XDG_SESSION_TYPE', 'wayland'), ('SYSTEMD_EXEC_PID', '506'), ('XAUTHORITY', '/run/user/1000/xauth_qwjjoz'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/brown'), ('LANG', 'C.UTF-8'), ('XDG_CURRENT_DESKTOP', 'KDE'), ('KONSOLE_DBUS_SERVICE', ':1.86'), ('MEMORY_PRESSURE_WATCH', '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/plasma-kwin_wayland.service/memory.pressure'), ('WAYLAND_DISPLAY', 'wayland-0'), ('KONSOLE_DBUS_SESSION', '/Sessions/2'), ('PROFILEHOME', ''), ('AMENT_PREFIX_PATH', '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/opt/ros/humble'), ('CMAKE_PREFIX_PATH', '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble'), ('COLCON_PREFIX_PATH', '/home/brown/Projects/MiningRobot/ros2_workspace/install:/opt/ros/humble'), ('INVOCATION_ID', '0451ff8a5b7f45339296dc187b8cbfb5'), ('KONSOLE_VERSION', '230801'), ('MANAGERPID', '465'), ('KDE_SESSION_UID', '1000'), ('XDG_ACTIVATION_TOKEN', 'kwin-2'), ('XDG_SESSION_CLASS', 'user'), ('PYTHONPATH', '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib/python3.11/site-packages:/home/brown/.cache/yay/ros2-humble/src/install/lib/python3.11/dist-packages:/opt/ros/humble/lib/python3.11/site-packages'), ('COLCON', '1'), ('TERM', 'xterm-256color'), ('USER', 'brown'), ('TMUX_PANE', '%6'), ('CUDA_PATH', '/opt/cuda'), ('COLORFGBG', '15;0'), ('PLASMA_USE_QT_SCALING', '1'), ('KDE_SESSION_VERSION', '5'), ('QT_WAYLAND_FORCE_DPI', '96'), ('DISPLAY', ':0'), ('SHLVL', '2'), ('XDG_VTNR', '1'), ('XDG_SESSION_ID', '1'), ('LD_LIBRARY_PATH', '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('ROS_LOCALHOST_ONLY', '0'), ('DEBUGINFOD_URLS', 'https://debuginfod.archlinux.org'), ('QT_AUTO_SCREEN_SCALE_FACTOR', '0'), ('JOURNAL_STREAM', '8:14885'), ('XCURSOR_THEME', 'breeze_cursors'), ('XDG_DATA_DIRS', '/home/brown/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/'), ('KDE_FULL_SESSION', 'true'), ('QSG_RENDER_LOOP', 'basic'), ('PATH', '/opt/ros/humble/bin:/home/brown/.local/bin:/home/brown/.local/bin:/home/brown/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/opt/cuda/bin:/opt/cuda/nsight_compute:/opt/cuda/nsight_systems/bin:/var/lib/flatpak/exports/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/opt/cuda/bin:/opt/cuda/nsight_compute:/opt/cuda/nsight_systems/bin'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('KDE_APPLICATIONS_AS_SCOPE', '1'), ('MAIL', '/var/spool/mail/brown'), ('ROS_DISTRO', 'humble'), ('OLDPWD', '/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core'), ('TERM_PROGRAM', 'tmux'), ('KONSOLE_DBUS_WINDOW', '/Windows/1'), ('_', '/usr/bin/env')]), 'shell': False}
+[0.198956] (-) TimerEvent: {}
+[0.221327] (aurora_core) StderrLine: {'line': b'\x1b[31mCMake Error at CMakeLists.txt:4 (target_include_directories):\n'}
+[0.221715] (aurora_core) StderrLine: {'line': b'  Cannot specify include directories for target "aurora_core" which is not\n'}
+[0.221896] (aurora_core) StderrLine: {'line': b'  built by this project.\n'}
+[0.222065] (aurora_core) StderrLine: {'line': b'\n'}
+[0.222232] (aurora_core) StderrLine: {'line': b'\x1b[0m\n'}
+[0.222395] (aurora_core) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.5 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[0.299055] (-) TimerEvent: {}
+[0.399426] (-) TimerEvent: {}
+[0.499792] (-) TimerEvent: {}
+[0.576851] (aurora_core) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.8 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[0.599907] (-) TimerEvent: {}
+[0.700317] (-) TimerEvent: {}
+[0.707942] (aurora_core) StdoutLine: {'line': b'-- Found rclcpp: 16.0.6 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[0.758348] (aurora_core) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[0.762755] (aurora_core) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[0.772673] (aurora_core) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[0.792310] (aurora_core) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.800411] (-) TimerEvent: {}
+[0.822020] (aurora_core) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.900539] (-) TimerEvent: {}
+[0.925905] (aurora_core) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.1 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[0.928307] (aurora_core) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.4 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[1.000702] (-) TimerEvent: {}
+[1.071106] (aurora_core) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[1.100803] (-) TimerEvent: {}
+[1.201139] (-) TimerEvent: {}
+[1.301534] (-) TimerEvent: {}
+[1.364756] (aurora_core) StdoutLine: {'line': b'-- Found ros2_ouster: 0.5.0 (/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake)\n'}
+[1.401660] (-) TimerEvent: {}
+[1.502043] (-) TimerEvent: {}
+[1.602392] (-) TimerEvent: {}
+[1.702765] (-) TimerEvent: {}
+[1.803136] (-) TimerEvent: {}
+[1.903490] (-) TimerEvent: {}
+[2.003857] (-) TimerEvent: {}
+[2.104258] (-) TimerEvent: {}
+[2.204670] (-) TimerEvent: {}
+[2.305040] (-) TimerEvent: {}
+[2.405425] (-) TimerEvent: {}
+[2.462958] (aurora_core) StdoutLine: {'line': b'-- Found eigen3_cmake_module: 0.1.1 (/opt/ros/humble/share/eigen3_cmake_module/cmake)\n'}
+[2.464963] (aurora_core) StdoutLine: {'line': b'-- Ensuring Eigen3 include directory is part of orocos-kdl CMake target\n'}
+[2.505531] (-) TimerEvent: {}
+[2.605867] (-) TimerEvent: {}
+[2.706299] (-) TimerEvent: {}
+[2.710308] (aurora_core) StderrLine: {'line': b'\x1b[33mCMake Warning (dev) at /usr/share/pcl-1.13/PCLConfig.cmake:143 (find_package):\n'}
+[2.710573] (aurora_core) StderrLine: {'line': b'  Policy CMP0144 is not set: find_package uses upper-case <PACKAGENAME>_ROOT\n'}
+[2.710749] (aurora_core) StderrLine: {'line': b'  variables.  Run "cmake --help-policy CMP0144" for policy details.  Use the\n'}
+[2.710909] (aurora_core) StderrLine: {'line': b'  cmake_policy command to set the policy and suppress this warning.\n'}
+[2.711068] (aurora_core) StderrLine: {'line': b'\n'}
+[2.711226] (aurora_core) StderrLine: {'line': b'  CMake variable EIGEN_ROOT is set to:\n'}
+[2.711380] (aurora_core) StderrLine: {'line': b'\n'}
+[2.711572] (aurora_core) StderrLine: {'line': b'    /usr/include/eigen3\n'}
+[2.711734] (aurora_core) StderrLine: {'line': b'\n'}
+[2.711909] (aurora_core) StderrLine: {'line': b'  For compatibility, find_package is ignoring the variable, but code in a\n'}
+[2.712059] (aurora_core) StderrLine: {'line': b'  .cmake module might still use it.\n'}
+[2.712198] (aurora_core) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[2.712353] (aurora_core) StderrLine: {'line': b'  /usr/share/pcl-1.13/PCLConfig.cmake:296 (find_eigen)\n'}
+[2.712515] (aurora_core) StderrLine: {'line': b'  /usr/share/pcl-1.13/PCLConfig.cmake:549 (find_external_library)\n'}
+[2.712677] (aurora_core) StderrLine: {'line': b'  /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)\n'}
+[2.712855] (aurora_core) StderrLine: {'line': b'  /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/pcl_conversionsConfig.cmake:41 (include)\n'}
+[2.713041] (aurora_core) StderrLine: {'line': b'  /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)\n'}
+[2.713223] (aurora_core) StderrLine: {'line': b'  /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ros2_ousterConfig.cmake:41 (include)\n'}
+[2.713411] (aurora_core) StderrLine: {'line': b'  CMakeLists.txt:29 (find_package)\n'}
+[2.713656] (aurora_core) StderrLine: {'line': b'This warning is for project developers.  Use -Wno-dev to suppress it.\n'}
+[2.713846] (aurora_core) StderrLine: {'line': b'\x1b[0m\n'}
+[2.720076] (aurora_core) StdoutLine: {'line': b'-- Eigen found (include: /usr/include/eigen3, version: 3.4.0)\n'}
+[2.736285] (aurora_core) StderrLine: {'line': b'\x1b[33mCMake Warning (dev) at /usr/share/pcl-1.13/Modules/FindFLANN.cmake:45 (find_package):\n'}
+[2.736575] (aurora_core) StderrLine: {'line': b'  Policy CMP0144 is not set: find_package uses upper-case <PACKAGENAME>_ROOT\n'}
+[2.736762] (aurora_core) StderrLine: {'line': b'  variables.  Run "cmake --help-policy CMP0144" for policy details.  Use the\n'}
+[2.736937] (aurora_core) StderrLine: {'line': b'  cmake_policy command to set the policy and suppress this warning.\n'}
+[2.737139] (aurora_core) StderrLine: {'line': b'\n'}
+[2.737314] (aurora_core) StderrLine: {'line': b'  CMake variable FLANN_ROOT is set to:\n'}
+[2.737488] (aurora_core) StderrLine: {'line': b'\n'}
+[2.737661] (aurora_core) StderrLine: {'line': b'    /usr\n'}
+[2.737838] (aurora_core) StderrLine: {'line': b'\n'}
+[2.738012] (aurora_core) StderrLine: {'line': b'  For compatibility, find_package is ignoring the variable, but code in a\n'}
+[2.738276] (aurora_core) StderrLine: {'line': b'  .cmake module might still use it.\n'}
+[2.738392] (aurora_core) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[2.738497] (aurora_core) StderrLine: {'line': b'  /usr/share/pcl-1.13/PCLConfig.cmake:253 (find_package)\n'}
+[2.738599] (aurora_core) StderrLine: {'line': b'  /usr/share/pcl-1.13/PCLConfig.cmake:298 (find_flann)\n'}
+[2.738701] (aurora_core) StderrLine: {'line': b'  /usr/share/pcl-1.13/PCLConfig.cmake:549 (find_external_library)\n'}
+[2.738804] (aurora_core) StderrLine: {'line': b'  /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)\n'}
+[2.738907] (aurora_core) StderrLine: {'line': b'  /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/pcl_conversionsConfig.cmake:41 (include)\n'}
+[2.739007] (aurora_core) StderrLine: {'line': b'  /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)\n'}
+[2.739137] (aurora_core) StderrLine: {'line': b'  /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ros2_ousterConfig.cmake:41 (include)\n'}
+[2.739296] (aurora_core) StderrLine: {'line': b'  CMakeLists.txt:29 (find_package)\n'}
+[2.739411] (aurora_core) StderrLine: {'line': b'This warning is for project developers.  Use -Wno-dev to suppress it.\n'}
+[2.739511] (aurora_core) StderrLine: {'line': b'\x1b[0m\n'}
+[2.739609] (aurora_core) StdoutLine: {'line': b'-- Found flann version 1.9.2\n'}
+[2.806437] (-) TimerEvent: {}
+[2.906877] (-) TimerEvent: {}
+[3.007266] (-) TimerEvent: {}
+[3.107663] (-) TimerEvent: {}
+[3.208041] (-) TimerEvent: {}
+[3.308498] (-) TimerEvent: {}
+[3.408923] (-) TimerEvent: {}
+[3.509382] (-) TimerEvent: {}
+[3.609840] (-) TimerEvent: {}
+[3.710258] (-) TimerEvent: {}
+[3.810655] (-) TimerEvent: {}
+[3.911025] (-) TimerEvent: {}
+[4.011459] (-) TimerEvent: {}
+[4.111858] (-) TimerEvent: {}
+[4.212238] (-) TimerEvent: {}
+[4.312621] (-) TimerEvent: {}
+[4.413026] (-) TimerEvent: {}
+[4.513460] (-) TimerEvent: {}
+[4.613892] (-) TimerEvent: {}
+[4.714320] (-) TimerEvent: {}
+[4.814756] (-) TimerEvent: {}
+[4.915185] (-) TimerEvent: {}
+[5.015563] (-) TimerEvent: {}
+[5.115997] (-) TimerEvent: {}
+[5.216534] (-) TimerEvent: {}
+[5.316926] (-) TimerEvent: {}
+[5.417323] (-) TimerEvent: {}
+[5.517691] (-) TimerEvent: {}
+[5.618058] (-) TimerEvent: {}
+[5.718465] (-) TimerEvent: {}
+[5.818870] (-) TimerEvent: {}
+[5.919267] (-) TimerEvent: {}
+[6.019666] (-) TimerEvent: {}
+[6.120045] (-) TimerEvent: {}
+[6.128223] (aurora_core) StdoutLine: {'line': b'-- Eigen found (include: /usr/include/eigen3, version: 3.4.0)\n'}
+[6.220193] (-) TimerEvent: {}
+[6.320599] (-) TimerEvent: {}
+[6.420975] (-) TimerEvent: {}
+[6.521328] (-) TimerEvent: {}
+[6.621733] (-) TimerEvent: {}
+[6.667860] (aurora_core) StdoutLine: {'line': b'-- Found Qhull version 8.0.2\n'}
+[6.721860] (-) TimerEvent: {}
+[6.822245] (-) TimerEvent: {}
+[6.922603] (-) TimerEvent: {}
+[7.022997] (-) TimerEvent: {}
+[7.123350] (-) TimerEvent: {}
+[7.223724] (-) TimerEvent: {}
+[7.324111] (-) TimerEvent: {}
+[7.424481] (-) TimerEvent: {}
+[7.524846] (-) TimerEvent: {}
+[7.625238] (-) TimerEvent: {}
+[7.725641] (-) TimerEvent: {}
+[7.826005] (-) TimerEvent: {}
+[7.870421] (aurora_core) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[7.870936] (aurora_core) StdoutLine: {'line': b'-- Configured cppcheck include dirs: \n'}
+[7.871162] (aurora_core) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[7.878897] (aurora_core) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[7.901386] (aurora_core) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[7.901704] (aurora_core) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[7.904473] (aurora_core) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[7.905744] (aurora_core) StdoutLine: {'line': b'-- Configuring incomplete, errors occurred!\n'}
+[7.926127] (-) TimerEvent: {}
+[7.936590] (aurora_core) StderrLine: {'line': b'make: *** [Makefile:267: cmake_check_build_system] Error 1\n'}
+[7.940174] (aurora_core) CommandEnded: {'returncode': 2}
+[8.026782] (-) TimerEvent: {}
+[8.127115] (-) TimerEvent: {}
+[8.135668] (aurora_core) JobEnded: {'identifier': 'aurora_core', 'rc': 2}
+[8.146522] (-) EventReactorShutdown: {}

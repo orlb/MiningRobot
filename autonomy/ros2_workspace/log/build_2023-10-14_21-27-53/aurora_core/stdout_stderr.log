@@ -1,0 +1,28 @@
+[ 50%] [32mBuilding CXX object CMakeFiles/aurora_node_core.dir/src/aurora_node_core.cpp.o[0m
+[01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core/src/aurora_node_core.cpp:[m[K In function ‘[01m[Kint[01;32m[K main[m[K(int, char**)[m[K’:
+[01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core/src/aurora_node_core.cpp:120:14:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kwrites[m[K’ set but not used [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-but-set-variable-Wunused-but-set-variable]8;;[m[K]
+  120 |         bool [01;35m[Kwrites[m[K=false;
+      |              [01;35m[K^~~~~~[m[K
+[01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core/src/aurora_node_core.cpp:82:9:[m[K [01;35m[Kwarning: [m[Kvariable ‘[01m[Kmillisleep[m[K’ set but not used [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wunused-but-set-variable-Wunused-but-set-variable]8;;[m[K]
+   82 |     int [01;35m[Kmillisleep[m[K=10; // <- run at 100Hz max
+      |         [01;35m[K^~~~~~~~~~[m[K
+[100%] [32m[1mLinking CXX executable aurora_node_core[0m
+[100%] Built target aurora_node_core
+-- Install configuration: ""
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/lib/aurora_core/aurora_node_core
+-- Set runtime path of "/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/lib/aurora_core/aurora_node_core" to ""
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/ament_index/resource_index/package_run_dependencies/aurora_core
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/ament_index/resource_index/parent_prefix_path/aurora_core
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/environment/ament_prefix_path.sh
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/environment/ament_prefix_path.dsv
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/environment/path.sh
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/environment/path.dsv
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/local_setup.bash
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/local_setup.sh
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/local_setup.zsh
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/local_setup.dsv
+-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/package.dsv
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/ament_index/resource_index/packages/aurora_core
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/cmake/aurora_coreConfig.cmake
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/cmake/aurora_coreConfig-version.cmake
+-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/package.xml

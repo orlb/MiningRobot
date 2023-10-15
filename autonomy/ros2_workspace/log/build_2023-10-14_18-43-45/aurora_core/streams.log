@@ -1,0 +1,96 @@
+[0.177s] Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core -- -j4 -l4
+[0.223s] -- Found ament_cmake: 1.3.5 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.574s] -- Found ament_lint_auto: 0.12.8 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[0.712s] -- Found rclcpp: 16.0.6 (/opt/ros/humble/share/rclcpp/cmake)
+[0.767s] -- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[0.771s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[0.781s] -- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[0.801s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.830s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.934s] -- Found rmw_implementation_cmake: 6.1.1 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[0.936s] -- Found rmw_fastrtps_cpp: 6.2.4 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[1.078s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[1.367s] -- Found ros2_ouster: 0.5.0 (/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake)
+[2.470s] -- Found eigen3_cmake_module: 0.1.1 (/opt/ros/humble/share/eigen3_cmake_module/cmake)
+[2.472s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[2.721s] [33mCMake Warning (dev) at /usr/share/pcl-1.13/PCLConfig.cmake:143 (find_package):
+[2.721s]   Policy CMP0144 is not set: find_package uses upper-case <PACKAGENAME>_ROOT
+[2.721s]   variables.  Run "cmake --help-policy CMP0144" for policy details.  Use the
+[2.721s]   cmake_policy command to set the policy and suppress this warning.
+[2.721s] 
+[2.722s]   CMake variable EIGEN_ROOT is set to:
+[2.722s] 
+[2.722s]     /usr/include/eigen3
+[2.722s] 
+[2.722s]   For compatibility, find_package is ignoring the variable, but code in a
+[2.722s]   .cmake module might still use it.
+[2.722s] Call Stack (most recent call first):
+[2.723s]   /usr/share/pcl-1.13/PCLConfig.cmake:296 (find_eigen)
+[2.723s]   /usr/share/pcl-1.13/PCLConfig.cmake:549 (find_external_library)
+[2.723s]   /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)
+[2.723s]   /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/pcl_conversionsConfig.cmake:41 (include)
+[2.723s]   /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)
+[2.723s]   /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ros2_ousterConfig.cmake:41 (include)
+[2.723s]   CMakeLists.txt:29 (find_package)
+[2.724s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[2.724s] [0m
+[2.728s] -- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+[2.748s] [33mCMake Warning (dev) at /usr/share/pcl-1.13/Modules/FindFLANN.cmake:45 (find_package):
+[2.748s]   Policy CMP0144 is not set: find_package uses upper-case <PACKAGENAME>_ROOT
+[2.748s]   variables.  Run "cmake --help-policy CMP0144" for policy details.  Use the
+[2.748s]   cmake_policy command to set the policy and suppress this warning.
+[2.748s] 
+[2.749s]   CMake variable FLANN_ROOT is set to:
+[2.749s] 
+[2.749s]     /usr
+[2.749s] 
+[2.749s]   For compatibility, find_package is ignoring the variable, but code in a
+[2.749s]   .cmake module might still use it.
+[2.750s] Call Stack (most recent call first):
+[2.750s]   /usr/share/pcl-1.13/PCLConfig.cmake:253 (find_package)
+[2.750s]   /usr/share/pcl-1.13/PCLConfig.cmake:298 (find_flann)
+[2.750s]   /usr/share/pcl-1.13/PCLConfig.cmake:549 (find_external_library)
+[2.750s]   /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)
+[2.750s]   /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/pcl_conversionsConfig.cmake:41 (include)
+[2.751s]   /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)
+[2.751s]   /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ros2_ousterConfig.cmake:41 (include)
+[2.751s]   CMakeLists.txt:29 (find_package)
+[2.751s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[2.751s] [0m
+[2.751s] -- Found flann version 1.9.2
+[6.125s] -- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+[6.658s] -- Found Qhull version 8.0.2
+[7.863s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[7.864s] -- Configured cppcheck include dirs: /home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core/include
+[7.864s] -- Configured cppcheck exclude dirs and/or files: 
+[7.871s] -- Added test 'lint_cmake' to check CMake code style
+[7.892s] -- Added test 'uncrustify' to check C / C++ code style
+[7.892s] -- Configured uncrustify additional arguments: 
+[7.895s] -- Added test 'xmllint' to check XML markup files
+[7.896s] -- Configuring done (7.7s)
+[7.976s] -- Generating done (0.1s)
+[7.980s] -- Build files have been written to: /home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core
+[8.073s] [ 50%] [32mBuilding CXX object CMakeFiles/aurora_node_core.dir/src/aurora_node_core.cpp.o[0m
+[12.757s] [100%] [32m[1mLinking CXX executable aurora_node_core[0m
+[14.529s] [100%] Built target aurora_node_core
+[14.545s] Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core' returned '0': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core -- -j4 -l4
+[14.637s] Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core
+[14.646s] -- Install configuration: ""
+[14.647s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/lib/aurora_core/aurora_node_core
+[14.648s] -- Set runtime path of "/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/lib/aurora_core/aurora_node_core" to ""
+[14.649s] -- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/ament_index/resource_index/package_run_dependencies/aurora_core
+[14.649s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/ament_index/resource_index/parent_prefix_path/aurora_core
+[14.649s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/environment/ament_prefix_path.sh
+[14.649s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/environment/ament_prefix_path.dsv
+[14.650s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/environment/path.sh
+[14.650s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/environment/path.dsv
+[14.650s] -- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/local_setup.bash
+[14.650s] -- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/local_setup.sh
+[14.651s] -- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/local_setup.zsh
+[14.651s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/local_setup.dsv
+[14.651s] -- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/package.dsv
+[14.651s] -- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/ament_index/resource_index/packages/aurora_core
+[14.651s] -- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/cmake/aurora_coreConfig.cmake
+[14.652s] -- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/cmake/aurora_coreConfig-version.cmake
+[14.652s] -- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/package.xml
+[14.654s] Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core' returned '0': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core

@@ -1,0 +1,7 @@
+[01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core/src/aurora_node_core.cpp:10:10:[m[K [01;31m[Kfatal error: [m[Kbase/autonomy/aurora/include/robot_base.h: No such file or directory
+   10 | #include [01;31m[K"base/autonomy/aurora/include/robot_base.h"[m[K    // aurora includes
+      |          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[m[K
+compilation terminated.
+make[2]: *** [CMakeFiles/aurora_node_core.dir/build.make:76: CMakeFiles/aurora_node_core.dir/src/aurora_node_core.cpp.o] Error 1
+make[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/aurora_node_core.dir/all] Error 2
+make: *** [Makefile:146: all] Error 2

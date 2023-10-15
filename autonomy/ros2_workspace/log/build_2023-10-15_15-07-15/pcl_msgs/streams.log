@@ -1,0 +1,383 @@
+[0.180s] Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_msgs': _=/usr/bin/env /usr/bin/cmake /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/pcl_msgs -DCMAKE_INSTALL_PREFIX=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs
+[0.200s] -- Found ament_cmake: 1.3.5 (/opt/ros/humble/share/ament_cmake/cmake)
+[1.133s] -- Found Python3: /usr/bin/python3.11 (found version "3.11.5") found components: Interpreter 
+[1.313s] -- Found rosidl_default_generators: 1.2.0 (/opt/ros/humble/share/rosidl_default_generators/cmake)
+[1.318s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.328s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[1.392s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.452s] -- Found sensor_msgs: 4.2.3 (/opt/ros/humble/share/sensor_msgs/cmake)
+[2.792s] -- Found ament_cmake_cppcheck: 0.12.8 (/opt/ros/humble/share/ament_cmake_cppcheck/cmake)
+[2.796s] -- Found ament_cmake_cpplint: 0.12.8 (/opt/ros/humble/share/ament_cmake_cpplint/cmake)
+[2.801s] -- Found ament_cmake_uncrustify: 0.12.8 (/opt/ros/humble/share/ament_cmake_uncrustify/cmake)
+[2.806s] -- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)
+[3.755s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[5.125s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[5.130s] [33mCMake Warning (dev) at /opt/ros/humble/share/rosidl_generator_py/cmake/rosidl_generator_py_generate_interfaces.cmake:20 (find_package):
+[5.130s]   Policy CMP0148 is not set: The FindPythonInterp and FindPythonLibs modules
+[5.130s]   are removed.  Run "cmake --help-policy CMP0148" for policy details.  Use
+[5.130s]   the cmake_policy command to set the policy and suppress this warning.
+[5.130s] 
+[5.130s] Call Stack (most recent call first):
+[5.131s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[5.131s]   /opt/ros/humble/share/rosidl_cmake/cmake/rosidl_generate_interfaces.cmake:286 (ament_execute_extensions)
+[5.131s]   CMakeLists.txt:31 (rosidl_generate_interfaces)
+[5.131s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[5.131s] [0m
+[5.174s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.11.5", minimum required is "3.6") 
+[5.177s] -- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)
+[5.178s] [33mCMake Warning (dev) at /opt/ros/humble/share/python_cmake_module/cmake/Modules/FindPythonExtra.cmake:52 (find_package):
+[5.178s]   Policy CMP0148 is not set: The FindPythonInterp and FindPythonLibs modules
+[5.178s]   are removed.  Run "cmake --help-policy CMP0148" for policy details.  Use
+[5.178s]   the cmake_policy command to set the policy and suppress this warning.
+[5.179s] 
+[5.179s] Call Stack (most recent call first):
+[5.179s]   /opt/ros/humble/share/rosidl_generator_py/cmake/rosidl_generator_py_generate_interfaces.cmake:23 (find_package)
+[5.179s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[5.179s]   /opt/ros/humble/share/rosidl_cmake/cmake/rosidl_generate_interfaces.cmake:286 (ament_execute_extensions)
+[5.179s]   CMakeLists.txt:31 (rosidl_generate_interfaces)
+[5.179s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[5.180s] [0m
+[5.225s] [33mCMake Warning (dev) at /opt/ros/humble/share/python_cmake_module/cmake/Modules/FindPythonExtra.cmake:140 (find_package):
+[5.225s]   Policy CMP0148 is not set: The FindPythonInterp and FindPythonLibs modules
+[5.225s]   are removed.  Run "cmake --help-policy CMP0148" for policy details.  Use
+[5.225s]   the cmake_policy command to set the policy and suppress this warning.
+[5.225s] 
+[5.225s] Call Stack (most recent call first):
+[5.226s]   /opt/ros/humble/share/rosidl_generator_py/cmake/rosidl_generator_py_generate_interfaces.cmake:23 (find_package)
+[5.226s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[5.226s]   /opt/ros/humble/share/rosidl_cmake/cmake/rosidl_generate_interfaces.cmake:286 (ament_execute_extensions)
+[5.226s]   CMakeLists.txt:31 (rosidl_generate_interfaces)
+[5.226s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[5.226s] [0m
+[5.238s] -- Found PythonLibs: /usr/lib/libpython3.11.so (found suitable version "3.11.5", minimum required is "3.5") 
+[5.238s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[5.238s] -- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.11
+[5.238s] -- Using PYTHON_LIBRARIES: /usr/lib/libpython3.11.so
+[5.284s] -- Found PythonExtra: .so  
+[5.761s] -- Using numpy include directory: /usr/lib/python3.11/site-packages/numpy/core/include
+[5.805s] -- Found ament_cmake_flake8: 0.12.8 (/opt/ros/humble/share/ament_cmake_flake8/cmake)
+[5.809s] -- Found ament_cmake_pep257: 0.12.8 (/opt/ros/humble/share/ament_cmake_pep257/cmake)
+[5.831s] -- Configuring done (5.6s)
+[5.941s] -- Generating done (0.1s)
+[5.947s] -- Build files have been written to: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_msgs
+[5.967s] Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_msgs' returned '0': _=/usr/bin/env /usr/bin/cmake /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/pcl_msgs -DCMAKE_INSTALL_PREFIX=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs
+[5.968s] Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_msgs': _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_msgs -- -j4 -l4
+[6.175s] [  1%] [34m[1mGenerating C++ code for ROS interfaces[0m
+[7.648s] [  1%] Built target pcl_msgs__cpp
+[7.677s] [  3%] [34m[1mGenerating C code for ROS interfaces[0m
+[7.724s] [  3%] Built target ament_cmake_python_copy_pcl_msgs
+[10.418s] [  4%] [32mBuilding C object CMakeFiles/pcl_msgs__rosidl_generator_c.dir/rosidl_generator_c/pcl_msgs/msg/detail/model_coefficients__functions.c.o[0m
+[10.668s] [  6%] [32mBuilding C object CMakeFiles/pcl_msgs__rosidl_generator_c.dir/rosidl_generator_c/pcl_msgs/msg/detail/point_indices__functions.c.o[0m
+[10.921s] [  7%] [32mBuilding C object CMakeFiles/pcl_msgs__rosidl_generator_c.dir/rosidl_generator_c/pcl_msgs/msg/detail/polygon_mesh__functions.c.o[0m
+[11.170s] [  9%] [32mBuilding C object CMakeFiles/pcl_msgs__rosidl_generator_c.dir/rosidl_generator_c/pcl_msgs/msg/detail/vertices__functions.c.o[0m
+[11.475s] [ 11%] [32mBuilding C object CMakeFiles/pcl_msgs__rosidl_generator_c.dir/rosidl_generator_c/pcl_msgs/srv/detail/update_filename__functions.c.o[0m
+[11.760s] [ 12%] [32m[1mLinking C shared library libpcl_msgs__rosidl_generator_c.so[0m
+[12.025s] [ 12%] Built target pcl_msgs__rosidl_generator_c
+[12.098s] [ 14%] [34m[1mGenerating C++ introspection for ROS interfaces[0m
+[14.181s] [ 15%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/pcl_msgs/msg/detail/model_coefficients__type_support.cpp.o[0m
+[16.044s] [ 17%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/pcl_msgs/msg/detail/point_indices__type_support.cpp.o[0m
+[18.189s] [ 19%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/pcl_msgs/msg/detail/polygon_mesh__type_support.cpp.o[0m
+[20.890s] [ 20%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/pcl_msgs/msg/detail/vertices__type_support.cpp.o[0m
+[22.822s] [ 22%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/pcl_msgs/srv/detail/update_filename__type_support.cpp.o[0m
+[24.608s] [ 23%] [32m[1mLinking CXX shared library libpcl_msgs__rosidl_typesupport_introspection_cpp.so[0m
+[24.969s] [ 23%] Built target pcl_msgs__rosidl_typesupport_introspection_cpp
+[25.028s] [ 25%] [34m[1mGenerating C type support for eProsima Fast-RTPS[0m
+[26.105s] running egg_info
+[26.110s] creating pcl_msgs.egg-info
+[26.202s] writing pcl_msgs.egg-info/PKG-INFO
+[26.207s] writing dependency_links to pcl_msgs.egg-info/dependency_links.txt
+[26.210s] writing top-level names to pcl_msgs.egg-info/top_level.txt
+[26.210s] writing manifest file 'pcl_msgs.egg-info/SOURCES.txt'
+[26.485s] reading manifest file 'pcl_msgs.egg-info/SOURCES.txt'
+[26.487s] writing manifest file 'pcl_msgs.egg-info/SOURCES.txt'
+[26.660s] [ 25%] Built target ament_cmake_python_build_pcl_msgs_egg
+[26.798s] [ 26%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/pcl_msgs/msg/detail/model_coefficients__type_support_c.cpp.o[0m
+[28.706s] [ 28%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/pcl_msgs/msg/detail/point_indices__type_support_c.cpp.o[0m
+[30.520s] [ 30%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/pcl_msgs/msg/detail/polygon_mesh__type_support_c.cpp.o[0m
+[32.240s] [ 31%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/pcl_msgs/msg/detail/vertices__type_support_c.cpp.o[0m
+[34.163s] [ 33%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/pcl_msgs/srv/detail/update_filename__type_support_c.cpp.o[0m
+[36.253s] [ 34%] [32m[1mLinking CXX shared library libpcl_msgs__rosidl_typesupport_fastrtps_c.so[0m
+[36.576s] [ 34%] Built target pcl_msgs__rosidl_typesupport_fastrtps_c
+[36.595s] [ 36%] [34m[1mGenerating C introspection for ROS interfaces[0m
+[37.944s] [ 38%] [32mBuilding C object CMakeFiles/pcl_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/pcl_msgs/msg/detail/model_coefficients__type_support.c.o[0m
+[38.071s] [ 39%] [32mBuilding C object CMakeFiles/pcl_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/pcl_msgs/msg/detail/point_indices__type_support.c.o[0m
+[38.193s] [ 41%] [32mBuilding C object CMakeFiles/pcl_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/pcl_msgs/msg/detail/polygon_mesh__type_support.c.o[0m
+[38.334s] [ 42%] [32mBuilding C object CMakeFiles/pcl_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/pcl_msgs/msg/detail/vertices__type_support.c.o[0m
+[38.508s] [ 44%] [32mBuilding C object CMakeFiles/pcl_msgs__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/pcl_msgs/srv/detail/update_filename__type_support.c.o[0m
+[38.657s] [ 46%] [32m[1mLinking C shared library libpcl_msgs__rosidl_typesupport_introspection_c.so[0m
+[38.780s] [ 46%] Built target pcl_msgs__rosidl_typesupport_introspection_c
+[38.817s] [ 47%] [34m[1mGenerating C type support dispatch for ROS interfaces[0m
+[39.894s] [ 50%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/pcl_msgs/msg/point_indices__type_support.cpp.o[0m
+[39.895s] [ 50%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/pcl_msgs/msg/model_coefficients__type_support.cpp.o[0m
+[40.006s] [ 52%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/pcl_msgs/msg/polygon_mesh__type_support.cpp.o[0m
+[40.096s] [ 53%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/pcl_msgs/srv/update_filename__type_support.cpp.o[0m
+[40.099s] [ 55%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_c.dir/rosidl_typesupport_c/pcl_msgs/msg/vertices__type_support.cpp.o[0m
+[40.210s] [ 57%] [32m[1mLinking CXX shared library libpcl_msgs__rosidl_typesupport_c.so[0m
+[40.512s] [ 57%] Built target pcl_msgs__rosidl_typesupport_c
+[40.552s] [ 58%] [34m[1mGenerating C++ type support for eProsima Fast-RTPS[0m
+[40.563s] [ 60%] [34m[1mGenerating C++ type support dispatch for ROS interfaces[0m
+[41.862s] [ 61%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/pcl_msgs/msg/model_coefficients__type_support.cpp.o[0m
+[42.322s] [ 63%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/pcl_msgs/msg/detail/dds_fastrtps/model_coefficients__type_support.cpp.o[0m
+[43.477s] [ 65%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/pcl_msgs/msg/polygon_mesh__type_support.cpp.o[0m
+[44.927s] [ 66%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/pcl_msgs/msg/vertices__type_support.cpp.o[0m
+[44.928s] [ 68%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/pcl_msgs/msg/detail/dds_fastrtps/point_indices__type_support.cpp.o[0m
+[46.447s] [ 69%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/pcl_msgs/srv/update_filename__type_support.cpp.o[0m
+[47.271s] [ 71%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/pcl_msgs/msg/detail/dds_fastrtps/vertices__type_support.cpp.o[0m
+[47.274s] [ 73%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/pcl_msgs/msg/detail/dds_fastrtps/polygon_mesh__type_support.cpp.o[0m
+[47.899s] [ 74%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/pcl_msgs/msg/point_indices__type_support.cpp.o[0m
+[49.685s] [ 76%] [32m[1mLinking CXX shared library libpcl_msgs__rosidl_typesupport_cpp.so[0m
+[50.023s] [ 76%] Built target pcl_msgs__rosidl_typesupport_cpp
+[50.256s] [ 77%] [32mBuilding CXX object CMakeFiles/pcl_msgs__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/pcl_msgs/srv/detail/dds_fastrtps/update_filename__type_support.cpp.o[0m
+[52.611s] [ 79%] [32m[1mLinking CXX shared library libpcl_msgs__rosidl_typesupport_fastrtps_cpp.so[0m
+[52.962s] [ 79%] Built target pcl_msgs__rosidl_typesupport_fastrtps_cpp
+[53.046s] [ 79%] Built target pcl_msgs
+[53.116s] [ 80%] [34m[1mGenerating Python code for ROS interfaces[0m
+[55.147s] [ 80%] Built target pcl_msgs__py
+[55.221s] [ 82%] [32mBuilding C object CMakeFiles/pcl_msgs__rosidl_generator_py.dir/rosidl_generator_py/pcl_msgs/msg/_model_coefficients_s.c.o[0m
+[55.229s] [ 84%] [32mBuilding C object CMakeFiles/pcl_msgs__rosidl_generator_py.dir/rosidl_generator_py/pcl_msgs/msg/_point_indices_s.c.o[0m
+[55.232s] [ 87%] [32mBuilding C object CMakeFiles/pcl_msgs__rosidl_generator_py.dir/rosidl_generator_py/pcl_msgs/msg/_vertices_s.c.o[0m
+[55.232s] [ 87%] [32mBuilding C object CMakeFiles/pcl_msgs__rosidl_generator_py.dir/rosidl_generator_py/pcl_msgs/msg/_polygon_mesh_s.c.o[0m
+[56.038s] [ 88%] [32mBuilding C object CMakeFiles/pcl_msgs__rosidl_generator_py.dir/rosidl_generator_py/pcl_msgs/srv/_update_filename_s.c.o[0m
+[56.401s] [ 90%] [32m[1mLinking C shared library rosidl_generator_py/pcl_msgs/libpcl_msgs__rosidl_generator_py.so[0m
+[56.538s] [ 90%] Built target pcl_msgs__rosidl_generator_py
+[56.603s] [ 92%] [32mBuilding C object CMakeFiles/pcl_msgs__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator_py/pcl_msgs/_pcl_msgs_s.ep.rosidl_typesupport_fastrtps_c.c.o[0m
+[56.608s] [ 93%] [32mBuilding C object CMakeFiles/pcl_msgs__rosidl_typesupport_introspection_c__pyext.dir/rosidl_generator_py/pcl_msgs/_pcl_msgs_s.ep.rosidl_typesupport_introspection_c.c.o[0m
+[57.094s] [ 95%] [32m[1mLinking C shared library rosidl_generator_py/pcl_msgs/pcl_msgs_s__rosidl_typesupport_fastrtps_c.cpython-311-x86_64-linux-gnu.so[0m
+[57.115s] [ 96%] [32m[1mLinking C shared library rosidl_generator_py/pcl_msgs/pcl_msgs_s__rosidl_typesupport_introspection_c.cpython-311-x86_64-linux-gnu.so[0m
+[57.252s] [ 96%] Built target pcl_msgs__rosidl_typesupport_fastrtps_c__pyext
+[57.270s] [ 96%] Built target pcl_msgs__rosidl_typesupport_introspection_c__pyext
+[57.334s] [ 98%] [32mBuilding C object CMakeFiles/pcl_msgs__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/pcl_msgs/_pcl_msgs_s.ep.rosidl_typesupport_c.c.o[0m
+[57.712s] [100%] [32m[1mLinking C shared library rosidl_generator_py/pcl_msgs/pcl_msgs_s__rosidl_typesupport_c.cpython-311-x86_64-linux-gnu.so[0m
+[57.881s] [100%] Built target pcl_msgs__rosidl_typesupport_c__pyext
+[57.909s] Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_msgs' returned '0': _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_msgs -- -j4 -l4
+[58.938s] Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_msgs': _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_msgs
+[58.957s] -- Install configuration: ""
+[58.958s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/ament_index/resource_index/rosidl_interfaces/pcl_msgs
+[58.959s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs
+[58.959s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv
+[58.959s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/update_filename.h
+[58.960s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/detail
+[58.961s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/detail/update_filename__struct.h
+[58.961s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/detail/update_filename__type_support.h
+[58.961s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/detail/update_filename__functions.c
+[58.962s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/detail/update_filename__functions.h
+[58.962s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg
+[58.962s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/vertices.h
+[58.962s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/polygon_mesh.h
+[58.964s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail
+[58.964s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/polygon_mesh__functions.h
+[58.964s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/vertices__functions.c
+[58.965s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/polygon_mesh__type_support.h
+[58.968s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/vertices__functions.h
+[58.969s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/model_coefficients__type_support.h
+[58.969s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/vertices__type_support.h
+[58.971s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/vertices__struct.h
+[58.971s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/model_coefficients__functions.h
+[58.971s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/polygon_mesh__functions.c
+[58.971s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/point_indices__type_support.h
+[58.972s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/polygon_mesh__struct.h
+[58.972s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/model_coefficients__functions.c
+[58.972s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/point_indices__struct.h
+[58.973s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/point_indices__functions.h
+[58.973s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/point_indices__functions.c
+[58.973s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/model_coefficients__struct.h
+[58.974s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/model_coefficients.h
+[58.974s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/point_indices.h
+[58.975s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/rosidl_generator_c__visibility_control.h
+[58.975s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/environment/library_path.sh
+[58.976s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/environment/library_path.dsv
+[58.976s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/libpcl_msgs__rosidl_generator_c.so
+[58.976s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/libpcl_msgs__rosidl_generator_c.so" to ""
+[58.976s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs
+[58.977s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv
+[58.977s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/detail
+[58.977s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/detail/update_filename__rosidl_typesupport_fastrtps_c.h
+[58.977s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg
+[58.977s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail
+[58.977s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/polygon_mesh__rosidl_typesupport_fastrtps_c.h
+[58.977s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/model_coefficients__rosidl_typesupport_fastrtps_c.h
+[58.977s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/point_indices__rosidl_typesupport_fastrtps_c.h
+[58.978s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/vertices__rosidl_typesupport_fastrtps_c.h
+[58.978s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+[58.978s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/libpcl_msgs__rosidl_typesupport_fastrtps_c.so
+[58.978s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/libpcl_msgs__rosidl_typesupport_fastrtps_c.so" to ""
+[58.978s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs
+[58.979s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv
+[58.979s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/detail
+[58.979s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/detail/update_filename__rosidl_typesupport_introspection_c.h
+[58.979s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/detail/update_filename__type_support.c
+[58.980s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg
+[58.980s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/rosidl_typesupport_introspection_c__visibility_control.h
+[58.980s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail
+[58.980s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/point_indices__rosidl_typesupport_introspection_c.h
+[58.981s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/point_indices__type_support.c
+[58.981s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/vertices__type_support.c
+[58.981s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/polygon_mesh__type_support.c
+[58.981s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/polygon_mesh__rosidl_typesupport_introspection_c.h
+[58.981s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/vertices__rosidl_typesupport_introspection_c.h
+[58.981s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/model_coefficients__type_support.c
+[58.982s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/model_coefficients__rosidl_typesupport_introspection_c.h
+[58.982s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/libpcl_msgs__rosidl_typesupport_introspection_c.so
+[58.984s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/libpcl_msgs__rosidl_typesupport_introspection_c.so" to ""
+[58.984s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/libpcl_msgs__rosidl_typesupport_c.so
+[58.985s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/libpcl_msgs__rosidl_typesupport_c.so" to ""
+[58.986s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs
+[58.986s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv
+[58.986s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/detail
+[58.986s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/detail/update_filename__traits.hpp
+[58.987s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/detail/update_filename__struct.hpp
+[58.987s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/detail/update_filename__builder.hpp
+[58.987s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/update_filename.hpp
+[58.988s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg
+[58.988s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/polygon_mesh.hpp
+[58.988s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail
+[58.988s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/vertices__traits.hpp
+[58.988s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/point_indices__builder.hpp
+[58.989s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/model_coefficients__traits.hpp
+[58.989s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/polygon_mesh__traits.hpp
+[58.989s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/polygon_mesh__struct.hpp
+[58.989s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/model_coefficients__struct.hpp
+[58.990s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/model_coefficients__builder.hpp
+[58.991s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/vertices__struct.hpp
+[58.992s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/vertices__builder.hpp
+[58.993s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/point_indices__traits.hpp
+[58.993s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/polygon_mesh__builder.hpp
+[58.994s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/point_indices__struct.hpp
+[58.994s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/model_coefficients.hpp
+[58.994s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/vertices.hpp
+[58.994s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/point_indices.hpp
+[58.995s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs
+[58.995s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv
+[58.995s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/detail
+[58.995s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/detail/update_filename__rosidl_typesupport_fastrtps_cpp.hpp
+[58.995s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/detail/dds_fastrtps
+[58.995s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg
+[58.996s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail
+[58.996s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/polygon_mesh__rosidl_typesupport_fastrtps_cpp.hpp
+[58.996s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/point_indices__rosidl_typesupport_fastrtps_cpp.hpp
+[58.996s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/vertices__rosidl_typesupport_fastrtps_cpp.hpp
+[58.996s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/dds_fastrtps
+[58.997s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/model_coefficients__rosidl_typesupport_fastrtps_cpp.hpp
+[58.997s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+[58.997s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/libpcl_msgs__rosidl_typesupport_fastrtps_cpp.so
+[58.998s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/libpcl_msgs__rosidl_typesupport_fastrtps_cpp.so" to ""
+[58.998s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs
+[58.998s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv
+[58.999s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/detail
+[58.999s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/detail/update_filename__rosidl_typesupport_introspection_cpp.hpp
+[58.999s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/srv/detail/update_filename__type_support.cpp
+[58.999s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg
+[59.000s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail
+[59.000s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/model_coefficients__type_support.cpp
+[59.001s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/model_coefficients__rosidl_typesupport_introspection_cpp.hpp
+[59.001s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/vertices__type_support.cpp
+[59.004s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/point_indices__rosidl_typesupport_introspection_cpp.hpp
+[59.004s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/point_indices__type_support.cpp
+[59.005s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/vertices__rosidl_typesupport_introspection_cpp.hpp
+[59.005s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/polygon_mesh__type_support.cpp
+[59.005s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/include/pcl_msgs/pcl_msgs/msg/detail/polygon_mesh__rosidl_typesupport_introspection_cpp.hpp
+[59.006s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/libpcl_msgs__rosidl_typesupport_introspection_cpp.so
+[59.007s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/libpcl_msgs__rosidl_typesupport_introspection_cpp.so" to ""
+[59.009s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/libpcl_msgs__rosidl_typesupport_cpp.so
+[59.009s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/libpcl_msgs__rosidl_typesupport_cpp.so" to ""
+[59.010s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/environment/pythonpath.sh
+[59.010s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/environment/pythonpath.dsv
+[59.010s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs-1.0.0-py3.11.egg-info
+[59.010s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs-1.0.0-py3.11.egg-info/dependency_links.txt
+[59.010s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs-1.0.0-py3.11.egg-info/top_level.txt
+[59.010s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs-1.0.0-py3.11.egg-info/PKG-INFO
+[59.011s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs-1.0.0-py3.11.egg-info/SOURCES.txt
+[59.011s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs
+[59.011s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/_pcl_msgs_s.ep.rosidl_typesupport_fastrtps_c.c
+[59.011s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/__init__.py
+[59.011s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/pcl_msgs_s__rosidl_typesupport_c.cpython-311-x86_64-linux-gnu.so
+[59.012s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/_pcl_msgs_s.ep.rosidl_typesupport_introspection_c.c
+[59.012s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/libpcl_msgs__rosidl_generator_py.so
+[59.013s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/srv
+[59.013s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/srv/__init__.py
+[59.013s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/srv/_update_filename_s.c
+[59.014s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/srv/_update_filename.py
+[59.019s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/pcl_msgs_s__rosidl_typesupport_introspection_c.cpython-311-x86_64-linux-gnu.so
+[59.019s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/pcl_msgs_s__rosidl_typesupport_fastrtps_c.cpython-311-x86_64-linux-gnu.so
+[59.021s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/_pcl_msgs_s.ep.rosidl_typesupport_c.c
+[59.021s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/msg
+[59.023s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/msg/__init__.py
+[59.024s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/msg/_point_indices.py
+[59.024s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/msg/_point_indices_s.c
+[59.026s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/msg/_model_coefficients.py
+[59.027s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/msg/_polygon_mesh.py
+[59.027s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/msg/_model_coefficients_s.c
+[59.028s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/msg/_vertices_s.c
+[59.029s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/msg/_vertices.py
+[59.030s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/msg/_polygon_mesh_s.c
+[59.184s] Listing '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs'...
+[59.184s] Compiling '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/__init__.py'...
+[59.184s] Listing '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/msg'...
+[59.185s] Compiling '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/msg/__init__.py'...
+[59.185s] Compiling '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/msg/_model_coefficients.py'...
+[59.185s] Compiling '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/msg/_point_indices.py'...
+[59.185s] Compiling '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/msg/_polygon_mesh.py'...
+[59.185s] Compiling '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/msg/_vertices.py'...
+[59.186s] Listing '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/srv'...
+[59.186s] Compiling '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/srv/__init__.py'...
+[59.186s] Compiling '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/srv/_update_filename.py'...
+[59.216s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/pcl_msgs_s__rosidl_typesupport_fastrtps_c.cpython-311-x86_64-linux-gnu.so
+[59.221s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/pcl_msgs_s__rosidl_typesupport_fastrtps_c.cpython-311-x86_64-linux-gnu.so" to ""
+[59.221s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/pcl_msgs_s__rosidl_typesupport_introspection_c.cpython-311-x86_64-linux-gnu.so
+[59.221s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/pcl_msgs_s__rosidl_typesupport_introspection_c.cpython-311-x86_64-linux-gnu.so" to ""
+[59.222s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/pcl_msgs_s__rosidl_typesupport_c.cpython-311-x86_64-linux-gnu.so
+[59.223s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages/pcl_msgs/pcl_msgs_s__rosidl_typesupport_c.cpython-311-x86_64-linux-gnu.so" to ""
+[59.224s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/libpcl_msgs__rosidl_generator_py.so
+[59.225s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/libpcl_msgs__rosidl_generator_py.so" to ""
+[59.225s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/msg/ModelCoefficients.idl
+[59.225s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/msg/PointIndices.idl
+[59.225s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/msg/PolygonMesh.idl
+[59.226s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/msg/Vertices.idl
+[59.231s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/srv/UpdateFilename.idl
+[59.231s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/msg/ModelCoefficients.msg
+[59.242s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/msg/PointIndices.msg
+[59.242s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/msg/PolygonMesh.msg
+[59.243s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/msg/Vertices.msg
+[59.245s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/srv/UpdateFilename.srv
+[59.245s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/srv/UpdateFilename_Request.msg
+[59.245s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/srv/UpdateFilename_Response.msg
+[59.245s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/ament_index/resource_index/package_run_dependencies/pcl_msgs
+[59.245s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/ament_index/resource_index/parent_prefix_path/pcl_msgs
+[59.246s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/environment/ament_prefix_path.sh
+[59.246s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/environment/ament_prefix_path.dsv
+[59.249s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/environment/path.sh
+[59.249s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/environment/path.dsv
+[59.249s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/local_setup.bash
+[59.250s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/local_setup.sh
+[59.250s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/local_setup.zsh
+[59.252s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/local_setup.dsv
+[59.253s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/package.dsv
+[59.253s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/ament_index/resource_index/packages/pcl_msgs
+[59.256s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/export_pcl_msgs__rosidl_generator_cExport.cmake
+[59.256s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/export_pcl_msgs__rosidl_generator_cExport-noconfig.cmake
+[59.258s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/export_pcl_msgs__rosidl_typesupport_fastrtps_cExport.cmake
+[59.259s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/export_pcl_msgs__rosidl_typesupport_fastrtps_cExport-noconfig.cmake
+[59.263s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/pcl_msgs__rosidl_typesupport_introspection_cExport.cmake
+[59.264s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/pcl_msgs__rosidl_typesupport_introspection_cExport-noconfig.cmake
+[59.264s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/pcl_msgs__rosidl_typesupport_cExport.cmake
+[59.264s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/pcl_msgs__rosidl_typesupport_cExport-noconfig.cmake
+[59.264s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/export_pcl_msgs__rosidl_generator_cppExport.cmake
+[59.266s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/export_pcl_msgs__rosidl_typesupport_fastrtps_cppExport.cmake
+[59.266s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/export_pcl_msgs__rosidl_typesupport_fastrtps_cppExport-noconfig.cmake
+[59.268s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/pcl_msgs__rosidl_typesupport_introspection_cppExport.cmake
+[59.270s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/pcl_msgs__rosidl_typesupport_introspection_cppExport-noconfig.cmake
+[59.272s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/pcl_msgs__rosidl_typesupport_cppExport.cmake
+[59.273s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/pcl_msgs__rosidl_typesupport_cppExport-noconfig.cmake
+[59.273s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/export_pcl_msgs__rosidl_generator_pyExport.cmake
+[59.274s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/export_pcl_msgs__rosidl_generator_pyExport-noconfig.cmake
+[59.276s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/rosidl_cmake-extras.cmake
+[59.276s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/ament_cmake_export_dependencies-extras.cmake
+[59.277s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/ament_cmake_export_include_directories-extras.cmake
+[59.277s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/ament_cmake_export_libraries-extras.cmake
+[59.277s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/ament_cmake_export_targets-extras.cmake
+[59.278s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+[59.278s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+[59.278s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/pcl_msgsConfig.cmake
+[59.278s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake/pcl_msgsConfig-version.cmake
+[59.279s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/package.xml
+[59.285s] Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_msgs' returned '0': _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_msgs

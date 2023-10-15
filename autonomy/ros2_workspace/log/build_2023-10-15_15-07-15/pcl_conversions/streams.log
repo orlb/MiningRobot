@@ -1,0 +1,105 @@
+[0.178s] Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_conversions': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/perception_pcl/pcl_conversions -DCMAKE_INSTALL_PREFIX=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions
+[0.392s] -- The C compiler identification is GNU 13.2.1
+[0.734s] -- The CXX compiler identification is GNU 13.2.1
+[0.782s] -- Detecting C compiler ABI info
+[1.005s] -- Detecting C compiler ABI info - done
+[1.023s] -- Check for working C compiler: /usr/bin/cc - skipped
+[1.023s] -- Detecting C compile features
+[1.024s] -- Detecting C compile features - done
+[1.055s] -- Detecting CXX compiler ABI info
+[1.413s] -- Detecting CXX compiler ABI info - done
+[1.427s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[1.428s] -- Detecting CXX compile features
+[1.429s] -- Detecting CXX compile features - done
+[1.433s] -- Found ament_cmake: 1.3.5 (/opt/ros/humble/share/ament_cmake/cmake)
+[3.432s] -- Found Python3: /usr/bin/python3.11 (found version "3.11.5") found components: Interpreter 
+[3.786s] -- Found Boost: /usr/lib/cmake/Boost-1.83.0/BoostConfig.cmake (found version "1.83.0")  
+[3.806s] -- Found message_filters: 4.3.3 (/opt/ros/humble/share/message_filters/cmake)
+[3.921s] -- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[3.934s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[3.955s] -- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[3.995s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[4.047s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[4.273s] -- Found rmw_implementation_cmake: 6.1.1 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[4.285s] -- Found rmw_fastrtps_cpp: 6.2.4 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[4.559s] -- Found OpenSSL: /usr/lib/libcrypto.so (found version "3.1.3")  
+[4.635s] -- Found FastRTPS: /opt/ros/humble/include  
+[4.720s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[4.739s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[5.045s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[5.049s] -- Found Threads: TRUE  
+[5.584s] [33mCMake Warning (dev) at /usr/share/pcl-1.13/PCLConfig.cmake:143 (find_package):
+[5.584s]   Policy CMP0144 is not set: find_package uses upper-case <PACKAGENAME>_ROOT
+[5.584s]   variables.  Run "cmake --help-policy CMP0144" for policy details.  Use the
+[5.585s]   cmake_policy command to set the policy and suppress this warning.
+[5.585s] 
+[5.585s]   CMake variable EIGEN_ROOT is set to:
+[5.585s] 
+[5.586s]     /usr/include/eigen3
+[5.586s] 
+[5.586s]   For compatibility, find_package is ignoring the variable, but code in a
+[5.587s]   .cmake module might still use it.
+[5.587s] Call Stack (most recent call first):
+[5.587s]   /usr/share/pcl-1.13/PCLConfig.cmake:296 (find_eigen)
+[5.587s]   /usr/share/pcl-1.13/PCLConfig.cmake:549 (find_external_library)
+[5.587s]   CMakeLists.txt:17 (find_package)
+[5.587s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[5.588s] [0m
+[5.596s] -- Checking for module 'eigen3'
+[5.626s] --   Found eigen3, version 3.4.0
+[5.707s] -- Found Eigen: /usr/include/eigen3 (Required is at least version "3.3") 
+[5.708s] -- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+[5.770s] -- Found Pcap: /usr/lib/libpcap.so  
+[5.891s] -- Found ZLIB: /usr/lib/libz.so (found version "1.3")  
+[6.017s] -- Found PNG: /usr/lib/libpng.so (found version "1.6.40") 
+[7.886s] -- Found MPI_C: /usr/lib/libmpi.so (found version "3.1") 
+[14.061s] -- Found MPI_CXX: /usr/lib/libmpi_cxx.so (found version "3.1") 
+[14.061s] -- Found MPI: TRUE (found version "3.1")  
+[17.348s] -- Checking for module 'libusb-1.0'
+[17.387s] --   Found libusb-1.0, version 1.0.26
+[17.485s] -- Found libusb: /usr/lib/libusb-1.0.so  
+[17.516s] -- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+[17.524s] -- Found PCL_COMMON: /usr/lib/libpcl_common.so  
+[17.531s] -- Found PCL_OCTREE: /usr/lib/libpcl_octree.so  
+[17.537s] -- Found PCL_IO: /usr/lib/libpcl_io.so  
+[17.540s] -- Found pcl_msgs: 1.0.0 (/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/share/pcl_msgs/cmake)
+[18.193s] -- Found ament_cmake_gtest: 1.3.5 (/opt/ros/humble/share/ament_cmake_gtest/cmake)
+[18.202s] -- Found gtest sources under '/opt/ros/humble/src/gtest_vendor': C++ tests using 'Google Test' will be built
+[18.554s] -- Configuring done (18.4s)
+[18.630s] -- Generating done (0.0s)
+[18.636s] -- Build files have been written to: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_conversions
+[18.719s] Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_conversions' returned '0': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/perception_pcl/pcl_conversions -DCMAKE_INSTALL_PREFIX=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions
+[18.724s] Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_conversions': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_conversions -- -j4 -l4
+[18.878s] [ 16%] [32mBuilding CXX object gtest/CMakeFiles/gtest.dir/src/gtest-all.cc.o[0m
+[18.882s] [ 33%] [32mBuilding CXX object gtest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o[0m
+[21.929s] [ 50%] [32m[1mLinking CXX static library libgtest_main.a[0m
+[22.055s] [ 50%] Built target gtest_main
+[30.306s] [ 66%] [32m[1mLinking CXX static library libgtest.a[0m
+[30.581s] [ 66%] Built target gtest
+[30.646s] [ 83%] [32mBuilding CXX object CMakeFiles/pcl_conversions-test.dir/test/test_pcl_conversions.cpp.o[0m
+[52.896s] [100%] [32m[1mLinking CXX executable pcl_conversions-test[0m
+[54.816s] [100%] Built target pcl_conversions-test
+[54.841s] Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_conversions' returned '0': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_conversions -- -j4 -l4
+[54.992s] Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_conversions': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_conversions
+[55.008s] -- Install configuration: ""
+[55.009s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/include/pcl_conversions
+[55.009s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/include/pcl_conversions/pcl_conversions
+[55.009s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/include/pcl_conversions/pcl_conversions/pcl_conversions.h
+[55.011s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/ament_index/resource_index/package_run_dependencies/pcl_conversions
+[55.012s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/ament_index/resource_index/parent_prefix_path/pcl_conversions
+[55.013s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/pcl_conversions/environment/ament_prefix_path.sh
+[55.014s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/pcl_conversions/environment/ament_prefix_path.dsv
+[55.015s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/pcl_conversions/environment/path.sh
+[55.016s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/pcl_conversions/environment/path.dsv
+[55.016s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/pcl_conversions/local_setup.bash
+[55.017s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/pcl_conversions/local_setup.sh
+[55.017s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/pcl_conversions/local_setup.zsh
+[55.017s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/pcl_conversions/local_setup.dsv
+[55.018s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/pcl_conversions/package.dsv
+[55.018s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/ament_index/resource_index/packages/pcl_conversions
+[55.019s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/ament_cmake_export_include_directories-extras.cmake
+[55.019s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/ament_cmake_export_dependencies-extras.cmake
+[55.019s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/pcl_conversionsConfig.cmake
+[55.020s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/pcl_conversionsConfig-version.cmake
+[55.020s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/pcl_conversions/package.xml
+[55.028s] Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_conversions' returned '0': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_conversions

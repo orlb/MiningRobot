@@ -1,0 +1,259 @@
+[0.000000] (-) TimerEvent: {}
+[0.000323] (-) JobUnselected: {'identifier': 'ouster_msgs'}
+[0.000668] (-) JobUnselected: {'identifier': 'pcl_conversions'}
+[0.000849] (-) JobUnselected: {'identifier': 'pcl_msgs'}
+[0.000981] (-) JobUnselected: {'identifier': 'pcl_ros'}
+[0.001065] (-) JobUnselected: {'identifier': 'perception_pcl'}
+[0.001205] (-) JobUnselected: {'identifier': 'ros2_ouster'}
+[0.001393] (aurora_core) JobQueued: {'identifier': 'aurora_core', 'dependencies': OrderedDict([('ouster_msgs', '/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs'), ('pcl_msgs', '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs'), ('pcl_conversions', '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions'), ('ros2_ouster', '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster')])}
+[0.001545] (aurora_core) JobStarted: {'identifier': 'aurora_core'}
+[0.098943] (-) TimerEvent: {}
+[0.174103] (aurora_core) JobProgress: {'identifier': 'aurora_core', 'progress': 'cmake'}
+[0.175550] (aurora_core) JobProgress: {'identifier': 'aurora_core', 'progress': 'build'}
+[0.176970] (aurora_core) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core', '--', '-j4', '-l4'], 'cwd': '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core', 'env': OrderedDict([('SHELL', '/bin/bash'), ('ROS_VERSION', '2'), ('WINDOWID', '1'), ('COLORTERM', 'truecolor'), ('XDG_CONFIG_DIRS', '/home/brown/.config/kdedefaults:/etc/xdg'), ('KGLOBALACCELD_PLATFORM', 'org.kde.kwin'), ('TERM_PROGRAM_VERSION', '3.3a'), ('TMUX', '/tmp/tmux-1000/default,1806,0'), ('PKG_CONFIG_PATH', '/opt/ros/humble/lib/pkgconfig'), ('ROS_PYTHON_VERSION', '3'), ('LANGUAGE', ''), ('SHELL_SESSION_ID', 'adab33755f16428db603933a933b68e7'), ('MEMORY_PRESSURE_WRITE', 'c29tZSAyMDAwMDAgMjAwMDAwMAA='), ('XCURSOR_SIZE', '24'), ('EDITOR', '/usr/bin/nvim'), ('XDG_SEAT', 'seat0'), ('PWD', '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core'), ('LOGNAME', 'brown'), ('XDG_SESSION_TYPE', 'wayland'), ('SYSTEMD_EXEC_PID', '506'), ('XAUTHORITY', '/run/user/1000/xauth_qwjjoz'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/brown'), ('LANG', 'C.UTF-8'), ('XDG_CURRENT_DESKTOP', 'KDE'), ('KONSOLE_DBUS_SERVICE', ':1.86'), ('MEMORY_PRESSURE_WATCH', '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/plasma-kwin_wayland.service/memory.pressure'), ('WAYLAND_DISPLAY', 'wayland-0'), ('KONSOLE_DBUS_SESSION', '/Sessions/2'), ('PROFILEHOME', ''), ('AMENT_PREFIX_PATH', '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/opt/ros/humble'), ('CMAKE_PREFIX_PATH', '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble'), ('COLCON_PREFIX_PATH', '/home/brown/Projects/MiningRobot/ros2_workspace/install:/opt/ros/humble'), ('INVOCATION_ID', '0451ff8a5b7f45339296dc187b8cbfb5'), ('KONSOLE_VERSION', '230801'), ('MANAGERPID', '465'), ('KDE_SESSION_UID', '1000'), ('XDG_ACTIVATION_TOKEN', 'kwin-2'), ('XDG_SESSION_CLASS', 'user'), ('PYTHONPATH', '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib/python3.11/site-packages:/home/brown/.cache/yay/ros2-humble/src/install/lib/python3.11/dist-packages:/opt/ros/humble/lib/python3.11/site-packages'), ('COLCON', '1'), ('TERM', 'xterm-256color'), ('USER', 'brown'), ('TMUX_PANE', '%6'), ('CUDA_PATH', '/opt/cuda'), ('COLORFGBG', '15;0'), ('PLASMA_USE_QT_SCALING', '1'), ('KDE_SESSION_VERSION', '5'), ('QT_WAYLAND_FORCE_DPI', '96'), ('DISPLAY', ':0'), ('SHLVL', '2'), ('XDG_VTNR', '1'), ('XDG_SESSION_ID', '1'), ('LD_LIBRARY_PATH', '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('ROS_LOCALHOST_ONLY', '0'), ('DEBUGINFOD_URLS', 'https://debuginfod.archlinux.org'), ('QT_AUTO_SCREEN_SCALE_FACTOR', '0'), ('JOURNAL_STREAM', '8:14885'), ('XCURSOR_THEME', 'breeze_cursors'), ('XDG_DATA_DIRS', '/home/brown/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/'), ('KDE_FULL_SESSION', 'true'), ('QSG_RENDER_LOOP', 'basic'), ('PATH', '/opt/ros/humble/bin:/home/brown/.local/bin:/home/brown/.local/bin:/home/brown/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/opt/cuda/bin:/opt/cuda/nsight_compute:/opt/cuda/nsight_systems/bin:/var/lib/flatpak/exports/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/opt/cuda/bin:/opt/cuda/nsight_compute:/opt/cuda/nsight_systems/bin'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('KDE_APPLICATIONS_AS_SCOPE', '1'), ('MAIL', '/var/spool/mail/brown'), ('ROS_DISTRO', 'humble'), ('OLDPWD', '/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core'), ('TERM_PROGRAM', 'tmux'), ('KONSOLE_DBUS_WINDOW', '/Windows/1'), ('_', '/usr/bin/env')]), 'shell': False}
+[0.199098] (-) TimerEvent: {}
+[0.224108] (aurora_core) StdoutLine: {'line': b'-- Found ament_cmake: 1.3.5 (/opt/ros/humble/share/ament_cmake/cmake)\n'}
+[0.299194] (-) TimerEvent: {}
+[0.399670] (-) TimerEvent: {}
+[0.500043] (-) TimerEvent: {}
+[0.575177] (aurora_core) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.12.8 (/opt/ros/humble/share/ament_lint_auto/cmake)\n'}
+[0.600149] (-) TimerEvent: {}
+[0.700510] (-) TimerEvent: {}
+[0.713828] (aurora_core) StdoutLine: {'line': b'-- Found rclcpp: 16.0.6 (/opt/ros/humble/share/rclcpp/cmake)\n'}
+[0.768587] (aurora_core) StdoutLine: {'line': b'-- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)\n'}
+[0.772825] (aurora_core) StdoutLine: {'line': b'-- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)\n'}
+[0.782792] (aurora_core) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)\n'}
+[0.800611] (-) TimerEvent: {}
+[0.802293] (aurora_core) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.831198] (aurora_core) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.900736] (-) TimerEvent: {}
+[0.935260] (aurora_core) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 6.1.1 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)\n'}
+[0.937691] (aurora_core) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 6.2.4 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)\n'}
+[1.000866] (-) TimerEvent: {}
+[1.079322] (aurora_core) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[1.100984] (-) TimerEvent: {}
+[1.201354] (-) TimerEvent: {}
+[1.301686] (-) TimerEvent: {}
+[1.368689] (aurora_core) StdoutLine: {'line': b'-- Found ros2_ouster: 0.5.0 (/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake)\n'}
+[1.401810] (-) TimerEvent: {}
+[1.502182] (-) TimerEvent: {}
+[1.602534] (-) TimerEvent: {}
+[1.702911] (-) TimerEvent: {}
+[1.803315] (-) TimerEvent: {}
+[1.903694] (-) TimerEvent: {}
+[2.004058] (-) TimerEvent: {}
+[2.104430] (-) TimerEvent: {}
+[2.204815] (-) TimerEvent: {}
+[2.305196] (-) TimerEvent: {}
+[2.405564] (-) TimerEvent: {}
+[2.471281] (aurora_core) StdoutLine: {'line': b'-- Found eigen3_cmake_module: 0.1.1 (/opt/ros/humble/share/eigen3_cmake_module/cmake)\n'}
+[2.473480] (aurora_core) StdoutLine: {'line': b'-- Ensuring Eigen3 include directory is part of orocos-kdl CMake target\n'}
+[2.505678] (-) TimerEvent: {}
+[2.606030] (-) TimerEvent: {}
+[2.706421] (-) TimerEvent: {}
+[2.722049] (aurora_core) StderrLine: {'line': b'\x1b[33mCMake Warning (dev) at /usr/share/pcl-1.13/PCLConfig.cmake:143 (find_package):\n'}
+[2.722362] (aurora_core) StderrLine: {'line': b'  Policy CMP0144 is not set: find_package uses upper-case <PACKAGENAME>_ROOT\n'}
+[2.722538] (aurora_core) StderrLine: {'line': b'  variables.  Run "cmake --help-policy CMP0144" for policy details.  Use the\n'}
+[2.722701] (aurora_core) StderrLine: {'line': b'  cmake_policy command to set the policy and suppress this warning.\n'}
+[2.722862] (aurora_core) StderrLine: {'line': b'\n'}
+[2.723024] (aurora_core) StderrLine: {'line': b'  CMake variable EIGEN_ROOT is set to:\n'}
+[2.723186] (aurora_core) StderrLine: {'line': b'\n'}
+[2.723345] (aurora_core) StderrLine: {'line': b'    /usr/include/eigen3\n'}
+[2.723507] (aurora_core) StderrLine: {'line': b'\n'}
+[2.723667] (aurora_core) StderrLine: {'line': b'  For compatibility, find_package is ignoring the variable, but code in a\n'}
+[2.723827] (aurora_core) StderrLine: {'line': b'  .cmake module might still use it.\n'}
+[2.723985] (aurora_core) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[2.724125] (aurora_core) StderrLine: {'line': b'  /usr/share/pcl-1.13/PCLConfig.cmake:296 (find_eigen)\n'}
+[2.724246] (aurora_core) StderrLine: {'line': b'  /usr/share/pcl-1.13/PCLConfig.cmake:549 (find_external_library)\n'}
+[2.724354] (aurora_core) StderrLine: {'line': b'  /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)\n'}
+[2.724457] (aurora_core) StderrLine: {'line': b'  /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/pcl_conversionsConfig.cmake:41 (include)\n'}
+[2.724559] (aurora_core) StderrLine: {'line': b'  /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)\n'}
+[2.724759] (aurora_core) StderrLine: {'line': b'  /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ros2_ousterConfig.cmake:41 (include)\n'}
+[2.724919] (aurora_core) StderrLine: {'line': b'  CMakeLists.txt:29 (find_package)\n'}
+[2.725077] (aurora_core) StderrLine: {'line': b'This warning is for project developers.  Use -Wno-dev to suppress it.\n'}
+[2.725236] (aurora_core) StderrLine: {'line': b'\x1b[0m\n'}
+[2.729201] (aurora_core) StdoutLine: {'line': b'-- Eigen found (include: /usr/include/eigen3, version: 3.4.0)\n'}
+[2.749168] (aurora_core) StderrLine: {'line': b'\x1b[33mCMake Warning (dev) at /usr/share/pcl-1.13/Modules/FindFLANN.cmake:45 (find_package):\n'}
+[2.749465] (aurora_core) StderrLine: {'line': b'  Policy CMP0144 is not set: find_package uses upper-case <PACKAGENAME>_ROOT\n'}
+[2.749631] (aurora_core) StderrLine: {'line': b'  variables.  Run "cmake --help-policy CMP0144" for policy details.  Use the\n'}
+[2.749795] (aurora_core) StderrLine: {'line': b'  cmake_policy command to set the policy and suppress this warning.\n'}
+[2.749957] (aurora_core) StderrLine: {'line': b'\n'}
+[2.750117] (aurora_core) StderrLine: {'line': b'  CMake variable FLANN_ROOT is set to:\n'}
+[2.750279] (aurora_core) StderrLine: {'line': b'\n'}
+[2.750474] (aurora_core) StderrLine: {'line': b'    /usr\n'}
+[2.750634] (aurora_core) StderrLine: {'line': b'\n'}
+[2.750793] (aurora_core) StderrLine: {'line': b'  For compatibility, find_package is ignoring the variable, but code in a\n'}
+[2.750961] (aurora_core) StderrLine: {'line': b'  .cmake module might still use it.\n'}
+[2.751118] (aurora_core) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[2.751276] (aurora_core) StderrLine: {'line': b'  /usr/share/pcl-1.13/PCLConfig.cmake:253 (find_package)\n'}
+[2.751451] (aurora_core) StderrLine: {'line': b'  /usr/share/pcl-1.13/PCLConfig.cmake:298 (find_flann)\n'}
+[2.751607] (aurora_core) StderrLine: {'line': b'  /usr/share/pcl-1.13/PCLConfig.cmake:549 (find_external_library)\n'}
+[2.751766] (aurora_core) StderrLine: {'line': b'  /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)\n'}
+[2.751928] (aurora_core) StderrLine: {'line': b'  /home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/pcl_conversionsConfig.cmake:41 (include)\n'}
+[2.752088] (aurora_core) StderrLine: {'line': b'  /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)\n'}
+[2.752248] (aurora_core) StderrLine: {'line': b'  /home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ros2_ousterConfig.cmake:41 (include)\n'}
+[2.752406] (aurora_core) StderrLine: {'line': b'  CMakeLists.txt:29 (find_package)\n'}
+[2.752565] (aurora_core) StderrLine: {'line': b'This warning is for project developers.  Use -Wno-dev to suppress it.\n'}
+[2.752722] (aurora_core) StderrLine: {'line': b'\x1b[0m\n'}
+[2.752878] (aurora_core) StdoutLine: {'line': b'-- Found flann version 1.9.2\n'}
+[2.806558] (-) TimerEvent: {}
+[2.906982] (-) TimerEvent: {}
+[3.007424] (-) TimerEvent: {}
+[3.107828] (-) TimerEvent: {}
+[3.208235] (-) TimerEvent: {}
+[3.308644] (-) TimerEvent: {}
+[3.409077] (-) TimerEvent: {}
+[3.509509] (-) TimerEvent: {}
+[3.609944] (-) TimerEvent: {}
+[3.710379] (-) TimerEvent: {}
+[3.810814] (-) TimerEvent: {}
+[3.911257] (-) TimerEvent: {}
+[4.011709] (-) TimerEvent: {}
+[4.112091] (-) TimerEvent: {}
+[4.212452] (-) TimerEvent: {}
+[4.312824] (-) TimerEvent: {}
+[4.413248] (-) TimerEvent: {}
+[4.513621] (-) TimerEvent: {}
+[4.614021] (-) TimerEvent: {}
+[4.714403] (-) TimerEvent: {}
+[4.814781] (-) TimerEvent: {}
+[4.915151] (-) TimerEvent: {}
+[5.015528] (-) TimerEvent: {}
+[5.115931] (-) TimerEvent: {}
+[5.216389] (-) TimerEvent: {}
+[5.316759] (-) TimerEvent: {}
+[5.417123] (-) TimerEvent: {}
+[5.517479] (-) TimerEvent: {}
+[5.617861] (-) TimerEvent: {}
+[5.718276] (-) TimerEvent: {}
+[5.818668] (-) TimerEvent: {}
+[5.919168] (-) TimerEvent: {}
+[6.019649] (-) TimerEvent: {}
+[6.120033] (-) TimerEvent: {}
+[6.126557] (aurora_core) StdoutLine: {'line': b'-- Eigen found (include: /usr/include/eigen3, version: 3.4.0)\n'}
+[6.220160] (-) TimerEvent: {}
+[6.320569] (-) TimerEvent: {}
+[6.420960] (-) TimerEvent: {}
+[6.521361] (-) TimerEvent: {}
+[6.621723] (-) TimerEvent: {}
+[6.659597] (aurora_core) StdoutLine: {'line': b'-- Found Qhull version 8.0.2\n'}
+[6.721841] (-) TimerEvent: {}
+[6.822219] (-) TimerEvent: {}
+[6.922613] (-) TimerEvent: {}
+[7.023009] (-) TimerEvent: {}
+[7.123380] (-) TimerEvent: {}
+[7.223788] (-) TimerEvent: {}
+[7.324128] (-) TimerEvent: {}
+[7.424489] (-) TimerEvent: {}
+[7.524855] (-) TimerEvent: {}
+[7.625221] (-) TimerEvent: {}
+[7.725611] (-) TimerEvent: {}
+[7.825990] (-) TimerEvent: {}
+[7.864668] (aurora_core) StdoutLine: {'line': b"-- Added test 'cppcheck' to perform static code analysis on C / C++ code\n"}
+[7.865272] (aurora_core) StdoutLine: {'line': b'-- Configured cppcheck include dirs: /home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core/include\n'}
+[7.865417] (aurora_core) StdoutLine: {'line': b'-- Configured cppcheck exclude dirs and/or files: \n'}
+[7.872713] (aurora_core) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[7.893568] (aurora_core) StdoutLine: {'line': b"-- Added test 'uncrustify' to check C / C++ code style\n"}
+[7.893753] (aurora_core) StdoutLine: {'line': b'-- Configured uncrustify additional arguments: \n'}
+[7.896390] (aurora_core) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[7.897759] (aurora_core) StdoutLine: {'line': b'-- Configuring done (7.7s)\n'}
+[7.926109] (-) TimerEvent: {}
+[7.977009] (aurora_core) StdoutLine: {'line': b'-- Generating done (0.1s)\n'}
+[7.981338] (aurora_core) StdoutLine: {'line': b'-- Build files have been written to: /home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core\n'}
+[8.026263] (-) TimerEvent: {}
+[8.074174] (aurora_core) StdoutLine: {'line': b'[ 50%] \x1b[32mBuilding CXX object CMakeFiles/aurora_node_core.dir/src/aurora_node_core.cpp.o\x1b[0m\n'}
+[8.126384] (-) TimerEvent: {}
+[8.226818] (-) TimerEvent: {}
+[8.327227] (-) TimerEvent: {}
+[8.427622] (-) TimerEvent: {}
+[8.528026] (-) TimerEvent: {}
+[8.628438] (-) TimerEvent: {}
+[8.728873] (-) TimerEvent: {}
+[8.829317] (-) TimerEvent: {}
+[8.929754] (-) TimerEvent: {}
+[9.030205] (-) TimerEvent: {}
+[9.130659] (-) TimerEvent: {}
+[9.231085] (-) TimerEvent: {}
+[9.331514] (-) TimerEvent: {}
+[9.431929] (-) TimerEvent: {}
+[9.532394] (-) TimerEvent: {}
+[9.632809] (-) TimerEvent: {}
+[9.733220] (-) TimerEvent: {}
+[9.833634] (-) TimerEvent: {}
+[9.934067] (-) TimerEvent: {}
+[10.034511] (-) TimerEvent: {}
+[10.134968] (-) TimerEvent: {}
+[10.235404] (-) TimerEvent: {}
+[10.335834] (-) TimerEvent: {}
+[10.436269] (-) TimerEvent: {}
+[10.536685] (-) TimerEvent: {}
+[10.637103] (-) TimerEvent: {}
+[10.737545] (-) TimerEvent: {}
+[10.837988] (-) TimerEvent: {}
+[10.938428] (-) TimerEvent: {}
+[11.038862] (-) TimerEvent: {}
+[11.139286] (-) TimerEvent: {}
+[11.239681] (-) TimerEvent: {}
+[11.340086] (-) TimerEvent: {}
+[11.440495] (-) TimerEvent: {}
+[11.540897] (-) TimerEvent: {}
+[11.641335] (-) TimerEvent: {}
+[11.741738] (-) TimerEvent: {}
+[11.842165] (-) TimerEvent: {}
+[11.942584] (-) TimerEvent: {}
+[12.042967] (-) TimerEvent: {}
+[12.143392] (-) TimerEvent: {}
+[12.244039] (-) TimerEvent: {}
+[12.344443] (-) TimerEvent: {}
+[12.444811] (-) TimerEvent: {}
+[12.545186] (-) TimerEvent: {}
+[12.645570] (-) TimerEvent: {}
+[12.745986] (-) TimerEvent: {}
+[12.757783] (aurora_core) StdoutLine: {'line': b'[100%] \x1b[32m\x1b[1mLinking CXX executable aurora_node_core\x1b[0m\n'}
+[12.846106] (-) TimerEvent: {}
+[12.946498] (-) TimerEvent: {}
+[13.046858] (-) TimerEvent: {}
+[13.147226] (-) TimerEvent: {}
+[13.247610] (-) TimerEvent: {}
+[13.348197] (-) TimerEvent: {}
+[13.448701] (-) TimerEvent: {}
+[13.549086] (-) TimerEvent: {}
+[13.649516] (-) TimerEvent: {}
+[13.749918] (-) TimerEvent: {}
+[13.850309] (-) TimerEvent: {}
+[13.950717] (-) TimerEvent: {}
+[14.051251] (-) TimerEvent: {}
+[14.151716] (-) TimerEvent: {}
+[14.252120] (-) TimerEvent: {}
+[14.352567] (-) TimerEvent: {}
+[14.452992] (-) TimerEvent: {}
+[14.530056] (aurora_core) StdoutLine: {'line': b'[100%] Built target aurora_node_core\n'}
+[14.545889] (aurora_core) CommandEnded: {'returncode': 0}
+[14.553146] (-) TimerEvent: {}
+[14.625881] (aurora_core) JobProgress: {'identifier': 'aurora_core', 'progress': 'install'}
+[14.637795] (aurora_core) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core'], 'cwd': '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core', 'env': OrderedDict([('SHELL', '/bin/bash'), ('ROS_VERSION', '2'), ('WINDOWID', '1'), ('COLORTERM', 'truecolor'), ('XDG_CONFIG_DIRS', '/home/brown/.config/kdedefaults:/etc/xdg'), ('KGLOBALACCELD_PLATFORM', 'org.kde.kwin'), ('TERM_PROGRAM_VERSION', '3.3a'), ('TMUX', '/tmp/tmux-1000/default,1806,0'), ('PKG_CONFIG_PATH', '/opt/ros/humble/lib/pkgconfig'), ('ROS_PYTHON_VERSION', '3'), ('LANGUAGE', ''), ('SHELL_SESSION_ID', 'adab33755f16428db603933a933b68e7'), ('MEMORY_PRESSURE_WRITE', 'c29tZSAyMDAwMDAgMjAwMDAwMAA='), ('XCURSOR_SIZE', '24'), ('EDITOR', '/usr/bin/nvim'), ('XDG_SEAT', 'seat0'), ('PWD', '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core'), ('LOGNAME', 'brown'), ('XDG_SESSION_TYPE', 'wayland'), ('SYSTEMD_EXEC_PID', '506'), ('XAUTHORITY', '/run/user/1000/xauth_qwjjoz'), ('MOTD_SHOWN', 'pam'), ('HOME', '/home/brown'), ('LANG', 'C.UTF-8'), ('XDG_CURRENT_DESKTOP', 'KDE'), ('KONSOLE_DBUS_SERVICE', ':1.86'), ('MEMORY_PRESSURE_WATCH', '/sys/fs/cgroup/user.slice/user-1000.slice/user@1000.service/session.slice/plasma-kwin_wayland.service/memory.pressure'), ('WAYLAND_DISPLAY', 'wayland-0'), ('KONSOLE_DBUS_SESSION', '/Sessions/2'), ('PROFILEHOME', ''), ('AMENT_PREFIX_PATH', '/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core:/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/opt/ros/humble'), ('CMAKE_PREFIX_PATH', '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble'), ('COLCON_PREFIX_PATH', '/home/brown/Projects/MiningRobot/ros2_workspace/install:/opt/ros/humble'), ('INVOCATION_ID', '0451ff8a5b7f45339296dc187b8cbfb5'), ('KONSOLE_VERSION', '230801'), ('MANAGERPID', '465'), ('KDE_SESSION_UID', '1000'), ('XDG_ACTIVATION_TOKEN', 'kwin-2'), ('XDG_SESSION_CLASS', 'user'), ('PYTHONPATH', '/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib/python3.11/site-packages:/home/brown/.cache/yay/ros2-humble/src/install/lib/python3.11/dist-packages:/opt/ros/humble/lib/python3.11/site-packages'), ('COLCON', '1'), ('TERM', 'xterm-256color'), ('USER', 'brown'), ('TMUX_PANE', '%6'), ('CUDA_PATH', '/opt/cuda'), ('COLORFGBG', '15;0'), ('PLASMA_USE_QT_SCALING', '1'), ('KDE_SESSION_VERSION', '5'), ('QT_WAYLAND_FORCE_DPI', '96'), ('DISPLAY', ':0'), ('SHLVL', '2'), ('XDG_VTNR', '1'), ('XDG_SESSION_ID', '1'), ('LD_LIBRARY_PATH', '/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('ROS_LOCALHOST_ONLY', '0'), ('DEBUGINFOD_URLS', 'https://debuginfod.archlinux.org'), ('QT_AUTO_SCREEN_SCALE_FACTOR', '0'), ('JOURNAL_STREAM', '8:14885'), ('XCURSOR_THEME', 'breeze_cursors'), ('XDG_DATA_DIRS', '/home/brown/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share/:/usr/share/'), ('KDE_FULL_SESSION', 'true'), ('QSG_RENDER_LOOP', 'basic'), ('PATH', '/opt/ros/humble/bin:/home/brown/.local/bin:/home/brown/.local/bin:/home/brown/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/opt/cuda/bin:/opt/cuda/nsight_compute:/opt/cuda/nsight_systems/bin:/var/lib/flatpak/exports/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/opt/cuda/bin:/opt/cuda/nsight_compute:/opt/cuda/nsight_systems/bin'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus'), ('KDE_APPLICATIONS_AS_SCOPE', '1'), ('MAIL', '/var/spool/mail/brown'), ('ROS_DISTRO', 'humble'), ('OLDPWD', '/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core'), ('TERM_PROGRAM', 'tmux'), ('KONSOLE_DBUS_WINDOW', '/Windows/1'), ('_', '/usr/bin/env')]), 'shell': False}
+[14.647506] (aurora_core) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[14.648435] (aurora_core) StdoutLine: {'line': b'-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/lib/aurora_core/aurora_node_core\n'}
+[14.649865] (aurora_core) StdoutLine: {'line': b'-- Set runtime path of "/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/lib/aurora_core/aurora_node_core" to ""\n'}
+[14.650121] (aurora_core) StdoutLine: {'line': b'-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/ament_index/resource_index/package_run_dependencies/aurora_core\n'}
+[14.650315] (aurora_core) StdoutLine: {'line': b'-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/ament_index/resource_index/parent_prefix_path/aurora_core\n'}
+[14.650569] (aurora_core) StdoutLine: {'line': b'-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/environment/ament_prefix_path.sh\n'}
+[14.650828] (aurora_core) StdoutLine: {'line': b'-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/environment/ament_prefix_path.dsv\n'}
+[14.651057] (aurora_core) StdoutLine: {'line': b'-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/environment/path.sh\n'}
+[14.651251] (aurora_core) StdoutLine: {'line': b'-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/environment/path.dsv\n'}
+[14.651517] (aurora_core) StdoutLine: {'line': b'-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/local_setup.bash\n'}
+[14.651765] (aurora_core) StdoutLine: {'line': b'-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/local_setup.sh\n'}
+[14.651951] (aurora_core) StdoutLine: {'line': b'-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/local_setup.zsh\n'}
+[14.652165] (aurora_core) StdoutLine: {'line': b'-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/local_setup.dsv\n'}
+[14.652373] (aurora_core) StdoutLine: {'line': b'-- Installing: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/package.dsv\n'}
+[14.652656] (aurora_core) StdoutLine: {'line': b'-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/ament_index/resource_index/packages/aurora_core\n'}
+[14.652826] (aurora_core) StdoutLine: {'line': b'-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/cmake/aurora_coreConfig.cmake\n'}
+[14.653003] (aurora_core) StdoutLine: {'line': b'-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/cmake/aurora_coreConfig-version.cmake\n'}
+[14.653159] (-) TimerEvent: {}
+[14.653566] (aurora_core) StdoutLine: {'line': b'-- Up-to-date: /home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core/share/aurora_core/package.xml\n'}
+[14.655027] (aurora_core) CommandEnded: {'returncode': 0}
+[14.753385] (-) TimerEvent: {}
+[14.853730] (-) TimerEvent: {}
+[14.954416] (-) TimerEvent: {}
+[14.981276] (aurora_core) JobEnded: {'identifier': 'aurora_core', 'rc': 0}
+[14.982581] (-) EventReactorShutdown: {}

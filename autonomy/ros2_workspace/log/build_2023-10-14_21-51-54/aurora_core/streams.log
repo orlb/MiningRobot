@@ -1,0 +1,39 @@
+[0.197s] Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core -- -j4 -l4
+[0.327s] [ 50%] [32mBuilding CXX object CMakeFiles/aurora_node_core.dir/src/aurora_node_core.cpp.o[0m
+[5.959s] [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core/src/aurora_node_core.cpp:[m[K In function ‘[01m[Kint[01;32m[K main[m[K(int, char**)[m[K’:
+[5.959s] [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core/src/aurora_node_core.cpp:79:68:[m[K [01;31m[Kerror: [m[K‘[01m[Kemulate_tty[m[K’ was not declared in this scope
+[5.960s]    79 |     auto node = std::make_shared<rclcpp::Node>("aurora_node_core", [01;31m[Kemulate_tty[m[K=True);
+[5.960s]       |                                                                    [01;31m[K^~~~~~~~~~~[m[K
+[5.964s] [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core/src/aurora_node_core.cpp:79:80:[m[K [01;31m[Kerror: [m[K‘[01m[KTrue[m[K’ was not declared in this scope
+[5.964s]    79 |     auto node = std::make_shared<rclcpp::Node>("aurora_node_core", emulate_tty=[01;31m[KTrue[m[K);
+[5.964s]       |                                                                                [01;31m[K^~~~[m[K
+[5.988s] In file included from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/client.hpp:40[m[K,
+[5.988s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/callback_group.hpp:24[m[K,
+[5.988s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/any_executable.hpp:20[m[K,
+[5.988s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/memory_strategy.hpp:25[m[K,
+[5.988s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/memory_strategies.hpp:18[m[K,
+[5.988s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executor_options.hpp:20[m[K,
+[5.988s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executor.hpp:37[m[K,
+[5.988s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors/multi_threaded_executor.hpp:25[m[K,
+[5.988s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/executors.hpp:21[m[K,
+[5.989s]                  from [01m[K/opt/ros/humble/include/rclcpp/rclcpp/rclcpp.hpp:155[m[K,
+[5.989s]                  from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core/src/aurora_node_core.cpp:10[m[K:
+[5.989s] [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core/src/aurora_node_core.cpp:141:5:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[5.989s]   141 |     [01;31m[KRCLCPP_INFO[m[K(node->get_logger(), "Reached bottom");
+[5.989s]       |     [01;31m[K^~~~~~~~~~~[m[K
+[5.989s] [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core/src/aurora_node_core.cpp:141:5:[m[K [01;31m[Kerror: [m[K‘[01m[K<declaration error>[m[K’ is not a template [[01;31m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-fpermissive-fpermissive]8;;[m[K]
+[5.989s]   141 |     [01;31m[KRCLCPP_INFO[m[K(node->get_logger(), "Reached bottom");
+[5.989s]       |     [01;31m[K^~~~~~~~~~~[m[K
+[5.989s] [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core/src/aurora_node_core.cpp:141:5:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[5.990s]   141 |     [01;31m[KRCLCPP_INFO[m[K(node->get_logger(), "Reached bottom");
+[5.990s]       |     [01;31m[K^~~~~~~~~~~[m[K
+[5.990s] [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core/src/aurora_node_core.cpp:141:5:[m[K [01;31m[Kerror: [m[K‘[01m[K<declaration error>[m[K’ is not a template [[01;31m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-fpermissive-fpermissive]8;;[m[K]
+[5.990s]   141 |     [01;31m[KRCLCPP_INFO[m[K(node->get_logger(), "Reached bottom");
+[5.990s]       |     [01;31m[K^~~~~~~~~~~[m[K
+[5.990s] [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core/src/aurora_node_core.cpp:141:5:[m[K [01;31m[Kerror: [m[Ktemplate argument 1 is invalid
+[5.990s]   141 |     [01;31m[KRCLCPP_INFO[m[K(node->get_logger(), "Reached bottom");
+[5.990s]       |     [01;31m[K^~~~~~~~~~~[m[K
+[7.565s] make[2]: *** [CMakeFiles/aurora_node_core.dir/build.make:76: CMakeFiles/aurora_node_core.dir/src/aurora_node_core.cpp.o] Error 1
+[7.566s] make[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/aurora_node_core.dir/all] Error 2
+[7.566s] make: *** [Makefile:146: all] Error 2
+[7.570s] Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core' returned '2': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core -- -j4 -l4

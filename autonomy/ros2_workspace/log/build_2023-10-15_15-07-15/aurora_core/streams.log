@@ -1,0 +1,1197 @@
+[0.403s] Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/aurora_core': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl -DCMAKE_INSTALL_PREFIX=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core
+[0.862s] -- The C compiler identification is GNU 13.2.1
+[1.335s] -- The CXX compiler identification is GNU 13.2.1
+[1.452s] -- Detecting C compiler ABI info
+[1.834s] -- Detecting C compiler ABI info - done
+[1.873s] -- Check for working C compiler: /usr/bin/cc - skipped
+[1.875s] -- Detecting C compile features
+[1.891s] -- Detecting C compile features - done
+[2.006s] -- Detecting CXX compiler ABI info
+[2.413s] -- Detecting CXX compiler ABI info - done
+[2.456s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[2.458s] -- Detecting CXX compile features
+[2.461s] -- Detecting CXX compile features - done
+[2.501s] -- Found ament_cmake: 1.3.5 (/opt/ros/humble/share/ament_cmake/cmake)
+[6.332s] -- Found Python3: /usr/bin/python3.11 (found version "3.11.5") found components: Interpreter 
+[7.073s] -- Found ament_lint_auto: 0.12.8 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[7.667s] -- Found rclcpp: 16.0.6 (/opt/ros/humble/share/rclcpp/cmake)
+[8.138s] -- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[8.182s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[8.341s] -- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[8.477s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[8.644s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[9.268s] -- Found rmw_implementation_cmake: 6.1.1 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[9.285s] -- Found rmw_fastrtps_cpp: 6.2.4 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[10.176s] -- Found OpenSSL: /usr/lib/libcrypto.so (found version "3.1.3")  
+[10.382s] -- Found FastRTPS: /opt/ros/humble/include  
+[10.763s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[10.887s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[11.407s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[11.411s] -- Found Threads: TRUE  
+[13.102s] -- Found ros2_ouster: 0.5.0 (/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake)
+[16.799s] -- Found eigen3_cmake_module: 0.1.1 (/opt/ros/humble/share/eigen3_cmake_module/cmake)
+[16.803s] -- Found Eigen3: TRUE (found version "3.4.0") 
+[16.804s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[17.515s] [33mCMake Warning (dev) at /usr/share/pcl-1.13/PCLConfig.cmake:143 (find_package):
+[17.515s]   Policy CMP0144 is not set: find_package uses upper-case <PACKAGENAME>_ROOT
+[17.515s]   variables.  Run "cmake --help-policy CMP0144" for policy details.  Use the
+[17.516s]   cmake_policy command to set the policy and suppress this warning.
+[17.516s] 
+[17.516s]   CMake variable EIGEN_ROOT is set to:
+[17.516s] 
+[17.516s]     /usr/include/eigen3
+[17.517s] 
+[17.517s]   For compatibility, find_package is ignoring the variable, but code in a
+[17.517s]   .cmake module might still use it.
+[17.517s] Call Stack (most recent call first):
+[17.517s]   /usr/share/pcl-1.13/PCLConfig.cmake:296 (find_eigen)
+[17.518s]   /usr/share/pcl-1.13/PCLConfig.cmake:549 (find_external_library)
+[17.518s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)
+[17.518s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/pcl_conversionsConfig.cmake:41 (include)
+[17.518s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)
+[17.519s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ros2_ousterConfig.cmake:41 (include)
+[17.519s]   CMakeLists.txt:29 (find_package)
+[17.519s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[17.520s] [0m
+[17.529s] -- Checking for module 'eigen3'
+[17.598s] --   Found eigen3, version 3.4.0
+[17.703s] -- Found Eigen: /usr/include/eigen3 (Required is at least version "3.3") 
+[17.703s] -- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+[17.826s] [33mCMake Warning (dev) at /usr/share/pcl-1.13/Modules/FindFLANN.cmake:45 (find_package):
+[17.826s]   Policy CMP0144 is not set: find_package uses upper-case <PACKAGENAME>_ROOT
+[17.827s]   variables.  Run "cmake --help-policy CMP0144" for policy details.  Use the
+[17.827s]   cmake_policy command to set the policy and suppress this warning.
+[17.827s] 
+[17.827s]   CMake variable FLANN_ROOT is set to:
+[17.827s] 
+[17.827s]     /usr
+[17.828s] 
+[17.828s]   For compatibility, find_package is ignoring the variable, but code in a
+[17.828s]   .cmake module might still use it.
+[17.828s] Call Stack (most recent call first):
+[17.828s]   /usr/share/pcl-1.13/PCLConfig.cmake:253 (find_package)
+[17.828s]   /usr/share/pcl-1.13/PCLConfig.cmake:298 (find_flann)
+[17.829s]   /usr/share/pcl-1.13/PCLConfig.cmake:549 (find_external_library)
+[17.829s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)
+[17.829s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake/pcl_conversionsConfig.cmake:41 (include)
+[17.830s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ament_cmake_export_dependencies-extras.cmake:21 (find_package)
+[17.830s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster/share/ros2_ouster/cmake/ros2_ousterConfig.cmake:41 (include)
+[17.830s]   CMakeLists.txt:29 (find_package)
+[17.830s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[17.830s] [0m
+[17.838s] -- Found flann version 1.9.2
+[23.057s] -- Found MPI_C: /usr/lib/libmpi.so (found version "3.1") 
+[34.507s] -- Found MPI_CXX: /usr/lib/libmpi_cxx.so (found version "3.1") 
+[34.507s] -- Found MPI: TRUE (found version "3.1")  
+[41.401s] -- Found Pcap: /usr/lib/libpcap.so  
+[41.756s] -- Found ZLIB: /usr/lib/libz.so (found version "1.3")  
+[42.188s] -- Found PNG: /usr/lib/libpng.so (found version "1.6.40") 
+[44.702s] -- Checking for module 'libusb-1.0'
+[44.760s] --   Found libusb-1.0, version 1.0.26
+[44.906s] -- Found libusb: /usr/lib/libusb-1.0.so  
+[44.962s] -- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+[46.804s] -- Found Qhull version 8.0.2
+[47.939s] -- Found PCL_COMMON: /usr/lib/libpcl_common.so  
+[47.951s] -- Found PCL_KDTREE: /usr/lib/libpcl_kdtree.so  
+[47.955s] -- Found PCL_OCTREE: /usr/lib/libpcl_octree.so  
+[47.960s] -- Found PCL_SEARCH: /usr/lib/libpcl_search.so  
+[47.970s] -- Found PCL_SAMPLE_CONSENSUS: /usr/lib/libpcl_sample_consensus.so  
+[47.973s] -- Found PCL_FILTERS: /usr/lib/libpcl_filters.so  
+[47.975s] -- Found PCL_2D: /usr/include/pcl-1.13  
+[47.978s] -- Found PCL_GEOMETRY: /usr/include/pcl-1.13  
+[47.987s] -- Found PCL_IO: /usr/lib/libpcl_io.so  
+[47.993s] -- Found PCL_FEATURES: /usr/lib/libpcl_features.so  
+[48.005s] -- Found PCL_ML: /usr/lib/libpcl_ml.so  
+[48.017s] -- Found PCL_SEGMENTATION: /usr/lib/libpcl_segmentation.so  
+[48.024s] -- Found PCL_VISUALIZATION: /usr/lib/libpcl_visualization.so  
+[48.040s] -- Found PCL_SURFACE: /usr/lib/libpcl_surface.so  
+[48.044s] -- Found PCL_REGISTRATION: /usr/lib/libpcl_registration.so  
+[48.050s] -- Found PCL_KEYPOINTS: /usr/lib/libpcl_keypoints.so  
+[48.056s] -- Found PCL_TRACKING: /usr/lib/libpcl_tracking.so  
+[48.060s] -- Found PCL_RECOGNITION: /usr/lib/libpcl_recognition.so  
+[48.071s] -- Found PCL_STEREO: /usr/lib/libpcl_stereo.so  
+[48.076s] -- Found PCL_OUTOFCORE: /usr/lib/libpcl_outofcore.so  
+[48.091s] -- Found PCL_PEOPLE: /usr/lib/libpcl_people.so  
+[51.041s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_cppcheck/cmake/ament_cmake_cppcheck_lint_hook.cmake:17 (file):
+[51.041s]   Cyclic recursion detected while globbing for '*.c':
+[51.041s] 
+[51.041s] 
+[51.041s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[51.041s] 
+[51.042s] 
+[51.042s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[51.042s] 
+[51.042s] 
+[51.042s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[51.042s] Call Stack (most recent call first):
+[51.043s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[51.043s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[51.043s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[51.043s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[51.043s]   CMakeLists.txt:38 (ament_package)
+[51.043s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[51.044s] [0m
+[51.044s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_cppcheck/cmake/ament_cmake_cppcheck_lint_hook.cmake:17 (file):
+[51.044s]   Cyclic recursion detected while globbing for '*.c':
+[51.044s] 
+[51.044s] 
+[51.045s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[51.045s] 
+[51.045s] 
+[51.045s] 
+[51.045s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[51.046s] Call Stack (most recent call first):
+[51.046s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[51.046s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[51.046s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[51.046s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[51.046s]   CMakeLists.txt:38 (ament_package)
+[51.047s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[51.047s] [0m
+[51.290s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_cppcheck/cmake/ament_cmake_cppcheck_lint_hook.cmake:17 (file):
+[51.290s]   Cyclic recursion detected while globbing for '*.cc':
+[51.290s] 
+[51.290s] 
+[51.291s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[51.291s] 
+[51.291s] 
+[51.291s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[51.291s] 
+[51.292s] 
+[51.292s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[51.292s] Call Stack (most recent call first):
+[51.292s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[51.292s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[51.297s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[51.297s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[51.298s]   CMakeLists.txt:38 (ament_package)
+[51.298s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[51.298s] [0m
+[51.298s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_cppcheck/cmake/ament_cmake_cppcheck_lint_hook.cmake:17 (file):
+[51.299s]   Cyclic recursion detected while globbing for '*.cc':
+[51.299s] 
+[51.299s] 
+[51.299s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[51.299s] 
+[51.300s] 
+[51.300s] 
+[51.300s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[51.301s] Call Stack (most recent call first):
+[51.301s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[51.301s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[51.301s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[51.303s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[51.303s]   CMakeLists.txt:38 (ament_package)
+[51.304s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[51.304s] [0m
+[51.534s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_cppcheck/cmake/ament_cmake_cppcheck_lint_hook.cmake:17 (file):
+[51.534s]   Cyclic recursion detected while globbing for '*.cpp':
+[51.534s] 
+[51.534s] 
+[51.534s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[51.534s] 
+[51.535s] 
+[51.535s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[51.535s] 
+[51.535s] 
+[51.535s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[51.535s] Call Stack (most recent call first):
+[51.536s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[51.537s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[51.537s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[51.537s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[51.538s]   CMakeLists.txt:38 (ament_package)
+[51.538s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[51.538s] [0m
+[51.538s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_cppcheck/cmake/ament_cmake_cppcheck_lint_hook.cmake:17 (file):
+[51.539s]   Cyclic recursion detected while globbing for '*.cpp':
+[51.539s] 
+[51.539s] 
+[51.539s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[51.539s] 
+[51.539s] 
+[51.540s] 
+[51.540s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[51.540s] Call Stack (most recent call first):
+[51.540s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[51.540s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[51.540s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[51.541s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[51.541s]   CMakeLists.txt:38 (ament_package)
+[51.541s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[51.542s] [0m
+[51.783s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_cppcheck/cmake/ament_cmake_cppcheck_lint_hook.cmake:17 (file):
+[51.783s]   Cyclic recursion detected while globbing for '*.cxx':
+[51.784s] 
+[51.784s] 
+[51.784s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[51.784s] 
+[51.785s] 
+[51.785s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[51.785s] 
+[51.789s] 
+[51.790s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[51.790s] Call Stack (most recent call first):
+[51.791s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[51.791s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[51.791s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[51.791s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[51.792s]   CMakeLists.txt:38 (ament_package)
+[51.792s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[51.792s] [0m
+[51.792s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_cppcheck/cmake/ament_cmake_cppcheck_lint_hook.cmake:17 (file):
+[51.793s]   Cyclic recursion detected while globbing for '*.cxx':
+[51.794s] 
+[51.794s] 
+[51.795s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[51.795s] 
+[51.795s] 
+[51.795s] 
+[51.795s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[51.795s] Call Stack (most recent call first):
+[51.796s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[51.796s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[51.796s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[51.796s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[51.796s]   CMakeLists.txt:38 (ament_package)
+[51.796s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[51.796s] [0m
+[52.032s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_cppcheck/cmake/ament_cmake_cppcheck_lint_hook.cmake:17 (file):
+[52.032s]   Cyclic recursion detected while globbing for '*.h':
+[52.032s] 
+[52.032s] 
+[52.033s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[52.033s] 
+[52.033s] 
+[52.033s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[52.034s] 
+[52.034s] 
+[52.034s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[52.034s] Call Stack (most recent call first):
+[52.034s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[52.035s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[52.035s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[52.035s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[52.035s]   CMakeLists.txt:38 (ament_package)
+[52.036s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[52.036s] [0m
+[52.036s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_cppcheck/cmake/ament_cmake_cppcheck_lint_hook.cmake:17 (file):
+[52.036s]   Cyclic recursion detected while globbing for '*.h':
+[52.036s] 
+[52.037s] 
+[52.037s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[52.037s] 
+[52.037s] 
+[52.037s] 
+[52.037s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[52.038s] Call Stack (most recent call first):
+[52.038s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[52.038s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[52.038s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[52.039s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[52.039s]   CMakeLists.txt:38 (ament_package)
+[52.039s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[52.039s] [0m
+[52.374s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_cppcheck/cmake/ament_cmake_cppcheck_lint_hook.cmake:17 (file):
+[52.375s]   Cyclic recursion detected while globbing for '*.hh':
+[52.375s] 
+[52.375s] 
+[52.375s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[52.376s] 
+[52.376s] 
+[52.376s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[52.376s] 
+[52.376s] 
+[52.377s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[52.378s] Call Stack (most recent call first):
+[52.379s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[52.380s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[52.380s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[52.380s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[52.380s]   CMakeLists.txt:38 (ament_package)
+[52.380s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[52.380s] [0m
+[52.380s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_cppcheck/cmake/ament_cmake_cppcheck_lint_hook.cmake:17 (file):
+[52.381s]   Cyclic recursion detected while globbing for '*.hh':
+[52.381s] 
+[52.381s] 
+[52.381s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[52.381s] 
+[52.381s] 
+[52.381s] 
+[52.382s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[52.382s] Call Stack (most recent call first):
+[52.383s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[52.383s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[52.384s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[52.385s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[52.385s]   CMakeLists.txt:38 (ament_package)
+[52.385s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[52.385s] [0m
+[52.656s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_cppcheck/cmake/ament_cmake_cppcheck_lint_hook.cmake:17 (file):
+[52.657s]   Cyclic recursion detected while globbing for '*.hpp':
+[52.657s] 
+[52.657s] 
+[52.658s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[52.658s] 
+[52.658s] 
+[52.658s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[52.659s] 
+[52.659s] 
+[52.659s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[52.659s] Call Stack (most recent call first):
+[52.659s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[52.660s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[52.660s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[52.660s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[52.660s]   CMakeLists.txt:38 (ament_package)
+[52.660s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[52.661s] [0m
+[52.661s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_cppcheck/cmake/ament_cmake_cppcheck_lint_hook.cmake:17 (file):
+[52.661s]   Cyclic recursion detected while globbing for '*.hpp':
+[52.663s] 
+[52.664s] 
+[52.664s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[52.664s] 
+[52.664s] 
+[52.664s] 
+[52.665s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[52.665s] Call Stack (most recent call first):
+[52.665s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[52.665s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[52.665s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[52.666s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[52.666s]   CMakeLists.txt:38 (ament_package)
+[52.666s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[52.666s] [0m
+[52.998s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_cppcheck/cmake/ament_cmake_cppcheck_lint_hook.cmake:17 (file):
+[52.998s]   Cyclic recursion detected while globbing for '*.hxx':
+[52.998s] 
+[52.998s] 
+[52.999s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[52.999s] 
+[52.999s] 
+[52.999s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[53.000s] 
+[53.000s] 
+[53.000s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[53.000s] Call Stack (most recent call first):
+[53.007s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[53.007s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[53.007s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[53.007s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[53.008s]   CMakeLists.txt:38 (ament_package)
+[53.008s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[53.008s] [0m
+[53.008s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_cppcheck/cmake/ament_cmake_cppcheck_lint_hook.cmake:17 (file):
+[53.009s]   Cyclic recursion detected while globbing for '*.hxx':
+[53.009s] 
+[53.009s] 
+[53.009s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[53.009s] 
+[53.010s] 
+[53.016s] 
+[53.016s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[53.017s] Call Stack (most recent call first):
+[53.017s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[53.017s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[53.017s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[53.017s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[53.019s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[53.035s]   CMakeLists.txt:38 (ament_package)
+[53.036s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[53.036s] [0m
+[53.036s] -- Configured cppcheck include dirs: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include
+[53.036s] -- Configured cppcheck exclude dirs and/or files: 
+[53.287s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_flake8/cmake/ament_cmake_flake8_lint_hook.cmake:15 (file):
+[53.287s]   Cyclic recursion detected while globbing for '*.py':
+[53.288s] 
+[53.288s] 
+[53.288s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[53.289s] 
+[53.289s] 
+[53.290s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[53.291s] 
+[53.291s] 
+[53.292s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[53.292s] Call Stack (most recent call first):
+[53.293s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[53.293s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[53.295s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[53.297s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[53.298s]   CMakeLists.txt:38 (ament_package)
+[53.298s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[53.299s] [0m
+[53.302s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_flake8/cmake/ament_cmake_flake8_lint_hook.cmake:15 (file):
+[53.302s]   Cyclic recursion detected while globbing for '*.py':
+[53.302s] 
+[53.303s] 
+[53.304s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[53.304s] 
+[53.304s] 
+[53.304s] 
+[53.305s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[53.305s] Call Stack (most recent call first):
+[53.305s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[53.305s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[53.305s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[53.306s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[53.306s]   CMakeLists.txt:38 (ament_package)
+[53.315s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[53.315s] [0m
+[53.316s] -- Added test 'flake8' to check Python code syntax and style conventions
+[53.551s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_lint_cmake/cmake/ament_cmake_lint_cmake_lint_hook.cmake:15 (file):
+[53.551s]   Cyclic recursion detected while globbing for 'CMakeLists.txt':
+[53.551s] 
+[53.551s] 
+[53.552s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[53.552s] 
+[53.552s] 
+[53.552s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[53.552s] 
+[53.552s] 
+[53.552s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[53.553s] Call Stack (most recent call first):
+[53.553s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[53.553s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[53.553s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[53.553s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[53.553s]   CMakeLists.txt:38 (ament_package)
+[53.554s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[53.554s] [0m
+[53.554s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_lint_cmake/cmake/ament_cmake_lint_cmake_lint_hook.cmake:15 (file):
+[53.554s]   Cyclic recursion detected while globbing for 'CMakeLists.txt':
+[53.554s] 
+[53.554s] 
+[53.555s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[53.555s] 
+[53.555s] 
+[53.555s] 
+[53.555s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[53.555s] Call Stack (most recent call first):
+[53.556s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[53.556s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[53.556s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[53.556s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[53.556s]   CMakeLists.txt:38 (ament_package)
+[53.556s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[53.556s] [0m
+[53.721s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_lint_cmake/cmake/ament_cmake_lint_cmake_lint_hook.cmake:15 (file):
+[53.721s]   Cyclic recursion detected while globbing for '*.cmake':
+[53.722s] 
+[53.722s] 
+[53.722s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[53.722s] 
+[53.722s] 
+[53.722s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[53.722s] 
+[53.723s] 
+[53.723s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[53.723s] Call Stack (most recent call first):
+[53.723s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[53.724s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[53.724s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[53.724s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[53.724s]   CMakeLists.txt:38 (ament_package)
+[53.724s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[53.724s] [0m
+[53.724s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_lint_cmake/cmake/ament_cmake_lint_cmake_lint_hook.cmake:15 (file):
+[53.725s]   Cyclic recursion detected while globbing for '*.cmake':
+[53.725s] 
+[53.725s] 
+[53.725s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[53.725s] 
+[53.725s] 
+[53.726s] 
+[53.726s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[53.726s] Call Stack (most recent call first):
+[53.726s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[53.726s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[53.726s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[53.726s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[53.727s]   CMakeLists.txt:38 (ament_package)
+[53.727s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[53.727s] [0m
+[53.728s] -- Added test 'lint_cmake' to check CMake code style
+[53.882s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_pep257/cmake/ament_cmake_pep257_lint_hook.cmake:15 (file):
+[53.882s]   Cyclic recursion detected while globbing for '*.py':
+[53.882s] 
+[53.882s] 
+[53.882s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[53.883s] 
+[53.883s] 
+[53.883s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[53.883s] 
+[53.884s] 
+[53.884s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[53.884s] Call Stack (most recent call first):
+[53.884s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[53.884s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[53.884s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[53.884s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[53.884s]   CMakeLists.txt:38 (ament_package)
+[53.885s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[53.885s] [0m
+[53.885s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[53.885s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_pep257/cmake/ament_cmake_pep257_lint_hook.cmake:15 (file):
+[53.886s]   Cyclic recursion detected while globbing for '*.py':
+[53.886s] 
+[53.886s] 
+[53.886s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[53.886s] 
+[53.887s] 
+[53.887s] 
+[53.888s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[53.888s] Call Stack (most recent call first):
+[53.888s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[53.888s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[53.888s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[53.888s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[53.889s]   CMakeLists.txt:38 (ament_package)
+[53.889s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[53.889s] [0m
+[54.044s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_uncrustify/cmake/ament_cmake_uncrustify_lint_hook.cmake:15 (file):
+[54.045s]   Cyclic recursion detected while globbing for '*.c':
+[54.045s] 
+[54.045s] 
+[54.045s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[54.045s] 
+[54.046s] 
+[54.046s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[54.046s] 
+[54.046s] 
+[54.046s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[54.046s] Call Stack (most recent call first):
+[54.046s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.046s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[54.047s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.047s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[54.047s]   CMakeLists.txt:38 (ament_package)
+[54.047s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[54.047s] [0m
+[54.047s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_uncrustify/cmake/ament_cmake_uncrustify_lint_hook.cmake:15 (file):
+[54.047s]   Cyclic recursion detected while globbing for '*.c':
+[54.048s] 
+[54.048s] 
+[54.048s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[54.048s] 
+[54.048s] 
+[54.048s] 
+[54.048s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[54.049s] Call Stack (most recent call first):
+[54.049s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.049s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[54.049s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.049s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[54.049s]   CMakeLists.txt:38 (ament_package)
+[54.049s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[54.050s] [0m
+[54.201s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_uncrustify/cmake/ament_cmake_uncrustify_lint_hook.cmake:15 (file):
+[54.201s]   Cyclic recursion detected while globbing for '*.cc':
+[54.201s] 
+[54.202s] 
+[54.202s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[54.202s] 
+[54.202s] 
+[54.202s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[54.202s] 
+[54.203s] 
+[54.203s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[54.203s] Call Stack (most recent call first):
+[54.203s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.203s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[54.203s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.203s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[54.204s]   CMakeLists.txt:38 (ament_package)
+[54.204s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[54.204s] [0m
+[54.204s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_uncrustify/cmake/ament_cmake_uncrustify_lint_hook.cmake:15 (file):
+[54.204s]   Cyclic recursion detected while globbing for '*.cc':
+[54.204s] 
+[54.205s] 
+[54.205s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[54.205s] 
+[54.205s] 
+[54.206s] 
+[54.206s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[54.206s] Call Stack (most recent call first):
+[54.206s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.206s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[54.206s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.207s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[54.207s]   CMakeLists.txt:38 (ament_package)
+[54.207s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[54.208s] [0m
+[54.367s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_uncrustify/cmake/ament_cmake_uncrustify_lint_hook.cmake:15 (file):
+[54.367s]   Cyclic recursion detected while globbing for '*.cpp':
+[54.367s] 
+[54.367s] 
+[54.368s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[54.368s] 
+[54.368s] 
+[54.368s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[54.368s] 
+[54.368s] 
+[54.368s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[54.369s] Call Stack (most recent call first):
+[54.369s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.369s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[54.369s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.369s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[54.369s]   CMakeLists.txt:38 (ament_package)
+[54.370s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[54.370s] [0m
+[54.370s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_uncrustify/cmake/ament_cmake_uncrustify_lint_hook.cmake:15 (file):
+[54.370s]   Cyclic recursion detected while globbing for '*.cpp':
+[54.370s] 
+[54.371s] 
+[54.371s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[54.371s] 
+[54.371s] 
+[54.371s] 
+[54.371s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[54.371s] Call Stack (most recent call first):
+[54.372s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.372s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[54.372s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.372s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[54.372s]   CMakeLists.txt:38 (ament_package)
+[54.373s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[54.373s] [0m
+[54.525s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_uncrustify/cmake/ament_cmake_uncrustify_lint_hook.cmake:15 (file):
+[54.525s]   Cyclic recursion detected while globbing for '*.cxx':
+[54.525s] 
+[54.526s] 
+[54.526s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[54.526s] 
+[54.526s] 
+[54.526s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[54.527s] 
+[54.527s] 
+[54.527s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[54.527s] Call Stack (most recent call first):
+[54.527s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.527s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[54.528s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.528s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[54.529s]   CMakeLists.txt:38 (ament_package)
+[54.530s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[54.530s] [0m
+[54.531s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_uncrustify/cmake/ament_cmake_uncrustify_lint_hook.cmake:15 (file):
+[54.531s]   Cyclic recursion detected while globbing for '*.cxx':
+[54.531s] 
+[54.531s] 
+[54.531s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[54.531s] 
+[54.532s] 
+[54.532s] 
+[54.532s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[54.532s] Call Stack (most recent call first):
+[54.532s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.533s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[54.533s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.533s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[54.533s]   CMakeLists.txt:38 (ament_package)
+[54.533s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[54.534s] [0m
+[54.710s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_uncrustify/cmake/ament_cmake_uncrustify_lint_hook.cmake:15 (file):
+[54.710s]   Cyclic recursion detected while globbing for '*.h':
+[54.710s] 
+[54.711s] 
+[54.711s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[54.711s] 
+[54.711s] 
+[54.711s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[54.711s] 
+[54.711s] 
+[54.711s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[54.711s] Call Stack (most recent call first):
+[54.712s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.712s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[54.712s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.712s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[54.712s]   CMakeLists.txt:38 (ament_package)
+[54.712s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[54.712s] [0m
+[54.712s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_uncrustify/cmake/ament_cmake_uncrustify_lint_hook.cmake:15 (file):
+[54.712s]   Cyclic recursion detected while globbing for '*.h':
+[54.712s] 
+[54.713s] 
+[54.713s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[54.713s] 
+[54.713s] 
+[54.713s] 
+[54.713s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[54.713s] Call Stack (most recent call first):
+[54.713s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.714s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[54.714s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.714s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[54.714s]   CMakeLists.txt:38 (ament_package)
+[54.714s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[54.714s] [0m
+[54.910s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_uncrustify/cmake/ament_cmake_uncrustify_lint_hook.cmake:15 (file):
+[54.910s]   Cyclic recursion detected while globbing for '*.hh':
+[54.911s] 
+[54.911s] 
+[54.911s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[54.911s] 
+[54.911s] 
+[54.912s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[54.912s] 
+[54.912s] 
+[54.912s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[54.912s] Call Stack (most recent call first):
+[54.913s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.913s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[54.913s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.915s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[54.915s]   CMakeLists.txt:38 (ament_package)
+[54.915s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[54.915s] [0m
+[54.916s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_uncrustify/cmake/ament_cmake_uncrustify_lint_hook.cmake:15 (file):
+[54.916s]   Cyclic recursion detected while globbing for '*.hh':
+[54.916s] 
+[54.916s] 
+[54.916s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[54.916s] 
+[54.916s] 
+[54.917s] 
+[54.917s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[54.917s] Call Stack (most recent call first):
+[54.917s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.917s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[54.918s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[54.918s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[54.918s]   CMakeLists.txt:38 (ament_package)
+[54.918s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[54.918s] [0m
+[55.115s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_uncrustify/cmake/ament_cmake_uncrustify_lint_hook.cmake:15 (file):
+[55.115s]   Cyclic recursion detected while globbing for '*.hpp':
+[55.116s] 
+[55.116s] 
+[55.116s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[55.117s] 
+[55.117s] 
+[55.117s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[55.118s] 
+[55.118s] 
+[55.118s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[55.118s] Call Stack (most recent call first):
+[55.119s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[55.119s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[55.119s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[55.119s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[55.120s]   CMakeLists.txt:38 (ament_package)
+[55.120s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[55.121s] [0m
+[55.122s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_uncrustify/cmake/ament_cmake_uncrustify_lint_hook.cmake:15 (file):
+[55.122s]   Cyclic recursion detected while globbing for '*.hpp':
+[55.123s] 
+[55.123s] 
+[55.123s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[55.123s] 
+[55.124s] 
+[55.124s] 
+[55.124s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[55.125s] Call Stack (most recent call first):
+[55.125s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[55.125s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[55.125s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[55.126s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[55.126s]   CMakeLists.txt:38 (ament_package)
+[55.126s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[55.126s] [0m
+[55.301s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_uncrustify/cmake/ament_cmake_uncrustify_lint_hook.cmake:15 (file):
+[55.301s]   Cyclic recursion detected while globbing for '*.hxx':
+[55.301s] 
+[55.301s] 
+[55.301s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[55.301s] 
+[55.302s] 
+[55.302s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[55.302s] 
+[55.302s] 
+[55.302s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[55.302s] Call Stack (most recent call first):
+[55.302s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[55.303s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[55.303s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[55.303s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[55.303s]   CMakeLists.txt:38 (ament_package)
+[55.304s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[55.304s] [0m
+[55.304s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_uncrustify/cmake/ament_cmake_uncrustify_lint_hook.cmake:15 (file):
+[55.304s]   Cyclic recursion detected while globbing for '*.hxx':
+[55.304s] 
+[55.305s] 
+[55.305s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[55.305s] 
+[55.305s] 
+[55.305s] 
+[55.305s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[55.306s] Call Stack (most recent call first):
+[55.306s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[55.306s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[55.306s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[55.306s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[55.309s]   CMakeLists.txt:38 (ament_package)
+[55.309s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[55.309s] [0m
+[55.310s] -- Added test 'uncrustify' to check C / C++ code style
+[55.310s] -- Configured uncrustify additional arguments: 
+[55.460s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_xmllint/cmake/ament_cmake_xmllint_lint_hook.cmake:15 (file):
+[55.460s]   Cyclic recursion detected while globbing for '*.xml':
+[55.461s] 
+[55.461s] 
+[55.461s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[55.461s] 
+[55.461s] 
+[55.461s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace
+[55.462s] 
+[55.462s] 
+[55.462s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[55.462s] Call Stack (most recent call first):
+[55.462s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[55.462s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[55.462s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[55.463s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[55.463s]   CMakeLists.txt:38 (ament_package)
+[55.463s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[55.463s] [0m
+[55.463s] [33mCMake Warning (dev) at /opt/ros/humble/share/ament_cmake_xmllint/cmake/ament_cmake_xmllint_lint_hook.cmake:15 (file):
+[55.463s]   Cyclic recursion detected while globbing for '*.xml':
+[55.463s] 
+[55.463s] 
+[55.463s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include
+[55.464s] 
+[55.464s] 
+[55.464s] 
+[55.464s]   /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/aurora_core/include/base
+[55.464s] Call Stack (most recent call first):
+[55.464s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[55.464s]   /opt/ros/humble/share/ament_lint_auto/cmake/ament_lint_auto_package_hook.cmake:21 (ament_execute_extensions)
+[55.465s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_execute_extensions.cmake:48 (include)
+[55.465s]   /opt/ros/humble/share/ament_cmake_core/cmake/core/ament_package.cmake:66 (ament_execute_extensions)
+[55.465s]   CMakeLists.txt:38 (ament_package)
+[55.465s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[55.465s] [0m
+[55.466s] -- Added test 'xmllint' to check XML markup files
+[55.466s] -- Configuring done (55.0s)
+[55.623s] -- Generating done (0.1s)
+[55.634s] -- Build files have been written to: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/aurora_core
+[55.688s] Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/aurora_core' returned '0': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl -DCMAKE_INSTALL_PREFIX=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core
+[55.693s] Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/aurora_core': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/aurora_core -- -j4 -l4
+[55.867s] [ 50%] [32mBuilding CXX object CMakeFiles/aurora_node_core.dir/src/aurora_node_core.cpp.o[0m
+[64.170s] In file included from [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vec2.h:9[m[K,
+[64.170s]                  from [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/coords.h:30[m[K,
+[64.170s]                  from [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/robot_base.h:10[m[K,
+[64.170s]                  from [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/src/aurora_node_core.cpp:10[m[K:
+[64.171s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vector2d.h:[m[K In copy constructor ‘[01m[Kosl::Vector2d::[01;32m[KVector2d[m[K(const osl::Vector2d&)[m[K’:
+[64.171s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vector2d.h:157:9:[m[K [01;35m[Kwarning: [m[Kbase class ‘[01m[Kclass osl::Vector2dT<double, osl::Vector2d>[m[K’ should be explicitly initialized in the copy constructor [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wextra-Wextra]8;;[m[K]
+[64.171s]   157 |         [01;35m[KVector2d[m[K(const Vector2d &copy) {x=copy.x;y=copy.y;}
+[64.171s]       |         [01;35m[K^~~~~~~~[m[K
+[64.179s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vector2d.h:[m[K In member function ‘[01m[Kbool osl::LineSeg::[01;32m[Kintersects[m[K(const osl::LineSeg&, bool, osl::Vector2d*) const[m[K’:
+[64.179s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vector2d.h:244:34:[m[K [01;35m[Kwarning: [m[Kimplicitly-declared ‘[01m[Kosl::Vector2d& osl::Vector2d::[01;32m[Koperator=[m[K(const osl::Vector2d&)[m[K’ is deprecated [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-copy-Wdeprecated-copy]8;;[m[K]
+[64.180s]   244 |                         *ret=at(t[01;35m[K)[m[K;
+[64.182s]       |                                  [01;35m[K^[m[K
+[64.182s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vector2d.h:157:9:[m[K [01;36m[Knote: [m[Kbecause ‘[01m[Kosl::Vector2d[m[K’ has user-provided ‘[01m[Kosl::Vector2d::[01;32m[KVector2d[m[K(const osl::Vector2d&)[m[K’
+[64.182s]   157 |         [01;36m[KVector2d[m[K(const Vector2d &copy) {x=copy.x;y=copy.y;}
+[64.183s]       |         [01;36m[K^~~~~~~~[m[K
+[64.183s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vector2d.h:247:34:[m[K [01;35m[Kwarning: [m[Kimplicitly-declared ‘[01m[Kosl::Vector2d& osl::Vector2d::[01;32m[Koperator=[m[K(const osl::Vector2d&)[m[K’ is deprecated [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-copy-Wdeprecated-copy]8;;[m[K]
+[64.183s]   247 |                         *ret=at(t[01;35m[K)[m[K;
+[64.183s]       |                                  [01;35m[K^[m[K
+[64.183s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vector2d.h:157:9:[m[K [01;36m[Knote: [m[Kbecause ‘[01m[Kosl::Vector2d[m[K’ has user-provided ‘[01m[Kosl::Vector2d::[01;32m[KVector2d[m[K(const osl::Vector2d&)[m[K’
+[64.183s]   157 |         [01;36m[KVector2d[m[K(const Vector2d &copy) {x=copy.x;y=copy.y;}
+[64.184s]       |         [01;36m[K^~~~~~~~[m[K
+[64.184s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vector2d.h:[m[K In member function ‘[01m[Kvoid osl::Halfspace2d::[01;32m[KinitCheck[m[K(cv&, cv&, cv&)[m[K’:
+[64.184s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vector2d.h:279:43:[m[K [01;35m[Kwarning: [m[Kimplicitly-declared ‘[01m[Kosl::Vector2d& osl::Vector2d::[01;32m[Koperator=[m[K(const osl::Vector2d&)[m[K’ is deprecated [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-copy-Wdeprecated-copy]8;;[m[K]
+[64.184s]   279 |         { init(p1,p2);if (side(in)<0) {n=-[01;35m[Kn[m[K;d=-d;} }
+[64.184s]       |                                           [01;35m[K^[m[K
+[64.184s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vector2d.h:157:9:[m[K [01;36m[Knote: [m[Kbecause ‘[01m[Kosl::Vector2d[m[K’ has user-provided ‘[01m[Kosl::Vector2d::[01;32m[KVector2d[m[K(const osl::Vector2d&)[m[K’
+[64.184s]   157 |         [01;36m[KVector2d[m[K(const Vector2d &copy) {x=copy.x;y=copy.y;}
+[64.184s]       |         [01;36m[K^~~~~~~~[m[K
+[64.320s] In file included from [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/nanoslot_IMU.h:10[m[K,
+[64.320s]                  from [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/nanoslot_exchange.h:21[m[K,
+[64.320s]                  from [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/lunatic.h:43[m[K,
+[64.321s]                  from [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/src/aurora_node_core.cpp:12[m[K:
+[64.321s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionVector[01;32m[K FusionVectorAdd[m[K(FusionVector, FusionVector)[m[K’:
+[64.321s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:207:34:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.321s]   207 |     const FusionVector result = {[01;35m[K.[m[Kaxis = {
+[64.321s]       |                                  [01;35m[K^[m[K
+[64.322s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:208:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.322s]   208 |             [01;35m[K.[m[Kx = vectorA.axis.x + vectorB.axis.x,
+[64.322s]       |             [01;35m[K^[m[K
+[64.322s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:209:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.322s]   209 |             [01;35m[K.[m[Ky = vectorA.axis.y + vectorB.axis.y,
+[64.323s]       |             [01;35m[K^[m[K
+[64.324s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:210:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.324s]   210 |             [01;35m[K.[m[Kz = vectorA.axis.z + vectorB.axis.z,
+[64.324s]       |             [01;35m[K^[m[K
+[64.325s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionVector[01;32m[K FusionVectorSubtract[m[K(FusionVector, FusionVector)[m[K’:
+[64.325s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:222:34:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.325s]   222 |     const FusionVector result = {[01;35m[K.[m[Kaxis = {
+[64.325s]       |                                  [01;35m[K^[m[K
+[64.326s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:223:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.326s]   223 |             [01;35m[K.[m[Kx = vectorA.axis.x - vectorB.axis.x,
+[64.326s]       |             [01;35m[K^[m[K
+[64.326s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:224:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.327s]   224 |             [01;35m[K.[m[Ky = vectorA.axis.y - vectorB.axis.y,
+[64.327s]       |             [01;35m[K^[m[K
+[64.335s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:225:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.335s]   225 |             [01;35m[K.[m[Kz = vectorA.axis.z - vectorB.axis.z,
+[64.336s]       |             [01;35m[K^[m[K
+[64.336s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionVector[01;32m[K FusionVectorMultiplyScalar[m[K(FusionVector, float)[m[K’:
+[64.336s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:246:34:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.336s]   246 |     const FusionVector result = {[01;35m[K.[m[Kaxis = {
+[64.336s]       |                                  [01;35m[K^[m[K
+[64.336s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:247:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.337s]   247 |             [01;35m[K.[m[Kx = vector.axis.x * scalar,
+[64.337s]       |             [01;35m[K^[m[K
+[64.337s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:248:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.337s]   248 |             [01;35m[K.[m[Ky = vector.axis.y * scalar,
+[64.338s]       |             [01;35m[K^[m[K
+[64.338s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:249:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.338s]   249 |             [01;35m[K.[m[Kz = vector.axis.z * scalar,
+[64.338s]       |             [01;35m[K^[m[K
+[64.339s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionVector[01;32m[K FusionVectorHadamardProduct[m[K(FusionVector, FusionVector)[m[K’:
+[64.339s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:261:34:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.340s]   261 |     const FusionVector result = {[01;35m[K.[m[Kaxis = {
+[64.340s]       |                                  [01;35m[K^[m[K
+[64.340s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:262:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.340s]   262 |             [01;35m[K.[m[Kx = vectorA.axis.x * vectorB.axis.x,
+[64.341s]       |             [01;35m[K^[m[K
+[64.341s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:263:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.341s]   263 |             [01;35m[K.[m[Ky = vectorA.axis.y * vectorB.axis.y,
+[64.341s]       |             [01;35m[K^[m[K
+[64.341s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:264:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.342s]   264 |             [01;35m[K.[m[Kz = vectorA.axis.z * vectorB.axis.z,
+[64.342s]       |             [01;35m[K^[m[K
+[64.342s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionVector[01;32m[K FusionVectorCrossProduct[m[K(FusionVector, FusionVector)[m[K’:
+[64.342s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:290:34:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.343s]   290 |     const FusionVector result = {[01;35m[K.[m[Kaxis = {
+[64.343s]       |                                  [01;35m[K^[m[K
+[64.343s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:291:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.343s]   291 |             [01;35m[K.[m[Kx = A.y * B.z - A.z * B.y,
+[64.344s]       |             [01;35m[K^[m[K
+[64.344s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:292:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.345s]   292 |             [01;35m[K.[m[Ky = A.z * B.x - A.x * B.z,
+[64.345s]       |             [01;35m[K^[m[K
+[64.346s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:293:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.346s]   293 |             [01;35m[K.[m[Kz = A.x * B.y - A.y * B.x,
+[64.346s]       |             [01;35m[K^[m[K
+[64.346s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionQuaternion[01;32m[K FusionQuaternionZradians[m[K(float)[m[K’:
+[64.346s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:339:33:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.347s]   339 |     const FusionQuaternion Q = {[01;35m[K.[m[Kelement = {
+[64.347s]       |                                 [01;35m[K^[m[K
+[64.347s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:340:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.348s]   340 |             [01;35m[K.[m[Kw = cosf(a),
+[64.348s]       |             [01;35m[K^[m[K
+[64.348s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:341:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.348s]   341 |             [01;35m[K.[m[Kx = 0.0f,
+[64.348s]       |             [01;35m[K^[m[K
+[64.348s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:342:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.349s]   342 |             [01;35m[K.[m[Ky = 0.0f,
+[64.349s]       |             [01;35m[K^[m[K
+[64.349s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:343:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.349s]   343 |             [01;35m[K.[m[Kz = 1.0f * sinf(a),
+[64.350s]       |             [01;35m[K^[m[K
+[64.350s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionQuaternion[01;32m[K FusionQuaternionAdd[m[K(FusionQuaternion, FusionQuaternion)[m[K’:
+[64.350s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:363:38:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.350s]   363 |     const FusionQuaternion result = {[01;35m[K.[m[Kelement = {
+[64.350s]       |                                      [01;35m[K^[m[K
+[64.351s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:364:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.351s]   364 |             [01;35m[K.[m[Kw = quaternionA.element.w + quaternionB.element.w,
+[64.351s]       |             [01;35m[K^[m[K
+[64.351s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:365:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.351s]   365 |             [01;35m[K.[m[Kx = quaternionA.element.x + quaternionB.element.x,
+[64.351s]       |             [01;35m[K^[m[K
+[64.351s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:366:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.352s]   366 |             [01;35m[K.[m[Ky = quaternionA.element.y + quaternionB.element.y,
+[64.352s]       |             [01;35m[K^[m[K
+[64.352s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:367:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.352s]   367 |             [01;35m[K.[m[Kz = quaternionA.element.z + quaternionB.element.z,
+[64.352s]       |             [01;35m[K^[m[K
+[64.352s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionQuaternion[01;32m[K FusionQuaternionMultiply[m[K(FusionQuaternion, FusionQuaternion)[m[K’:
+[64.352s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:381:38:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.353s]   381 |     const FusionQuaternion result = {[01;35m[K.[m[Kelement = {
+[64.353s]       |                                      [01;35m[K^[m[K
+[64.353s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:382:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.353s]   382 |             [01;35m[K.[m[Kw = A.w * B.w - A.x * B.x - A.y * B.y - A.z * B.z,
+[64.353s]       |             [01;35m[K^[m[K
+[64.353s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:383:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.354s]   383 |             [01;35m[K.[m[Kx = A.w * B.x + A.x * B.w + A.y * B.z - A.z * B.y,
+[64.354s]       |             [01;35m[K^[m[K
+[64.354s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:384:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.354s]   384 |             [01;35m[K.[m[Ky = A.w * B.y - A.x * B.z + A.y * B.w + A.z * B.x,
+[64.354s]       |             [01;35m[K^[m[K
+[64.354s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:385:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.354s]   385 |             [01;35m[K.[m[Kz = A.w * B.z + A.x * B.y - A.y * B.x + A.z * B.w,
+[64.355s]       |             [01;35m[K^[m[K
+[64.355s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionQuaternion[01;32m[K FusionQuaternionMultiplyVector[m[K(FusionQuaternion, FusionVector)[m[K’:
+[64.355s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:404:38:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.355s]   404 |     const FusionQuaternion result = {[01;35m[K.[m[Kelement = {
+[64.355s]       |                                      [01;35m[K^[m[K
+[64.355s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:405:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.356s]   405 |             [01;35m[K.[m[Kw = -Q.x * V.x - Q.y * V.y - Q.z * V.z,
+[64.356s]       |             [01;35m[K^[m[K
+[64.356s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:406:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.356s]   406 |             [01;35m[K.[m[Kx = Q.w * V.x + Q.y * V.z - Q.z * V.y,
+[64.356s]       |             [01;35m[K^[m[K
+[64.356s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:407:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.356s]   407 |             [01;35m[K.[m[Ky = Q.w * V.y - Q.x * V.z + Q.z * V.x,
+[64.357s]       |             [01;35m[K^[m[K
+[64.357s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:408:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.357s]   408 |             [01;35m[K.[m[Kz = Q.w * V.z + Q.x * V.y - Q.y * V.x,
+[64.357s]       |             [01;35m[K^[m[K
+[64.357s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionQuaternion[01;32m[K FusionQuaternionConjugate[m[K(FusionQuaternion)[m[K’:
+[64.357s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:424:38:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.357s]   424 |     const FusionQuaternion result = {[01;35m[K.[m[Kelement = {
+[64.357s]       |                                      [01;35m[K^[m[K
+[64.357s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:425:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.358s]   425 |             [01;35m[K.[m[Kw = Q.w,
+[64.358s]       |             [01;35m[K^[m[K
+[64.358s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:426:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.358s]   426 |             [01;35m[K.[m[Kx = -Q.x,
+[64.358s]       |             [01;35m[K^[m[K
+[64.358s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:427:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.358s]   427 |             [01;35m[K.[m[Ky = -Q.y,
+[64.358s]       |             [01;35m[K^[m[K
+[64.358s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:428:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.358s]   428 |             [01;35m[K.[m[Kz = -Q.z,
+[64.358s]       |             [01;35m[K^[m[K
+[64.359s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionQuaternion[01;32m[K FusionQuaternionNormalise[m[K(FusionQuaternion)[m[K’:
+[64.359s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:448:38:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.359s]   448 |     const FusionQuaternion result = {[01;35m[K.[m[Kelement = {
+[64.359s]       |                                      [01;35m[K^[m[K
+[64.359s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:449:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.359s]   449 |             [01;35m[K.[m[Kw = Q.w * magnitudeReciprocal,
+[64.359s]       |             [01;35m[K^[m[K
+[64.359s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:450:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.359s]   450 |             [01;35m[K.[m[Kx = Q.x * magnitudeReciprocal,
+[64.359s]       |             [01;35m[K^[m[K
+[64.359s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:451:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.360s]   451 |             [01;35m[K.[m[Ky = Q.y * magnitudeReciprocal,
+[64.360s]       |             [01;35m[K^[m[K
+[64.360s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:452:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.360s]   452 |             [01;35m[K.[m[Kz = Q.z * magnitudeReciprocal,
+[64.360s]       |             [01;35m[K^[m[K
+[64.360s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionVector[01;32m[K FusionMatrixMultiplyVector[m[K(FusionMatrix, FusionVector)[m[K’:
+[64.360s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:469:34:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.360s]   469 |     const FusionVector result = {[01;35m[K.[m[Kaxis = {
+[64.360s]       |                                  [01;35m[K^[m[K
+[64.360s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:470:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.361s]   470 |             [01;35m[K.[m[Kx = R.xx * vector.axis.x + R.xy * vector.axis.y + R.xz * vector.axis.z,
+[64.361s]       |             [01;35m[K^[m[K
+[64.361s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:471:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.361s]   471 |             [01;35m[K.[m[Ky = R.yx * vector.axis.x + R.yy * vector.axis.y + R.yz * vector.axis.z,
+[64.361s]       |             [01;35m[K^[m[K
+[64.361s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:472:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.361s]   472 |             [01;35m[K.[m[Kz = R.zx * vector.axis.x + R.zy * vector.axis.y + R.zz * vector.axis.z,
+[64.361s]       |             [01;35m[K^[m[K
+[64.362s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionVector[01;32m[K FusionQuaternionXaxis[m[K(FusionQuaternion)[m[K’:
+[64.362s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:484:34:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.362s]   484 |     const FusionVector result = {[01;35m[K.[m[Kaxis={
+[64.362s]       |                                  [01;35m[K^[m[K
+[64.362s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:485:5:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.362s]   485 |     [01;35m[K.[m[Kx = 2.0f * (Q.w*Q.w - 0.5f + Q.x * Q.x),
+[64.363s]       |     [01;35m[K^[m[K
+[64.363s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:486:5:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.363s]   486 |     [01;35m[K.[m[Ky = 2.0f * (Q.x*Q.y + Q.w*Q.z),
+[64.363s]       |     [01;35m[K^[m[K
+[64.363s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:487:5:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.363s]   487 |     [01;35m[K.[m[Kz = 2.0f * (Q.x*Q.z - Q.w*Q.y),
+[64.363s]       |     [01;35m[K^[m[K
+[64.364s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionVector[01;32m[K FusionQuaternionYaxis[m[K(FusionQuaternion)[m[K’:
+[64.365s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:495:34:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.365s]   495 |     const FusionVector result = {[01;35m[K.[m[Kaxis={
+[64.365s]       |                                  [01;35m[K^[m[K
+[64.365s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:496:5:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.365s]   496 |     [01;35m[K.[m[Kx = 2.0f * (Q.x*Q.y - Q.w*Q.z),
+[64.365s]       |     [01;35m[K^[m[K
+[64.365s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:497:5:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.367s]   497 |     [01;35m[K.[m[Ky = 2.0f * (Q.w*Q.w - 0.5f + Q.y * Q.y),
+[64.368s]       |     [01;35m[K^[m[K
+[64.368s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:498:5:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.368s]   498 |     [01;35m[K.[m[Kz = 2.0f * (Q.y*Q.z + Q.w*Q.x),
+[64.368s]       |     [01;35m[K^[m[K
+[64.368s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionVector[01;32m[K FusionQuaternionZaxis[m[K(FusionQuaternion)[m[K’:
+[64.368s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:506:34:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.369s]   506 |     const FusionVector result = {[01;35m[K.[m[Kaxis={
+[64.369s]       |                                  [01;35m[K^[m[K
+[64.369s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:507:5:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.369s]   507 |     [01;35m[K.[m[Kx = 2.0f * (Q.x*Q.z + Q.w*Q.y),
+[64.369s]       |     [01;35m[K^[m[K
+[64.370s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:508:5:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.370s]   508 |     [01;35m[K.[m[Ky = 2.0f * (Q.y*Q.z - Q.w*Q.x),
+[64.370s]       |     [01;35m[K^[m[K
+[64.370s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:509:5:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.370s]   509 |     [01;35m[K.[m[Kz = 2.0f * (Q.w*Q.w - 0.5f + Q.z * Q.z),
+[64.371s]       |     [01;35m[K^[m[K
+[64.371s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionMatrix[01;32m[K FusionQuaternionToMatrix[m[K(FusionQuaternion)[m[K’:
+[64.371s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:530:34:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.371s]   530 |     const FusionMatrix matrix = {[01;35m[K.[m[Kelement = {
+[64.371s]       |                                  [01;35m[K^[m[K
+[64.372s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:531:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.372s]   531 |             [01;35m[K.[m[Kxx = 2.0f * (qwqw - 0.5f + Q.x * Q.x),
+[64.372s]       |             [01;35m[K^[m[K
+[64.372s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:532:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.372s]   532 |             [01;35m[K.[m[Kxy = 2.0f * (qxqy - qwqz),
+[64.373s]       |             [01;35m[K^[m[K
+[64.373s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:533:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.373s]   533 |             [01;35m[K.[m[Kxz = 2.0f * (qxqz + qwqy),
+[64.373s]       |             [01;35m[K^[m[K
+[64.374s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:535:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.374s]   535 |             [01;35m[K.[m[Kyx = 2.0f * (qxqy + qwqz),
+[64.374s]       |             [01;35m[K^[m[K
+[64.374s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:536:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.382s]   536 |             [01;35m[K.[m[Kyy = 2.0f * (qwqw - 0.5f + Q.y * Q.y),
+[64.382s]       |             [01;35m[K^[m[K
+[64.382s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:537:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.382s]   537 |             [01;35m[K.[m[Kyz = 2.0f * (qyqz - qwqx),
+[64.383s]       |             [01;35m[K^[m[K
+[64.383s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:539:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.383s]   539 |             [01;35m[K.[m[Kzx = 2.0f * (qxqz - qwqy),
+[64.383s]       |             [01;35m[K^[m[K
+[64.383s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:540:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.383s]   540 |             [01;35m[K.[m[Kzy = 2.0f * (qyqz + qwqx),
+[64.384s]       |             [01;35m[K^[m[K
+[64.384s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:541:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.384s]   541 |             [01;35m[K.[m[Kzz = 2.0f * (qwqw - 0.5f + Q.z * Q.z),
+[64.384s]       |             [01;35m[K^[m[K
+[64.384s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionEuler[01;32m[K FusionQuaternionToEuler[m[K(FusionQuaternion)[m[K’:
+[64.384s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:555:32:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.385s]   555 |     const FusionEuler euler = {[01;35m[K.[m[Kangle = {
+[64.385s]       |                                [01;35m[K^[m[K
+[64.385s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:556:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.385s]   556 |             [01;35m[K.[m[Kroll = FusionRadiansToDegrees(atan2f(Q.w * Q.x + Q.y * Q.z, halfMinusQySquared - Q.x * Q.x)),
+[64.385s]       |             [01;35m[K^[m[K
+[64.385s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:557:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.386s]   557 |             [01;35m[K.[m[Kpitch = FusionRadiansToDegrees(FusionAsin(2.0f * (Q.w * Q.y - Q.z * Q.x))),
+[64.386s]       |             [01;35m[K^[m[K
+[64.386s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:558:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[64.386s]   558 |             [01;35m[K.[m[Kyaw = FusionRadiansToDegrees(atan2f(Q.w * Q.z + Q.x * Q.y, halfMinusQySquared - Q.z * Q.z)),
+[64.386s]       |             [01;35m[K^[m[K
+[66.634s] [100%] [32m[1mLinking CXX executable aurora_node_core[0m
+[71.438s] [100%] Built target aurora_node_core
+[71.483s] Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/aurora_core' returned '0': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/aurora_core -- -j4 -l4
+[71.718s] Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/aurora_core': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/aurora_core
+[71.752s] -- Install configuration: ""
+[71.753s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/lib/aurora_core/aurora_node_core
+[71.758s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/lib/aurora_core/aurora_node_core" to ""
+[71.759s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/ament_index/resource_index/package_run_dependencies/aurora_core
+[71.760s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/ament_index/resource_index/parent_prefix_path/aurora_core
+[71.762s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/environment/ament_prefix_path.sh
+[71.763s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/environment/ament_prefix_path.dsv
+[71.763s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/environment/path.sh
+[71.764s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/environment/path.dsv
+[71.764s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/local_setup.bash
+[71.766s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/local_setup.sh
+[71.767s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/local_setup.zsh
+[71.767s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/local_setup.dsv
+[71.768s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/package.dsv
+[71.768s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/ament_index/resource_index/packages/aurora_core
+[71.772s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/cmake/aurora_coreConfig.cmake
+[71.772s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/cmake/aurora_coreConfig-version.cmake
+[71.772s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/package.xml
+[71.779s] Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/aurora_core' returned '0': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/aurora_core

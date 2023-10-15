@@ -1,5 +1,0 @@
-/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_msgs/rosidl_adapter/pcl_msgs:msg/ModelCoefficients.idl
-/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_msgs/rosidl_adapter/pcl_msgs:msg/PointIndices.idl
-/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_msgs/rosidl_adapter/pcl_msgs:msg/PolygonMesh.idl
-/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_msgs/rosidl_adapter/pcl_msgs:msg/Vertices.idl
-/home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_msgs/rosidl_adapter/pcl_msgs:srv/UpdateFilename.idl

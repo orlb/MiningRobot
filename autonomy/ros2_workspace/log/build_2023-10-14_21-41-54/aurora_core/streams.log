@@ -1,0 +1,25 @@
+[0.788s] Invoking command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core -- -j4 -l4
+[1.121s] [ 50%] [32mBuilding CXX object CMakeFiles/aurora_node_core.dir/src/aurora_node_core.cpp.o[0m
+[11.679s] [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core/src/aurora_node_core.cpp:[m[K In function ‘[01m[Kint[01;32m[K main[m[K(int, char**)[m[K’:
+[11.680s] [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core/src/aurora_node_core.cpp:138:33:[m[K [01;31m[Kerror: [m[Kcannot convert ‘[01m[Kstd::ostream[m[K’ {aka ‘[01m[Kstd::basic_ostream<char>[m[K’} to ‘[01m[KFILE*[m[K’
+[11.680s]   138 |         if (writes) fflush([01;31m[Kstd::cout[m[K);
+[11.681s]       |                            [01;31m[K~~~~~^~~~[m[K
+[11.681s]       |                                 [01;31m[K|[m[K
+[11.682s]       |                                 [01;31m[Kstd::ostream {aka std::basic_ostream<char>}[m[K
+[11.682s] In file included from [01m[K/usr/include/c++/13.2.1/cstdio:42[m[K,
+[11.682s]                  from [01m[K/usr/include/c++/13.2.1/ext/string_conversions.h:45[m[K,
+[11.682s]                  from [01m[K/usr/include/c++/13.2.1/bits/basic_string.h:4097[m[K,
+[11.683s]                  from [01m[K/usr/include/c++/13.2.1/string:54[m[K,
+[11.684s]                  from [01m[K/usr/include/c++/13.2.1/bits/locale_classes.h:40[m[K,
+[11.684s]                  from [01m[K/usr/include/c++/13.2.1/bits/ios_base.h:41[m[K,
+[11.684s]                  from [01m[K/usr/include/c++/13.2.1/ios:44[m[K,
+[11.685s]                  from [01m[K/usr/include/c++/13.2.1/ostream:40[m[K,
+[11.685s]                  from [01m[K/usr/include/c++/13.2.1/iostream:41[m[K,
+[11.685s]                  from [01m[K/home/brown/Projects/MiningRobot/ros2_workspace/src/aurora_core/src/aurora_node_core.cpp:8[m[K:
+[11.685s] [01m[K/usr/include/stdio.h:235:26:[m[K [01;36m[Knote: [m[K  initializing argument 1 of ‘[01m[Kint[01;32m[K fflush[m[K(FILE*)[m[K’
+[11.686s]   235 | extern int fflush ([01;36m[KFILE *__stream[m[K);
+[11.686s]       |                    [01;36m[K~~~~~~^~~~~~~~[m[K
+[15.168s] make[2]: *** [CMakeFiles/aurora_node_core.dir/build.make:76: CMakeFiles/aurora_node_core.dir/src/aurora_node_core.cpp.o] Error 1
+[15.174s] make[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/aurora_node_core.dir/all] Error 2
+[15.174s] make: *** [Makefile:146: all] Error 2
+[15.180s] Invoked command in '/home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core' returned '2': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/ros2_workspace/install/aurora_core:/home/brown/Projects/MiningRobot/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/ros2_workspace/build/aurora_core -- -j4 -l4

@@ -1,0 +1,6 @@
+[0.144s] Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/ouster_msgs': _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/ouster_msgs -- -j4 -l4
+[0.154s] [0mCMake Error: The current CMakeCache.txt directory /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/ouster_msgs/CMakeCache.txt is different than the directory /home/brown/Projects/MiningRobot/ros2_workspace/build/ouster_msgs where CMakeCache.txt was created. This may result in binaries being created in the wrong place. If you are not sure, reedit the CMakeCache.txt[0m
+[0.177s] [0mCMake Error: The source directory "/home/brown/Projects/MiningRobot/ros2_workspace/src/ros2_ouster_drivers/ouster_msgs" does not exist.
+[0.177s] Specify --help for usage, or press the help button on the CMake GUI.[0m
+[0.178s] make: *** [Makefile:963: cmake_check_build_system] Error 1
+[0.180s] Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/ouster_msgs' returned '2': _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/ouster_msgs -- -j4 -l4

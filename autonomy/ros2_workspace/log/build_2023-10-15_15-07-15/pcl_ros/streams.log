@@ -1,0 +1,279 @@
+[0.319s] Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_ros': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/perception_pcl/pcl_ros -DCMAKE_INSTALL_PREFIX=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros
+[0.561s] -- The C compiler identification is GNU 13.2.1
+[0.959s] -- The CXX compiler identification is GNU 13.2.1
+[1.027s] -- Detecting C compiler ABI info
+[1.350s] -- Detecting C compiler ABI info - done
+[1.386s] -- Check for working C compiler: /usr/bin/cc - skipped
+[1.387s] -- Detecting C compile features
+[1.389s] -- Detecting C compile features - done
+[1.435s] -- Detecting CXX compiler ABI info
+[2.030s] -- Detecting CXX compiler ABI info - done
+[2.073s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[2.074s] -- Detecting CXX compile features
+[2.077s] -- Detecting CXX compile features - done
+[2.240s] [33mCMake Warning (dev) at /usr/share/pcl-1.13/PCLConfig.cmake:143 (find_package):
+[2.240s]   Policy CMP0144 is not set: find_package uses upper-case <PACKAGENAME>_ROOT
+[2.240s]   variables.  Run "cmake --help-policy CMP0144" for policy details.  Use the
+[2.241s]   cmake_policy command to set the policy and suppress this warning.
+[2.241s] 
+[2.241s]   CMake variable EIGEN_ROOT is set to:
+[2.241s] 
+[2.241s]     /usr/include/eigen3
+[2.241s] 
+[2.242s]   For compatibility, find_package is ignoring the variable, but code in a
+[2.242s]   .cmake module might still use it.
+[2.242s] Call Stack (most recent call first):
+[2.242s]   /usr/share/pcl-1.13/PCLConfig.cmake:296 (find_eigen)
+[2.242s]   /usr/share/pcl-1.13/PCLConfig.cmake:549 (find_external_library)
+[2.242s]   CMakeLists.txt:13 (find_package)
+[2.243s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[2.243s] [0m
+[2.249s] -- Checking for module 'eigen3'
+[2.338s] --   Found eigen3, version 3.4.0
+[2.453s] -- Found Eigen: /usr/include/eigen3 (Required is at least version "3.3") 
+[2.454s] -- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+[2.536s] [33mCMake Warning (dev) at /usr/share/pcl-1.13/Modules/FindFLANN.cmake:45 (find_package):
+[2.537s]   Policy CMP0144 is not set: find_package uses upper-case <PACKAGENAME>_ROOT
+[2.537s]   variables.  Run "cmake --help-policy CMP0144" for policy details.  Use the
+[2.538s]   cmake_policy command to set the policy and suppress this warning.
+[2.539s] 
+[2.539s]   CMake variable FLANN_ROOT is set to:
+[2.539s] 
+[2.540s]     /usr
+[2.540s] 
+[2.540s]   For compatibility, find_package is ignoring the variable, but code in a
+[2.541s]   .cmake module might still use it.
+[2.541s] Call Stack (most recent call first):
+[2.543s]   /usr/share/pcl-1.13/PCLConfig.cmake:253 (find_package)
+[2.543s]   /usr/share/pcl-1.13/PCLConfig.cmake:298 (find_flann)
+[2.543s]   /usr/share/pcl-1.13/PCLConfig.cmake:549 (find_external_library)
+[2.544s]   CMakeLists.txt:13 (find_package)
+[2.544s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[2.544s] [0m
+[2.549s] -- Found flann version 1.9.2
+[3.904s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[4.282s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[4.293s] -- Found Threads: TRUE  
+[5.458s] -- Found MPI_C: /usr/lib/libmpi.so (found version "3.1") 
+[13.255s] -- Found MPI_CXX: /usr/lib/libmpi_cxx.so (found version "3.1") 
+[13.256s] -- Found MPI: TRUE (found version "3.1")  
+[18.626s] -- Found Pcap: /usr/lib/libpcap.so  
+[18.699s] -- Found ZLIB: /usr/lib/libz.so (found version "1.3")  
+[18.773s] -- Found PNG: /usr/lib/libpng.so (found version "1.6.40") 
+[20.171s] -- Checking for module 'libusb-1.0'
+[20.220s] --   Found libusb-1.0, version 1.0.26
+[20.353s] -- Found libusb: /usr/lib/libusb-1.0.so  
+[20.391s] -- Eigen found (include: /usr/include/eigen3, version: 3.4.0)
+[20.401s] -- Found Qhull version 8.0.2
+[21.803s] -- Found PCL_COMMON: /usr/lib/libpcl_common.so  
+[21.814s] -- Found PCL_KDTREE: /usr/lib/libpcl_kdtree.so  
+[21.824s] -- Found PCL_OCTREE: /usr/lib/libpcl_octree.so  
+[21.836s] -- Found PCL_SEARCH: /usr/lib/libpcl_search.so  
+[21.839s] -- Found PCL_2D: /usr/include/pcl-1.13  
+[21.851s] -- Found PCL_FEATURES: /usr/lib/libpcl_features.so  
+[21.863s] -- Found PCL_SAMPLE_CONSENSUS: /usr/lib/libpcl_sample_consensus.so  
+[21.872s] -- Found PCL_FILTERS: /usr/lib/libpcl_filters.so  
+[21.884s] -- Found PCL_IO: /usr/lib/libpcl_io.so  
+[21.887s] -- Found PCL_GEOMETRY: /usr/include/pcl-1.13  
+[21.894s] -- Found PCL_ML: /usr/lib/libpcl_ml.so  
+[21.906s] -- Found PCL_SEGMENTATION: /usr/lib/libpcl_segmentation.so  
+[21.916s] -- Found PCL_SURFACE: /usr/lib/libpcl_surface.so  
+[21.923s] -- Found ament_cmake: 1.3.5 (/opt/ros/humble/share/ament_cmake/cmake)
+[24.611s] -- Found Python3: /usr/bin/python3.11 (found version "3.11.5") found components: Interpreter 
+[25.018s] -- Found pcl_conversions: 2.4.1 (/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions/share/pcl_conversions/cmake)
+[25.168s] -- Found rosidl_generator_c: 3.1.5 (/opt/ros/humble/share/rosidl_generator_c/cmake)
+[25.184s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[25.213s] -- Found rosidl_generator_cpp: 3.1.5 (/opt/ros/humble/share/rosidl_generator_cpp/cmake)
+[25.270s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[25.355s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[25.759s] -- Found rmw_implementation_cmake: 6.1.1 (/opt/ros/humble/share/rmw_implementation_cmake/cmake)
+[25.766s] -- Found rmw_fastrtps_cpp: 6.2.4 (/opt/ros/humble/share/rmw_fastrtps_cpp/cmake)
+[26.421s] -- Found OpenSSL: /usr/lib/libcrypto.so (found version "3.1.3")  
+[26.522s] -- Found FastRTPS: /opt/ros/humble/include  
+[26.713s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[28.360s] -- Found rclcpp_components: 16.0.6 (/opt/ros/humble/share/rclcpp_components/cmake)
+[28.570s] -- Found tf2: 0.25.4 (/opt/ros/humble/share/tf2/cmake)
+[28.592s] -- Found tf2_geometry_msgs: 0.25.4 (/opt/ros/humble/share/tf2_geometry_msgs/cmake)
+[28.611s] -- Found eigen3_cmake_module: 0.1.1 (/opt/ros/humble/share/eigen3_cmake_module/cmake)
+[28.617s] -- Found Eigen3: TRUE (found version "3.4.0") 
+[28.618s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[30.119s] -- Checking to see if CXX compiler accepts flag -Wl,--version-script,"/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_ros/class_loader_hide_library_symbols__pcl_ros_filters.script"
+[30.493s] -- Checking to see if CXX compiler accepts flag -Wl,--version-script,"/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_ros/class_loader_hide_library_symbols__pcl_ros_filters.script" - yes
+[31.125s] -- Found ament_lint_auto: 0.12.8 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[58.099s] -- Added test 'cppcheck' to perform static code analysis on C / C++ code
+[58.105s] -- Configured cppcheck include dirs: $<BUILD_INTERFACE:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/perception_pcl/pcl_ros/include>
+[58.106s] -- Configured cppcheck exclude dirs and/or files: 
+[58.127s] -- Added test 'cpplint' to check C / C++ code against the Google style
+[58.131s] -- Configured cpplint exclude dirs and/or files: 
+[58.137s] -- Added test 'flake8' to check Python code syntax and style conventions
+[58.140s] -- Added test 'lint_cmake' to check CMake code style
+[58.145s] -- Added test 'pep257' to check Python code against some of the docstring style conventions in PEP 257
+[58.167s] -- Added test 'uncrustify' to check C / C++ code style
+[58.167s] -- Configured uncrustify additional arguments: 
+[58.171s] -- Added test 'xmllint' to check XML markup files
+[58.183s] -- Configuring done (57.8s)
+[58.637s] -- Generating done (0.3s)
+[58.651s] -- Build files have been written to: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_ros
+[58.733s] Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_ros' returned '0': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/perception_pcl/pcl_ros -DCMAKE_INSTALL_PREFIX=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros
+[58.735s] Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_ros': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_ros -- -j4 -l4
+[58.886s] [  3%] [32mBuilding CXX object CMakeFiles/pcl_ros_tf.dir/src/transforms.cpp.o[0m
+[78.988s] [  6%] [32mBuilding CXX object CMakeFiles/filter_project_inliers_node.dir/rclcpp_components/node_main_filter_project_inliers_node.cpp.o[0m
+[94.543s] [  9%] [32m[1mLinking CXX executable filter_project_inliers_node[0m
+[95.029s] [  9%] Built target filter_project_inliers_node
+[96.104s] [ 12%] [32mBuilding CXX object CMakeFiles/filter_radius_outlier_removal_node.dir/rclcpp_components/node_main_filter_radius_outlier_removal_node.cpp.o[0m
+[96.157s] [ 16%] [32mBuilding CXX object CMakeFiles/filter_passthrough_node.dir/rclcpp_components/node_main_filter_passthrough_node.cpp.o[0m
+[102.962s] [ 19%] [32m[1mLinking CXX static library libpcl_ros_tf.a[0m
+[103.752s] [ 19%] Built target pcl_ros_tf
+[108.797s] [ 22%] [32m[1mLinking CXX executable filter_radius_outlier_removal_node[0m
+[109.114s] [ 22%] Built target filter_radius_outlier_removal_node
+[110.315s] [ 25%] [32m[1mLinking CXX executable filter_passthrough_node[0m
+[110.780s] [ 25%] Built target filter_passthrough_node
+[110.895s] [ 29%] [32mBuilding CXX object CMakeFiles/filter_crop_box_node.dir/rclcpp_components/node_main_filter_crop_box_node.cpp.o[0m
+[114.933s] [ 32%] [32mBuilding CXX object CMakeFiles/filter_statistical_outlier_removal_node.dir/rclcpp_components/node_main_filter_statistical_outlier_removal_node.cpp.o[0m
+[114.962s] [ 35%] [32mBuilding CXX object CMakeFiles/filter_voxel_grid_node.dir/rclcpp_components/node_main_filter_voxel_grid_node.cpp.o[0m
+[125.444s] [ 38%] [32m[1mLinking CXX executable filter_crop_box_node[0m
+[125.822s] [ 38%] Built target filter_crop_box_node
+[127.517s] [ 41%] [32m[1mLinking CXX executable filter_voxel_grid_node[0m
+[127.866s] [ 41%] Built target filter_voxel_grid_node
+[128.661s] [ 45%] [32m[1mLinking CXX executable filter_statistical_outlier_removal_node[0m
+[128.925s] [ 45%] Built target filter_statistical_outlier_removal_node
+[128.934s] [ 48%] [32mBuilding CXX object CMakeFiles/pcd_to_pointcloud.dir/rclcpp_components/node_main_pcd_to_pointcloud.cpp.o[0m
+[129.011s] [ 51%] [32mBuilding CXX object CMakeFiles/pcd_to_pointcloud_lib.dir/tools/pcd_to_pointcloud.cpp.o[0m
+[129.030s] [ 54%] [32mBuilding CXX object tests/filters/CMakeFiles/dummy_topics.dir/dummy_topics.cpp.o[0m
+[143.577s] [ 58%] [32m[1mLinking CXX executable pcd_to_pointcloud[0m
+[144.012s] [ 58%] Built target pcd_to_pointcloud
+[160.900s] [ 61%] [32m[1mLinking CXX shared library libpcd_to_pointcloud_lib.so[0m
+[165.968s] [ 61%] Built target pcd_to_pointcloud_lib
+[167.202s] [ 64%] [32m[1mLinking CXX shared library libdummy_topics.so[0m
+[169.221s] [ 64%] Built target dummy_topics
+[169.286s] [ 67%] [32mBuilding CXX object CMakeFiles/pcl_ros_filters.dir/src/pcl_ros/filters/extract_indices.cpp.o[0m
+[169.288s] [ 70%] [32mBuilding CXX object CMakeFiles/pcl_ros_filters.dir/src/pcl_ros/filters/filter.cpp.o[0m
+[169.290s] [ 74%] [32mBuilding CXX object CMakeFiles/filter_extract_indices_node.dir/rclcpp_components/node_main_filter_extract_indices_node.cpp.o[0m
+[186.151s] [ 77%] [32m[1mLinking CXX executable filter_extract_indices_node[0m
+[186.618s] [ 77%] Built target filter_extract_indices_node
+[206.773s] [ 80%] [32mBuilding CXX object CMakeFiles/pcl_ros_filters.dir/src/pcl_ros/filters/project_inliers.cpp.o[0m
+[240.178s] [ 83%] [32mBuilding CXX object CMakeFiles/pcl_ros_filters.dir/src/pcl_ros/filters/radius_outlier_removal.cpp.o[0m
+[240.250s] [ 87%] [32mBuilding CXX object CMakeFiles/pcl_ros_filters.dir/src/pcl_ros/filters/passthrough.cpp.o[0m
+[318.714s] [ 90%] [32mBuilding CXX object CMakeFiles/pcl_ros_filters.dir/src/pcl_ros/filters/voxel_grid.cpp.o[0m
+[318.715s] [ 93%] [32mBuilding CXX object CMakeFiles/pcl_ros_filters.dir/src/pcl_ros/filters/crop_box.cpp.o[0m
+[318.716s] [ 96%] [32mBuilding CXX object CMakeFiles/pcl_ros_filters.dir/src/pcl_ros/filters/statistical_outlier_removal.cpp.o[0m
+[392.018s] [100%] [32m[1mLinking CXX shared library libpcl_ros_filters.so[0m
+[396.776s] [100%] Built target pcl_ros_filters
+[396.801s] Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_ros' returned '0': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_ros -- -j4 -l4
+[397.441s] Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_ros': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_ros
+[397.484s] -- Install configuration: ""
+[397.486s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/pcl_ros/filter_extract_indices_node
+[397.494s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/pcl_ros/filter_extract_indices_node" to ""
+[397.495s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/pcl_ros/filter_passthrough_node
+[397.509s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/pcl_ros/filter_passthrough_node" to ""
+[397.511s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/pcl_ros/filter_project_inliers_node
+[397.517s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/pcl_ros/filter_project_inliers_node" to ""
+[397.517s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/pcl_ros/filter_radius_outlier_removal_node
+[397.522s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/pcl_ros/filter_radius_outlier_removal_node" to ""
+[397.522s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/pcl_ros/filter_statistical_outlier_removal_node
+[397.526s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/pcl_ros/filter_statistical_outlier_removal_node" to ""
+[397.526s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/pcl_ros/filter_crop_box_node
+[397.532s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/pcl_ros/filter_crop_box_node" to ""
+[397.532s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/pcl_ros/filter_voxel_grid_node
+[397.537s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/pcl_ros/filter_voxel_grid_node" to ""
+[397.539s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/pcl_ros/pcd_to_pointcloud
+[397.545s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/pcl_ros/pcd_to_pointcloud" to ""
+[397.546s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros
+[397.547s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros
+[397.548s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/segmentation
+[397.548s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/segmentation/segment_differences.hpp
+[397.550s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/segmentation/extract_clusters.hpp
+[397.551s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/segmentation/extract_polygonal_prism_data.hpp
+[397.556s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/segmentation/sac_segmentation.hpp
+[397.559s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/point_cloud.hpp
+[397.562s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/impl
+[397.563s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/impl/transforms.hpp
+[397.565s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/io
+[397.571s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/io/concatenate_data.hpp
+[397.583s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/io/bag_io.hpp
+[397.584s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/io/concatenate_fields.hpp
+[397.584s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/io/pcd_io.hpp
+[397.584s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/transforms.hpp
+[397.591s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/publisher.hpp
+[397.593s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/filters
+[397.594s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/filters/voxel_grid.hpp
+[397.596s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/filters/statistical_outlier_removal.hpp
+[397.598s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/filters/radius_outlier_removal.hpp
+[397.601s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/filters/filter.hpp
+[397.602s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/filters/project_inliers.hpp
+[397.602s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/filters/extract_indices.hpp
+[397.603s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/filters/passthrough.hpp
+[397.603s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/filters/crop_box.hpp
+[397.604s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/surface
+[397.605s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/surface/convex_hull.hpp
+[397.606s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/surface/moving_least_squares.hpp
+[397.606s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/pcl_node.hpp
+[397.613s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/features
+[397.616s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/features/shot.hpp
+[397.617s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/features/fpfh.hpp
+[397.618s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/features/fpfh_omp.hpp
+[397.618s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/features/shot_omp.hpp
+[397.619s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/features/feature.hpp
+[397.621s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/features/boundary.hpp
+[397.622s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/features/pfh.hpp
+[397.623s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/features/normal_3d_omp.hpp
+[397.625s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/features/moment_invariants.hpp
+[397.626s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/features/normal_3d_tbb.hpp
+[397.632s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/features/principal_curvatures.hpp
+[397.632s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/features/vfh.hpp
+[397.633s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/include/pcl_ros/pcl_ros/features/normal_3d.hpp
+[397.633s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/libpcl_ros_tf.a
+[397.638s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/libpcd_to_pointcloud_lib.so
+[397.666s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/libpcd_to_pointcloud_lib.so" to ""
+[397.666s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/libpcl_ros_filters.so
+[397.730s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib/libpcl_ros_filters.so" to ""
+[397.730s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/plugins
+[397.730s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/plugins/nodelet
+[397.731s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/plugins/nodelet/libpcl_ros_features.xml
+[397.733s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/plugins/nodelet/libpcl_ros_filters.xml
+[397.734s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/plugins/nodelet/libpcl_ros_surface.xml
+[397.736s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/plugins/nodelet/libpcl_ros_io.xml
+[397.737s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/plugins/nodelet/libpcl_ros_segmentation.xml
+[397.738s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/samples
+[397.738s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/samples/pcl_ros
+[397.740s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/samples/pcl_ros/segmentation
+[397.743s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/samples/pcl_ros/segmentation/sample_extract_clusters.launch
+[397.747s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/samples/pcl_ros/io
+[397.753s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/samples/pcl_ros/io/sample_concatenate_data.launch
+[397.754s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/samples/pcl_ros/filters
+[397.754s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/samples/pcl_ros/filters/config
+[397.754s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/samples/pcl_ros/filters/config/voxel_grid.rviz
+[397.755s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/samples/pcl_ros/filters/config/statistical_outlier_removal.rviz
+[397.756s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/samples/pcl_ros/filters/sample_voxel_grid.launch
+[397.756s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/samples/pcl_ros/filters/sample_statistical_outlier_removal.launch
+[397.758s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/samples/pcl_ros/surface
+[397.758s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/samples/pcl_ros/surface/sample_convex_hull.launch
+[397.761s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/samples/pcl_ros/features
+[397.762s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/samples/pcl_ros/features/sample_normal_3d.launch
+[397.763s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/samples/data
+[397.763s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/samples/data/.gitignore
+[397.764s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/environment/library_path.sh
+[397.765s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/environment/library_path.dsv
+[397.769s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/ament_index/resource_index/package_run_dependencies/pcl_ros
+[397.774s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/ament_index/resource_index/parent_prefix_path/pcl_ros
+[397.779s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/environment/ament_prefix_path.sh
+[397.779s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/environment/ament_prefix_path.dsv
+[397.780s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/environment/path.sh
+[397.784s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/environment/path.dsv
+[397.784s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/local_setup.bash
+[397.786s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/local_setup.sh
+[397.788s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/local_setup.zsh
+[397.790s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/local_setup.dsv
+[397.791s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/package.dsv
+[397.792s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/ament_index/resource_index/packages/pcl_ros
+[397.797s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/ament_index/resource_index/rclcpp_components/pcl_ros
+[397.797s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/cmake/export_pcl_rosExport.cmake
+[397.800s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/cmake/export_pcl_rosExport-noconfig.cmake
+[397.809s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/cmake/ament_cmake_export_include_directories-extras.cmake
+[397.809s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/cmake/ament_cmake_export_libraries-extras.cmake
+[397.809s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/cmake/ament_cmake_export_targets-extras.cmake
+[397.810s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/cmake/ament_cmake_export_dependencies-extras.cmake
+[397.811s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/cmake/pcl_rosConfig.cmake
+[397.811s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/cmake/pcl_rosConfig-version.cmake
+[397.812s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/share/pcl_ros/package.xml
+[397.833s] Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_ros' returned '0': AMENT_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:${CMAKE_PREFIX_PATH} LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib/python3.11/site-packages:${PYTHONPATH} _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_ros
