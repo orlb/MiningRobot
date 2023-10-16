@@ -1,0 +1,314 @@
+[0.193s] Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/aurora_core': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/aurora_core -- -j4 -l4
+[0.307s] [ 50%] [32mBuilding CXX object CMakeFiles/aurora_node_core.dir/src/aurora_node_core.cpp.o[0m
+[3.793s] In file included from [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vec2.h:9[m[K,
+[3.793s]                  from [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/coords.h:30[m[K,
+[3.793s]                  from [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/robot_base.h:10[m[K,
+[3.793s]                  from [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/src/aurora_node_core.cpp:10[m[K:
+[3.793s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vector2d.h:[m[K In copy constructor ‘[01m[Kosl::Vector2d::[01;32m[KVector2d[m[K(const osl::Vector2d&)[m[K’:
+[3.793s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vector2d.h:157:9:[m[K [01;35m[Kwarning: [m[Kbase class ‘[01m[Kclass osl::Vector2dT<double, osl::Vector2d>[m[K’ should be explicitly initialized in the copy constructor [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wextra-Wextra]8;;[m[K]
+[3.794s]   157 |         [01;35m[KVector2d[m[K(const Vector2d &copy) {x=copy.x;y=copy.y;}
+[3.794s]       |         [01;35m[K^~~~~~~~[m[K
+[3.796s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vector2d.h:[m[K In member function ‘[01m[Kbool osl::LineSeg::[01;32m[Kintersects[m[K(const osl::LineSeg&, bool, osl::Vector2d*) const[m[K’:
+[3.797s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vector2d.h:244:34:[m[K [01;35m[Kwarning: [m[Kimplicitly-declared ‘[01m[Kosl::Vector2d& osl::Vector2d::[01;32m[Koperator=[m[K(const osl::Vector2d&)[m[K’ is deprecated [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-copy-Wdeprecated-copy]8;;[m[K]
+[3.797s]   244 |                         *ret=at(t[01;35m[K)[m[K;
+[3.797s]       |                                  [01;35m[K^[m[K
+[3.797s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vector2d.h:157:9:[m[K [01;36m[Knote: [m[Kbecause ‘[01m[Kosl::Vector2d[m[K’ has user-provided ‘[01m[Kosl::Vector2d::[01;32m[KVector2d[m[K(const osl::Vector2d&)[m[K’
+[3.797s]   157 |         [01;36m[KVector2d[m[K(const Vector2d &copy) {x=copy.x;y=copy.y;}
+[3.797s]       |         [01;36m[K^~~~~~~~[m[K
+[3.798s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vector2d.h:247:34:[m[K [01;35m[Kwarning: [m[Kimplicitly-declared ‘[01m[Kosl::Vector2d& osl::Vector2d::[01;32m[Koperator=[m[K(const osl::Vector2d&)[m[K’ is deprecated [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-copy-Wdeprecated-copy]8;;[m[K]
+[3.798s]   247 |                         *ret=at(t[01;35m[K)[m[K;
+[3.798s]       |                                  [01;35m[K^[m[K
+[3.798s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vector2d.h:157:9:[m[K [01;36m[Knote: [m[Kbecause ‘[01m[Kosl::Vector2d[m[K’ has user-provided ‘[01m[Kosl::Vector2d::[01;32m[KVector2d[m[K(const osl::Vector2d&)[m[K’
+[3.798s]   157 |         [01;36m[KVector2d[m[K(const Vector2d &copy) {x=copy.x;y=copy.y;}
+[3.798s]       |         [01;36m[K^~~~~~~~[m[K
+[3.799s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vector2d.h:[m[K In member function ‘[01m[Kvoid osl::Halfspace2d::[01;32m[KinitCheck[m[K(cv&, cv&, cv&)[m[K’:
+[3.799s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vector2d.h:279:43:[m[K [01;35m[Kwarning: [m[Kimplicitly-declared ‘[01m[Kosl::Vector2d& osl::Vector2d::[01;32m[Koperator=[m[K(const osl::Vector2d&)[m[K’ is deprecated [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wdeprecated-copy-Wdeprecated-copy]8;;[m[K]
+[3.799s]   279 |         { init(p1,p2);if (side(in)<0) {n=-[01;35m[Kn[m[K;d=-d;} }
+[3.799s]       |                                           [01;35m[K^[m[K
+[3.799s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../osl/vector2d.h:157:9:[m[K [01;36m[Knote: [m[Kbecause ‘[01m[Kosl::Vector2d[m[K’ has user-provided ‘[01m[Kosl::Vector2d::[01;32m[KVector2d[m[K(const osl::Vector2d&)[m[K’
+[3.800s]   157 |         [01;36m[KVector2d[m[K(const Vector2d &copy) {x=copy.x;y=copy.y;}
+[3.800s]       |         [01;36m[K^~~~~~~~[m[K
+[3.857s] In file included from [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/nanoslot_IMU.h:10[m[K,
+[3.858s]                  from [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/nanoslot_exchange.h:21[m[K,
+[3.858s]                  from [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/lunatic.h:43[m[K,
+[3.858s]                  from [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/src/aurora_node_core.cpp:12[m[K:
+[3.858s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionVector[01;32m[K FusionVectorAdd[m[K(FusionVector, FusionVector)[m[K’:
+[3.859s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:207:34:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.859s]   207 |     const FusionVector result = {[01;35m[K.[m[Kaxis = {
+[3.859s]       |                                  [01;35m[K^[m[K
+[3.859s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:208:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.859s]   208 |             [01;35m[K.[m[Kx = vectorA.axis.x + vectorB.axis.x,
+[3.860s]       |             [01;35m[K^[m[K
+[3.860s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:209:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.860s]   209 |             [01;35m[K.[m[Ky = vectorA.axis.y + vectorB.axis.y,
+[3.860s]       |             [01;35m[K^[m[K
+[3.861s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:210:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.861s]   210 |             [01;35m[K.[m[Kz = vectorA.axis.z + vectorB.axis.z,
+[3.861s]       |             [01;35m[K^[m[K
+[3.861s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionVector[01;32m[K FusionVectorSubtract[m[K(FusionVector, FusionVector)[m[K’:
+[3.861s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:222:34:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.862s]   222 |     const FusionVector result = {[01;35m[K.[m[Kaxis = {
+[3.862s]       |                                  [01;35m[K^[m[K
+[3.862s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:223:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.862s]   223 |             [01;35m[K.[m[Kx = vectorA.axis.x - vectorB.axis.x,
+[3.863s]       |             [01;35m[K^[m[K
+[3.863s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:224:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.863s]   224 |             [01;35m[K.[m[Ky = vectorA.axis.y - vectorB.axis.y,
+[3.863s]       |             [01;35m[K^[m[K
+[3.864s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:225:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.864s]   225 |             [01;35m[K.[m[Kz = vectorA.axis.z - vectorB.axis.z,
+[3.864s]       |             [01;35m[K^[m[K
+[3.864s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionVector[01;32m[K FusionVectorMultiplyScalar[m[K(FusionVector, float)[m[K’:
+[3.864s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:246:34:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.864s]   246 |     const FusionVector result = {[01;35m[K.[m[Kaxis = {
+[3.865s]       |                                  [01;35m[K^[m[K
+[3.865s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:247:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.865s]   247 |             [01;35m[K.[m[Kx = vector.axis.x * scalar,
+[3.865s]       |             [01;35m[K^[m[K
+[3.865s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:248:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.865s]   248 |             [01;35m[K.[m[Ky = vector.axis.y * scalar,
+[3.866s]       |             [01;35m[K^[m[K
+[3.866s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:249:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.866s]   249 |             [01;35m[K.[m[Kz = vector.axis.z * scalar,
+[3.866s]       |             [01;35m[K^[m[K
+[3.866s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionVector[01;32m[K FusionVectorHadamardProduct[m[K(FusionVector, FusionVector)[m[K’:
+[3.866s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:261:34:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.866s]   261 |     const FusionVector result = {[01;35m[K.[m[Kaxis = {
+[3.867s]       |                                  [01;35m[K^[m[K
+[3.867s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:262:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.867s]   262 |             [01;35m[K.[m[Kx = vectorA.axis.x * vectorB.axis.x,
+[3.867s]       |             [01;35m[K^[m[K
+[3.867s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:263:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.867s]   263 |             [01;35m[K.[m[Ky = vectorA.axis.y * vectorB.axis.y,
+[3.867s]       |             [01;35m[K^[m[K
+[3.867s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:264:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.868s]   264 |             [01;35m[K.[m[Kz = vectorA.axis.z * vectorB.axis.z,
+[3.868s]       |             [01;35m[K^[m[K
+[3.868s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionVector[01;32m[K FusionVectorCrossProduct[m[K(FusionVector, FusionVector)[m[K’:
+[3.868s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:290:34:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.868s]   290 |     const FusionVector result = {[01;35m[K.[m[Kaxis = {
+[3.868s]       |                                  [01;35m[K^[m[K
+[3.868s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:291:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.868s]   291 |             [01;35m[K.[m[Kx = A.y * B.z - A.z * B.y,
+[3.868s]       |             [01;35m[K^[m[K
+[3.869s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:292:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.869s]   292 |             [01;35m[K.[m[Ky = A.z * B.x - A.x * B.z,
+[3.869s]       |             [01;35m[K^[m[K
+[3.869s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:293:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.869s]   293 |             [01;35m[K.[m[Kz = A.x * B.y - A.y * B.x,
+[3.869s]       |             [01;35m[K^[m[K
+[3.869s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionQuaternion[01;32m[K FusionQuaternionZradians[m[K(float)[m[K’:
+[3.869s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:339:33:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.869s]   339 |     const FusionQuaternion Q = {[01;35m[K.[m[Kelement = {
+[3.869s]       |                                 [01;35m[K^[m[K
+[3.869s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:340:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.870s]   340 |             [01;35m[K.[m[Kw = cosf(a),
+[3.870s]       |             [01;35m[K^[m[K
+[3.870s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:341:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.870s]   341 |             [01;35m[K.[m[Kx = 0.0f,
+[3.870s]       |             [01;35m[K^[m[K
+[3.870s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:342:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.870s]   342 |             [01;35m[K.[m[Ky = 0.0f,
+[3.870s]       |             [01;35m[K^[m[K
+[3.870s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:343:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.870s]   343 |             [01;35m[K.[m[Kz = 1.0f * sinf(a),
+[3.870s]       |             [01;35m[K^[m[K
+[3.871s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionQuaternion[01;32m[K FusionQuaternionAdd[m[K(FusionQuaternion, FusionQuaternion)[m[K’:
+[3.871s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:363:38:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.871s]   363 |     const FusionQuaternion result = {[01;35m[K.[m[Kelement = {
+[3.871s]       |                                      [01;35m[K^[m[K
+[3.871s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:364:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.871s]   364 |             [01;35m[K.[m[Kw = quaternionA.element.w + quaternionB.element.w,
+[3.871s]       |             [01;35m[K^[m[K
+[3.871s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:365:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.871s]   365 |             [01;35m[K.[m[Kx = quaternionA.element.x + quaternionB.element.x,
+[3.871s]       |             [01;35m[K^[m[K
+[3.872s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:366:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.872s]   366 |             [01;35m[K.[m[Ky = quaternionA.element.y + quaternionB.element.y,
+[3.872s]       |             [01;35m[K^[m[K
+[3.872s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:367:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.872s]   367 |             [01;35m[K.[m[Kz = quaternionA.element.z + quaternionB.element.z,
+[3.872s]       |             [01;35m[K^[m[K
+[3.872s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionQuaternion[01;32m[K FusionQuaternionMultiply[m[K(FusionQuaternion, FusionQuaternion)[m[K’:
+[3.872s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:381:38:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.872s]   381 |     const FusionQuaternion result = {[01;35m[K.[m[Kelement = {
+[3.872s]       |                                      [01;35m[K^[m[K
+[3.872s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:382:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.873s]   382 |             [01;35m[K.[m[Kw = A.w * B.w - A.x * B.x - A.y * B.y - A.z * B.z,
+[3.873s]       |             [01;35m[K^[m[K
+[3.873s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:383:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.873s]   383 |             [01;35m[K.[m[Kx = A.w * B.x + A.x * B.w + A.y * B.z - A.z * B.y,
+[3.873s]       |             [01;35m[K^[m[K
+[3.873s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:384:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.873s]   384 |             [01;35m[K.[m[Ky = A.w * B.y - A.x * B.z + A.y * B.w + A.z * B.x,
+[3.873s]       |             [01;35m[K^[m[K
+[3.873s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:385:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.873s]   385 |             [01;35m[K.[m[Kz = A.w * B.z + A.x * B.y - A.y * B.x + A.z * B.w,
+[3.874s]       |             [01;35m[K^[m[K
+[3.874s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionQuaternion[01;32m[K FusionQuaternionMultiplyVector[m[K(FusionQuaternion, FusionVector)[m[K’:
+[3.874s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:404:38:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.874s]   404 |     const FusionQuaternion result = {[01;35m[K.[m[Kelement = {
+[3.874s]       |                                      [01;35m[K^[m[K
+[3.874s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:405:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.874s]   405 |             [01;35m[K.[m[Kw = -Q.x * V.x - Q.y * V.y - Q.z * V.z,
+[3.874s]       |             [01;35m[K^[m[K
+[3.874s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:406:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.874s]   406 |             [01;35m[K.[m[Kx = Q.w * V.x + Q.y * V.z - Q.z * V.y,
+[3.874s]       |             [01;35m[K^[m[K
+[3.875s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:407:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.875s]   407 |             [01;35m[K.[m[Ky = Q.w * V.y - Q.x * V.z + Q.z * V.x,
+[3.875s]       |             [01;35m[K^[m[K
+[3.875s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:408:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.875s]   408 |             [01;35m[K.[m[Kz = Q.w * V.z + Q.x * V.y - Q.y * V.x,
+[3.875s]       |             [01;35m[K^[m[K
+[3.875s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionQuaternion[01;32m[K FusionQuaternionConjugate[m[K(FusionQuaternion)[m[K’:
+[3.875s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:424:38:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.875s]   424 |     const FusionQuaternion result = {[01;35m[K.[m[Kelement = {
+[3.875s]       |                                      [01;35m[K^[m[K
+[3.876s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:425:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.876s]   425 |             [01;35m[K.[m[Kw = Q.w,
+[3.876s]       |             [01;35m[K^[m[K
+[3.876s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:426:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.876s]   426 |             [01;35m[K.[m[Kx = -Q.x,
+[3.876s]       |             [01;35m[K^[m[K
+[3.876s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:427:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.876s]   427 |             [01;35m[K.[m[Ky = -Q.y,
+[3.876s]       |             [01;35m[K^[m[K
+[3.876s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:428:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.876s]   428 |             [01;35m[K.[m[Kz = -Q.z,
+[3.877s]       |             [01;35m[K^[m[K
+[3.877s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionQuaternion[01;32m[K FusionQuaternionNormalise[m[K(FusionQuaternion)[m[K’:
+[3.877s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:448:38:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.877s]   448 |     const FusionQuaternion result = {[01;35m[K.[m[Kelement = {
+[3.877s]       |                                      [01;35m[K^[m[K
+[3.877s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:449:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.877s]   449 |             [01;35m[K.[m[Kw = Q.w * magnitudeReciprocal,
+[3.877s]       |             [01;35m[K^[m[K
+[3.877s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:450:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.877s]   450 |             [01;35m[K.[m[Kx = Q.x * magnitudeReciprocal,
+[3.877s]       |             [01;35m[K^[m[K
+[3.878s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:451:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.878s]   451 |             [01;35m[K.[m[Ky = Q.y * magnitudeReciprocal,
+[3.878s]       |             [01;35m[K^[m[K
+[3.878s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:452:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.878s]   452 |             [01;35m[K.[m[Kz = Q.z * magnitudeReciprocal,
+[3.878s]       |             [01;35m[K^[m[K
+[3.878s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionVector[01;32m[K FusionMatrixMultiplyVector[m[K(FusionMatrix, FusionVector)[m[K’:
+[3.878s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:469:34:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.878s]   469 |     const FusionVector result = {[01;35m[K.[m[Kaxis = {
+[3.878s]       |                                  [01;35m[K^[m[K
+[3.879s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:470:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.879s]   470 |             [01;35m[K.[m[Kx = R.xx * vector.axis.x + R.xy * vector.axis.y + R.xz * vector.axis.z,
+[3.879s]       |             [01;35m[K^[m[K
+[3.879s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:471:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.879s]   471 |             [01;35m[K.[m[Ky = R.yx * vector.axis.x + R.yy * vector.axis.y + R.yz * vector.axis.z,
+[3.879s]       |             [01;35m[K^[m[K
+[3.879s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:472:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.879s]   472 |             [01;35m[K.[m[Kz = R.zx * vector.axis.x + R.zy * vector.axis.y + R.zz * vector.axis.z,
+[3.879s]       |             [01;35m[K^[m[K
+[3.880s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionVector[01;32m[K FusionQuaternionXaxis[m[K(FusionQuaternion)[m[K’:
+[3.880s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:484:34:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.880s]   484 |     const FusionVector result = {[01;35m[K.[m[Kaxis={
+[3.880s]       |                                  [01;35m[K^[m[K
+[3.880s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:485:5:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.880s]   485 |     [01;35m[K.[m[Kx = 2.0f * (Q.w*Q.w - 0.5f + Q.x * Q.x),
+[3.880s]       |     [01;35m[K^[m[K
+[3.881s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:486:5:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.881s]   486 |     [01;35m[K.[m[Ky = 2.0f * (Q.x*Q.y + Q.w*Q.z),
+[3.881s]       |     [01;35m[K^[m[K
+[3.881s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:487:5:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.881s]   487 |     [01;35m[K.[m[Kz = 2.0f * (Q.x*Q.z - Q.w*Q.y),
+[3.881s]       |     [01;35m[K^[m[K
+[3.881s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionVector[01;32m[K FusionQuaternionYaxis[m[K(FusionQuaternion)[m[K’:
+[3.882s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:495:34:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.882s]   495 |     const FusionVector result = {[01;35m[K.[m[Kaxis={
+[3.882s]       |                                  [01;35m[K^[m[K
+[3.882s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:496:5:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.882s]   496 |     [01;35m[K.[m[Kx = 2.0f * (Q.x*Q.y - Q.w*Q.z),
+[3.882s]       |     [01;35m[K^[m[K
+[3.882s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:497:5:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.882s]   497 |     [01;35m[K.[m[Ky = 2.0f * (Q.w*Q.w - 0.5f + Q.y * Q.y),
+[3.882s]       |     [01;35m[K^[m[K
+[3.882s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:498:5:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.883s]   498 |     [01;35m[K.[m[Kz = 2.0f * (Q.y*Q.z + Q.w*Q.x),
+[3.883s]       |     [01;35m[K^[m[K
+[3.883s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionVector[01;32m[K FusionQuaternionZaxis[m[K(FusionQuaternion)[m[K’:
+[3.883s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:506:34:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.883s]   506 |     const FusionVector result = {[01;35m[K.[m[Kaxis={
+[3.883s]       |                                  [01;35m[K^[m[K
+[3.883s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:507:5:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.883s]   507 |     [01;35m[K.[m[Kx = 2.0f * (Q.x*Q.z + Q.w*Q.y),
+[3.883s]       |     [01;35m[K^[m[K
+[3.883s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:508:5:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.883s]   508 |     [01;35m[K.[m[Ky = 2.0f * (Q.y*Q.z - Q.w*Q.x),
+[3.884s]       |     [01;35m[K^[m[K
+[3.884s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:509:5:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.884s]   509 |     [01;35m[K.[m[Kz = 2.0f * (Q.w*Q.w - 0.5f + Q.z * Q.z),
+[3.884s]       |     [01;35m[K^[m[K
+[3.884s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionMatrix[01;32m[K FusionQuaternionToMatrix[m[K(FusionQuaternion)[m[K’:
+[3.884s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:530:34:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.884s]   530 |     const FusionMatrix matrix = {[01;35m[K.[m[Kelement = {
+[3.884s]       |                                  [01;35m[K^[m[K
+[3.884s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:531:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.884s]   531 |             [01;35m[K.[m[Kxx = 2.0f * (qwqw - 0.5f + Q.x * Q.x),
+[3.885s]       |             [01;35m[K^[m[K
+[3.885s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:532:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.885s]   532 |             [01;35m[K.[m[Kxy = 2.0f * (qxqy - qwqz),
+[3.885s]       |             [01;35m[K^[m[K
+[3.885s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:533:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.885s]   533 |             [01;35m[K.[m[Kxz = 2.0f * (qxqz + qwqy),
+[3.885s]       |             [01;35m[K^[m[K
+[3.885s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:535:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.885s]   535 |             [01;35m[K.[m[Kyx = 2.0f * (qxqy + qwqz),
+[3.885s]       |             [01;35m[K^[m[K
+[3.886s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:536:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.886s]   536 |             [01;35m[K.[m[Kyy = 2.0f * (qwqw - 0.5f + Q.y * Q.y),
+[3.886s]       |             [01;35m[K^[m[K
+[3.886s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:537:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.886s]   537 |             [01;35m[K.[m[Kyz = 2.0f * (qyqz - qwqx),
+[3.886s]       |             [01;35m[K^[m[K
+[3.886s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:539:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.886s]   539 |             [01;35m[K.[m[Kzx = 2.0f * (qxqz - qwqy),
+[3.886s]       |             [01;35m[K^[m[K
+[3.886s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:540:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.886s]   540 |             [01;35m[K.[m[Kzy = 2.0f * (qyqz + qwqx),
+[3.887s]       |             [01;35m[K^[m[K
+[3.887s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:541:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.887s]   541 |             [01;35m[K.[m[Kzz = 2.0f * (qwqw - 0.5f + Q.z * Q.z),
+[3.887s]       |             [01;35m[K^[m[K
+[3.887s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:[m[K In function ‘[01m[KFusionEuler[01;32m[K FusionQuaternionToEuler[m[K(FusionQuaternion)[m[K’:
+[3.887s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:555:32:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.887s]   555 |     const FusionEuler euler = {[01;35m[K.[m[Kangle = {
+[3.887s]       |                                [01;35m[K^[m[K
+[3.887s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:556:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.887s]   556 |             [01;35m[K.[m[Kroll = FusionRadiansToDegrees(atan2f(Q.w * Q.x + Q.y * Q.z, halfMinusQySquared - Q.x * Q.x)),
+[3.888s]       |             [01;35m[K^[m[K
+[3.888s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:557:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.888s]   557 |             [01;35m[K.[m[Kpitch = FusionRadiansToDegrees(FusionAsin(2.0f * (Q.w * Q.y - Q.z * Q.x))),
+[3.888s]       |             [01;35m[K^[m[K
+[3.888s] [01m[K/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/aurora_core_sl/include/base/include/aurora/../nanoslot/FusionMath.h:558:13:[m[K [01;35m[Kwarning: [m[KC++ designated initializers only available with ‘[01m[K-std=c++20[m[K’ or ‘[01m[K-std=gnu++20[m[K’ [[01;35m[K]8;;https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wc++20-extensions-Wc++20-extensions]8;;[m[K]
+[3.888s]   558 |             [01;35m[K.[m[Kyaw = FusionRadiansToDegrees(atan2f(Q.w * Q.z + Q.x * Q.y, halfMinusQySquared - Q.z * Q.z)),
+[3.888s]       |             [01;35m[K^[m[K
+[5.134s] [100%] [32m[1mLinking CXX executable aurora_node_core[0m
+[7.073s] [100%] Built target aurora_node_core
+[7.086s] Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/aurora_core' returned '0': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/aurora_core -- -j4 -l4
+[7.178s] Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/aurora_core': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/aurora_core
+[7.188s] -- Install configuration: ""
+[7.190s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/lib/aurora_core/aurora_node_core
+[7.192s] -- Set runtime path of "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/lib/aurora_core/aurora_node_core" to ""
+[7.192s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/ament_index/resource_index/package_run_dependencies/aurora_core
+[7.193s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/ament_index/resource_index/parent_prefix_path/aurora_core
+[7.193s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/environment/ament_prefix_path.sh
+[7.193s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/environment/ament_prefix_path.dsv
+[7.193s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/environment/path.sh
+[7.193s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/environment/path.dsv
+[7.193s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/local_setup.bash
+[7.194s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/local_setup.sh
+[7.194s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/local_setup.zsh
+[7.194s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/local_setup.dsv
+[7.194s] -- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/package.dsv
+[7.194s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/ament_index/resource_index/packages/aurora_core
+[7.194s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/cmake/aurora_coreConfig.cmake
+[7.194s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/cmake/aurora_coreConfig-version.cmake
+[7.195s] -- Up-to-date: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core/share/aurora_core/package.xml
+[7.196s] Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/aurora_core' returned '0': CMAKE_PREFIX_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_conversions:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/aurora_core:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/perception_pcl:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros:/opt/ros/humble LD_LIBRARY_PATH=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ros2_ouster/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_msgs/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/ouster_msgs/lib:/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/install/pcl_ros/lib:/opt/ros/humble/opt/yaml_cpp_vendor/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib _=/usr/bin/env /usr/bin/cmake --install /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/aurora_core

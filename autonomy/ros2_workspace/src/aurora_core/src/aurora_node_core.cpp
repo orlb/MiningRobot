@@ -1,7 +1,7 @@
 /**
 * Simple ROS Node
 *
-* TODO write shared memory, read from backend
+* TODO write shared memory
 *
 **/
 
@@ -15,7 +15,7 @@
 #include <chrono>
 #include <thread>
 
-int main(int argc, char* argv[]) {
+int main ( int argc, char ** argv ) {
 
     /* ros2 : node init ------------------------------------------------------------------------- */
 
@@ -25,21 +25,21 @@ int main(int argc, char* argv[]) {
         // Create a ROS node
     auto node = std::make_shared<rclcpp::Node>("aurora_node_core");
 
-    /* ~ros2 ----------------------------------------------------------------------------------- */
+    /* ~ros2 ------------------------------------------------------------------------------------ */
 
-    /* main loop : read state from robot_base -------------------------------------------------- */
+    /* main loop : read state from robot_base --------------------------------------------------- */
 
         // get robot_base
     MAKE_exchange_backend_state();
     const robot_base & robot = exchange_backend_state.read();
 
-    while (true) {
+    while ( true ) {
         std::cout << state_to_string(robot.state) << std::endl;
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
         // RCLCPP_INFO(node->get_logger(), "This works!");
     }
 
-    /* ~main loop ------------------------------------------------------------------------------ */
+    /* ~main loop ------------------------------------------------------------------------------- */
 
         // Don't exit the program.
     //rclcpp::spin(node);
