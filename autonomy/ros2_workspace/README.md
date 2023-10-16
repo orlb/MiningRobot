@@ -6,7 +6,7 @@ Topics of interest include :
 - Implementing ROS2 packages for point cloud based navigation (SLAM, etc.)
 
 Ideas :
-- ROS2 OS1 drivers publish lidar data as ROS messages on [topics](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html) over IP. We would like to write this data to shared memory instead. Here's a related ROS package : [https://wiki.ros.org/shm_transport](https://wiki.ros.org/shm_transport)
+- ROS2 OS1 drivers publish lidar data as ROS messages on [topics](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html) over IP. Any packages we use for mapping and localization may do the same, but any instructional output to be sent to the robot should be written to shared memory for compatibility. Here's a related ROS package : [https://wiki.ros.org/shm_transport](https://wiki.ros.org/shm_transport)
 
 ## Building dependencies
 

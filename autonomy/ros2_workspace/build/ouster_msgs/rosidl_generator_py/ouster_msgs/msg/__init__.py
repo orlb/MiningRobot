@@ -1,1 +1,1 @@
-from ouster_msgs.msg._metadata import Metadata  # noqa: F401
+from ouster_msgs.msg._packet_msg import PacketMsg  # noqa: F401

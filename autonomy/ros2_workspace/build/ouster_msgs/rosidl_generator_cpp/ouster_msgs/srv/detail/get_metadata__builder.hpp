@@ -18,26 +18,6 @@ namespace ouster_msgs
 namespace srv
 {
 
-namespace builder
-{
-
-class Init_GetMetadata_Request_metadata_filepath
-{
-public:
-  Init_GetMetadata_Request_metadata_filepath()
-  : msg_(::rosidl_runtime_cpp::MessageInitialization::SKIP)
-  {}
-  ::ouster_msgs::srv::GetMetadata_Request metadata_filepath(::ouster_msgs::srv::GetMetadata_Request::_metadata_filepath_type arg)
-  {
-    msg_.metadata_filepath = std::move(arg);
-    return std::move(msg_);
-  }
-
-private:
-  ::ouster_msgs::srv::GetMetadata_Request msg_;
-};
-
-}  // namespace builder
 
 }  // namespace srv
 
@@ -48,7 +28,7 @@ template<>
 inline
 auto build<::ouster_msgs::srv::GetMetadata_Request>()
 {
-  return ouster_msgs::srv::builder::Init_GetMetadata_Request_metadata_filepath();
+  return ::ouster_msgs::srv::GetMetadata_Request(rosidl_runtime_cpp::MessageInitialization::ZERO);
 }
 
 }  // namespace ouster_msgs

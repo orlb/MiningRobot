@@ -60,7 +60,7 @@ add_library(ouster_msgs::ouster_msgs__rosidl_generator_py SHARED IMPORTED)
 
 set_target_properties(ouster_msgs::ouster_msgs__rosidl_generator_py PROPERTIES
   INTERFACE_INCLUDE_DIRECTORIES "/usr/lib/python3.11/site-packages/numpy/core/include"
-  INTERFACE_LINK_LIBRARIES "ouster_msgs::ouster_msgs__rosidl_generator_c;/usr/lib/libpython3.11.so;ouster_msgs::ouster_msgs__rosidl_typesupport_c;builtin_interfaces::builtin_interfaces__rosidl_generator_py;std_msgs::std_msgs__rosidl_generator_py"
+  INTERFACE_LINK_LIBRARIES "ouster_msgs::ouster_msgs__rosidl_generator_c;/usr/lib/libpython3.11.so;ouster_msgs::ouster_msgs__rosidl_typesupport_c;std_msgs::std_msgs__rosidl_generator_py;builtin_interfaces::builtin_interfaces__rosidl_generator_py"
 )
 
 if(CMAKE_VERSION VERSION_LESS 2.8.12)

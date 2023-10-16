@@ -1,2 +1,1 @@
-
-string metadata_filepath
+/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/ouster_msgs/rosidl_cmake/srv/GetMetadata_Request.msg

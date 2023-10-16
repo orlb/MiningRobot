@@ -16,7 +16,7 @@ set(_ouster_msgs_CONFIG_INCLUDED TRUE)
 
 # output package information
 if(NOT ouster_msgs_FIND_QUIETLY)
-  message(STATUS "Found ouster_msgs: 0.5.0 (${ouster_msgs_DIR})")
+  message(STATUS "Found ouster_msgs: 0.2.0 (${ouster_msgs_DIR})")
 endif()
 
 # warn when using a deprecated package

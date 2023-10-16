@@ -1,1 +1,1 @@
-prepend-non-duplicate;PYTHONPATH;lib/python3.11/site-packages
+/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/ouster_msgs/ament_cmake_environment_hooks/pythonpath.dsv

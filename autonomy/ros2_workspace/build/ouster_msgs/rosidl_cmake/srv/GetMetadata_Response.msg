@@ -1,2 +1,2 @@
 
-ouster_msgs/Metadata metadata
+string metadata

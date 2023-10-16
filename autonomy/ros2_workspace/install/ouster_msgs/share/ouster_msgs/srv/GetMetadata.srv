@@ -1,4 +1,1 @@
-
-string metadata_filepath
----
-ouster_msgs/Metadata metadata
+/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/ouster-ros/ouster-msgs/srv/GetMetadata.srv

@@ -1,6 +1,0 @@
-setup.py
-ouster_msgs/__init__.py
-ouster_msgs.egg-info/PKG-INFO
-ouster_msgs.egg-info/SOURCES.txt
-ouster_msgs.egg-info/dependency_links.txt
-ouster_msgs.egg-info/top_level.txt

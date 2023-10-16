@@ -1,2 +1,4 @@
+/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/ouster_msgs/rosidl_adapter/ouster_msgs:msg/PacketMsg.idl
+/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/ouster_msgs/rosidl_adapter/ouster_msgs:srv/GetConfig.idl
+/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/ouster_msgs/rosidl_adapter/ouster_msgs:srv/SetConfig.idl
 /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/ouster_msgs/rosidl_adapter/ouster_msgs:srv/GetMetadata.idl
-/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/ouster_msgs/rosidl_adapter/ouster_msgs:msg/Metadata.idl

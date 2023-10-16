@@ -34,8 +34,6 @@ extern "C"
 {
 #endif
 
-#include "rosidl_runtime_c/string.h"  // metadata_filepath
-#include "rosidl_runtime_c/string_functions.h"  // metadata_filepath
 
 // forward declare type support functions
 
@@ -51,18 +49,9 @@ static bool _GetMetadata_Request__cdr_serialize(
     return false;
   }
   const _GetMetadata_Request__ros_msg_type * ros_message = static_cast<const _GetMetadata_Request__ros_msg_type *>(untyped_ros_message);
-  // Field name: metadata_filepath
+  // Field name: structure_needs_at_least_one_member
   {
-    const rosidl_runtime_c__String * str = &ros_message->metadata_filepath;
-    if (str->capacity == 0 || str->capacity <= str->size) {
-      fprintf(stderr, "string capacity not greater than size\n");
-      return false;
-    }
-    if (str->data[str->size] != '\0') {
-      fprintf(stderr, "string not null-terminated\n");
-      return false;
-    }
-    cdr << str->data;
+    cdr << ros_message->structure_needs_at_least_one_member;
   }
 
   return true;
@@ -77,20 +66,9 @@ static bool _GetMetadata_Request__cdr_deserialize(
     return false;
   }
   _GetMetadata_Request__ros_msg_type * ros_message = static_cast<_GetMetadata_Request__ros_msg_type *>(untyped_ros_message);
-  // Field name: metadata_filepath
+  // Field name: structure_needs_at_least_one_member
   {
-    std::string tmp;
-    cdr >> tmp;
-    if (!ros_message->metadata_filepath.data) {
-      rosidl_runtime_c__String__init(&ros_message->metadata_filepath);
-    }
-    bool succeeded = rosidl_runtime_c__String__assign(
-      &ros_message->metadata_filepath,
-      tmp.c_str());
-    if (!succeeded) {
-      fprintf(stderr, "failed to assign string into field 'metadata_filepath'\n");
-      return false;
-    }
+    cdr >> ros_message->structure_needs_at_least_one_member;
   }
 
   return true;
@@ -110,10 +88,12 @@ size_t get_serialized_size_ouster_msgs__srv__GetMetadata_Request(
   (void)padding;
   (void)wchar_size;
 
-  // field.name metadata_filepath
-  current_alignment += padding +
-    eprosima::fastcdr::Cdr::alignment(current_alignment, padding) +
-    (ros_message->metadata_filepath.size + 1);
+  // field.name structure_needs_at_least_one_member
+  {
+    size_t item_size = sizeof(ros_message->structure_needs_at_least_one_member);
+    current_alignment += item_size +
+      eprosima::fastcdr::Cdr::alignment(current_alignment, item_size);
+  }
 
   return current_alignment - initial_alignment;
 }
@@ -141,17 +121,11 @@ size_t max_serialized_size_ouster_msgs__srv__GetMetadata_Request(
   full_bounded = true;
   is_plain = true;
 
-  // member: metadata_filepath
+  // member: structure_needs_at_least_one_member
   {
     size_t array_size = 1;
 
-    full_bounded = false;
-    is_plain = false;
-    for (size_t index = 0; index < array_size; ++index) {
-      current_alignment += padding +
-        eprosima::fastcdr::Cdr::alignment(current_alignment, padding) +
-        1;
-    }
+    current_alignment += array_size * sizeof(uint8_t);
   }
 
   return current_alignment - initial_alignment;
@@ -237,20 +211,10 @@ extern "C"
 {
 #endif
 
-#include "ouster_msgs/msg/detail/metadata__functions.h"  // metadata
+#include "rosidl_runtime_c/string.h"  // metadata
+#include "rosidl_runtime_c/string_functions.h"  // metadata
 
 // forward declare type support functions
-size_t get_serialized_size_ouster_msgs__msg__Metadata(
-  const void * untyped_ros_message,
-  size_t current_alignment);
-
-size_t max_serialized_size_ouster_msgs__msg__Metadata(
-  bool & full_bounded,
-  bool & is_plain,
-  size_t current_alignment);
-
-const rosidl_message_type_support_t *
-  ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_fastrtps_c, ouster_msgs, msg, Metadata)();
 
 
 using _GetMetadata_Response__ros_msg_type = ouster_msgs__srv__GetMetadata_Response;
@@ -266,16 +230,16 @@ static bool _GetMetadata_Response__cdr_serialize(
   const _GetMetadata_Response__ros_msg_type * ros_message = static_cast<const _GetMetadata_Response__ros_msg_type *>(untyped_ros_message);
   // Field name: metadata
   {
-    const message_type_support_callbacks_t * callbacks =
-      static_cast<const message_type_support_callbacks_t *>(
-      ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(
-        rosidl_typesupport_fastrtps_c, ouster_msgs, msg, Metadata
-      )()->data);
-    if (!callbacks->cdr_serialize(
-        &ros_message->metadata, cdr))
-    {
+    const rosidl_runtime_c__String * str = &ros_message->metadata;
+    if (str->capacity == 0 || str->capacity <= str->size) {
+      fprintf(stderr, "string capacity not greater than size\n");
       return false;
     }
+    if (str->data[str->size] != '\0') {
+      fprintf(stderr, "string not null-terminated\n");
+      return false;
+    }
+    cdr << str->data;
   }
 
   return true;
@@ -292,14 +256,16 @@ static bool _GetMetadata_Response__cdr_deserialize(
   _GetMetadata_Response__ros_msg_type * ros_message = static_cast<_GetMetadata_Response__ros_msg_type *>(untyped_ros_message);
   // Field name: metadata
   {
-    const message_type_support_callbacks_t * callbacks =
-      static_cast<const message_type_support_callbacks_t *>(
-      ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(
-        rosidl_typesupport_fastrtps_c, ouster_msgs, msg, Metadata
-      )()->data);
-    if (!callbacks->cdr_deserialize(
-        cdr, &ros_message->metadata))
-    {
+    std::string tmp;
+    cdr >> tmp;
+    if (!ros_message->metadata.data) {
+      rosidl_runtime_c__String__init(&ros_message->metadata);
+    }
+    bool succeeded = rosidl_runtime_c__String__assign(
+      &ros_message->metadata,
+      tmp.c_str());
+    if (!succeeded) {
+      fprintf(stderr, "failed to assign string into field 'metadata'\n");
       return false;
     }
   }
@@ -322,9 +288,9 @@ size_t get_serialized_size_ouster_msgs__srv__GetMetadata_Response(
   (void)wchar_size;
 
   // field.name metadata
-
-  current_alignment += get_serialized_size_ouster_msgs__msg__Metadata(
-    &(ros_message->metadata), current_alignment);
+  current_alignment += padding +
+    eprosima::fastcdr::Cdr::alignment(current_alignment, padding) +
+    (ros_message->metadata.size + 1);
 
   return current_alignment - initial_alignment;
 }
@@ -356,15 +322,12 @@ size_t max_serialized_size_ouster_msgs__srv__GetMetadata_Response(
   {
     size_t array_size = 1;
 
-
+    full_bounded = false;
+    is_plain = false;
     for (size_t index = 0; index < array_size; ++index) {
-      bool inner_full_bounded;
-      bool inner_is_plain;
-      current_alignment +=
-        max_serialized_size_ouster_msgs__msg__Metadata(
-        inner_full_bounded, inner_is_plain, current_alignment);
-      full_bounded &= inner_full_bounded;
-      is_plain &= inner_is_plain;
+      current_alignment += padding +
+        eprosima::fastcdr::Cdr::alignment(current_alignment, padding) +
+        1;
     }
   }
 

@@ -17,14 +17,10 @@ extern "C"
 
 // Constants defined in the message
 
-// Include directives for member types
-// Member 'metadata_filepath'
-#include "rosidl_runtime_c/string.h"
-
 /// Struct defined in srv/GetMetadata in the package ouster_msgs.
 typedef struct ouster_msgs__srv__GetMetadata_Request
 {
-  rosidl_runtime_c__String metadata_filepath;
+  uint8_t structure_needs_at_least_one_member;
 } ouster_msgs__srv__GetMetadata_Request;
 
 // Struct for a sequence of ouster_msgs__srv__GetMetadata_Request.
@@ -42,12 +38,12 @@ typedef struct ouster_msgs__srv__GetMetadata_Request__Sequence
 
 // Include directives for member types
 // Member 'metadata'
-#include "ouster_msgs/msg/detail/metadata__struct.h"
+#include "rosidl_runtime_c/string.h"
 
 /// Struct defined in srv/GetMetadata in the package ouster_msgs.
 typedef struct ouster_msgs__srv__GetMetadata_Response
 {
-  ouster_msgs__msg__Metadata metadata;
+  rosidl_runtime_c__String metadata;
 } ouster_msgs__srv__GetMetadata_Response;
 
 // Struct for a sequence of ouster_msgs__srv__GetMetadata_Response.

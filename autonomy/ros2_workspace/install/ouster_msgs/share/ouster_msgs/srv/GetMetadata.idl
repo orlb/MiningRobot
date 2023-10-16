@@ -1,16 +1,1 @@
-// generated from rosidl_adapter/resource/srv.idl.em
-// with input from ouster_msgs/srv/GetMetadata.srv
-// generated code does not contain a copyright notice
-
-#include "ouster_msgs/msg/Metadata.idl"
-
-module ouster_msgs {
-  module srv {
-    struct GetMetadata_Request {
-      string metadata_filepath;
-    };
-    struct GetMetadata_Response {
-      ouster_msgs::msg::Metadata metadata;
-    };
-  };
-};
+/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/ouster_msgs/rosidl_adapter/ouster_msgs/srv/GetMetadata.idl

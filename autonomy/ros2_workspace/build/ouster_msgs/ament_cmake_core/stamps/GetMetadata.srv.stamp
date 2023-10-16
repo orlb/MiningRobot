@@ -1,4 +1,2 @@
-
-string metadata_filepath
 ---
-ouster_msgs/Metadata metadata
+string metadata

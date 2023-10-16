@@ -10,21 +10,13 @@
 
 #include "rcutils/allocator.h"
 
-// Include directives for member types
-// Member `metadata_filepath`
-#include "rosidl_runtime_c/string_functions.h"
-
 bool
 ouster_msgs__srv__GetMetadata_Request__init(ouster_msgs__srv__GetMetadata_Request * msg)
 {
   if (!msg) {
     return false;
   }
-  // metadata_filepath
-  if (!rosidl_runtime_c__String__init(&msg->metadata_filepath)) {
-    ouster_msgs__srv__GetMetadata_Request__fini(msg);
-    return false;
-  }
+  // structure_needs_at_least_one_member
   return true;
 }
 
@@ -34,8 +26,7 @@ ouster_msgs__srv__GetMetadata_Request__fini(ouster_msgs__srv__GetMetadata_Reques
   if (!msg) {
     return;
   }
-  // metadata_filepath
-  rosidl_runtime_c__String__fini(&msg->metadata_filepath);
+  // structure_needs_at_least_one_member
 }
 
 bool
@@ -44,10 +35,8 @@ ouster_msgs__srv__GetMetadata_Request__are_equal(const ouster_msgs__srv__GetMeta
   if (!lhs || !rhs) {
     return false;
   }
-  // metadata_filepath
-  if (!rosidl_runtime_c__String__are_equal(
-      &(lhs->metadata_filepath), &(rhs->metadata_filepath)))
-  {
+  // structure_needs_at_least_one_member
+  if (lhs->structure_needs_at_least_one_member != rhs->structure_needs_at_least_one_member) {
     return false;
   }
   return true;
@@ -61,12 +50,8 @@ ouster_msgs__srv__GetMetadata_Request__copy(
   if (!input || !output) {
     return false;
   }
-  // metadata_filepath
-  if (!rosidl_runtime_c__String__copy(
-      &(input->metadata_filepath), &(output->metadata_filepath)))
-  {
-    return false;
-  }
+  // structure_needs_at_least_one_member
+  output->structure_needs_at_least_one_member = input->structure_needs_at_least_one_member;
   return true;
 }
 
@@ -252,7 +237,7 @@ ouster_msgs__srv__GetMetadata_Request__Sequence__copy(
 
 // Include directives for member types
 // Member `metadata`
-#include "ouster_msgs/msg/detail/metadata__functions.h"
+#include "rosidl_runtime_c/string_functions.h"
 
 bool
 ouster_msgs__srv__GetMetadata_Response__init(ouster_msgs__srv__GetMetadata_Response * msg)
@@ -261,7 +246,7 @@ ouster_msgs__srv__GetMetadata_Response__init(ouster_msgs__srv__GetMetadata_Respo
     return false;
   }
   // metadata
-  if (!ouster_msgs__msg__Metadata__init(&msg->metadata)) {
+  if (!rosidl_runtime_c__String__init(&msg->metadata)) {
     ouster_msgs__srv__GetMetadata_Response__fini(msg);
     return false;
   }
@@ -275,7 +260,7 @@ ouster_msgs__srv__GetMetadata_Response__fini(ouster_msgs__srv__GetMetadata_Respo
     return;
   }
   // metadata
-  ouster_msgs__msg__Metadata__fini(&msg->metadata);
+  rosidl_runtime_c__String__fini(&msg->metadata);
 }
 
 bool
@@ -285,7 +270,7 @@ ouster_msgs__srv__GetMetadata_Response__are_equal(const ouster_msgs__srv__GetMet
     return false;
   }
   // metadata
-  if (!ouster_msgs__msg__Metadata__are_equal(
+  if (!rosidl_runtime_c__String__are_equal(
       &(lhs->metadata), &(rhs->metadata)))
   {
     return false;
@@ -302,7 +287,7 @@ ouster_msgs__srv__GetMetadata_Response__copy(
     return false;
   }
   // metadata
-  if (!ouster_msgs__msg__Metadata__copy(
+  if (!rosidl_runtime_c__String__copy(
       &(input->metadata), &(output->metadata)))
   {
     return false;

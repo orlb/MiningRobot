@@ -5,8 +5,6 @@
 
 # Import statements for member types
 
-import builtins  # noqa: E402, I100
-
 import rosidl_parser.definition  # noqa: E402, I100
 
 
@@ -55,22 +53,18 @@ class GetMetadata_Request(metaclass=Metaclass_GetMetadata_Request):
     """Message class 'GetMetadata_Request'."""
 
     __slots__ = [
-        '_metadata_filepath',
     ]
 
     _fields_and_field_types = {
-        'metadata_filepath': 'string',
     }
 
     SLOT_TYPES = (
-        rosidl_parser.definition.UnboundedString(),  # noqa: E501
     )
 
     def __init__(self, **kwargs):
         assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
             'Invalid arguments passed to constructor: %s' % \
             ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
-        self.metadata_filepath = kwargs.get('metadata_filepath', str())
 
     def __repr__(self):
         typename = self.__class__.__module__.split('.')
@@ -101,8 +95,6 @@ class GetMetadata_Request(metaclass=Metaclass_GetMetadata_Request):
     def __eq__(self, other):
         if not isinstance(other, self.__class__):
             return False
-        if self.metadata_filepath != other.metadata_filepath:
-            return False
         return True
 
     @classmethod
@@ -110,24 +102,10 @@ class GetMetadata_Request(metaclass=Metaclass_GetMetadata_Request):
         from copy import copy
         return copy(cls._fields_and_field_types)
 
-    @builtins.property
-    def metadata_filepath(self):
-        """Message field 'metadata_filepath'."""
-        return self._metadata_filepath
-
-    @metadata_filepath.setter
-    def metadata_filepath(self, value):
-        if __debug__:
-            assert \
-                isinstance(value, str), \
-                "The 'metadata_filepath' field must be of type 'str'"
-        self._metadata_filepath = value
-
 
 # Import statements for member types
 
-# already imported above
-# import builtins
+import builtins  # noqa: E402, I100
 
 # already imported above
 # import rosidl_parser.definition
@@ -165,10 +143,6 @@ class Metaclass_GetMetadata_Response(type):
             cls._TYPE_SUPPORT = module.type_support_msg__srv__get_metadata__response
             cls._DESTROY_ROS_MESSAGE = module.destroy_ros_message_msg__srv__get_metadata__response
 
-            from ouster_msgs.msg import Metadata
-            if Metadata.__class__._TYPE_SUPPORT is None:
-                Metadata.__class__.__import_type_support__()
-
     @classmethod
     def __prepare__(cls, name, bases, **kwargs):
         # list constant names here so that they appear in the help text of
@@ -186,19 +160,18 @@ class GetMetadata_Response(metaclass=Metaclass_GetMetadata_Response):
     ]
 
     _fields_and_field_types = {
-        'metadata': 'ouster_msgs/Metadata',
+        'metadata': 'string',
     }
 
     SLOT_TYPES = (
-        rosidl_parser.definition.NamespacedType(['ouster_msgs', 'msg'], 'Metadata'),  # noqa: E501
+        rosidl_parser.definition.UnboundedString(),  # noqa: E501
     )
 
     def __init__(self, **kwargs):
         assert all('_' + key in self.__slots__ for key in kwargs.keys()), \
             'Invalid arguments passed to constructor: %s' % \
             ', '.join(sorted(k for k in kwargs.keys() if '_' + k not in self.__slots__))
-        from ouster_msgs.msg import Metadata
-        self.metadata = kwargs.get('metadata', Metadata())
+        self.metadata = kwargs.get('metadata', str())
 
     def __repr__(self):
         typename = self.__class__.__module__.split('.')
@@ -246,10 +219,9 @@ class GetMetadata_Response(metaclass=Metaclass_GetMetadata_Response):
     @metadata.setter
     def metadata(self, value):
         if __debug__:
-            from ouster_msgs.msg import Metadata
             assert \
-                isinstance(value, Metadata), \
-                "The 'metadata' field must be a sub message of type 'Metadata'"
+                isinstance(value, str), \
+                "The 'metadata' field must be of type 'str'"
         self._metadata = value
 
 

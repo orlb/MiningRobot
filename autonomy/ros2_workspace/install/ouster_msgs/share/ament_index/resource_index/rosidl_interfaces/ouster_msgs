@@ -1,6 +1,1 @@
-msg/Metadata.idl
-msg/Metadata.msg
-srv/GetMetadata.idl
-srv/GetMetadata.srv
-srv/GetMetadata_Request.msg
-srv/GetMetadata_Response.msg
+/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/ouster_msgs/ament_cmake_index/share/ament_index/resource_index/rosidl_interfaces/ouster_msgs

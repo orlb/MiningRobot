@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='ouster_msgs',
-    version='0.5.0',
+    version='0.2.0',
     packages=find_packages(
         include=('ouster_msgs', 'ouster_msgs.*')),
 )

@@ -1,2 +1,1 @@
-
-ouster_msgs/Metadata metadata
+/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/ouster_msgs/rosidl_cmake/srv/GetMetadata_Response.msg

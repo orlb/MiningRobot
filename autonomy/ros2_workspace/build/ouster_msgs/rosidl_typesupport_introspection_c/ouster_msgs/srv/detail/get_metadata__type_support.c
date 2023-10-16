@@ -12,10 +12,6 @@
 #include "ouster_msgs/srv/detail/get_metadata__struct.h"
 
 
-// Include directives for member types
-// Member `metadata_filepath`
-#include "rosidl_runtime_c/string_functions.h"
-
 #ifdef __cplusplus
 extern "C"
 {
@@ -37,14 +33,14 @@ void ouster_msgs__srv__GetMetadata_Request__rosidl_typesupport_introspection_c__
 
 static rosidl_typesupport_introspection_c__MessageMember ouster_msgs__srv__GetMetadata_Request__rosidl_typesupport_introspection_c__GetMetadata_Request_message_member_array[1] = {
   {
-    "metadata_filepath",  // name
-    rosidl_typesupport_introspection_c__ROS_TYPE_STRING,  // type
+    "structure_needs_at_least_one_member",  // name
+    rosidl_typesupport_introspection_c__ROS_TYPE_UINT8,  // type
     0,  // upper bound of string
     NULL,  // members of sub message
     false,  // is array
     0,  // array size
     false,  // is upper bound
-    offsetof(ouster_msgs__srv__GetMetadata_Request, metadata_filepath),  // bytes offset in struct
+    offsetof(ouster_msgs__srv__GetMetadata_Request, structure_needs_at_least_one_member),  // bytes offset in struct
     NULL,  // default value
     NULL,  // size() function pointer
     NULL,  // get_const(index) function pointer
@@ -106,9 +102,7 @@ ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_introspecti
 
 // Include directives for member types
 // Member `metadata`
-#include "ouster_msgs/msg/metadata.h"
-// Member `metadata`
-#include "ouster_msgs/msg/detail/metadata__rosidl_typesupport_introspection_c.h"
+#include "rosidl_runtime_c/string_functions.h"
 
 #ifdef __cplusplus
 extern "C"
@@ -132,9 +126,9 @@ void ouster_msgs__srv__GetMetadata_Response__rosidl_typesupport_introspection_c_
 static rosidl_typesupport_introspection_c__MessageMember ouster_msgs__srv__GetMetadata_Response__rosidl_typesupport_introspection_c__GetMetadata_Response_message_member_array[1] = {
   {
     "metadata",  // name
-    rosidl_typesupport_introspection_c__ROS_TYPE_MESSAGE,  // type
+    rosidl_typesupport_introspection_c__ROS_TYPE_STRING,  // type
     0,  // upper bound of string
-    NULL,  // members of sub message (initialized later)
+    NULL,  // members of sub message
     false,  // is array
     0,  // array size
     false,  // is upper bound
@@ -170,8 +164,6 @@ static rosidl_message_type_support_t ouster_msgs__srv__GetMetadata_Response__ros
 ROSIDL_TYPESUPPORT_INTROSPECTION_C_EXPORT_ouster_msgs
 const rosidl_message_type_support_t *
 ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_introspection_c, ouster_msgs, srv, GetMetadata_Response)() {
-  ouster_msgs__srv__GetMetadata_Response__rosidl_typesupport_introspection_c__GetMetadata_Response_message_member_array[0].members_ =
-    ROSIDL_TYPESUPPORT_INTERFACE__MESSAGE_SYMBOL_NAME(rosidl_typesupport_introspection_c, ouster_msgs, msg, Metadata)();
   if (!ouster_msgs__srv__GetMetadata_Response__rosidl_typesupport_introspection_c__GetMetadata_Response_message_type_support_handle.typesupport_identifier) {
     ouster_msgs__srv__GetMetadata_Response__rosidl_typesupport_introspection_c__GetMetadata_Response_message_type_support_handle.typesupport_identifier =
       rosidl_typesupport_introspection_c__identifier;

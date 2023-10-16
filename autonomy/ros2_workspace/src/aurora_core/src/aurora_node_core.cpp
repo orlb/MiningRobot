@@ -44,6 +44,6 @@ int main ( int argc, char ** argv ) {
         // Don't exit the program.
     //rclcpp::spin(node);
     
-    return 1;
+    return 0;
 }
 

@@ -57,7 +57,7 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/ros2_ouster_drivers/ouster_msgs
+CMAKE_SOURCE_DIR = /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/ouster-ros/ouster-msgs
 
 # The top-level build directory on which CMake was run.
 CMAKE_BINARY_DIR = /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/ouster_msgs

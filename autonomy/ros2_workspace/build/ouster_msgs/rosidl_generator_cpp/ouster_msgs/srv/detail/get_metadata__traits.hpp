@@ -24,28 +24,17 @@ inline void to_flow_style_yaml(
   const GetMetadata_Request & msg,
   std::ostream & out)
 {
-  out << "{";
-  // member: metadata_filepath
-  {
-    out << "metadata_filepath: ";
-    rosidl_generator_traits::value_to_yaml(msg.metadata_filepath, out);
-  }
-  out << "}";
+  (void)msg;
+  out << "null";
 }  // NOLINT(readability/fn_size)
 
 inline void to_block_style_yaml(
   const GetMetadata_Request & msg,
   std::ostream & out, size_t indentation = 0)
 {
-  // member: metadata_filepath
-  {
-    if (indentation > 0) {
-      out << std::string(indentation, ' ');
-    }
-    out << "metadata_filepath: ";
-    rosidl_generator_traits::value_to_yaml(msg.metadata_filepath, out);
-    out << "\n";
-  }
+  (void)msg;
+  (void)indentation;
+  out << "null\n";
 }  // NOLINT(readability/fn_size)
 
 inline std::string to_yaml(const GetMetadata_Request & msg, bool use_flow_style = false)
@@ -94,21 +83,17 @@ inline const char * name<ouster_msgs::srv::GetMetadata_Request>()
 
 template<>
 struct has_fixed_size<ouster_msgs::srv::GetMetadata_Request>
-  : std::integral_constant<bool, false> {};
+  : std::integral_constant<bool, true> {};
 
 template<>
 struct has_bounded_size<ouster_msgs::srv::GetMetadata_Request>
-  : std::integral_constant<bool, false> {};
+  : std::integral_constant<bool, true> {};
 
 template<>
 struct is_message<ouster_msgs::srv::GetMetadata_Request>
   : std::true_type {};
 
 }  // namespace rosidl_generator_traits
-
-// Include directives for member types
-// Member 'metadata'
-#include "ouster_msgs/msg/detail/metadata__traits.hpp"
 
 namespace ouster_msgs
 {
@@ -124,7 +109,7 @@ inline void to_flow_style_yaml(
   // member: metadata
   {
     out << "metadata: ";
-    to_flow_style_yaml(msg.metadata, out);
+    rosidl_generator_traits::value_to_yaml(msg.metadata, out);
   }
   out << "}";
 }  // NOLINT(readability/fn_size)
@@ -138,8 +123,9 @@ inline void to_block_style_yaml(
     if (indentation > 0) {
       out << std::string(indentation, ' ');
     }
-    out << "metadata:\n";
-    to_block_style_yaml(msg.metadata, out, indentation + 2);
+    out << "metadata: ";
+    rosidl_generator_traits::value_to_yaml(msg.metadata, out);
+    out << "\n";
   }
 }  // NOLINT(readability/fn_size)
 
@@ -189,11 +175,11 @@ inline const char * name<ouster_msgs::srv::GetMetadata_Response>()
 
 template<>
 struct has_fixed_size<ouster_msgs::srv::GetMetadata_Response>
-  : std::integral_constant<bool, has_fixed_size<ouster_msgs::msg::Metadata>::value> {};
+  : std::integral_constant<bool, false> {};
 
 template<>
 struct has_bounded_size<ouster_msgs::srv::GetMetadata_Response>
-  : std::integral_constant<bool, has_bounded_size<ouster_msgs::msg::Metadata>::value> {};
+  : std::integral_constant<bool, false> {};
 
 template<>
 struct is_message<ouster_msgs::srv::GetMetadata_Response>

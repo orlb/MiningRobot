@@ -59,7 +59,7 @@ endif()
 add_library(ouster_msgs::ouster_msgs__rosidl_typesupport_c SHARED IMPORTED)
 
 set_target_properties(ouster_msgs::ouster_msgs__rosidl_typesupport_c PROPERTIES
-  INTERFACE_LINK_LIBRARIES "ouster_msgs::ouster_msgs__rosidl_generator_c;builtin_interfaces::builtin_interfaces__rosidl_typesupport_c;std_msgs::std_msgs__rosidl_typesupport_c"
+  INTERFACE_LINK_LIBRARIES "ouster_msgs::ouster_msgs__rosidl_generator_c;std_msgs::std_msgs__rosidl_typesupport_c;builtin_interfaces::builtin_interfaces__rosidl_typesupport_c"
 )
 
 if(CMAKE_VERSION VERSION_LESS 2.8.12)

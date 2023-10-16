@@ -16,9 +16,6 @@
 #include "ouster_msgs/srv/detail/get_metadata__struct.h"
 #include "ouster_msgs/srv/detail/get_metadata__functions.h"
 
-#include "rosidl_runtime_c/string.h"
-#include "rosidl_runtime_c/string_functions.h"
-
 
 ROSIDL_GENERATOR_C_EXPORT
 bool ouster_msgs__srv__get_metadata__request__convert_from_py(PyObject * _pymsg, void * _ros_message)
@@ -53,21 +50,7 @@ bool ouster_msgs__srv__get_metadata__request__convert_from_py(PyObject * _pymsg,
     assert(strncmp("ouster_msgs.srv._get_metadata.GetMetadata_Request", full_classname_dest, 49) == 0);
   }
   ouster_msgs__srv__GetMetadata_Request * ros_message = _ros_message;
-  {  // metadata_filepath
-    PyObject * field = PyObject_GetAttrString(_pymsg, "metadata_filepath");
-    if (!field) {
-      return false;
-    }
-    assert(PyUnicode_Check(field));
-    PyObject * encoded_field = PyUnicode_AsUTF8String(field);
-    if (!encoded_field) {
-      Py_DECREF(field);
-      return false;
-    }
-    rosidl_runtime_c__String__assign(&ros_message->metadata_filepath, PyBytes_AS_STRING(encoded_field));
-    Py_DECREF(encoded_field);
-    Py_DECREF(field);
-  }
+  ros_message->structure_needs_at_least_one_member = 0;
 
   return true;
 }
@@ -89,24 +72,7 @@ PyObject * ouster_msgs__srv__get_metadata__request__convert_to_py(void * raw_ros
       return NULL;
     }
   }
-  ouster_msgs__srv__GetMetadata_Request * ros_message = (ouster_msgs__srv__GetMetadata_Request *)raw_ros_message;
-  {  // metadata_filepath
-    PyObject * field = NULL;
-    field = PyUnicode_DecodeUTF8(
-      ros_message->metadata_filepath.data,
-      strlen(ros_message->metadata_filepath.data),
-      "replace");
-    if (!field) {
-      return NULL;
-    }
-    {
-      int rc = PyObject_SetAttrString(_pymessage, "metadata_filepath", field);
-      Py_DECREF(field);
-      if (rc) {
-        return NULL;
-      }
-    }
-  }
+  (void)raw_ros_message;
 
   // ownership of _pymessage is transferred to the caller
   return _pymessage;
@@ -126,8 +92,9 @@ PyObject * ouster_msgs__srv__get_metadata__request__convert_to_py(void * raw_ros
 // already included above
 // #include "ouster_msgs/srv/detail/get_metadata__functions.h"
 
-bool ouster_msgs__msg__metadata__convert_from_py(PyObject * _pymsg, void * _ros_message);
-PyObject * ouster_msgs__msg__metadata__convert_to_py(void * raw_ros_message);
+#include "rosidl_runtime_c/string.h"
+#include "rosidl_runtime_c/string_functions.h"
+
 
 ROSIDL_GENERATOR_C_EXPORT
 bool ouster_msgs__srv__get_metadata__response__convert_from_py(PyObject * _pymsg, void * _ros_message)
@@ -167,10 +134,14 @@ bool ouster_msgs__srv__get_metadata__response__convert_from_py(PyObject * _pymsg
     if (!field) {
       return false;
     }
-    if (!ouster_msgs__msg__metadata__convert_from_py(field, &ros_message->metadata)) {
+    assert(PyUnicode_Check(field));
+    PyObject * encoded_field = PyUnicode_AsUTF8String(field);
+    if (!encoded_field) {
       Py_DECREF(field);
       return false;
     }
+    rosidl_runtime_c__String__assign(&ros_message->metadata, PyBytes_AS_STRING(encoded_field));
+    Py_DECREF(encoded_field);
     Py_DECREF(field);
   }
 
@@ -197,7 +168,10 @@ PyObject * ouster_msgs__srv__get_metadata__response__convert_to_py(void * raw_ro
   ouster_msgs__srv__GetMetadata_Response * ros_message = (ouster_msgs__srv__GetMetadata_Response *)raw_ros_message;
   {  // metadata
     PyObject * field = NULL;
-    field = ouster_msgs__msg__metadata__convert_to_py(&ros_message->metadata);
+    field = PyUnicode_DecodeUTF8(
+      ros_message->metadata.data,
+      strlen(ros_message->metadata.data),
+      "replace");
     if (!field) {
       return NULL;
     }

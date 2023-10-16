@@ -38,32 +38,25 @@ struct GetMetadata_Request_
     if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
-      this->metadata_filepath = "";
+      this->structure_needs_at_least_one_member = 0;
     }
   }
 
   explicit GetMetadata_Request_(const ContainerAllocator & _alloc, rosidl_runtime_cpp::MessageInitialization _init = rosidl_runtime_cpp::MessageInitialization::ALL)
-  : metadata_filepath(_alloc)
   {
+    (void)_alloc;
     if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
       rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
     {
-      this->metadata_filepath = "";
+      this->structure_needs_at_least_one_member = 0;
     }
   }
 
   // field types and members
-  using _metadata_filepath_type =
-    std::basic_string<char, std::char_traits<char>, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<char>>;
-  _metadata_filepath_type metadata_filepath;
+  using _structure_needs_at_least_one_member_type =
+    uint8_t;
+  _structure_needs_at_least_one_member_type structure_needs_at_least_one_member;
 
-  // setters for named parameter idiom
-  Type & set__metadata_filepath(
-    const std::basic_string<char, std::char_traits<char>, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<char>> & _arg)
-  {
-    this->metadata_filepath = _arg;
-    return *this;
-  }
 
   // constant declarations
 
@@ -107,7 +100,7 @@ struct GetMetadata_Request_
   // comparison operators
   bool operator==(const GetMetadata_Request_ & other) const
   {
-    if (this->metadata_filepath != other.metadata_filepath) {
+    if (this->structure_needs_at_least_one_member != other.structure_needs_at_least_one_member) {
       return false;
     }
     return true;
@@ -129,10 +122,6 @@ using GetMetadata_Request =
 }  // namespace ouster_msgs
 
 
-// Include directives for member types
-// Member 'metadata'
-#include "ouster_msgs/msg/detail/metadata__struct.hpp"
-
 #ifndef _WIN32
 # define DEPRECATED__ouster_msgs__srv__GetMetadata_Response __attribute__((deprecated))
 #else
@@ -152,25 +141,32 @@ struct GetMetadata_Response_
   using Type = GetMetadata_Response_<ContainerAllocator>;
 
   explicit GetMetadata_Response_(rosidl_runtime_cpp::MessageInitialization _init = rosidl_runtime_cpp::MessageInitialization::ALL)
-  : metadata(_init)
   {
-    (void)_init;
+    if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
+      rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
+    {
+      this->metadata = "";
+    }
   }
 
   explicit GetMetadata_Response_(const ContainerAllocator & _alloc, rosidl_runtime_cpp::MessageInitialization _init = rosidl_runtime_cpp::MessageInitialization::ALL)
-  : metadata(_alloc, _init)
+  : metadata(_alloc)
   {
-    (void)_init;
+    if (rosidl_runtime_cpp::MessageInitialization::ALL == _init ||
+      rosidl_runtime_cpp::MessageInitialization::ZERO == _init)
+    {
+      this->metadata = "";
+    }
   }
 
   // field types and members
   using _metadata_type =
-    ouster_msgs::msg::Metadata_<ContainerAllocator>;
+    std::basic_string<char, std::char_traits<char>, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<char>>;
   _metadata_type metadata;
 
   // setters for named parameter idiom
   Type & set__metadata(
-    const ouster_msgs::msg::Metadata_<ContainerAllocator> & _arg)
+    const std::basic_string<char, std::char_traits<char>, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<char>> & _arg)
   {
     this->metadata = _arg;
     return *this;
