@@ -1,1 +1,0 @@
-/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/ouster_msgs/rosidl_typesupport_fastrtps_c/ouster_msgs/srv/detail/get_metadata__rosidl_typesupport_fastrtps_c.h

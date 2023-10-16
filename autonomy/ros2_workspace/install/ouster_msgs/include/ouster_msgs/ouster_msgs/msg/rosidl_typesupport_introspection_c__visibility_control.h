@@ -1,1 +1,0 @@
-/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/ouster_msgs/rosidl_typesupport_introspection_c/ouster_msgs/msg/rosidl_typesupport_introspection_c__visibility_control.h

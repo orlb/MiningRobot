@@ -1,9 +1,0 @@
-{
-  "package_name": "ouster_msgs",
-  "non_idl_tuples": [
-    "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/ouster-ros/ouster-msgs:msg/PacketMsg.msg",
-    "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/ouster-ros/ouster-msgs:srv/GetConfig.srv",
-    "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/ouster-ros/ouster-msgs:srv/SetConfig.srv",
-    "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/src/ouster-ros/ouster-msgs:srv/GetMetadata.srv"
-  ]
-}

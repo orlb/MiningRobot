@@ -47,7 +47,7 @@ Clone required repos into src/ :
     git clone https://github.com/ros-perception/perception_pcl
     git clone --branch humble https://github.com/ros2/geometry2
     git clone --branch humble https://github.com/ros2/rviz
-    git clone --branch ros2 https://github.com/ouster-lidar/ouster-ros.git
+    git clone -b ros2 --recurse-submodules https://github.com/ouster-lidar/ouster-ros.git
 )
 ```
 

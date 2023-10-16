@@ -1,1 +1,0 @@
-/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_conversions/ament_cmake_environment_hooks/local_setup.zsh

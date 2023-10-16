@@ -1,1 +1,0 @@
-/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/ouster_msgs/rosidl_generator_cpp/ouster_msgs/srv/get_metadata.hpp

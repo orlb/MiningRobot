@@ -1,6 +1,0 @@
-[0.289s] Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_msgs': _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_msgs -- -j4 -l4
-[0.302s] [0mCMake Error: The current CMakeCache.txt directory /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_msgs/CMakeCache.txt is different than the directory /home/brown/Projects/MiningRobot/ros2_workspace/build/pcl_msgs where CMakeCache.txt was created. This may result in binaries being created in the wrong place. If you are not sure, reedit the CMakeCache.txt[0m
-[0.329s] [0mCMake Error: The source directory "/home/brown/Projects/MiningRobot/ros2_workspace/src/pcl_msgs" does not exist.
-[0.330s] Specify --help for usage, or press the help button on the CMake GUI.[0m
-[0.331s] make: *** [Makefile:1611: cmake_check_build_system] Error 1
-[0.335s] Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_msgs' returned '2': _=/usr/bin/env /usr/bin/cmake --build /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/build/pcl_msgs -- -j4 -l4
