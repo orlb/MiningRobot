@@ -5,6 +5,9 @@ Topics of interest include :
 - Leveraging simulation environment using ROS2 suite, [especially for lidar sensing](https://wilselby.com/2019/05/simulating-an-ouster-os-1-lidar-sensor-in-ros-gazebo-and-rviz/)
 - Implementing ROS2 packages for point cloud based navigation (SLAM, etc.)
 
+Ideas :
+- ROS2 OS1 drivers publish lidar data as ROS messages on [topics](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools/Understanding-ROS2-Topics/Understanding-ROS2-Topics.html) over IP. We would like to write this data to shared memory instead. Here's a related ROS package : [https://wiki.ros.org/shm_transport](https://wiki.ros.org/shm_transport)
+
 ## Building dependencies
 
 Guide here : [https://industrial-training-master.readthedocs.io/en/foxy/_source/session1/ros2/2-Installing-Existing-Packages.html](https://industrial-training-master.readthedocs.io/en/foxy/_source/session1/ros2/2-Installing-Existing-Packages.html)
