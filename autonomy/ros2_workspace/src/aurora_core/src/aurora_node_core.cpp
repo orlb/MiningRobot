@@ -1,9 +1,9 @@
-/**
-* Simple ROS Node
-*
-* TODO write shared memory
-*
-**/
+/*
+ |  ROS Node
+ |
+ |  Test reading shared memory from robot
+ |
+ *-----------------------*/
 
 #include <rclcpp/rclcpp.hpp>    // ROS2 includes
 

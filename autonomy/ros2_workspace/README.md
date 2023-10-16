@@ -1,17 +1,51 @@
-## Building ros2_ouster_drivers and dependencies
+# ROS2 Robot Integrations
 
-Requires packages : 
-- libtins
-- jsoncpp cmake build
-- boost
-- pcl
+Topics of interest include :
+- Utilizing [Ouster ROS2 drivers](https://github.com/ouster-lidar/ouster-ros/tree/master) for interfacing with OS1 LiDAR sensor
+- Leveraging simulation environment using ROS2 suite, [especially for lidar sensing](https://wilselby.com/2019/05/simulating-an-ouster-os-1-lidar-sensor-in-ros-gazebo-and-rviz/)
+- Implementing ROS2 packages for point cloud based navigation (SLAM, etc.)
 
-Clone repos
-- [pcl_msgs ros2 branch](https://github.com/ros-perception/pcl_msgs.git)
-- [perception_pcl](https://github.com/ros-perception/perception_pcl.git)
-- [ros2_ouster_drivers](https://github.com/ros-drivers/ros2_ouster_drivers.git)
+## Building dependencies
 
-to src, run `colcon build` here then `source install/setup.bash`
+Guide here : [https://industrial-training-master.readthedocs.io/en/foxy/_source/session1/ros2/2-Installing-Existing-Packages.html](https://industrial-training-master.readthedocs.io/en/foxy/_source/session1/ros2/2-Installing-Existing-Packages.html)
+
+Distro : Humble Hawksbill
+
+Get required packages :
+
+```bash
+sudo apt install -y         \
+    build-essential         \
+    libeigen3-dev           \
+    libjsoncpp-dev          \
+    libspdlog-dev           \
+    libcurl4-openssl-dev    \
+    cmake
+```
+
+### Using apt 
+
+```bash
+sudo apt install -y         \
+    ros-humble-pcl-ros      \
+    ros-humble-rviz
+```
+
+### From source
+
+Get required packages above;
+
+Clone required repos into src/ :
+```bash
+(
+    cd src/
+    git clone https://github.com/ros-perception/perception_pcl
+    git clone --branch humble https://github.com/ros2/rviz
+    git clone --recurse-submodules https://github.com/ouster-lidar/ouster-ros.git
+)
+```
+
+run `colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release` here then `source install/setup.bash`
 
 ## Rebuilding aurora_core
 

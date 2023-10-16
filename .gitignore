@@ -1,3 +1,8 @@
+autonomy/ros2_workspace/build/
+autonomy/ros2_workspace/install/
+autonomy/ros2_workspace/log/
+autonomy/ros2_workspace/__pycache__/
+
 autonomy/backend/backend
 autonomy/backend/debug_nav.txt
 autonomy/backend/log.txt
