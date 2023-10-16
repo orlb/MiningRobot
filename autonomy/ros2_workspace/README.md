@@ -20,7 +20,8 @@ sudo apt install -y         \
     libjsoncpp-dev          \
     libspdlog-dev           \
     libcurl4-openssl-dev    \
-    cmake
+    cmake                   \
+    python3-colcon-common-extensions
 ```
 
 ### Using apt 
@@ -28,7 +29,8 @@ sudo apt install -y         \
 ```bash
 sudo apt install -y         \
     ros-humble-pcl-ros      \
-    ros-humble-rviz
+    ros-humble-tf2-eigen    \
+    ros-humble-rviz2
 ```
 
 ### From source
@@ -40,12 +42,13 @@ Clone required repos into src/ :
 (
     cd src/
     git clone https://github.com/ros-perception/perception_pcl
+    git clone --branch humble https://github.com/ros2/geometry2
     git clone --branch humble https://github.com/ros2/rviz
-    git clone --recurse-submodules https://github.com/ouster-lidar/ouster-ros.git
+    git clone --branch ros2 https://github.com/ouster-lidar/ouster-ros.git
 )
 ```
 
-run `colcon build --cmake-args -DCMAKE_BUILD_TYPE=Release` here then `source install/setup.bash`
+run `colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release` here then `source install/setup.bash`
 
 ## Rebuilding aurora_core
 
