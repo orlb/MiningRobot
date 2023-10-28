@@ -1,0 +1,1 @@
+/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/src/ouster_test_description/launch/launch.py

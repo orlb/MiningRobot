@@ -1,0 +1,33 @@
+[0.156s] Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/urdf_sim_tutorial': /usr/bin/cmake /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/example_resources/urdf_sim_tutorial -DCATKIN_INSTALL_INTO_PREFIX_ROOT=0 -DCATKIN_SYMLINK_INSTALL=ON -DCMAKE_INSTALL_PREFIX=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/urdf_sim_tutorial
+[0.376s] -- The C compiler identification is GNU 11.4.0
+[0.589s] -- The CXX compiler identification is GNU 11.4.0
+[0.609s] -- Detecting C compiler ABI info
+[0.720s] -- Detecting C compiler ABI info - done
+[0.740s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.741s] -- Detecting C compile features
+[0.742s] -- Detecting C compile features - done
+[0.748s] -- Detecting CXX compiler ABI info
+[0.851s] -- Detecting CXX compiler ABI info - done
+[0.867s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.868s] -- Detecting CXX compile features
+[0.869s] -- Detecting CXX compile features - done
+[0.888s] [31mCMake Error at CMakeLists.txt:4 (find_package):
+[0.889s]   By not providing "Findcatkin.cmake" in CMAKE_MODULE_PATH this project has
+[0.889s]   asked CMake to find a package configuration file provided by "catkin", but
+[0.889s]   CMake did not find one.
+[0.889s] 
+[0.889s]   Could not find a package configuration file provided by "catkin" with any
+[0.890s]   of the following names:
+[0.890s] 
+[0.890s]     catkinConfig.cmake
+[0.890s]     catkin-config.cmake
+[0.890s] 
+[0.890s]   Add the installation prefix of "catkin" to CMAKE_PREFIX_PATH or set
+[0.891s]   "catkin_DIR" to a directory containing one of the above files.  If "catkin"
+[0.891s]   provides a separate development package or SDK, be sure it has been
+[0.891s]   installed.
+[0.891s] 
+[0.891s] [0m
+[0.891s] -- Configuring incomplete, errors occurred!
+[0.892s] See also "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/urdf_sim_tutorial/CMakeFiles/CMakeOutput.log".
+[0.895s] Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/urdf_sim_tutorial' returned '1': /usr/bin/cmake /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/example_resources/urdf_sim_tutorial -DCATKIN_INSTALL_INTO_PREFIX_ROOT=0 -DCATKIN_SYMLINK_INSTALL=ON -DCMAKE_INSTALL_PREFIX=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/urdf_sim_tutorial

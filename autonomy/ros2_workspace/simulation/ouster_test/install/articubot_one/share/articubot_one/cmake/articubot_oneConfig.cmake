@@ -1,0 +1,1 @@
+/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/articubot_one/ament_cmake_core/articubot_oneConfig.cmake

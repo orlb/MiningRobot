@@ -1,0 +1,22 @@
+Following Articulated Robotics mobile robot playlist, lidar showcase > https://www.youtube.com/watch?v=eJZXRncGaGM&list=PLunhqkrRNRhYAffV8JDiFOatQXuU-NnxT&index=9
+
+articubot_one tests :
+    https://github.com/joshnewans/articubot_one/tree/545acac87ae215d80ef6b28abe6097eb7281d9ff
+    ^ checkout this commit, build package
+    
+    ros2 launch articubot_one launch_sim.launch.py world:=./src/articubot_one/worlds/obstacles.world
+    ros2 run teleop_twist_keyboard teleop_twist_keyboard
+    ros2 run rviz2 rviz2
+        fixed frame is odom
+        add robot model at /robot_description
+        add laserscan at /scan
+
+
+TODO
+
+    Throw Ouster OS1 sensor onto articubot, following https://wilselby.com/2019/05/simulating-an-ouster-os-1-lidar-sensor-in-ros-gazebo-and-rviz/
+        run tests
+        SLAM integration
+
+    Test SLAM integration with MiningRobot
+        ROS2 SLAM implementations, navigation output to MiningRobot

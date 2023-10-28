@@ -1,0 +1,5 @@
+[0.138s] Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/ouster_test_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/ouster_test_description -- -j4 -l4
+[0.161s] [0mCMake Error: The source directory "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/src/ouster_test_description" does not appear to contain CMakeLists.txt.
+[0.161s] Specify --help for usage, or press the help button on the CMake GUI.[0m
+[0.162s] gmake: *** [Makefile:226: cmake_check_build_system] Error 1
+[0.165s] Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/ouster_test_description' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/ouster_test_description -- -j4 -l4

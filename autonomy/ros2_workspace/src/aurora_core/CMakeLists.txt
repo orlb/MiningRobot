@@ -25,11 +25,12 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-find_package(rclcpp REQUIRED)
-find_package(ros2_ouster REQUIRED)
+find_package(ouster_ros REQUIRED)
+find_package (Eigen3 3.3 REQUIRED)
 
 add_executable(aurora_node_core src/aurora_node_core.cpp)
-ament_target_dependencies(aurora_node_core rclcpp ros2_ouster)
+ament_target_dependencies(aurora_node_core ouster_ros)
+target_link_libraries(aurora_node_core Eigen3::Eigen)
 
 # Mark executables for installation
 install(TARGETS aurora_node_core

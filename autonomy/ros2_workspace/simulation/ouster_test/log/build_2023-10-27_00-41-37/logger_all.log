@@ -1,0 +1,192 @@
+[1.939s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--symlink-install']
+[1.939s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=True, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=4, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7f36cc4978e0>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7f36cc9339d0>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7f36cc9339d0>>)
+[2.021s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[2.021s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[2.021s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[2.021s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[2.021s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[2.021s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[2.022s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test'
+[2.022s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[2.022s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[2.022s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[2.022s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[2.022s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[2.022s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[2.022s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[2.022s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[2.022s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[2.039s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[2.039s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[2.039s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[2.039s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[2.039s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[2.039s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[2.039s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[2.039s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[2.040s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources) by extensions ['ignore', 'ignore_ament_install']
+[2.040s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources) by extension 'ignore'
+[2.040s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources) by extension 'ignore_ament_install'
+[2.040s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources) by extensions ['colcon_pkg']
+[2.040s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources) by extension 'colcon_pkg'
+[2.040s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources) by extensions ['colcon_meta']
+[2.040s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources) by extension 'colcon_meta'
+[2.040s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources) by extensions ['ros']
+[2.040s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources) by extension 'ros'
+[2.040s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources) by extensions ['cmake', 'python']
+[2.040s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources) by extension 'cmake'
+[2.041s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources) by extension 'python'
+[2.041s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources) by extensions ['python_setup_py']
+[2.041s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources) by extension 'python_setup_py'
+[2.041s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources/urdf_sim_tutorial) by extensions ['ignore', 'ignore_ament_install']
+[2.041s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources/urdf_sim_tutorial) by extension 'ignore'
+[2.041s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources/urdf_sim_tutorial) by extension 'ignore_ament_install'
+[2.041s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources/urdf_sim_tutorial) by extensions ['colcon_pkg']
+[2.041s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources/urdf_sim_tutorial) by extension 'colcon_pkg'
+[2.041s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources/urdf_sim_tutorial) by extensions ['colcon_meta']
+[2.041s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources/urdf_sim_tutorial) by extension 'colcon_meta'
+[2.041s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources/urdf_sim_tutorial) by extensions ['ros']
+[2.041s] Level 1:colcon.colcon_core.package_identification:_identify(example_resources/urdf_sim_tutorial) by extension 'ros'
+[2.046s] DEBUG:colcon.colcon_core.package_identification:Package 'example_resources/urdf_sim_tutorial' with type 'ros.catkin' and name 'urdf_sim_tutorial'
+[2.046s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[2.046s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[2.046s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[2.046s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[2.046s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[2.046s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[2.047s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[2.047s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[2.047s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[2.047s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[2.047s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[2.047s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[2.047s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[2.047s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[2.047s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[2.047s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[2.047s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[2.047s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[2.047s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[2.047s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[2.048s] Level 1:colcon.colcon_core.package_identification:_identify(src/ouster_test_description) by extensions ['ignore', 'ignore_ament_install']
+[2.048s] Level 1:colcon.colcon_core.package_identification:_identify(src/ouster_test_description) by extension 'ignore'
+[2.048s] Level 1:colcon.colcon_core.package_identification:_identify(src/ouster_test_description) by extension 'ignore_ament_install'
+[2.048s] Level 1:colcon.colcon_core.package_identification:_identify(src/ouster_test_description) by extensions ['colcon_pkg']
+[2.048s] Level 1:colcon.colcon_core.package_identification:_identify(src/ouster_test_description) by extension 'colcon_pkg'
+[2.048s] Level 1:colcon.colcon_core.package_identification:_identify(src/ouster_test_description) by extensions ['colcon_meta']
+[2.048s] Level 1:colcon.colcon_core.package_identification:_identify(src/ouster_test_description) by extension 'colcon_meta'
+[2.048s] Level 1:colcon.colcon_core.package_identification:_identify(src/ouster_test_description) by extensions ['ros']
+[2.048s] Level 1:colcon.colcon_core.package_identification:_identify(src/ouster_test_description) by extension 'ros'
+[2.049s] DEBUG:colcon.colcon_core.package_identification:Package 'src/ouster_test_description' with type 'ros.ament_cmake' and name 'ouster_test_description'
+[2.049s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[2.049s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[2.049s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[2.049s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[2.049s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[2.219s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[2.220s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[2.279s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 1 installed packages in /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install
+[2.310s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 336 installed packages in /opt/ros/humble
+[2.327s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[2.510s] Level 5:colcon.colcon_core.verb:set package 'ouster_test_description' build argument 'cmake_args' from command line to 'None'
+[2.510s] Level 5:colcon.colcon_core.verb:set package 'ouster_test_description' build argument 'cmake_target' from command line to 'None'
+[2.510s] Level 5:colcon.colcon_core.verb:set package 'ouster_test_description' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[2.510s] Level 5:colcon.colcon_core.verb:set package 'ouster_test_description' build argument 'cmake_clean_cache' from command line to 'False'
+[2.510s] Level 5:colcon.colcon_core.verb:set package 'ouster_test_description' build argument 'cmake_clean_first' from command line to 'False'
+[2.510s] Level 5:colcon.colcon_core.verb:set package 'ouster_test_description' build argument 'cmake_force_configure' from command line to 'False'
+[2.510s] Level 5:colcon.colcon_core.verb:set package 'ouster_test_description' build argument 'ament_cmake_args' from command line to 'None'
+[2.510s] Level 5:colcon.colcon_core.verb:set package 'ouster_test_description' build argument 'catkin_cmake_args' from command line to 'None'
+[2.510s] Level 5:colcon.colcon_core.verb:set package 'ouster_test_description' build argument 'catkin_skip_building_tests' from command line to 'False'
+[2.510s] DEBUG:colcon.colcon_core.verb:Building package 'ouster_test_description' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/ouster_test_description', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description', 'merge_install': False, 'path': '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/src/ouster_test_description', 'symlink_install': True, 'test_result_base': None}
+[2.540s] Level 5:colcon.colcon_core.verb:set package 'urdf_sim_tutorial' build argument 'cmake_args' from command line to 'None'
+[2.540s] Level 5:colcon.colcon_core.verb:set package 'urdf_sim_tutorial' build argument 'cmake_target' from command line to 'None'
+[2.540s] Level 5:colcon.colcon_core.verb:set package 'urdf_sim_tutorial' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[2.540s] Level 5:colcon.colcon_core.verb:set package 'urdf_sim_tutorial' build argument 'cmake_clean_cache' from command line to 'False'
+[2.540s] Level 5:colcon.colcon_core.verb:set package 'urdf_sim_tutorial' build argument 'cmake_clean_first' from command line to 'False'
+[2.540s] Level 5:colcon.colcon_core.verb:set package 'urdf_sim_tutorial' build argument 'cmake_force_configure' from command line to 'False'
+[2.540s] Level 5:colcon.colcon_core.verb:set package 'urdf_sim_tutorial' build argument 'ament_cmake_args' from command line to 'None'
+[2.541s] Level 5:colcon.colcon_core.verb:set package 'urdf_sim_tutorial' build argument 'catkin_cmake_args' from command line to 'None'
+[2.541s] Level 5:colcon.colcon_core.verb:set package 'urdf_sim_tutorial' build argument 'catkin_skip_building_tests' from command line to 'False'
+[2.541s] DEBUG:colcon.colcon_core.verb:Building package 'urdf_sim_tutorial' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/urdf_sim_tutorial', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/urdf_sim_tutorial', 'merge_install': False, 'path': '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/example_resources/urdf_sim_tutorial', 'symlink_install': True, 'test_result_base': None}
+[2.569s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[2.599s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[2.600s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/src/ouster_test_description' with build type 'ament_cmake'
+[2.600s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/src/ouster_test_description'
+[2.652s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[2.653s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[2.653s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[2.766s] INFO:colcon.colcon_ros.task.catkin.build:Building ROS package in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/example_resources/urdf_sim_tutorial' with build type 'catkin'
+[2.766s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/example_resources/urdf_sim_tutorial'
+[2.807s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[2.807s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[2.911s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/ouster_test_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/ouster_test_description -- -j4 -l4
+[2.923s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/urdf_sim_tutorial': /usr/bin/cmake /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/example_resources/urdf_sim_tutorial -DCATKIN_INSTALL_INTO_PREFIX_ROOT=0 -DCATKIN_SYMLINK_INSTALL=ON -DCMAKE_INSTALL_PREFIX=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/urdf_sim_tutorial
+[2.969s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/ouster_test_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --build /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/ouster_test_description -- -j4 -l4
+[3.012s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/ouster_test_description': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/ouster_test_description
+[3.067s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(ouster_test_description)
+[3.068s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/ouster_test_description' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/humble /usr/bin/cmake --install /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/ouster_test_description
+[3.104s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description' for CMake module files
+[3.105s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description' for CMake config files
+[3.106s] Level 1:colcon.colcon_core.shell:create_environment_hook('ouster_test_description', 'cmake_prefix_path')
+[3.147s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/hook/cmake_prefix_path.ps1'
+[3.148s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/hook/cmake_prefix_path.dsv'
+[3.149s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/hook/cmake_prefix_path.sh'
+[3.150s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/bin'
+[3.150s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/lib/pkgconfig/ouster_test_description.pc'
+[3.151s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/lib/python3.10/site-packages'
+[3.151s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/bin'
+[3.186s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/package.ps1'
+[3.188s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/package.dsv'
+[3.189s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/package.sh'
+[3.190s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/package.bash'
+[3.191s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/package.zsh'
+[3.192s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/colcon-core/packages/ouster_test_description)
+[3.251s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(ouster_test_description)
+[3.285s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description' for CMake module files
+[3.285s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description' for CMake config files
+[3.286s] Level 1:colcon.colcon_core.shell:create_environment_hook('ouster_test_description', 'cmake_prefix_path')
+[3.322s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/hook/cmake_prefix_path.ps1'
+[3.323s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/hook/cmake_prefix_path.dsv'
+[3.324s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/hook/cmake_prefix_path.sh'
+[3.325s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/bin'
+[3.325s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/lib/pkgconfig/ouster_test_description.pc'
+[3.326s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/lib/python3.10/site-packages'
+[3.327s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/bin'
+[3.374s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/package.ps1'
+[3.375s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/package.dsv'
+[3.376s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/package.sh'
+[3.377s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/package.bash'
+[3.378s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/package.zsh'
+[3.379s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/colcon-core/packages/ouster_test_description)
+[3.662s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/urdf_sim_tutorial' returned '1': /usr/bin/cmake /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/example_resources/urdf_sim_tutorial -DCATKIN_INSTALL_INTO_PREFIX_ROOT=0 -DCATKIN_SYMLINK_INSTALL=ON -DCMAKE_INSTALL_PREFIX=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/urdf_sim_tutorial
+[3.675s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(urdf_sim_tutorial)
+[3.705s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/urdf_sim_tutorial' for CMake module files
+[3.706s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/urdf_sim_tutorial' for CMake config files
+[3.707s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/urdf_sim_tutorial/bin'
+[3.707s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/urdf_sim_tutorial/lib/pkgconfig/urdf_sim_tutorial.pc'
+[3.707s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/urdf_sim_tutorial/lib/python3.10/site-packages'
+[3.707s] Level 1:colcon.colcon_core.environment:checking '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/urdf_sim_tutorial/bin'
+[3.738s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/urdf_sim_tutorial/share/urdf_sim_tutorial/package.ps1'
+[3.739s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/urdf_sim_tutorial/share/urdf_sim_tutorial/package.dsv'
+[3.739s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/urdf_sim_tutorial/share/urdf_sim_tutorial/package.sh'
+[3.739s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/urdf_sim_tutorial/share/urdf_sim_tutorial/package.bash'
+[3.740s] INFO:colcon.colcon_core.shell:Creating package script '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/urdf_sim_tutorial/share/urdf_sim_tutorial/package.zsh'
+[3.740s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/urdf_sim_tutorial/share/colcon-core/packages/urdf_sim_tutorial)
+[3.751s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[3.751s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[3.751s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '1'
+[3.751s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[3.819s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[3.819s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[3.820s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[3.862s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[3.906s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/local_setup.ps1'
+[3.908s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/_local_setup_util_ps1.py'
+[3.910s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/setup.ps1'
+[3.943s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/local_setup.sh'
+[3.944s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/_local_setup_util_sh.py'
+[3.945s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/setup.sh'
+[3.981s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/local_setup.bash'
+[3.982s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/setup.bash'
+[4.014s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/local_setup.zsh'
+[4.015s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/setup.zsh'

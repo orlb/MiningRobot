@@ -1,0 +1,4 @@
+[31mCMake Error at CMakeLists.txt:31 (install):
+  install TARGETS given target "aurora_node_core" which does not exist.
+
+[0m

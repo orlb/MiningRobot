@@ -1,0 +1,23 @@
+-- Found ament_cmake: 1.3.5 (/opt/ros/humble/share/ament_cmake/cmake)
+-- Found ament_lint_auto: 0.12.8 (/opt/ros/humble/share/ament_lint_auto/cmake)
+-- Added test 'lint_cmake' to check CMake code style
+-- Added test 'xmllint' to check XML markup files
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/ouster_test_description
+-- Install configuration: ""
+-- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ament_index/resource_index/package_run_dependencies/ouster_test_description
+-- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ament_index/resource_index/parent_prefix_path/ouster_test_description
+-- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/environment/ament_prefix_path.sh
+-- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/environment/ament_prefix_path.dsv
+-- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/environment/path.sh
+-- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/environment/path.dsv
+-- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/local_setup.bash
+-- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/local_setup.sh
+-- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/local_setup.zsh
+-- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/local_setup.dsv
+-- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/package.dsv
+-- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ament_index/resource_index/packages/ouster_test_description
+-- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/cmake/ouster_test_descriptionConfig.cmake
+-- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/cmake/ouster_test_descriptionConfig-version.cmake
+-- Installing: /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description/share/ouster_test_description/package.xml

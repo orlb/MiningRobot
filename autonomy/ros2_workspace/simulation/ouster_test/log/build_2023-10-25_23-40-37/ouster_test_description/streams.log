@@ -1,0 +1,13 @@
+[0.106s] Invoking command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/ouster_test_description': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/src/ouster_test_description -DCMAKE_INSTALL_PREFIX=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description
+[0.125s] -- Found ament_cmake: 1.3.5 (/opt/ros/humble/share/ament_cmake/cmake)
+[0.362s] -- Found ament_lint_auto: 0.12.8 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[0.472s] [31mCMake Error at CMakeLists.txt:31 (install):
+[0.473s]   install TARGETS given target "ouster_test_description" which does not
+[0.473s]   exist.
+[0.473s] 
+[0.474s] [0m
+[0.483s] -- Added test 'lint_cmake' to check CMake code style
+[0.487s] -- Added test 'xmllint' to check XML markup files
+[0.489s] -- Configuring incomplete, errors occurred!
+[0.489s] See also "/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/ouster_test_description/CMakeFiles/CMakeOutput.log".
+[0.495s] Invoked command in '/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/build/ouster_test_description' returned '1': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/src/ouster_test_description -DCMAKE_INSTALL_PREFIX=/home/brown/Projects/MiningRobot/autonomy/ros2_workspace/simulation/ouster_test/install/ouster_test_description
